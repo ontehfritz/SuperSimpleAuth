@@ -1,0 +1,24 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.AppModel>
+@{
+  Layout = "_layout.cshtml";
+}
+<h1>Create an App</h1>
+
+@if(@Model.Errors != null)
+{
+    <ul>
+    @foreach(var e in @Model.Errors){
+        <li>
+        @foreach(var member in e.MemberNames){
+            @e.GetMessage(member);
+        }
+        </li>
+    }
+    </ul>
+}
+
+<form action="/app/new" method="post">
+    <label for="Name">Name:</label>
+    <input type="text" name="Name" />
+    <input type="submit" name="Create" value="Create" />
+</form>

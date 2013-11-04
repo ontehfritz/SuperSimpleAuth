@@ -1,0 +1,39 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+<html>
+    <head>
+        <title>Super Simple Auth (SSA) - Alpha v0.1</title>
+        <link rel="stylesheet" type="text/css" href="content/css/ss.css" />
+    </head>
+    <body>
+        <image src="content/images/logo.png" style="position:absolute;left:0px;top:0px;z-index:-1;"></image>
+            <h1 style="text-align: center;">Super Simple Auth - Alpha v0.1</h1>  
+            <div style="position:absolute;left:300px;top:200px;">
+            @Html.Partial("_logon", Model)
+            </div>
+            <div style="float:left;margin-left:10px;padding:5px;background-color:#ffffff;width:350px;border: solid black 1px;position:absolute;left:600px;top:50px;">
+            Simple and secure web authentication and authorization.
+            </div>
+            <div style="float:left;margin-left:10px;padding:5px;background-color:#ffffff;width:350px;border: solid black 1px;position:absolute;left:600px;top:100px;">
+            Language Support:
+            <ul>
+            <li>Mono/.Net C#</li>
+            <li>Ruby</li>
+            </ul>
+            Don't see your favorite language? You can develop your own wrapper from: 
+            api.supersimpleauth.com 
+            </div>
+            <div style="float:left;margin-left:10px;padding:5px;background-color:#ffffff;width:350px;border: solid black 1px;position:absolute;left:600px;top:250px;">
+            Steps:
+            <ol>
+                <li> Sign Up or Sign In</li>
+                <li> Create an Application</li>
+                <li> Create users, claims and roles</li>
+                <li> Use one of the supported wrappers
+                or use api.supersimpleauth.com directly</li>
+            </ol>
+            See <a href="https://github.com/fritzcoder/SuperSimpleAuth/wiki">wiki</a> for examples and How Tos
+            
+            </div>
+       
+    </body>
+</html>

@@ -1,0 +1,54 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.AppModel>
+@{
+  Layout = "_layout.cshtml";
+}
+   
+<h1>@Model.App.Name</h1>
+<!-- <p>@Model.App.Id</p> -->
+<form action="/app/@Model.App.Name" method="post">
+    <label for="Key">Key:</label><pre>@Model.App.Key</pre><input type="submit" name="Generate" value="Generate" 
+    onclick="return confirm('All applications using this key will need the new key assigned. Are you sure you want to generate a new key for this app?');" />
+    <br /><br /><hr />
+    <label for="WhiteListIps">Allowed Server IPs:</label>
+    <input type="text" name="WhiteListIps" style="width:400px;" value="@Helpers.Values(@Model.App.WhiteListIps)" />
+    <input type="submit" name="Update" value="update" />
+</form>
+<br />
+Roles: <a href="/app/@Model.App.Name/role/new">new</a>
+<div>
+    @if(@Model.Roles != null)
+    {
+    <ul>
+        @foreach(var role in @Model.Roles)
+        {
+            <li><a href="/app/@Model.App.Name/role/@role.Name">@role.Name</a></li>
+        }
+    </ul>
+    }
+</div>
+Claims: <a href="/app/@Model.App.Name/claim/new">new</a>
+
+<div>
+    @if(@Model.App.Claims != null)
+    {
+    <ul>
+        @foreach(var claim in @Model.App.Claims)
+        {
+            <li>@claim <a href="">X</a></li>
+        }
+    </ul>
+    }
+</div>
+
+<div>
+    Users: 
+    @if(@Model.Users != null)
+    {
+    <ul>
+        @foreach(var user in @Model.Users)
+        {
+            <li><a href="/app/@Model.App.Name/user/@user.Id">@user.Username</a></li>
+        }
+    </ul>
+    }
+</div>

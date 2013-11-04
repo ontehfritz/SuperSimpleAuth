@@ -1,0 +1,127 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.AppUserModel>
+@{
+  Layout = "_layout.cshtml";
+} 
+
+<form action="/app/@Model.App.Name/user/@Model.User.Id" method="post">
+@Model.Debug
+<table>
+<tr>
+    <td>UserName: </td>
+    <td>@Model.User.Username</td>
+</tr>
+<tr>
+    <td>Application: </td>
+    <td><a href="/app/@Model.App.Name">@Model.App.Name</a></td>
+</tr>
+<tr>
+    <td>Created: </td>
+    <td>@Model.User.CreatedAt.ToLongDateString() @Model.User.CreatedAt.ToLongTimeString()</td>
+</tr>
+<tr>
+    <td>Modified: </td>
+    <td>@Model.User.ModifiedAt.ToLongDateString() @Model.User.CreatedAt.ToLongTimeString()</td>
+</tr>
+<tr>
+    <td>Logon Count: </td>
+    <td>@Model.User.LogonCount</td>
+</tr>
+<tr>
+    <td>Current IP: </td>
+    <td>@Model.User.CurrentIp</td>
+</tr>
+<tr>
+    <td>Current Logon: </td>
+    <td>
+    @if(Model.User.CurrentLogon.HasValue){
+        <b>@Model.User.CurrentLogon.Value.ToLongTimeString() @Model.User.CurrentLogon.Value.ToLongTimeString()</b>
+    }
+    </td>
+</tr>
+<tr>
+    <td>Last IP: </td>
+    <td>@Model.User.LastIp</td>
+</tr>
+<tr>
+    <td>Last Request: </td>
+    <td>
+    @if(Model.User.LastRequest != null){
+        <b>@Model.User.LastRequest.ToLongDateString() @Model.User.LastRequest.ToLongTimeString()</b>
+    }
+    </td>
+</tr>
+<tr>
+    <td>Last Logon: </td>
+    <td>
+    @if(Model.User.LastLogon.HasValue){
+        <b>@Model.User.LastLogon.Value.ToLongTimeString() @Model.User.LastLogon.Value.ToLongTimeString()</b>
+    }
+    </td>
+</tr>
+<tr>
+    <td>Roles: </td>
+    <td>
+    <input id="Roles" type="hidden" name="NewRoles" value="@Helpers.Values(@Model.NewRoles)"/><br />
+    
+    @if(@Model.Roles != null)
+    {
+        foreach(SSAManager.Role role in @Model.Roles)
+        {
+            if(@Model.User.InRole(@role.Name))
+            {
+                <input type="checkbox" name="role" value="@role.Name" checked />@role.Name<br />
+            }
+            else
+            {
+                <input type="checkbox" name="role" value="@role.Name" />@role.Name<br />
+            }
+        }
+    }
+    </td>
+</tr>
+<tr>
+    <td>Claims: </td>
+    <td>
+    <input id="Claims" type="hidden" name="Claims" value="@Helpers.Values(@Model.Claims)" /><br />
+    @if(@Model.App.Claims != null)
+    {
+        foreach(string claim in @Model.App.Claims)
+        {
+            if(@Model.User.HasClaim(claim))
+            {
+                <input type="checkbox" name="claim" value="@claim" checked />@claim<br />
+            }
+            else
+            {
+                <input type="checkbox" name="claim" value="@claim" />@claim<br />
+            }
+        }
+    }
+    </td>
+</tr>
+</table>
+<input type="submit" name="Save" value="Save" />
+</form>
+<script>
+$("input[name='role']").change(function() {
+    $("#Roles").val($("input[name='role']").map(function() {
+        if(this.checked)
+        {
+            return $(this).val();
+        }
+    })
+    .get()
+    .join());
+});
+
+$("input[name='claim']").change(function() {
+    $("#Claims").val($("input[name='claim']").map(function() {
+        if(this.checked)
+        {
+            return $(this).val();
+        }
+    })
+    .get()
+    .join());
+});
+</script>

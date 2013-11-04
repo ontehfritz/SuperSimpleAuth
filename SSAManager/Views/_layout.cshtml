@@ -1,0 +1,30 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+<html>
+    <head>
+        <title>SSA Alpha v0.1 - Manage Applications</title>
+        <script src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
+        <link rel="stylesheet" type="text/css" href="/content/css/ss.css" />
+    </head>
+    <body style="margin:0px;padding:0px;">
+    <div id="header">
+        <div style="float:left;">SSA - Alpha v0.1</div> 
+        <div style="float:right;">
+        @if(@Model.Manager != null)
+        {
+            <a href="/home">@Model.Manager.UserName</a>
+        }
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <div id="content" >
+        @RenderBody()
+    </div>
+     <div id="footer" style="">
+        <div style="float:left;"><a href="https://github.com/fritzcoder/SuperSimpleAuth">
+        GitHub</a> | <a href="https://github.com/fritzcoder/SuperSimpleAuth">Wiki</a> |
+        <a href="">Docs</a>
+        </div> 
+        <div style="clear:both;"></div>
+    </div>
+    </body>
+</html>

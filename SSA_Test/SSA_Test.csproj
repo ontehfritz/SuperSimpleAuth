@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7C0E40A0-E53C-450B-A8DF-2AD5474132CC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SSA_Test</RootNamespace>
+    <AssemblyName>SSA_Test</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="nunit.framework">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Nancy">
+      <HintPath>..\packages\Nancy.0.21.1\lib\net40\Nancy.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SsaAPI.cs" />
+    <Compile Include="SSAManagerTest.cs" />
+    <Compile Include="CSharpWrapperTest.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\SuperSimpleAuthCSharp\SuperSimpleAuthCSharp.csproj">
+      <Project>{7EF26E89-0BDF-4A21-8045-47CA3288EABC}</Project>
+      <Name>SuperSimpleAuthCSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SSAManager\SSAManager.csproj">
+      <Project>{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}</Project>
+      <Name>SSAManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SuperSimpleAuth\SuperSimpleAuth.csproj">
+      <Project>{3E96487D-52AE-4A0B-8D29-B4F4EBEC5CC7}</Project>
+      <Name>SuperSimpleAuth</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

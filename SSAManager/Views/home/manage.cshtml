@@ -1,0 +1,18 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.ManageModel>
+@{
+  Layout = "_layout.cshtml";
+}   
+
+Your applications:
+<a href="~/app/new">New</a>
+<div>      
+@if(@Model.Apps != null)
+{
+    foreach(var app in @Model.Apps)
+    {
+        <div>
+        <a href="~/app/@app.Name">@app.Name</a>
+        </div>
+    }
+}
+</div>

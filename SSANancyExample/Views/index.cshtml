@@ -1,0 +1,52 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSANancyExample.NancyUserIdentity>
+<html>
+    <head>
+        <title>Nancy - SuperSimpleAuth Demo</title>
+    </head>
+    <body>
+    <table>
+    <tr>
+        <td>Id:</td>
+        <td>@Model.Id</td>
+    </tr>
+    <tr>
+        <td>UserName:</td>
+        <td>@Model.UserName</td>
+    </tr>
+    <tr>
+        <td>AuthToken:</td>
+        <td>@Model.AuthToken</td>
+    </tr>
+    <tr>
+        <td>Roles:</td>
+        <td>
+        <ul>
+        @if(Model.Roles != null)
+        {
+            foreach(string role in Model.Roles)
+            {
+                <li>@role </li>
+            }
+        }
+        </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>Claims:</td>
+        <td>
+        <ul>
+        @if(Model.Claims != null)
+        {
+            foreach(string claim in Model.Claims)
+            {
+                <li>@claim </li>
+            }
+        }
+        </ul>
+        </td>
+    </tr>
+    
+    </table>
+    <a href="/logoff">Log Off</a>
+    </body>
+</html>

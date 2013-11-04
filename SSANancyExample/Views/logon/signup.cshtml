@@ -1,0 +1,39 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSANancyExample.SignupModel>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+      
+      @if(@Model.Errors != null)
+      {
+        <ul>
+        @foreach(var e in @Model.Errors){
+            <li>
+            @foreach(var member in e.MemberNames){
+                @e.GetMessage(member);
+            }
+            </li>
+        }
+        </ul>
+       }
+       <b>@Model.Message</b>
+        <form action="/signup" method="post">
+        <div>
+            <label for="Email">Email</label>
+            <input type="text" name="Email" />
+        </div>
+        <div>
+            <label for="Secret">Password</label>
+            <input type="password" name="Secret" />
+        </div>
+        <div>
+            <label for="ConfirmSecret">Confirm Password</label>
+            <input type="password" name="ConfirmSecret" />
+        </div>
+        <div>
+            <input type="submit" name="Signup" value="Signup" />
+        </div>
+        </form>
+    </body>
+</html>

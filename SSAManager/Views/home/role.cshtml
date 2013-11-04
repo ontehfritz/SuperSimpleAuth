@@ -1,0 +1,81 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.RoleModel>
+@{
+  Layout = "_layout.cshtml";
+}
+
+<h4><a href="/app/@Model.App.Name/">@Model.App.Name</a></h4>
+Role: @Model.Role.Name
+<hr />
+Claims
+<hr />
+<form action="/app/@Model.App.Name/role/@Model.Role.Name" method="post">
+<input id="Claims" type="hidden" name="Claims" value="@Helpers.Values(@Model.Claims)" /><br />
+@if(@Model.App.Claims != null)
+{
+    foreach(string claim in @Model.App.Claims)
+    {
+        if(@Model.Role.HasClaim(claim))
+        {
+            <input type="checkbox" name="claim" value="@claim" checked />@claim<br />
+        }
+        else
+        {
+            <input type="checkbox" name="claim" value="@claim" />@claim<br />
+        }
+    }
+}
+<hr />
+Users
+<hr />
+<input id="RoleUsers" type="hidden" name="RoleUsers" value="@Helpers.Values(@Model.RoleUsers)" />
+<input id="uRoleUsers" type="hidden" name="uRoleUsers"  /><br />
+@if(@Model.Users != null)
+{
+    foreach(User user in @Model.Users)
+    {
+        if(user.InRole(Model.Role.Name))
+        {
+            <input type="checkbox" name="user" value="@user.Id" checked />@user.Username<br />
+        }
+        else
+        {
+            <input type="checkbox" name="user" value="@user.Id" />@user.Username<br />
+        }
+    }
+}
+<hr />
+<input type="submit" name="Save" value="Save" />
+</form>
+
+<script>
+$("input[name='claim']").change(function() {
+    $("#Claims").val($("input[name='claim']").map(function() {
+        if(this.checked)
+        {
+            return $(this).val();
+        }
+    })
+    .get()
+    .join());
+});
+
+$("input[name='user']").change(function() {
+    $("#RoleUsers").val($("input[name='user']").map(function() {
+        if(this.checked)
+        {
+            return $(this).val();
+        }
+    })
+    .get()
+    .join());
+    
+     $("#uRoleUsers").val($("input[name='user']").map(function() {
+        if(!this.checked)
+        {
+            return $(this).val();
+        }
+    })
+    .get()
+    .join());
+});
+</script>
