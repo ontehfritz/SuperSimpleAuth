@@ -9,7 +9,6 @@ namespace SSAManager
     {
         public string Name { get; set; }
         public string AppName { get; set; }
-        public IEnumerable<ModelValidationError> Errors { get; set; }
     }
 
     public class ClaimValidator : AbstractValidator<Claim>

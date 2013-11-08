@@ -21,20 +21,20 @@ namespace SSAManager
             };
 
             Post["/logon"] = parameters => {
-                LogonModel logon = this.Bind<LogonModel>();
+                LogonModel model = this.Bind<LogonModel>();
 
-                Manager manager = repository.GetManager(logon.Username);
+                Manager manager = repository.GetManager(model.Username);
 
-                logon.Message = "Password or/and Username is incorrect.";
+                model.Message = "Password or/and Username is incorrect.";
 
                 if(manager == null)
                 {
-                    return View["index", logon];
+                    return View["index", model];
                 }
   
-                if (manager != null && manager.Secret != logon.Secret)
+                if (manager != null && manager.Secret != model.Secret)
                 {
-                    return View["index", logon];
+                    return View["index", model];
                 }
 
                 return this.LoginAndRedirect(manager.Id, fallbackRedirectUrl: "/home");

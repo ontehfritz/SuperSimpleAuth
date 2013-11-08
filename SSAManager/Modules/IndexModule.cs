@@ -14,14 +14,15 @@ namespace SSAManager
             this.repository = repository;
 
             Get ["/"] = parameters => {
-                LogonModel logon = new LogonModel();
+                LogonModel model = new LogonModel();
    
                 if(this.Context.CurrentUser.IsAuthenticated())
                 {
                     Manager manager  = (Manager)this.Context.CurrentUser;
                     return this.LoginAndRedirect(manager.Id, fallbackRedirectUrl: "/home");
                 }
-                return View["index", logon];
+
+                return View["index", model];
             };
         }
     }

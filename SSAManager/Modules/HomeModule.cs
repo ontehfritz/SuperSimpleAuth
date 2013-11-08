@@ -180,8 +180,8 @@ namespace SSAManager
 
             Get ["/app/{name}/role/new"] = parameters => {
                 Role role = new Role ();
-                Manager manager  = (Manager)this.Context.CurrentUser;
-                App app = repository.GetApp(manager.Id,(string)parameters.name);
+                role.Manager  = (Manager)this.Context.CurrentUser;
+                App app = repository.GetApp(role.Manager.Id,(string)parameters.name);
                 role.AppId = app.Id;
                 role.AppName = app.Name;
 
@@ -190,8 +190,8 @@ namespace SSAManager
 
             Post ["/app/{name}/role/new"] = parameters => {
                 Role role = this.Bind<Role>();
-                Manager manager  = (Manager)this.Context.CurrentUser;
-                App app = repository.GetApp(manager.Id,(string)parameters.name);
+                role.Manager  = (Manager)this.Context.CurrentUser;
+                App app = repository.GetApp(role.Manager.Id,(string)parameters.name);
                 role.AppId = app.Id;
                 role.AppName = app.Name;
 
@@ -216,6 +216,8 @@ namespace SSAManager
             };
 
             Post ["/app/{name}/claim/new"] = parameters => {
+                ClaimModel model = this.Bind<ClaimModel>();
+
                 Manager manager = (Manager)this.Context.CurrentUser;
                 Claim claim = this.Bind<Claim>();
                 claim.AppName = (string)parameters.name;

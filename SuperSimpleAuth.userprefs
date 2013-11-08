@@ -23,7 +23,7 @@
       <File FileName="SSAManager/models/Role.cs" Line="1" Column="1" />
       <File FileName="SSAManager/models/AppModel.cs" Line="1" Column="1" />
       <File FileName="SSAManager/views/home/role.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/views/home/app_new.cshtml" Line="20" Column="39" />
+      <File FileName="SSAManager/views/home/app_new.cshtml" Line="13" Column="35" />
       <File FileName="SSAManager/models/RoleModel.cs" Line="1" Column="1" />
       <File FileName="SSAManager/content/css/ss.css" Line="1" Column="1" />
       <File FileName="SSAManager/web.config" Line="1" Column="1" />
@@ -32,27 +32,7 @@
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="SSA_Test" expanded="True">
-            <Node name="References" expanded="True" />
-          </Node>
-          <Node name="SSAManager" expanded="True" selected="True">
-            <Node name="content" expanded="True" />
-            <Node name="models" expanded="True" />
-            <Node name="modules" expanded="True" />
-            <Node name="views" expanded="True">
-              <Node name="home" expanded="True" />
-            </Node>
-          </Node>
-          <Node name="SSANancyExample" expanded="True">
-            <Node name="modules" expanded="True" />
-          </Node>
-          <Node name="SuperSimpleAuth" expanded="True">
-            <Node name="models" expanded="True" />
-            <Node name="modules" expanded="True" />
-          </Node>
-          <Node name="SuperSimpleAuthCSharp" expanded="True" />
-        </State>
+        <State expanded="True" />
       </Pad>
       <Pad Id="ClassPad">
         <State expanded="True" selected="True" />
@@ -60,11 +40,11 @@
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State />
       </Pad>
-      <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True" selected="True" />
-      </Pad>
       <Pad Id="ConnectionManagerPad">
         <State selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State expanded="True" selected="True" />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

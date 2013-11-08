@@ -1,28 +1,24 @@
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.Role>
-<html>
-    <head>
-        <title>Create Role</title>
-    </head>
-    <body>
-    <h1>Create a Role</h1>
-    
-    @if(@Model.Errors != null)
-    {
-        <ul>
-        @foreach(var e in @Model.Errors){
-            <li>
-            @foreach(var member in e.MemberNames){
-                @e.GetMessage(member);
-            }
-            </li>
+@{
+  Layout = "_layout.cshtml";
+}   
+<h1>Create a Role</h1>
+
+@if(@Model.Errors != null)
+{
+    <ul>
+    @foreach(var e in @Model.Errors){
+        <li>
+        @foreach(var member in e.MemberNames){
+            @e.GetMessage(member);
         }
-        </ul>
+        </li>
     }
-    
-    <form action="/app/@Model.AppName/role/new" method="post">
-        <label for="Name">Name:</label>
-        <input type="text" name="Name" />
-        <input type="submit" name="Create" value="Create" />
-    </form>
-    </body>
-</html>
+    </ul>
+}
+
+<form action="/app/@Model.AppName/role/new" method="post">
+    <label for="Name">Name:</label>
+    <input type="text" name="Name" />
+    <input type="submit" name="Create" value="Create" />
+</form>

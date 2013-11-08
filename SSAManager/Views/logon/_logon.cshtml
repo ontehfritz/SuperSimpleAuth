@@ -1,12 +1,21 @@
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.LogonModel>
 
-<p>@Model.Message</p>
+<div style="width:200px;color:red;">
+    <p>@Model.Message</p>
+</div>
 
 <form action="/logon" method="post">
+    <div>
     <label for="Username">Email Address:</label>
+    <br />
     <input type="text" name="Username" />
+    </div>
+    <div>
     <label for="Secret">Password:</label>
+    <br />
     <input type="password" name="Secret" />
+    </div>
+    
     <input type="submit" name="Logon" value="Logon" />
 </form>
 <a href="~/signup">Sign up</a> <a href="~/forgot">Forgot password</a>

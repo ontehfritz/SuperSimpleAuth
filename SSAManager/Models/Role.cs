@@ -19,6 +19,8 @@ namespace SSAManager
         [BsonIgnore]
         public string AppName { get; set; }
         [BsonIgnore]
+        public Manager Manager { get; set; }
+        [BsonIgnore]
         public IEnumerable<ModelValidationError> Errors { get; set; }
 
         public bool HasClaim(string claim)

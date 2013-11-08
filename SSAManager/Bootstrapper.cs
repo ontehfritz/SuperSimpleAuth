@@ -41,7 +41,7 @@ namespace SSAManager
 
             var formsAuthConfiguration = new FormsAuthenticationConfiguration
             {
-                RedirectUrl = "~/logon",
+                RedirectUrl = "~/",
                 UserMapper = container.Resolve<IUserMapper>(),
             };
 

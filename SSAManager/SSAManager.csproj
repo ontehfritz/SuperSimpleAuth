@@ -74,7 +74,6 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <Content Include="packages.config" />
     <Content Include="web.config" />
     <Content Include="favicon.png" />
     <Content Include="Content\css\ss.css" />
@@ -90,27 +89,30 @@
     <Folder Include="Models\" />
     <Folder Include="Modules\" />
     <Folder Include="Views\" />
+    <Folder Include="Models\Views\" />
+    <Folder Include="Models\Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Models\App.cs" />
-    <Compile Include="Models\AppModel.cs" />
-    <Compile Include="Models\AppUserModel.cs" />
     <Compile Include="Models\Claim.cs" />
     <Compile Include="Models\Helpers.cs" />
-    <Compile Include="Models\IPageModel.cs" />
-    <Compile Include="Models\IRepository.cs" />
-    <Compile Include="Models\LogonModel.cs" />
-    <Compile Include="Models\ManageModel.cs" />
     <Compile Include="Models\Manager.cs" />
-    <Compile Include="Models\MongoRepository.cs" />
     <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\RoleModel.cs" />
-    <Compile Include="Models\SignupModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Modules\IndexModule.cs" />
     <Compile Include="Modules\LogonModule.cs" />
+    <Compile Include="Models\Views\RoleModel.cs" />
+    <Compile Include="Models\Views\AppModel.cs" />
+    <Compile Include="Models\Views\AppUserModel.cs" />
+    <Compile Include="Models\Views\LogonModel.cs" />
+    <Compile Include="Models\Views\IPageModel.cs" />
+    <Compile Include="Models\Views\ManageModel.cs" />
+    <Compile Include="Models\Repositories\IRepository.cs" />
+    <Compile Include="Models\Repositories\MongoRepository.cs" />
+    <Compile Include="Models\Views\SignupModel.cs" />
+    <Compile Include="Models\Views\ClaimModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\.DS_Store" />

@@ -3,16 +3,23 @@
   Layout = "_layout.cshtml";
 }   
 
-Your applications:
-<a href="~/app/new">New</a>
+<h4>Applications</h4>
+<a href="~/app/new">Create</a>
+
 <div>      
 @if(@Model.Apps != null)
 {
     foreach(var app in @Model.Apps)
     {
-        <div>
-        <a href="~/app/@app.Name">@app.Name</a>
+        <div style="border: 1px solid black;">
+            <div>
+            <h4><a href="~/app/@app.Name">@app.Name</a></h4>
+            </div>
+            <div>
+            Created: @app.CreatedAt.ToLongDateString() @app.CreatedAt.ToLongTimeString()
+            </div>
         </div>
+        <br />
     }
 }
 </div>
