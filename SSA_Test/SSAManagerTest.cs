@@ -10,25 +10,85 @@ namespace SSA_Test
     [TestFixture()]
     public class SSAManagerTest
     {
-        IRepository repository = new MongoRepository ("mongodb://localhost");
-        string appGuid = "09070f2c-3cb3-486f-82be-13dc5b054b71";
-        string managerId = "c189f4d6-1f25-4599-a20c-290b647c11f8";
-        string appName = "test";
-     
-        [Test()]
-        public void TestGetUser ()
+        private IRepository repository = new MongoRepository ("mongodb://localhost");
+        private App _app;
+        private Manager _manager;
+        private SuperSimple.Auth.Api.MongoRepository _api = 
+            new SuperSimple.Auth.Api.MongoRepository("mongodb://localhost");
+
+        [SetUp()]
+        public void Init()
         {
-            Guid appId = Guid.Parse (appGuid);
-            User[] users = repository.GetAppUsers(appId);
+            Manager manager = new Manager ();
+            manager.UserName = "manager@test.ing";
+            manager.Secret = "test";
+            manager = repository.CreateManager (manager);
+            _manager = manager;
+
+            App app = repository.CreateApp ("test", _manager);
+            _app = app;
+
+            _api.CreateUser ();
+        }
+
+        [TearDown] public void Dispose()
+        { 
+            if (_app != null) {
+                repository.DeleteApp (_app.Name, _manager.Id);
+            }
+
+            if (_manager != null) {
+                repository.DeleteManager (_manager.Id);
+            }
+        }
+       
+        [Test()]
+        public void Create_manager()
+        {
+            Manager manager = new Manager ();
+            manager.UserName = "create@manager.test";
+            manager.Secret = "test";
+            manager = repository.CreateManager (manager);
+            Assert.IsNotNull (manager.Id);
+            repository.DeleteManager (manager.Id);
+        }
+       
+        [Test()]
+        public void Create_app()
+        {
+            App app = repository.CreateApp ("create_app_test", _manager);
+            Assert.IsNotNull (app);
+            repository.DeleteApp (app.Name, _manager.Id);
+        }
+
+        [Test()]
+        public void Get_manager()
+        {
+            Manager manager = repository.GetManager ("manager@test.ing");
+            Assert.AreEqual ("manager@test.ing", manager.UserName);
+        }
+
+        [Test()]
+        public void Get_app()
+        {
+            App app = repository.GetApp(_app.Name, 
+                                        _manager.Id);
+
+            Assert.AreEqual (_app.Id, app.Id);
+        }
+
+        [Test()]
+        public void Get_a_user ()
+        {
+            User[] users = repository.GetAppUsers(_app.Id);
             User user = repository.GetUser(users[0].Id);
             Assert.IsNotNull (user);
         }
 
         [Test()]
-        public void TestUpdateUser ()
+        public void Update_a_user ()
         {
-            Guid appId = Guid.Parse (appGuid);
-            User[] users = repository.GetAppUsers(appId);
+            User[] users = repository.GetAppUsers(_app.Id);
             User user = repository.GetUser(users[0].Id);
             user.Roles = user.Roles;
             user = repository.UpdateUser (user);
@@ -37,73 +97,41 @@ namespace SSA_Test
         }
        
         [Test()]
-        public void TestGetAppUsers ()
+        public void Get_all_users_for_application ()
         {
-            Guid appId = Guid.Parse (appGuid);
-            User[] users = repository.GetAppUsers(appId);
+            User[] users = repository.GetAppUsers(_app.Id);
             Assert.Greater (users.Length,0);
         }
 
-        [Test()]
-        public void TestGetManager()
-        {
-            Manager manager = repository.GetManager ("test24@test.com");
-            System.Console.WriteLine (manager.Id);
-            Assert.AreEqual ("test24@test.com", manager.UserName);
-        }
+
 
         [Test()]
-        public void TestGetApp()
+        public void Create_a_role()
         {
-            Guid appId = Guid.Parse (appGuid);
-            App app = repository.GetApp(Guid.Parse(managerId),
-                                        appName);
-
-            Assert.AreEqual (appId, app.Id);
-        }
-
-        [Test()]
-        public void TestCreateRole()
-        {
-            Guid appId = Guid.Parse (appGuid);
-           
-            Role role = new Role ();
-            role.Id = Guid.NewGuid ();
-            role.AppId = appId;
-            role.Name = "test_test";
-
-            Role r = repository.CreateRole(role);
-
+            Role r = repository.CreateRole(_app.Id, "test_test");
             Assert.AreEqual ("test_test",r.Name);
         }
 
 
         [Test()]
-        public void TestGetRole()
+        public void Get_a_role()
         {
-            Guid appId = Guid.Parse (appGuid);
-           
-            Role role = repository.GetRole (appId, "test_test");
-
+            Role role = repository.CreateRole (_app.Id, "test_test");
+            role = repository.GetRole (_app.Id, "test_test");
             Assert.IsNotNull (role);
         }
 
         [Test()]
-        public void TestGetRoles()
+        public void Get_all_roles()
         {
-            Guid appId = Guid.Parse (appGuid);
-
-            Role[] roles = repository.GetRoles (appId);
-
+            Role[] roles = repository.GetRoles (_app.Id);
             Assert.IsNotNull (roles);
         }
 
         [Test()]
-        public void TestUpdateRole()
+        public void Update_a_role()
         {
-            Guid appId = Guid.Parse (appGuid);
-
-            Role role = repository.GetRole (appId, "test_test");
+            Role role = repository.GetRole (_app.Id, "test_test");
 
             List<string> claims = new List<string>();
             claims.Add ("Write");
@@ -111,41 +139,59 @@ namespace SSA_Test
 
             role.Claims = claims;
             repository.UpdateRole (role);
-            role = repository.GetRole (appId, "test_test");
+            role = repository.GetRole (_app.Id, "test_test");
 
             Assert.IsNotNull (role.Claims);
         }
 
-        [Test()]
-        public void TestGetUsersInRole ()
+        public void Delete_a_role()
         {
-            Guid appId = Guid.Parse (appGuid);
-            Role role = repository.GetRole (appId, "test_test");
+
+        }
+
+        [Test()]
+        public void Get_users_in_role ()
+        {
+            Role role = repository.GetRole (_app.Id, "test_test");
 
             User[] users = repository.GetUsersInRole(role);
             Assert.Greater (users.Length,0);
         }
 
         [Test()]
-        public void TestUserInRole()
+        public void Is_user_in_role()
         {
-            Guid appId = Guid.Parse (appGuid);
-            User[] users = repository.GetAppUsers(appId);
+            User[] users = repository.GetAppUsers(_app.Id);
             User user = repository.GetUser(users[0].Id);
 
             Assert.IsTrue(user.InRole ("test_test"));
         }
 
         [Test()]
-        public void TestUserGetClaims ()
+        public void Get_user_claims ()
         {
-            Guid appId = Guid.Parse (appGuid);
-            User[] users = repository.GetAppUsers(appId);
+            User[] users = repository.GetAppUsers(_app.Id);
             User user = repository.GetUser(users[0].Id);
 
             string[] claims = user.GetClaims ();
 
             Assert.IsNotNull (claims);
+        }
+
+        [Test()]
+        public void Delete_app()
+        {
+            repository.DeleteApp (_app.Name,_manager.Id);
+            _app = null;
+        }
+
+        [Test()]
+        public void Delete_manager()
+        {
+            repository.DeleteManager (_manager.Id);
+            repository.DeleteApp (_app.Name,_manager.Id);
+            _app = null;
+            _manager = null;
         }
     }
 }

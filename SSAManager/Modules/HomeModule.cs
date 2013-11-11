@@ -45,22 +45,16 @@ namespace SSAManager
 
             Post ["/app/new"] = parameters => {
                 AppModel model = this.Bind<AppModel>();
-                App app = new App();
-                app.Name = model.Name;
                 model.Manager = (Manager)this.Context.CurrentUser;
-                var result = this.Validate(app);
+                var result = this.Validate(model);
                 model.Errors = result.Errors;
 
                 if (!result.IsValid)
                 {
                     return View["app_new", model];
                 }
-               
-                app.Key = Guid.NewGuid();
-                app.ManagerId = model.Manager.Id;
-                app.ModifiedBy = model.Manager.UserName;
-
-                repository.CreateApp(app);
+        
+                repository.CreateApp(model.Name, model.Manager);
 
                 return this.Response.AsRedirect("/home");
             };
@@ -68,7 +62,7 @@ namespace SSAManager
             Get ["/app/{name}"] = parameters => {
                 AppModel model = new AppModel();
                 model.Manager  = (Manager)this.Context.CurrentUser;
-                model.App = repository.GetApp(model.Manager.Id,(string)parameters.name);
+                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
                 model.Roles = repository.GetRoles(model.App.Id).ToList();
                 model.Users = repository.GetAppUsers(model.App.Id).ToList();
 
@@ -78,7 +72,7 @@ namespace SSAManager
             Post["/app/{name}"] = parameters => {
                 AppModel model = this.Bind<AppModel>();
                 model.Manager  = (Manager)this.Context.CurrentUser;
-                App app = repository.GetApp(model.Manager.Id,(string)parameters.name);
+                App app = repository.GetApp((string)parameters.name,model.Manager.Id);
                 model.Roles = repository.GetRoles(app.Id).ToList();
                 model.Users = repository.GetAppUsers(app.Id).ToList();
 
@@ -99,7 +93,7 @@ namespace SSAManager
             Get ["/app/{name}/role/{role}"] = parameters => {
                 RoleModel model = new RoleModel();
                 model.Manager  = (Manager)this.Context.CurrentUser;
-                model.App  = repository.GetApp(model.Manager.Id,(string)parameters.name);
+                model.App  = repository.GetApp((string)parameters.name, model.Manager.Id);
                 model.Users = repository.GetAppUsers(model.App.Id).ToList();
                 model.Role = repository.GetRole(model.App.Id,(string)parameters.role);
                 User[] us = repository.GetUsersInRole(model.Role);
@@ -121,7 +115,7 @@ namespace SSAManager
                 RoleModel model = this.Bind<RoleModel>();
 
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.App = repository.GetApp(model.Manager.Id,(string)parameters.name);
+                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
 
                 Role role = repository.GetRole(model.App.Id,(string)parameters.role);
 
@@ -181,7 +175,7 @@ namespace SSAManager
             Get ["/app/{name}/role/new"] = parameters => {
                 Role role = new Role ();
                 role.Manager  = (Manager)this.Context.CurrentUser;
-                App app = repository.GetApp(role.Manager.Id,(string)parameters.name);
+                App app = repository.GetApp((string)parameters.name, role.Manager.Id);
                 role.AppId = app.Id;
                 role.AppName = app.Name;
 
@@ -191,9 +185,8 @@ namespace SSAManager
             Post ["/app/{name}/role/new"] = parameters => {
                 Role role = this.Bind<Role>();
                 role.Manager  = (Manager)this.Context.CurrentUser;
-                App app = repository.GetApp(role.Manager.Id,(string)parameters.name);
-                role.AppId = app.Id;
-                role.AppName = app.Name;
+                App app = repository.GetApp((string)parameters.name, role.Manager.Id);
+
 
                 var result = this.Validate(role);
                 role.Errors = result.Errors;
@@ -203,35 +196,33 @@ namespace SSAManager
                     return View["role_new", role];
                 }
 
-                repository.CreateRole(role);
+                repository.CreateRole(app.Id, role.Name);
 
                 return this.Response.AsRedirect("/app/" + app.Name);
             };
 
             Get ["/app/{name}/claim/new"] = parameters => {
-                Claim claim = new Claim ();
-                claim.AppName = (string)parameters.name;
+                ClaimModel model = new ClaimModel ();
+                model.AppName = (string)parameters.name;
 
-                return View["claim_new", claim];
+                return View["claim_new", model];
             };
 
             Post ["/app/{name}/claim/new"] = parameters => {
                 ClaimModel model = this.Bind<ClaimModel>();
+                model.Manager = (Manager)this.Context.CurrentUser;
+                model.AppName = (string)parameters.name;
 
-                Manager manager = (Manager)this.Context.CurrentUser;
-                Claim claim = this.Bind<Claim>();
-                claim.AppName = (string)parameters.name;
-
-                var result = this.Validate(claim);
-                claim.Errors = result.Errors;
+                var result = this.Validate(model);
+                model.Errors = result.Errors;
 
                 if (!result.IsValid)
                 {
-                    return View["claim_new", claim];
+                    return View["claim_new", model];
                 }
 
 
-                App update = repository.GetApp(manager.Id,claim.AppName);
+                App update = repository.GetApp(model.AppName, model.Manager.Id);
                 List<string> claims = new List<string>(); 
 
                 if(update.Claims != null)
@@ -239,18 +230,18 @@ namespace SSAManager
                     claims = new List<string>(update.Claims);
                 }
 
-                claims.Add(claim.Name);
+                claims.Add(model.Name);
                 update.Claims = claims.ToList();
                 repository.UpdateApp(update);
 
-                return this.Response.AsRedirect("/app/" + claim.AppName);
+                return this.Response.AsRedirect("/app/" + model.AppName);
             };
 
             Get ["/app/{name}/user/{id}"] = parameters => {
                 AppUserModel model = new AppUserModel();
 
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.App = repository.GetApp(model.Manager.Id,(string)parameters.name);
+                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
                 model.User = repository.GetUser(Guid.Parse((string)parameters.id));
                 model.Roles = repository.GetRoles(model.App.Id).ToList();
 
@@ -273,7 +264,7 @@ namespace SSAManager
             Post ["/app/{name}/user/{id}"] = parameters => {
                 AppUserModel model = this.Bind<AppUserModel>();
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.App = repository.GetApp(model.Manager.Id,(string)parameters.name);
+                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
                 model.User = repository.GetUser(Guid.Parse((string)parameters.id));
                 model.Roles = repository.GetRoles(model.App.Id).ToList();
 

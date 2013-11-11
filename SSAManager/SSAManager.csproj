@@ -95,7 +95,6 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Models\App.cs" />
-    <Compile Include="Models\Claim.cs" />
     <Compile Include="Models\Helpers.cs" />
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\Role.cs" />

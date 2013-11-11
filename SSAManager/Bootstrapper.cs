@@ -14,7 +14,6 @@ namespace SSAManager
             base.ApplicationStartup(container, pipelines);
             StaticConfiguration.DisableErrorTraces = false;
             StaticConfiguration.EnableRequestTracing = true;
-
         }
 
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)

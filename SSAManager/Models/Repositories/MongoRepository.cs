@@ -100,15 +100,22 @@ namespace SSAManager
 
         public void DeleteUser(Guid appId, string userName)
         {
+            var collection = database.GetCollection<User> ("users");
+
+            Dictionary<string, object> query = new Dictionary<string, object> ();
+            query.Add ("_id", appId);
+            query.Add ("Username", userName);
+
+            collection.Remove(new QueryDocument(query));
 
         }
 
 
-        public App GetApp(Guid managerId, string appName)
+        public App GetApp(string name, Guid managerId)
         {
             var collection = database.GetCollection<App> ("apps");
             var query = Query.And(Query<App>.EQ (e => e.ManagerId, managerId),
-                                  Query<App>.EQ(e => e.Name, appName));
+                                  Query<App>.EQ(e => e.Name, name));
 
             App app = collection.FindOne (query);
 
@@ -130,11 +137,18 @@ namespace SSAManager
             return apps.ToArray();
         }
 
-        public App CreateApp(App app)
+        public App CreateApp(string name, Manager manager)
         {
             var collection = database.GetCollection<App>("apps");
+            App app = new App ();
+            app.Id = Guid.NewGuid ();
+            app.Name = name;
+            app.ManagerId = manager.Id;
+            app.ModifiedBy = manager.UserName;
+            app.Key = Guid.NewGuid ();
             app.CreatedAt = DateTime.Now;
             app.ModifiedAt = DateTime.Now;
+
             collection.Insert(app);
           
             return app;
@@ -157,19 +171,40 @@ namespace SSAManager
                 apps.Save(updateApp);
             }
 
-            return GetApp(app.ManagerId,app.Name);
+            return GetApp(app.Name, app.ManagerId);
         }
 
-        public void DeleteApp(Guid managerId, string appName)
+        public void DeleteApp(string name, Guid managerId)
         {
+            App app = this.GetApp (name, managerId);
+            Role[] roles = this.GetRoles(app.Id);
 
+            foreach (Role r in roles) {
+                this.DeleteRole (r);
+            }
+
+            User[] users = this.GetAppUsers (app.Id);
+
+            foreach (User u in users) {
+                this.DeleteUser(app.Id, u.Username);
+            }
+
+            var collection = database.GetCollection<App>("apps");
+            collection.Remove(new QueryDocument("_id", app.Id));
         }
 
         public Manager CreateManager(Manager manager)
         {
             var collection = database.GetCollection<Manager>("managers");
+            manager.Id = Guid.NewGuid();
             collection.Insert(manager);
             return manager;
+        }
+
+        public void DeleteManager(Guid id)
+        {
+            var collection = database.GetCollection<Manager>("managers");
+            collection.Remove(new QueryDocument("_id", id));
         }
 
         public Manager UpdateManager(Manager manager)
@@ -244,11 +279,23 @@ namespace SSAManager
             return roles.ToArray();
         }
 
-        public Role CreateRole(Role role)
+        public Role CreateRole(Guid appId, string name)
         {
             var collection = database.GetCollection<Role>("roles");
+
+            Role role = new Role ();
+            role.Id = Guid.NewGuid ();
+            role.AppId = appId;
+            role.Name = name;
             collection.Insert(role);
+
             return role;
+        }
+
+        public void DeleteRole(Role role)
+        {
+            var collection = database.GetCollection<Role>("roles");
+            collection.Remove(new QueryDocument("_id", role.Id));
         }
 
 

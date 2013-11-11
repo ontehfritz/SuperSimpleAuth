@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Nancy.Validation;
+using FluentValidation;
 
 namespace SSAManager
 {
@@ -13,6 +14,14 @@ namespace SSAManager
         public App App { get; set; }
         public string Name { get; set; }
         public string Title { get; set; }
+    }
+
+    public class AppModelValidator : AbstractValidator<AppModel>
+    {
+        public AppModelValidator()
+        {
+            RuleFor(app => app.Name).NotEmpty();
+        }
     }
 }
 

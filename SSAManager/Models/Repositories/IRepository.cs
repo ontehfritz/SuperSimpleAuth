@@ -16,18 +16,20 @@ namespace SSAManager
 
         Role[] GetRoles(Guid appId);
         Role GetRole(Guid appId, string name);
-        Role CreateRole(Role role);
+        Role CreateRole(Guid appId, string name);
         Role UpdateRole(Role role);
+        void DeleteRole(Role role);
 
-        App GetApp(Guid managerId, string appName);
+        App GetApp(string name, Guid managerId);
         App[] GetApps(Guid managerID);
-        App CreateApp(App app);
+        App CreateApp(string name, Manager manager);
         App UpdateApp(App app);
-        void DeleteApp(Guid managerId, string appName);
+        void DeleteApp(string name, Guid managerId);
 
         Manager GetManager(Guid managerId);
         Manager GetManager(string userName);
         Manager CreateManager(Manager manager);
         Manager UpdateManager(Manager manager);
+        void DeleteManager(Guid id);
     }
 }

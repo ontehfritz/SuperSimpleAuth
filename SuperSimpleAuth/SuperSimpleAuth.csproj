@@ -62,7 +62,6 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <Content Include="packages.config" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

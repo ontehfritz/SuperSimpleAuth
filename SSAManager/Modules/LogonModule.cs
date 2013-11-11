@@ -65,7 +65,6 @@ namespace SSAManager
                 }
 
                 Manager newManager = new Manager(){
-                    Id = Guid.NewGuid(),
                     UserName = signup.Email,
                     Secret = signup.Secret
                 };

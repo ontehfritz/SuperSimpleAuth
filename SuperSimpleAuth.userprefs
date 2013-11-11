@@ -1,38 +1,47 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/views/home/app_new.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Modules/HomeModule.cs">
     <Files>
       <File FileName="SuperSimpleAuthCSharp/SuperSimpleAuth.cs" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuth/modules/IndexModule.cs" Line="1" Column="1" />
-      <File FileName="SSA_Test/CSharpWrapperTest.cs" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuthCSharp/User.cs" Line="1" Column="1" />
-      <File FileName="SSANancyExample/modules/IndexModule.cs" Line="1" Column="1" />
-      <File FileName="SSANancyExample/Bootstrapper.cs" Line="1" Column="1" />
-      <File FileName="SSANancyExample/models/NancyUser.cs" Line="1" Column="1" />
-      <File FileName="SSANancyExample/modules/LogonModule.cs" Line="1" Column="1" />
-      <File FileName="SSANancyExample/views/index.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/modules/HomeModule.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/models/User.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/views/home/user.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Bootstrapper.cs" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuth/models/MongoRepository.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/views/index.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/views/_layout.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/models/App.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/models/SignupModel.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/models/Role.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/models/AppModel.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/views/home/role.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/views/home/app_new.cshtml" Line="13" Column="35" />
-      <File FileName="SSAManager/models/RoleModel.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/content/css/ss.css" Line="1" Column="1" />
-      <File FileName="SSAManager/web.config" Line="1" Column="1" />
-      <File FileName="SSAManager/models/Manager.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/views/home/app.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Bootstrapper.cs" Line="44" Column="34" />
+      <File FileName="SSAManager/Modules/LogonModule.cs" Line="53" Column="6" />
+      <File FileName="SSAManager/Modules/IndexModule.cs" Line="26" Column="10" />
+      <File FileName="SSAManager/Views/logon/_logon.cshtml" Line="3" Column="35" />
+      <File FileName="SSAManager/Views/_logon.cshtml" Line="20" Column="1" />
+      <File FileName="SSAManager/Views/_layout.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/index.cshtml" Line="25" Column="161" />
+      <File FileName="SSAManager/Modules/HomeModule.cs" Line="220" Column="17" />
+      <File FileName="SSAManager/Views/home/manage.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/home/role.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/home/role_new.cshtml" Line="1" Column="70" />
+      <File FileName="SSAManager/Views/home/user.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/home/claim_new.cshtml" Line="28" Column="8" />
+      <File FileName="SSAManager/Views/home/app_new.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/home/app.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Models/Role.cs" Line="20" Column="44" />
+      <File FileName="SSAManager/Models/Claim.cs" Line="20" Column="6" />
+      <File FileName="SSAManager/Models/App.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Models/Helpers.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Models/Views/RoleModel.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Models/Views/ClaimModel.cs" Line="24" Column="2" />
+      <File FileName="SSAManager/Models/Views/IPageModel.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True" />
+        <State expanded="True">
+          <Node name="SSAManager" expanded="True">
+            <Node name="Models" expanded="True">
+              <Node name="Views" expanded="True" />
+            </Node>
+            <Node name="Modules" expanded="True">
+              <Node name="HomeModule.cs" selected="True" />
+            </Node>
+            <Node name="Views" expanded="True">
+              <Node name="home" expanded="True" />
+            </Node>
+          </Node>
+          <Node name="SuperSimpleAuthCSharp" expanded="True" />
+        </State>
       </Pad>
       <Pad Id="ClassPad">
         <State expanded="True" selected="True" />
