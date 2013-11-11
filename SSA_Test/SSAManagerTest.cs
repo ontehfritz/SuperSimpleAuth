@@ -28,7 +28,11 @@ namespace SSA_Test
             App app = repository.CreateApp ("test", _manager);
             _app = app;
 
-            _api.CreateUser ();
+            _api.CreateUser (_app.Key, "test1", "test1");
+            _api.CreateUser (_app.Key, "test2", "test2");
+
+           
+
         }
 
         [TearDown] public void Dispose()
@@ -131,7 +135,7 @@ namespace SSA_Test
         [Test()]
         public void Update_a_role()
         {
-            Role role = repository.GetRole (_app.Id, "test_test");
+            Role role = repository.CreateRole (_app.Id, "test_test");
 
             List<string> claims = new List<string>();
             claims.Add ("Write");
@@ -152,17 +156,37 @@ namespace SSA_Test
         [Test()]
         public void Get_users_in_role ()
         {
-            Role role = repository.GetRole (_app.Id, "test_test");
+            Role role = repository.CreateRole (_app.Id, "test_test");
 
-            User[] users = repository.GetUsersInRole(role);
+            User[] users = repository.GetAppUsers(_app.Id);
+
+            foreach (User u in users) {
+
+                if (u.Roles == null) {
+                    u.Roles = new List<Role> ();
+                }
+
+                u.Roles.Add (role);
+                repository.UpdateUser (u);
+            }
+          
+            users = repository.GetUsersInRole(role);
             Assert.Greater (users.Length,0);
         }
 
         [Test()]
         public void Is_user_in_role()
         {
+            Role role = repository.CreateRole (_app.Id, "test_test");
+
             User[] users = repository.GetAppUsers(_app.Id);
             User user = repository.GetUser(users[0].Id);
+
+            if (user.Roles == null) {
+                user.Roles = new List<Role> ();
+                user.Roles.Add (role);
+                repository.UpdateUser (user);
+            }
 
             Assert.IsTrue(user.InRole ("test_test"));
         }

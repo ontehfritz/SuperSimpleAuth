@@ -102,11 +102,15 @@ namespace SuperSimple.Auth.Api
             return user;
         }
 
-        public User CreateUser (Guid appKey, User user)
+        public User CreateUser (Guid appKey, string username, 
+                                string password)
         {
             var appCollection = database.GetCollection<RawBsonDocument> ("apps");
             var query = Query.And(Query.EQ ("Key", appKey));
             var app = appCollection.FindOne (query);
+            User user = new User ();
+            user.Username = username;
+            user.Secret = password;
             user.AppId = app["_id"].AsGuid;
             user.CreatedAt = DateTime.Now;
             user.Enabled = true;

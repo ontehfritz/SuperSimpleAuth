@@ -151,12 +151,12 @@ namespace SuperSimple.Auth.Api
                 //string app = Request.Headers["ssa_app_key"].FirstOrDefault();
 
                 User user = new User ();
-                user.Username = Request.Form["Username"];
-                user.Secret = Request.Form["Secret"];
-               
+
                 try
                 {
-                    user = repository.CreateUser (appKey, user);
+                    user = repository.CreateUser (appKey, 
+                                                  Request.Form["Username"],
+                                                  Request.Form["Secret"]);
                 }
                 catch(Exception e)
                 {

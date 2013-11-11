@@ -31,7 +31,7 @@ namespace SSAManager
         [BsonElement]
         public DateTime ?LastLogon { get; set; }
         [BsonElement]
-        public DateTime LastRequest { get; set; }
+        public DateTime ?LastRequest { get; set; }
         [BsonElement]
         public int LogonCount { get; set; }
         [BsonElement]

@@ -14,12 +14,11 @@ namespace SSA_Test
         [Test()]
         public void TestCreateUsers ()
         {
-            User user = new User ();
-            user.Username = "testuser_api";
-            user.Secret = "test";
+            User user = 
+                repository.CreateUser (appKey,
+                                   "testuser_api", "test");
 
-            repository.CreateUser (appKey,
-                                   user);
+            Assert.IsNotNull (user);
         }
 
         [Test()]
