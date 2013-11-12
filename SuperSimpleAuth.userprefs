@@ -1,45 +1,38 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Modules/HomeModule.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SSA_Test/SSAManagerTest.cs">
     <Files>
-      <File FileName="SuperSimpleAuthCSharp/SuperSimpleAuth.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Bootstrapper.cs" Line="44" Column="34" />
-      <File FileName="SSAManager/Modules/LogonModule.cs" Line="53" Column="6" />
-      <File FileName="SSAManager/Modules/IndexModule.cs" Line="26" Column="10" />
-      <File FileName="SSAManager/Views/logon/_logon.cshtml" Line="3" Column="35" />
-      <File FileName="SSAManager/Views/_logon.cshtml" Line="20" Column="1" />
-      <File FileName="SSAManager/Views/_layout.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/index.cshtml" Line="25" Column="161" />
-      <File FileName="SSAManager/Modules/HomeModule.cs" Line="220" Column="17" />
-      <File FileName="SSAManager/Views/home/manage.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/home/role.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/home/role_new.cshtml" Line="1" Column="70" />
-      <File FileName="SSAManager/Views/home/user.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/home/claim_new.cshtml" Line="28" Column="8" />
-      <File FileName="SSAManager/Views/home/app_new.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/home/app.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/Role.cs" Line="20" Column="44" />
-      <File FileName="SSAManager/Models/Claim.cs" Line="20" Column="6" />
-      <File FileName="SSAManager/Models/App.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/Helpers.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/Views/RoleModel.cs" Line="1" Column="1" />
       <File FileName="SSAManager/Models/Views/ClaimModel.cs" Line="24" Column="2" />
-      <File FileName="SSAManager/Models/Views/IPageModel.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Modules/HomeModule.cs" Line="189" Column="17" />
+      <File FileName="SSAManager/Views/home/claim_new.cshtml" Line="1" Column="75" />
+      <File FileName="SSAManager/Bootstrapper.cs" Line="16" Column="61" />
+      <File FileName="SSAManager/Models/Repositories/MongoRepository.cs" Line="35" Column="34" />
+      <File FileName="SSAManager/Models/Repositories/IRepository.cs" Line="12" Column="36" />
+      <File FileName="SSA_Test/SSAManagerTest.cs" Line="137" Column="10" />
+      <File FileName="SSAManager/Modules/LogonModule.cs" Line="63" Column="18" />
+      <File FileName="SSAManager/Models/App.cs" Line="54" Column="6" />
+      <File FileName="SSAManager/Models/Views/AppModel.cs" Line="19" Column="43" />
+      <File FileName="SSAManager/Models/Role.cs" Line="20" Column="44" />
+      <File FileName="SuperSimpleAuth/Models/MongoRepository.cs" Line="114" Column="44" />
+      <File FileName="SuperSimpleAuth/Models/IRepository.cs" Line="14" Column="3" />
+      <File FileName="SuperSimpleAuth/Modules/IndexModule.cs" Line="154" Column="17" />
+      <File FileName="SSA_Test/SsaAPI.cs" Line="20" Column="13" />
+      <File FileName="SSAManager/Models/User.cs" Line="23" Column="22" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
+          <Node name="SSA_Test" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="SSAManagerTest.cs" selected="True" />
+          </Node>
           <Node name="SSAManager" expanded="True">
             <Node name="Models" expanded="True">
-              <Node name="Views" expanded="True" />
-            </Node>
-            <Node name="Modules" expanded="True">
-              <Node name="HomeModule.cs" selected="True" />
-            </Node>
-            <Node name="Views" expanded="True">
-              <Node name="home" expanded="True" />
+              <Node name="Repositories" expanded="True" />
             </Node>
           </Node>
+          <Node name="SSANancyExample" expanded="True" />
+          <Node name="SuperSimpleAuth" expanded="True" />
           <Node name="SuperSimpleAuthCSharp" expanded="True" />
         </State>
       </Pad>
@@ -53,7 +46,13 @@
         <State selected="True" />
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True" selected="True" />
+        <State expanded="True">
+          <Node name="SSA_Test" expanded="True">
+            <Node name="SSA_Test" expanded="True">
+              <Node name="SSAManagerTest" expanded="True" selected="True" />
+            </Node>
+          </Node>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

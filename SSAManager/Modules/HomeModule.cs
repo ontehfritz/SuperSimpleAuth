@@ -72,19 +72,19 @@ namespace SSAManager
             Post["/app/{name}"] = parameters => {
                 AppModel model = this.Bind<AppModel>();
                 model.Manager  = (Manager)this.Context.CurrentUser;
-                App app = repository.GetApp((string)parameters.name,model.Manager.Id);
+                App app = repository.GetApp((string)parameters.name, model.Manager.Id);
                 model.Roles = repository.GetRoles(app.Id).ToList();
                 model.Users = repository.GetAppUsers(app.Id).ToList();
 
 
-                app.WhiteListIps = model.App.WhiteListIps;
+                app.WhiteListIps = model.WhiteListIps;
 
                 if(Request.Form.Generate != null)
                 {
                     app.Key = Guid.NewGuid();
                 }
 
-                repository.UpdateApp(app);
+                model.App = repository.UpdateApp(app);
 
                 return View["app", model];
 

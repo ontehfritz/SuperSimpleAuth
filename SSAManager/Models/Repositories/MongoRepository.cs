@@ -294,6 +294,13 @@ namespace SSAManager
 
         public void DeleteRole(Role role)
         {
+            User[] users = this.GetUsersInRole (role);
+
+            foreach (User u in users) {
+                u.RemoveRole (role);
+                this.UpdateUser (u);
+            }
+
             var collection = database.GetCollection<Role>("roles");
             collection.Remove(new QueryDocument("_id", role.Id));
         }

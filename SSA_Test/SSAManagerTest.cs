@@ -35,7 +35,8 @@ namespace SSA_Test
 
         }
 
-        [TearDown] public void Dispose()
+        [TearDown] 
+        public void Dispose()
         { 
             if (_app != null) {
                 repository.DeleteApp (_app.Name, _manager.Id);
@@ -143,14 +144,22 @@ namespace SSA_Test
 
             role.Claims = claims;
             repository.UpdateRole (role);
+
             role = repository.GetRole (_app.Id, "test_test");
 
             Assert.IsNotNull (role.Claims);
         }
 
+        [Test()]
         public void Delete_a_role()
         {
+            Role role = repository.CreateRole (_app.Id, "test_test");
 
+            repository.DeleteRole (role);
+
+            role = repository.GetRole (_app.Id, "test_test");
+
+            Assert.IsNull (role);
         }
 
         [Test()]

@@ -12,6 +12,7 @@ namespace SSAManager
         public List<Role> Roles { get; set; }
         public List<User> Users { get; set; }
         public App App { get; set; }
+        public string[] WhiteListIps { get; set; }
         public string Name { get; set; }
         public string Title { get; set; }
     }
