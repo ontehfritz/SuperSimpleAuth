@@ -10,10 +10,11 @@ namespace SSAManager
         User[] GetAppUsers(Guid appId);
         User[] GetManagerUsers(Guid managerId);
         User[] GetUsersInRole(Role role);
+        User[] GetUsersWithClaim(Guid appId, string claim);
         User GetUser(Guid userId);
         User UpdateUser(User user);
         void DeleteUser(Guid appId, string userName);
-
+       
         Role[] GetRoles(Guid appId);
         Role GetRole(Guid appId, string name);
         Role CreateRole(Guid appId, string name);

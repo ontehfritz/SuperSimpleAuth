@@ -20,6 +20,25 @@ namespace SSAManager
         private MongoServer server;
         private MongoDatabase database;
 
+        public User[] GetUsersWithClaim(Guid appId, string claim)
+        {
+            List<User> users = new List<User> ();
+            var collection = database.GetCollection<User> ("users");
+
+            var query = Query.And(Query<User>.EQ (e => e.AppId, appId),
+                Query<User>.EQ (e => e.Claims, claim));
+
+            var usersdb = collection.Find(query)
+                .SetFields(Fields.Exclude("Secret","AuthToken"));
+
+            foreach(var user in usersdb )
+            {
+                users.Add (user);
+            }
+
+            return users.ToArray ();
+        }
+
         public User[] GetUsersInRole(Role role)
         {
             List<User> users = new List<User> ();

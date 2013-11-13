@@ -76,7 +76,6 @@ namespace SSAManager
                 model.Roles = repository.GetRoles(app.Id).ToList();
                 model.Users = repository.GetAppUsers(app.Id).ToList();
 
-
                 app.WhiteListIps = model.WhiteListIps;
 
                 if(Request.Form.Generate != null)
@@ -118,6 +117,12 @@ namespace SSAManager
                 model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
 
                 Role role = repository.GetRole(model.App.Id,(string)parameters.role);
+
+                if(Request.Form.Delete != null)
+                {
+                    repository.DeleteRole(role);
+                    return this.Response.AsRedirect(string.Format("/app/{0}",(string)parameters.name));
+                }
 
                 if(model.Claims != null)
                 {
@@ -199,6 +204,13 @@ namespace SSAManager
                 repository.CreateRole(app.Id, role.Name);
 
                 return this.Response.AsRedirect("/app/" + app.Name);
+            };
+
+            Get ["/app/{name}/claim/{cname}"] = parameters => {
+                ClaimModel model = new ClaimModel ();
+                model.AppName = (string)parameters.name;
+
+                return View["claim", model];
             };
 
             Get ["/app/{name}/claim/new"] = parameters => {

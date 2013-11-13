@@ -26,13 +26,24 @@ namespace SSA_Test
             _manager = manager;
 
             App app = repository.CreateApp ("test", _manager);
-            _app = app;
+            app.Claims = new List<string> ();
+            app.Claims.Add ("test1");
+            app.Claims.Add ("test2");
 
-            _api.CreateUser (_app.Key, "test1", "test1");
-            _api.CreateUser (_app.Key, "test2", "test2");
+            _app = repository.UpdateApp (app);
 
-           
+            SuperSimple.Auth.Api.User apiOne = _api.CreateUser (_app.Key, "test1", "test1");
+            SuperSimple.Auth.Api.User apiTwo =  _api.CreateUser (_app.Key, "test2", "test2");
 
+            User one = repository.GetUser (apiOne.Id);
+            User two = repository.GetUser (apiTwo.Id);
+            one.Claims = new List<string> ();
+            two.Claims = new List<string> ();
+            one.Claims.Add ("test1");
+            two.Claims.Add ("test2");
+
+            repository.UpdateUser(one);
+            repository.UpdateUser(two);
         }
 
         [TearDown] 
@@ -46,6 +57,8 @@ namespace SSA_Test
                 repository.DeleteManager (_manager.Id);
             }
         }
+
+
        
         [Test()]
         public void Create_manager()
@@ -102,13 +115,18 @@ namespace SSA_Test
         }
        
         [Test()]
+        public void Get_all_users_with_claim()
+        {
+            User[] users = repository.GetUsersWithClaim (_app.Id, "test1");
+            Assert.Greater(users.Length, 0);
+        }
+
+        [Test()]
         public void Get_all_users_for_application ()
         {
             User[] users = repository.GetAppUsers(_app.Id);
             Assert.Greater (users.Length,0);
         }
-
-
 
         [Test()]
         public void Create_a_role()

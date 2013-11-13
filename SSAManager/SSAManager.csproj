@@ -129,5 +129,6 @@
     <None Include="Views\home\user.cshtml" />
     <None Include="Views\logon\_logon.cshtml" />
     <None Include="Views\logon\signup.cshtml" />
+    <None Include="Views\home\claim.cshtml" />
   </ItemGroup>
 </Project>
