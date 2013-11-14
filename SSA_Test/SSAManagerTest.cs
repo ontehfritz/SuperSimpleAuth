@@ -58,8 +58,28 @@ namespace SSA_Test
             }
         }
 
+        [Test()]
+        public void Get_roles_with_claim()
+        {
+            Role role1 = repository.CreateRole (_app.Id, "test1");
+            Role role2 = repository.CreateRole (_app.Id, "test2");
 
-       
+            role1.Claims = new List<string> ();
+            role1.Claims.Add ("test1");
+
+            role1 = repository.UpdateRole (role1);
+
+            role2.Claims = new List<string> ();
+            role2.Claims.Add ("test1");
+
+            role2 = repository.UpdateRole (role2);
+
+            Role[] roles = repository.GetRolesWithClaim (_app.Id, "test1");
+
+            Assert.Greater (roles.Length, 0);
+
+        }
+
         [Test()]
         public void Create_manager()
         {

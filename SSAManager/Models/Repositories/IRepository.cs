@@ -16,6 +16,7 @@ namespace SSAManager
         void DeleteUser(Guid appId, string userName);
        
         Role[] GetRoles(Guid appId);
+        Role[] GetRolesWithClaim(Guid appId, string claim);
         Role GetRole(Guid appId, string name);
         Role CreateRole(Guid appId, string name);
         Role UpdateRole(Role role);

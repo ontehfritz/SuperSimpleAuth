@@ -208,7 +208,40 @@ namespace SSAManager
 
             Get ["/app/{name}/claim/{cname}"] = parameters => {
                 ClaimModel model = new ClaimModel ();
-                model.AppName = (string)parameters.name;
+                model.Name = (string)parameters.cname;
+                model.Title = "Claim";
+                model.Manager = (Manager)this.Context.CurrentUser;
+                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
+                model.Users = repository.GetUsersWithClaim(model.App.Id,(string)parameters.cname);
+                model.Roles = repository.GetRolesWithClaim(model.App.Id,(string)parameters.cname);
+
+                return View["claim", model];
+            };
+
+            Post ["/app/{name}/claim/{cname}"] = parameters => {
+                ClaimModel model = new ClaimModel ();
+                model.Name = (string)parameters.cname;
+                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
+
+                if (Request.Form.Delete != null) {
+                    model.App.Claims.Remove(model.Name);
+                    model.App = repository.UpdateApp(model.App);
+                    Role[] roles = repository.GetRolesWithClaim(model.App.Id, model.Name);
+
+                    foreach(Role r in roles){
+                        r.Claims.Remove(model.Name);
+                        repository.UpdateRole(r);
+                    }
+
+                    User[] users = repository.GetUsersWithClaim(model.App.Id, model.Name);
+
+                    foreach(User u in users){
+                        u.Claims.Remove(model.Name);
+                        repository.UpdateUser(u);
+                    }
+
+                    return this.Response.AsRedirect (string.Format ("/app/{0}", model.Name));
+                }
 
                 return View["claim", model];
             };
@@ -216,6 +249,7 @@ namespace SSAManager
             Get ["/app/{name}/claim/new"] = parameters => {
                 ClaimModel model = new ClaimModel ();
                 model.AppName = (string)parameters.name;
+                model.Manager = (Manager)this.Context.CurrentUser;
 
                 return View["claim_new", model];
             };

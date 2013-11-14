@@ -2,3 +2,23 @@
 @{
   Layout = "_layout.cshtml";
 }
+ 
+<h1>@Model.Name</h1>
+
+<h4>Roles:</h4>
+ <ul>
+ @foreach(SSAManager.Role role in Model.Roles){
+    <li>@role.Name</li>
+ }
+ </ul>
+ <h4>Users:</h4>
+ <ul>
+ @foreach(SSAManager.User user in Model.Users){
+    <li>@user.Username</li>
+ }
+ </ul>
+
+ <form action="/app/@Model.App.Name/claim/@Model.Name" method="post">
+    <input type="submit" name="Save" value="Save" />
+    <input type="submit" name="Delete" value="Delete" />
+ </form>

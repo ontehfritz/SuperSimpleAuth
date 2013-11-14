@@ -34,7 +34,7 @@ Claims: <a href="/app/@Model.App.Name/claim/new">new</a>
     <ul>
         @foreach(var claim in @Model.App.Claims)
         {
-            <li>@claim <a href="">X</a></li>
+            <li><a href="/app/@Model.App.Name/claim/@claim">@claim</a></li>
         }
     </ul>
     }
