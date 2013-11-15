@@ -11,7 +11,7 @@ namespace SuperSimple.Auth
 {
     public class SuperSimpleAuth
     {
-        private const string URI = "http://127.0.0.1:8082";
+        private const string URI = "http://127.0.0.1:8080";
         private Guid ApplicationKey { get; set; }
         private string Name;
 

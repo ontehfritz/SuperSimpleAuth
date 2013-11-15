@@ -59,6 +59,14 @@ namespace SSA_Test
         }
 
         [Test()]
+        public void Delete_user()
+        {
+            repository.DeleteUser (_app.Id, "test1");
+            User user = repository.GetUser(_app.Id, "test1");
+            Assert.IsNull (user);
+        }
+
+        [Test()]
         public void Get_roles_with_claim()
         {
             Role role1 = repository.CreateRole (_app.Id, "test1");
@@ -116,10 +124,16 @@ namespace SSA_Test
         }
 
         [Test()]
-        public void Get_a_user ()
+        public void Get_app_users ()
         {
             User[] users = repository.GetAppUsers(_app.Id);
-            User user = repository.GetUser(users[0].Id);
+            Assert.IsNotNull (users);
+        }
+
+        [Test()]
+        public void Get_a_user_by_name ()
+        {
+            User user = repository.GetUser(_app.Id, "test1");
             Assert.IsNotNull (user);
         }
 

@@ -221,6 +221,7 @@ namespace SSAManager
             Post ["/app/{name}/claim/{cname}"] = parameters => {
                 ClaimModel model = new ClaimModel ();
                 model.Name = (string)parameters.cname;
+                model.Manager = (Manager)this.Context.CurrentUser;
                 model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
 
                 if (Request.Form.Delete != null) {
@@ -228,19 +229,24 @@ namespace SSAManager
                     model.App = repository.UpdateApp(model.App);
                     Role[] roles = repository.GetRolesWithClaim(model.App.Id, model.Name);
 
-                    foreach(Role r in roles){
-                        r.Claims.Remove(model.Name);
-                        repository.UpdateRole(r);
+                    if(roles != null)
+                    {
+                        foreach(Role r in roles){
+                            r.Claims.Remove(model.Name);
+                            repository.UpdateRole(r);
+                        }
                     }
 
                     User[] users = repository.GetUsersWithClaim(model.App.Id, model.Name);
 
-                    foreach(User u in users){
-                        u.Claims.Remove(model.Name);
-                        repository.UpdateUser(u);
+                    if(users != null){
+                        foreach(User u in users){
+                            u.Claims.Remove(model.Name);
+                            repository.UpdateUser(u);
+                        }
                     }
 
-                    return this.Response.AsRedirect (string.Format ("/app/{0}", model.Name));
+                    return this.Response.AsRedirect (string.Format ("/app/{0}", model.App.Name));
                 }
 
                 return View["claim", model];

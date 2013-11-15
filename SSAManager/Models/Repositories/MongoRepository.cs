@@ -112,6 +112,21 @@ namespace SSAManager
             return null;
         }
 
+        public User GetUser(Guid appId, string username)
+        {
+            var collection = database.GetCollection<User> ("users");
+            var query = Query.And(Query<User>.EQ (e => e.AppId, appId),
+                Query<User>.EQ (e => e.Username, username));
+            var user = collection.Find(query)
+                .SetFields(Fields.Exclude("Secret","AuthToken"));
+
+            foreach (var u in user) {
+                return u;
+            }
+
+            return null;
+        }
+
         public User UpdateUser(User user){
             user.ModifiedAt = DateTime.Now;
 
@@ -140,14 +155,12 @@ namespace SSAManager
             var collection = database.GetCollection<User> ("users");
 
             Dictionary<string, object> query = new Dictionary<string, object> ();
-            query.Add ("_id", appId);
+            query.Add ("AppId", appId);
             query.Add ("Username", userName);
 
             collection.Remove(new QueryDocument(query));
-
         }
-
-
+       
         public App GetApp(string name, Guid managerId)
         {
             var collection = database.GetCollection<App> ("apps");
