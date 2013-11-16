@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SuperSimple.Auth
 {
-    public class User : ISsaUser
+    public class User
     {
         public Guid Id { get; set; }
         public string UserName { get; set;}
@@ -13,13 +13,15 @@ namespace SuperSimple.Auth
 
         public bool InRole(string role)
         {
-            if (Roles == null) {
+            if (Roles == null) 
+            {
                 return false;
             }
 
             foreach(string r in Roles)
             {
-                if (r == role) {
+                if (r == role) 
+                {
                     return true;
                 }
             }
@@ -29,13 +31,15 @@ namespace SuperSimple.Auth
 
         public bool HasClaim(string claim)
         {
-            if (Claims == null) {
+            if (Claims == null) 
+            {
                 return false;
             }
 
             foreach(string c in Claims)
             {
-                if (c == claim) {
+                if (c == claim) 
+                {
                     return true;
                 }
             }

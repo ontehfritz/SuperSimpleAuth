@@ -31,7 +31,8 @@ namespace SSAManager
 
             var rolesdb = collection.Find (query);
 
-            foreach(var role in rolesdb ){
+            foreach(var role in rolesdb )
+            {
                 roles.Add (role);
             }
 
@@ -105,7 +106,8 @@ namespace SSAManager
             var user = collection.Find(query)
                 .SetFields(Fields.Exclude("Secret","AuthToken"));
 
-            foreach (var u in user) {
+            foreach (var u in user) 
+            {
                 return u;
             }
 
@@ -120,14 +122,16 @@ namespace SSAManager
             var user = collection.Find(query)
                 .SetFields(Fields.Exclude("Secret","AuthToken"));
 
-            foreach (var u in user) {
+            foreach (var u in user) 
+            {
                 return u;
             }
 
             return null;
         }
 
-        public User UpdateUser(User user){
+        public User UpdateUser(User user)
+        {
             user.ModifiedAt = DateTime.Now;
 
             MongoCollection<User> users = database.GetCollection<User> ("users");
@@ -136,11 +140,13 @@ namespace SSAManager
             var u = users.Find(query);
 
             User updateUser = null;
-            foreach (User temp in u) {
+            foreach (User temp in u) 
+            {
                 updateUser = temp;
             }
 
-            if (updateUser != null) {
+            if (updateUser != null) 
+            {
                 updateUser.Roles = user.Roles;
                 updateUser.Claims = user.Claims;
          
@@ -180,7 +186,8 @@ namespace SSAManager
 
             List<App> apps = new List<App>();
 
-            foreach (App a in cursor) {
+            foreach (App a in cursor) 
+            {
                 apps.Add (a);
             }
 
@@ -196,6 +203,8 @@ namespace SSAManager
             app.ManagerId = manager.Id;
             app.ModifiedBy = manager.UserName;
             app.Key = Guid.NewGuid ();
+            //TODO: Change application salt to user salt
+            app.Salt = Guid.NewGuid ();
             app.CreatedAt = DateTime.Now;
             app.ModifiedAt = DateTime.Now;
 
@@ -213,7 +222,8 @@ namespace SSAManager
 
             BsonDocument updateApp = apps.FindOne(query);
 
-            if (updateApp != null) {
+            if (updateApp != null) 
+            {
                 updateApp ["Key"] = app.Key;
                 updateApp ["Claims"] = new BsonArray(app.Claims);
                 updateApp ["WhiteListIps"] = new BsonArray(app.WhiteListIps);
@@ -229,13 +239,15 @@ namespace SSAManager
             App app = this.GetApp (name, managerId);
             Role[] roles = this.GetRoles(app.Id);
 
-            foreach (Role r in roles) {
+            foreach (Role r in roles) 
+            {
                 this.DeleteRole (r);
             }
 
             User[] users = this.GetAppUsers (app.Id);
 
-            foreach (User u in users) {
+            foreach (User u in users) 
+            {
                 this.DeleteUser(app.Id, u.Username);
             }
 
@@ -248,6 +260,7 @@ namespace SSAManager
             var collection = database.GetCollection<Manager>("managers");
             manager.Id = Guid.NewGuid();
             collection.Insert(manager);
+
             return manager;
         }
 
@@ -289,10 +302,10 @@ namespace SSAManager
 
             var r = collection.Find(query);
 
-            foreach (Role role in r) {
+            foreach (Role role in r) 
+            {
                 return role;
             }
-
 
             return null;
         }
@@ -306,7 +319,8 @@ namespace SSAManager
 
             BsonDocument updateRole = roles.FindOne(query);
 
-            if (updateRole != null) {
+            if (updateRole != null) 
+            {
                 updateRole ["Claims"] = new BsonArray(role.Claims);
                 roles.Save(updateRole);
             }
@@ -322,7 +336,8 @@ namespace SSAManager
 
             var r = collection.Find(query);
           
-            foreach (Role role in r) {
+            foreach (Role role in r) 
+            {
                 roles.Add (role);
             }
 
@@ -346,7 +361,8 @@ namespace SSAManager
         {
             User[] users = this.GetUsersInRole (role);
 
-            foreach (User u in users) {
+            foreach (User u in users) 
+            {
                 u.RemoveRole (role);
                 this.UpdateUser (u);
             }

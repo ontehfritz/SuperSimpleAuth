@@ -21,9 +21,12 @@ namespace SuperSimple.Auth
 
             Guid key; 
 
-            if (Guid.TryParse (applicationKey, out key)) {
+            if (Guid.TryParse (applicationKey, out key)) 
+            {
                 ApplicationKey = key;
-            } else {
+            } 
+            else 
+            {
                 throw new Exception ("Application key is in an incorrect format.");
             }
         }
@@ -31,6 +34,7 @@ namespace SuperSimple.Auth
         public bool End(Guid authToken)
         {
             bool end = false;
+
             using(WebClient client = new WebClient())
             {
                 System.Collections.Specialized.NameValueCollection reqparm = 
@@ -52,7 +56,8 @@ namespace SuperSimple.Auth
                     responsebody = Encoding.UTF8.GetString(responsebytes);
 
                 }
-                catch(WebException e) {
+                catch(WebException e) 
+                {
                     HandleWebException (e);
                 }
 
@@ -65,6 +70,7 @@ namespace SuperSimple.Auth
         public User Authenticate(string username, string secret, string IP = null)
         {
             User user = null;
+
             using(WebClient client = new WebClient())
             {
                 System.Collections.Specialized.NameValueCollection reqparm = 
@@ -73,7 +79,8 @@ namespace SuperSimple.Auth
                 reqparm.Add("Username", username);
                 reqparm.Add("Secret", secret);
 
-                if (IP != null) {
+                if (IP != null) 
+                {
                     reqparm.Add ("IP", IP);
                 }
 
@@ -85,25 +92,23 @@ namespace SuperSimple.Auth
 
                 try
                 {
-                   
                     byte[] responsebytes = client.UploadValues(string.Format("{0}/authenticate", URI), 
                                                                "Post", reqparm);
 
                     responsebody = Encoding.UTF8.GetString(responsebytes);
-
                 }
-                catch(WebException e) {
+                catch(WebException e) 
+                {
                     HandleWebException (e);
                 }
                
                 user = JsonConvert.DeserializeObject<User>(responsebody);
             }
 
-
             return user;
         }
 
-        public bool Authorize(ISsaUser user, string action)
+        public bool Authorize(User user, string action)
         {
             bool isAuthorized = false;
             return isAuthorized;
@@ -122,7 +127,8 @@ namespace SuperSimple.Auth
 
                 reqparm.Add("AuthToken", authToken.ToString());
 
-                if (IP != null) {
+                if (IP != null) 
+                {
                     reqparm.Add ("IP", IP);
                 }
               
@@ -137,7 +143,8 @@ namespace SuperSimple.Auth
                     responsebody = Encoding.UTF8.GetString(responsebytes);
 
                 }
-                catch(WebException e) {
+                catch(WebException e) 
+                {
                     HandleWebException (e);
                 }
 
@@ -172,11 +179,11 @@ namespace SuperSimple.Auth
                     responsebody = Encoding.UTF8.GetString(responsebytes);
 
                 }
-                catch(WebException e) {
+                catch(WebException e) 
+                {
                     HandleWebException (e);
                 }
-
-
+              
                 user = JsonConvert.DeserializeObject<User>(responsebody);
             }
 
@@ -205,22 +212,26 @@ namespace SuperSimple.Auth
 
         private void HandleWebException(WebException exception)
         {
-            if (exception.Status != WebExceptionStatus.ProtocolError) {
+            if (exception.Status != WebExceptionStatus.ProtocolError) 
+            {
                 throw exception;
             }
 
             ErrorMessage error = new ErrorMessage();
 
-            try{
+            try
+            {
                 string response = ReadResponse (exception.Response);
                 error = 
                     JsonConvert.DeserializeObject<ErrorMessage>(response);
             }
-            catch(Exception e){
+            catch(Exception e)
+            {
                 throw exception;
             }
 
-            switch (error.Status) {
+            switch (error.Status) 
+            {
                 case "DuplicateUser":
                     throw new DuplicateUserException (error.Message);
                 case "InvalidKey":

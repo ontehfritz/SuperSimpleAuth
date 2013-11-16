@@ -19,6 +19,9 @@ namespace SSAManager
         public Guid Key { get; set; }
 
         [BsonElement]
+        public Guid Salt { get; set; }
+
+        [BsonElement]
         public Guid ManagerId { get; set; }
 
         [BsonElement]

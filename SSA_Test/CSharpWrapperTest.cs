@@ -8,9 +8,10 @@ using System.IO;
 using System.Runtime;
 using System.Collections.Generic;
 
-////////////////////////////
-// Note: you need to run: xsp4 in the SuperSimpleAuth folder before running these test
-// The wrapper needs a uri to connect that is running 
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Note: you need to run: xsp4 in the SuperSimpleAuth sub folder before running these test
+// this will run the SSA Api
 /// ////////////////////////
 
 namespace SSA_Test
@@ -18,11 +19,12 @@ namespace SSA_Test
     [TestFixture()]
     public class CSharpWrapperTest
     {
-        //string app = "test";
-        //string appKey = "900de06b-c0d3-4430-842e-b1512bf32b24";
         private SuperSimple.Auth.Api.MongoRepository _api = 
             new SuperSimple.Auth.Api.MongoRepository("mongodb://localhost");
-        SSAManager.IRepository mRepository = new SSAManager.MongoRepository ("mongodb://localhost");
+
+        private SSAManager.IRepository mRepository = 
+            new SSAManager.MongoRepository ("mongodb://localhost");
+
         private SSAManager.App _app;
         private SSAManager.Manager _manager;
         private SuperSimpleAuth ssa;
@@ -62,31 +64,33 @@ namespace SSA_Test
         [TearDown] 
         public void Dispose()
         { 
-            if (_app != null) {
+            if (_app != null) 
+            {
                 mRepository.DeleteApp (_app.Name, _manager.Id);
             }
 
-            if (_manager != null) {
+            if (_manager != null) 
+            {
                 mRepository.DeleteManager (_manager.Id);
             }
         }
 
         [Test()]
-        public void TestCreateUser ()
+        public void Create_a_user ()
         {
             User user = ssa.CreateUser("test_api_wrapper", "test1");
             Assert.AreEqual ("test_api_wrapper", user.UserName);
         }
 
         [Test()]
-        public void TestAuthenticate ()
+        public void Authenticate ()
         {
             User user = ssa.Authenticate("test1", "test1");
             Assert.AreEqual ("test1", user.UserName);
         }
 
         [Test()]
-        public void TestFailedAuthenticate ()
+        public void Authenticate_failed ()
         {
             AuthenticationFailedException fail = null;
 
@@ -97,7 +101,8 @@ namespace SSA_Test
                 user = ssa.Authenticate("test", "test");
                 Assert.IsNull(user);
             }
-            catch(AuthenticationFailedException e) {
+            catch(AuthenticationFailedException e) 
+            {
                
                 fail = e;
             }
@@ -106,17 +111,16 @@ namespace SSA_Test
         }
 
         [Test()]
-        public void TestValidate ()
+        public void Validate ()
         {
-            User user = ssa.Authenticate("tester", "test");
+            User user = ssa.Authenticate("test1", "test1");
             User validUser = ssa.Validate (user.AuthToken);
             Assert.IsNotNull (validUser);
         }
 
         [Test()]
-        public void TestValidateFailed ()
+        public void Validate_failed ()
         {
-           
             InvalidTokenException fail = null;
 
             try
@@ -133,9 +137,9 @@ namespace SSA_Test
         }
 
         [Test()]
-        public void TestEnd ()
+        public void End ()
         {
-            User user = ssa.Authenticate("tester", "test");
+            User user = ssa.Authenticate("test1", "test1");
             bool end = ssa.End (user.AuthToken);
 
             Assert.AreEqual (true, end);

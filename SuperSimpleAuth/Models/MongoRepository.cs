@@ -3,6 +3,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Bson;
 using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography;
 
 namespace SuperSimple.Auth.Api
 {
@@ -20,7 +21,6 @@ namespace SuperSimple.Auth.Api
             server = client.GetServer();
             database = server.GetDatabase("SsAuthDb");
         }
-
 
         public bool End(Guid appKey, Guid authToken)
         {
@@ -60,9 +60,10 @@ namespace SuperSimple.Auth.Api
             var app = appCollection.FindOne (appQuery);
 
             var collection = database.GetCollection<User> ("users");
+            //TODO: Change application salt to user salt
             var query = Query.And(Query<User>.EQ (e => e.Username, username),
-                                  Query<User>.EQ(e => e.Secret, secret),
-                                  Query<User>.EQ(e => e.AppId, app["_id"].AsGuid));
+                        Query<User>.EQ(e => e.Secret, this.Hash(app["Salt"].AsGuid.ToString(), secret)),
+                        Query<User>.EQ(e => e.AppId, app["_id"].AsGuid));
 
             user = collection.FindOne (query);
 
@@ -110,7 +111,8 @@ namespace SuperSimple.Auth.Api
             var app = appCollection.FindOne (query);
             User user = new User ();
             user.Username = username;
-            user.Secret = password;
+            //TODO: Change application salt to user salt
+            user.Secret = this.Hash(app["Salt"].AsGuid.ToString(), password);
             user.AppId = app["_id"].AsGuid;
             user.CreatedAt = DateTime.Now;
             user.Enabled = true;
@@ -171,6 +173,15 @@ namespace SuperSimple.Auth.Api
           
             return false;
         }
+
+        public string Hash(string Salt, string Password) 
+        {
+            Rfc2898DeriveBytes Hasher = new Rfc2898DeriveBytes(Password,
+                System.Text.Encoding.Default.GetBytes(Salt), 10000);
+
+            return Convert.ToBase64String(Hasher.GetBytes(25));
+        }
+
     }
 }
 

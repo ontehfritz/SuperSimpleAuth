@@ -50,11 +50,13 @@ namespace SSA_Test
         [TearDown] 
         public void Dispose()
         { 
-            if (_app != null) {
+            if (_app != null) 
+            {
                 mRepository.DeleteApp (_app.Name, _manager.Id);
             }
 
-            if (_manager != null) {
+            if (_manager != null) 
+            {
                 mRepository.DeleteManager (_manager.Id);
             }
         }
