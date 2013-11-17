@@ -11,8 +11,11 @@ using System.Collections.Generic;
 
 ///////////////////////////////////////////////////////////////////////////////////////
 // Note: you need to run: xsp4 in the SuperSimpleAuth sub folder before running these test
-// this will run the SSA Api
-/// ////////////////////////
+// this will run the SSA Api Command: 
+// xsp4 --port 8082
+// ssl: xsp4 --https --port 4433 --p12file hostname.p12 --pkpwd password
+// see: http://www.mono-project.com/UsingClientCertificatesWithXSP 
+/// ///////////////////////// ////////////////////////////////////////////////////////
 
 namespace SSA_Test
 {
@@ -58,7 +61,7 @@ namespace SSA_Test
 
             mRepository.UpdateUser(one);
             mRepository.UpdateUser(two);
-            ssa = new SuperSimpleAuth (_app.Name, _app.Key.ToString());
+            ssa = new SuperSimpleAuth (_app.Name, _app.Key.ToString(), "http://127.0.0.1:8082");
         }
 
         [TearDown] 

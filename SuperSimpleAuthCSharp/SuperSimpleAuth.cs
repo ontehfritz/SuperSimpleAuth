@@ -11,13 +11,15 @@ namespace SuperSimple.Auth
 {
     public class SuperSimpleAuth
     {
-        private const string URI = "http://127.0.0.1:8080";
+        private string URI;
         private Guid ApplicationKey { get; set; }
         private string Name;
 
-        public SuperSimpleAuth (string name, string applicationKey)
+        public SuperSimpleAuth (string name, 
+            string applicationKey, string uri = "http://api.supersimpleauth.com")
         {
             this.Name = name;
+            this.URI = uri;
 
             Guid key; 
 
@@ -49,6 +51,7 @@ namespace SuperSimple.Auth
 
                 try
                 {
+                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
                     byte[] responsebytes = 
                         client.UploadValues(string.Format("{0}/end",URI), 
                                             "Post", reqparm);
@@ -92,6 +95,7 @@ namespace SuperSimple.Auth
 
                 try
                 {
+                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
                     byte[] responsebytes = client.UploadValues(string.Format("{0}/authenticate", URI), 
                                                                "Post", reqparm);
 
@@ -136,6 +140,7 @@ namespace SuperSimple.Auth
 
                 try
                 {
+                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
                     byte[] responsebytes = 
                         client.UploadValues(string.Format("{0}/validate", URI), 
                                                                "Post", reqparm);
@@ -173,6 +178,7 @@ namespace SuperSimple.Auth
 
                 try
                 {
+                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
                     byte[] responsebytes = client.UploadValues(string.Format("{0}/user",URI), 
                                                            "Post", reqparm);
                    
