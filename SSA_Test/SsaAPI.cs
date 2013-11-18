@@ -33,8 +33,8 @@ namespace SSA_Test
 
             _app = mRepository.UpdateApp (app);
 
-            User apiOne = repository.CreateUser (_app.Key, "test1", "test1");
-            User apiTwo = repository.CreateUser (_app.Key, "test2", "test2");
+            User apiOne = repository.CreateUser (_app.Key, "test1", "test1", "test1@test1.com");
+            User apiTwo = repository.CreateUser (_app.Key, "test2", "test2", "test2@test2.com");
 
             SSAManager.User one = mRepository.GetUser (apiOne.Id);
             SSAManager.User two = mRepository.GetUser (apiTwo.Id);
@@ -61,12 +61,28 @@ namespace SSA_Test
             }
         }
 
+
+        [Test()]
+        public void Does_username_exist()
+        {
+            bool exist = repository.UsernameExists (_app.Key, "test1");
+            Assert.IsTrue (exist);
+        }
+
+        [Test()]
+        public void Does_email_exist()
+        {
+            bool exist = repository.EmailExists (_app.Key, "test1@test1.com");
+            Assert.IsTrue (exist);
+        }
+
+
         [Test()]
         public void Create_a_user ()
         {
             User user = 
                 repository.CreateUser (_app.Key,
-                                   "testuser_api", "test");
+                    "testuser_api", "test", "testuser_api@test.com");
 
             Assert.IsNotNull (user);
         }
@@ -76,7 +92,7 @@ namespace SSA_Test
         {
             User user = 
                 repository.CreateUser (_app.Key,
-                    "testuser_api", "test");
+                    "testuser_api", "test", "testuser_api@test.com");
 
             user = repository.Authenticate(_app.Key,"testuser_api","test");
             DateTime before = user.ModifiedAt;
@@ -100,7 +116,7 @@ namespace SSA_Test
         {
             User user = 
                 repository.CreateUser (_app.Key,
-                    "testuser_api", "test");
+                    "testuser_api", "test", "testuser_api@test.com");
 
             user = repository.Authenticate (_app.Key, "testuser_api", "test");
 
@@ -120,7 +136,7 @@ namespace SSA_Test
         {
             User user = 
                 repository.CreateUser (_app.Key,
-                    "testuser_api", "test");
+                    "testuser_api", "test", "testuser_api@test.com");
 
             user = repository.Authenticate (_app.Key, "testuser_api", "test");
             user = repository.Validate (user.AuthToken, _app.Key);
@@ -141,7 +157,7 @@ namespace SSA_Test
         {
             User user = 
                 repository.CreateUser (_app.Key,
-                    "testuser_api", "test");
+                    "testuser_api", "test", "testuser_api@test.com");
 
             user = repository.Authenticate (_app.Key, "testuser_api", "test");
             bool done = repository.End (_app.Key, user.AuthToken);

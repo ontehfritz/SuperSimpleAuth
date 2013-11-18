@@ -395,7 +395,8 @@ namespace SSAManager
         {
             var keys = new IndexKeysBuilder();
 
-            keys.Ascending("Username","AppId");
+            keys.Ascending("Username", "AppId");
+           
 
             var options = new IndexOptionsBuilder();
             options.SetSparse(true);

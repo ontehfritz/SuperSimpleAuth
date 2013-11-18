@@ -13,6 +13,8 @@ namespace SSAManager
         [BsonElement]
         public string Username { get; set; }
         [BsonElement]
+        public string Email { get; set;}
+        [BsonElement]
         public string Secret { get; set; }
         [BsonElement]
         public Guid AuthToken { get; set; }

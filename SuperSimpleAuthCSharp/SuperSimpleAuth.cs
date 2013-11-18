@@ -33,6 +33,10 @@ namespace SuperSimple.Auth
             }
         }
 
+        /// <summary>
+        /// End the specified authToken.
+        /// </summary>
+        /// <param name="authToken">Auth token.</param>
         public bool End(Guid authToken)
         {
             bool end = false;
@@ -159,7 +163,7 @@ namespace SuperSimple.Auth
             return user;
         }
 
-        public User CreateUser(string userName, string secret)
+        public User CreateUser(string userName, string secret, string email = null)
         {
             User user = null;
 
@@ -171,6 +175,11 @@ namespace SuperSimple.Auth
                 reqparm.Add("Username", userName);
                 reqparm.Add("Secret", secret);
 
+                if (email != null) 
+                {
+                    reqparm.Add("Email", email);
+                }
+
                 client.Headers["ssa_app_key"] = this.ApplicationKey.ToString();
                 client.Headers["ssa_app"] = this.Name;
 
@@ -180,7 +189,7 @@ namespace SuperSimple.Auth
                 {
                     ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
                     byte[] responsebytes = client.UploadValues(string.Format("{0}/user",URI), 
-                                                           "Post", reqparm);
+                        "Post", reqparm);
                    
                     responsebody = Encoding.UTF8.GetString(responsebytes);
 

@@ -13,6 +13,8 @@ namespace SuperSimple.Auth.Api
         [BsonElement]
 		public string Username { get; set;}
         [BsonElement]
+        public string Email { get; set;}
+        [BsonElement]
         public string Secret { get; set;}
         [BsonElement]
         public bool Enabled { get; set; }

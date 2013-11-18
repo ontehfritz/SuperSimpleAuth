@@ -1,8 +1,100 @@
-
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 <html>
     <head>
-        <title></title>
+        <title>Super Simple Auth (SSA) API - v0.1 Alpha</title>
     </head>
     <body>
+    <h1>Super Simple Auth (SSA) API</h1>
+    <p>
+    To use this api you must sign up for an account at: <a href="http://www.supersimpleauth.com">www.supersimpleauth.com</a>
+    and create an application. Once the application is created you will be given a App Key. The application name and App key
+    must be provided in the header of the request:
+    </p>
+    <pre>
+    ssa_app_key: XXXX-XXXX-XXXX-XXXX
+    ssa_app:     app_name
+    </pre>
+    <p>
+    All request to SSA should be done over https. If not your App Key can be compromised and your application will not be secure, 
+    please keep your App Key private. 
+    </p>
+    <h3>User</h3>
+    Description:
+    <p>
+    This is the definition of <b>user</b> used for authorization and authentication.
+    </p>
+
+    <pre>
+    Id          Guid        system identification,
+    Username    string      this is the email of the user, must use and email for username
+    Email       string      this is optional, but is used for account recovery
+    AuthToken   Guid        the users current authentication token,
+    Claims      string[]    an array of simple claims
+    Roles       string[]    an array of roles the user belongs to
+    </pre>
+
+    <h3>ErrorMessage</h3>
+    Description:
+    <p>Errors occured while making an api request will be in the following format.</p>
+    <pre>
+    Status          string       error type,
+    Message         string       details of the error
+    </pre>
+
+    <h1>API Methods </h1>
+    <h3>Create a user:</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/user
+    Provide request parameters:
+    "Username"  This is the username to create
+    "Secret"    The password for the user
+    </pre>
+
+    <p>
+    This method creates a user for the application. 
+    Application name and App Key need to be passed in the request header. 
+    <b>Important:</b> Always use https: when using SSA
+    </p>
+
+    <h3>Authenticate a user</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/authenticate
+    Provide request parameters:
+    "Username"  This is the username to authenticate
+    "Secret"    The password for the user
+    "IP"        Optional, but is important for logging
+    </pre>
+
+    <p>
+    This method will authenticate a user, if successful it will return a user with a AuthKey value. 
+    If a user cannot be authenticated an ErrorMessage will be returned. 
+
+    Application name and App Key need to be passed in the request header. 
+    <b>Important:</b> Always use https: when using SSA
+    </p>
+
+    <h3>Validate a user</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/validate
+    Provide request parameters:
+    "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user
+    "IP"        Optional, but is important for logging
+    </pre>
+
+    <p>
+    This method will validate a user, this can be done per request. Most web frameworks provide an event to be executed 
+    before a request this is a good place to validate the AuthKey. If validated it will return an user with an authkey if not it 
+    will return an error message. 
+
+    If a user cannot be authenticated an ErrorMessage will be returned. 
+
+    Application name and App Key need to be passed in the request header. 
+    <b>Important:</b> Always use https: when using SSA
+    </p>
+
+
+
+
+
     </body>
 </html>

@@ -20,13 +20,14 @@ namespace SuperSimple.Auth.Api
             this.repository = repository;
 
             Get ["/"] = parameters => {
-                return "index";
+                return View["index"];
             };
 
-            Post ["/"] = parameters => {
-                return "index";
-            };
-
+            /// <summary>
+            /// End the user's session and erase auth token.
+            /// After this is called the user must logon again
+            /// </summary>
+            /// <param name="authToken">Auth token.</param>
             Post ["/end"] = parameters => {
                 ErrorMessage error = Helper.VerifyRequest(Request,repository);
 
@@ -79,6 +80,7 @@ namespace SuperSimple.Auth.Api
                 var u = new { 
                     Id = user.Id,
                     Username = user.Username, 
+                    Email = user.Email,
                     AuthToken = user.AuthToken,
                     Claims = user.GetClaims(),
                     Roles = user.GetRoles()
@@ -123,6 +125,7 @@ namespace SuperSimple.Auth.Api
                 var u = new { 
                     Id = user.Id,
                     Username = user.Username, 
+                    Email = user.Email,
                     AuthToken = user.AuthToken,
                     Claims = user.GetClaims(),
                     Roles = user.GetRoles()
@@ -154,9 +157,21 @@ namespace SuperSimple.Auth.Api
 
                 try
                 {
+                    if(repository.EmailExists(appKey, Request.Form["Email"]))
+                    {
+                        ErrorMessage message = new ErrorMessage{
+                            Status = "DuplicateUser",
+                            Message =  "Email is already being used for this application."
+                        };
+
+                        return Response.AsJson(message,
+                            Nancy.HttpStatusCode.UnprocessableEntity);
+                    }
+
                     user = repository.CreateUser (appKey, 
-                                                  Request.Form["Username"],
-                                                  Request.Form["Secret"]);
+                        Request.Form["Username"],
+                        Request.Form["Secret"],
+                        Request.Form["Email"]);
                 }
                 catch(Exception e)
                 {
@@ -172,6 +187,7 @@ namespace SuperSimple.Auth.Api
                 var u = new { 
                     Id = user.Id,
                     Username = user.Username, 
+                    Email = user.Email,
                     AuthToken = user.AuthToken,
                     Claims = user.GetClaims(),
                     Roles = user.GetRoles()

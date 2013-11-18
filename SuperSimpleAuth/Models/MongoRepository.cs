@@ -22,6 +22,50 @@ namespace SuperSimple.Auth.Api
             database = server.GetDatabase("SsAuthDb");
         }
 
+        public bool UsernameExists (Guid appKey, string username)
+        {
+            User user = null;
+
+            var appCollection = database.GetCollection<RawBsonDocument> ("apps");
+            var appQuery = Query.And(Query.EQ ("Key", appKey));
+            var app = appCollection.FindOne (appQuery);
+
+            var collection = database.GetCollection<User> ("users");
+            var query = Query.And(Query<User>.EQ (e => e.Username, username),
+                Query<User>.EQ(e => e.AppId, app["_id"].AsGuid));
+
+            user = collection.FindOne (query);
+
+            if (user != null) 
+            {
+                return true;
+            }
+          
+            return false;
+        }
+
+        public bool EmailExists (Guid appKey, string email)
+        {
+            User user = null;
+
+            var appCollection = database.GetCollection<RawBsonDocument> ("apps");
+            var appQuery = Query.And(Query.EQ ("Key", appKey));
+            var app = appCollection.FindOne (appQuery);
+
+            var collection = database.GetCollection<User> ("users");
+            var query = Query.And(Query<User>.EQ (e => e.Email, email),
+                Query<User>.EQ(e => e.AppId, app["_id"].AsGuid));
+
+            user = collection.FindOne (query);
+
+            if (user != null) 
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public bool End(Guid appKey, Guid authToken)
         {
             User user = null;
@@ -104,13 +148,14 @@ namespace SuperSimple.Auth.Api
         }
 
         public User CreateUser (Guid appKey, string username, 
-                                string password)
+            string password, string email = null)
         {
             var appCollection = database.GetCollection<RawBsonDocument> ("apps");
             var query = Query.And(Query.EQ ("Key", appKey));
             var app = appCollection.FindOne (query);
             User user = new User ();
             user.Username = username;
+            user.Email = email;
             //TODO: Change application salt to user salt
             user.Secret = this.Hash(app["Salt"].AsGuid.ToString(), password);
             user.AppId = app["_id"].AsGuid;
