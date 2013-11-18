@@ -83,18 +83,52 @@
 
     <p>
     This method will validate a user, this can be done per request. Most web frameworks provide an event to be executed 
-    before a request this is a good place to validate the AuthKey. If validated it will return an user with an authkey if not it 
-    will return an error message. 
+    before a request this is a good place to call validate with the AuthKey of the user. If validated it will return a
+    user with an authkey if not it will return an error message. 
 
     If a user cannot be authenticated an ErrorMessage will be returned. 
 
     Application name and App Key need to be passed in the request header. 
+
     <b>Important:</b> Always use https: when using SSA
     </p>
 
+    <h3>Validate a user</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/validate
+    Provide request parameters:
+    "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user.
+    "IP"        Optional, but is important for logging.
+    </pre>
 
+    <p>
+    This method will validate a user, this can be done per request. Most web frameworks provide an event to be executed 
+    before a request this is a good place to call validate with the AuthKey of the user. If validated it will return a
+    user with an authkey if not it will return an error message. 
 
+    If a user cannot be authenticated an ErrorMessage will be returned. 
 
+    Application name and App Key need to be passed in the request header. 
 
+    <b>Important:</b> Always use https: when using SSA
+    </p>
+
+    <h3>End a session</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/end
+    Provide request parameters:
+    "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user.
+    "IP"        Optional, but is important for logging.
+    </pre>
+
+    <p>
+    This method will end a users session, it will return a boolean value, true if successfully ended and false if cannot. 
+    If this is successful the user will have to be authenticated again to recieve a valid AuthToken. I could place to call this 
+    method is in the logout process. 
+
+    Application name and App Key need to be passed in the request header. 
+
+    <b>Important:</b> Always use https: when using SSA
+    </p>
     </body>
 </html>

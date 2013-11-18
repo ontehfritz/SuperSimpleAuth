@@ -157,7 +157,9 @@ namespace SuperSimple.Auth.Api
 
                 try
                 {
-                    if(repository.EmailExists(appKey, Request.Form["Email"]))
+                    if(Request.Form["Email"] != null && 
+                        Request.Form["Email"] != "" &&
+                       repository.EmailExists(appKey, Request.Form["Email"]))
                     {
                         ErrorMessage message = new ErrorMessage{
                             Status = "DuplicateUser",

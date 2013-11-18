@@ -78,10 +78,33 @@ namespace SSA_Test
             }
         }
 
+
+        [Test()]
+        public void Check_for_duplicate_email ()
+        {
+            User user1 = ssa.CreateUser("test_api_wrapper", "test1",
+                "test_api_wrapper@test.com");
+
+            User user2 = null;
+
+            try
+            {
+               user2 = ssa.CreateUser("test_api_wrapper1", "test1",
+                "test_api_wrapper@test.com");
+            }
+            catch(Exception e) {
+                Console.WriteLine (e.Message);
+            }
+
+            Assert.IsNull (user2);
+        }
+
+
         [Test()]
         public void Create_a_user ()
         {
-            User user = ssa.CreateUser("test_api_wrapper", "test1");
+            User user = ssa.CreateUser("test_api_wrapper", "test1"/*,
+                "test_api_wrapper@test.com"*/);
             Assert.AreEqual ("test_api_wrapper", user.UserName);
         }
 
