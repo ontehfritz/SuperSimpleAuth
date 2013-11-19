@@ -14,7 +14,7 @@ namespace SSAManager
             this.repository = repository;
 
             Get ["/"] = parameters => {
-                LogonModel model = new LogonModel();
+                SignupModel model = new SignupModel();
    
                 if(this.Context.CurrentUser.IsAuthenticated())
                 {

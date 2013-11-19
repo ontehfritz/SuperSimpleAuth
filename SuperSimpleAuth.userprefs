@@ -1,22 +1,38 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SSA_Test/CSharpWrapperTest.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SSANancyExample/Views/index.cshtml">
     <Files>
-      <File FileName="SSA_Test/SsaAPI.cs" Line="1" Column="14" />
-      <File FileName="SSAManager/Models/App.cs" Line="22" Column="38" />
-      <File FileName="SSAManager/Models/Repositories/MongoRepository.cs" Line="35" Column="13" />
-      <File FileName="SuperSimpleAuth/Models/MongoRepository.cs" Line="114" Column="57" />
-      <File FileName="SSA_Test/CSharpWrapperTest.cs" Line="105" Column="13" />
+      <File FileName="SSA_Test/SsaAPI.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Models/App.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Models/Repositories/MongoRepository.cs" Line="1" Column="1" />
+      <File FileName="SuperSimpleAuth/Models/MongoRepository.cs" Line="1" Column="1" />
+      <File FileName="SSA_Test/CSharpWrapperTest.cs" Line="12" Column="15" />
+      <File FileName="SuperSimpleAuth/Modules/IndexModule.cs" Line="1" Column="1" />
+      <File FileName="SuperSimpleAuthCSharp/SuperSimpleAuth.cs" Line="1" Column="1" />
+      <File FileName="SuperSimpleAuth/Views/index.cshtml" Line="22" Column="17" />
+      <File FileName="SSANancyExample/Views/index.cshtml" Line="18" Column="25" />
+      <File FileName="SSAManager/Bootstrapper.cs" Line="1" Column="1" />
+      <File FileName="SuperSimpleAuth/Bootstrapper.cs" Line="1" Column="1" />
+      <File FileName="SuperSimpleAuth/Models/User.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Models/User.cs" Line="1" Column="1" />
+      <File FileName="SuperSimpleAuthCSharp/User.cs" Line="1" Column="1" />
+      <File FileName="SuperSimpleAuth/Models/IRepository.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Models/Repositories/IRepository.cs" Line="1" Column="1" />
+      <File FileName="SuperSimpleAuth/Models/Role.cs" Line="1" Column="1" />
+      <File FileName="SuperSimpleAuth/Models/ErrorMessage.cs" Line="1" Column="1" />
+      <File FileName="SSANancyExample/Bootstrapper.cs" Line="1" Column="1" />
+      <File FileName="SSANancyExample/Models/NancyUser.cs" Line="1" Column="1" />
+      <File FileName="SuperSimpleAuth/Helper/Helper.cs" Line="1" Column="1" />
+      <File FileName="SSANancyExample/Views/logon/logon.cshtml" Line="7" Column="42" />
+      <File FileName="SSANancyExample/Views/logon/signup.cshtml" Line="8" Column="21" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True">
+        <State expanded="True" selected="True">
           <Node name="SSA_Test" expanded="True">
             <Node name="SSA_Test" expanded="True">
               <Node name="CSharpWrapperTest" expanded="True" />
-              <Node name="SsaAPI" expanded="True">
-                <Node name="Validate_user" selected="True" />
-              </Node>
+              <Node name="SsaAPI" expanded="True" />
               <Node name="SSAManagerTest" expanded="True" />
             </Node>
           </Node>
