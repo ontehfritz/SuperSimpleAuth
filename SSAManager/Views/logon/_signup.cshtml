@@ -12,21 +12,12 @@
 }
 </ul>
 }
-<form action="/signup" method="post">
-<div>
-    <label for="Email">Email</label>
-    <input type="text" name="Email" />
-</div>
-<div>
-    <label for="Secret">Password</label>
-    <input type="password" name="Secret" />
-</div>
-<div>
-    <label for="ConfirmSecret">Confirm Password</label>
-    <input type="password" name="ConfirmSecret" />
-</div>
-<div>
-    <input type="submit" name="Signup" value="Signup" />
-</div>
+<div style="width: 300px;">
+<form class="form-signin" action="/signup" method="post">
+        <input type="text" name="Email" class="form-control" placeholder="Email address" required autofocus />
+        <input type="password" name="Secret" class="form-control" placeholder="Password" required />
+        <input type="password"  name="ConfirmSecret" class="form-control" placeholder="Confirm Password" required />
+        <button class="btn btn-lg btn-primary btn-block" name="Signup" type="submit">Sign Up</button>
 </form>
+</div>
     

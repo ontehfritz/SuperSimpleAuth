@@ -2,48 +2,25 @@ body
 {
     background-color:#0ffffff;
     background-image:url('../images/bg.jpg');
+    height: 100%;
     text-shadow: 0px 1px 1px #A4A4A4;
 }
 
-#logon {
-    width: 800px ;
-    margin-left: auto ;
-    margin-right: auto ;
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -60px;
+  /* Pad bottom by footer height */
+  padding: 0 0 60px;
 }
 
-#header
-{
-    background-color:#000000;
-    width:95%;
-    color:white;
-    box-shadow: 10px 10px 5px #888888;
-    border-bottom: groove 4px white;
-    padding:5px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#content
-{
-    background-color: #ffffff;
-    box-shadow: 10px 10px 5px #888888;
-    padding:10px;
-    width:95%;
-    height:80%;
-    margin-top:20px;
-    margin-bottom:20px;
-    margin-left: auto ;
-    margin-right: auto ;
-    border: solid 1px black;
-}
-
-#footer
-{
-    background-color:#000000;
-    width:95%;
-    color:white;box-shadow: 10px 10px 5px #888888;
-    border-top: groove 4px white;
-    padding:5px;
-    margin-left: auto ;
-    margin-right: auto ;
+/* Set the fixed height of the footer here */
+#footer {
+  height: 60px;
+  background-color: #000000;
+  color:black;
+  box-shadow: 10px 10px 5px #888888;
+  border-top: groove 4px black;
 }

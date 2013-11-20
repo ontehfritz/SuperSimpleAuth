@@ -127,9 +127,9 @@
     <None Include="Views\home\role.cshtml" />
     <None Include="Views\home\role_new.cshtml" />
     <None Include="Views\home\user.cshtml" />
-    <None Include="Views\logon\_logon.cshtml" />
     <None Include="Views\home\claim.cshtml" />
     <None Include="Views\logon\_signup.cshtml" />
     <None Include="Views\_signup.cshtml" />
+    <None Include="Views\logon\logon.cshtml" />
   </ItemGroup>
 </Project>

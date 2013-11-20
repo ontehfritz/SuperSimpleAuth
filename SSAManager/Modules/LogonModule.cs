@@ -29,12 +29,12 @@ namespace SSAManager
 
                 if(manager == null)
                 {
-                    return View["index", model];
+                    return View["logon", model];
                 }
   
                 if (manager != null && manager.Secret != model.Secret)
                 {
-                    return View["index", model];
+                    return View["logon", model];
                 }
 
                 return this.LoginAndRedirect(manager.Id, fallbackRedirectUrl: "/home");
