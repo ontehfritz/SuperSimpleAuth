@@ -1,45 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Views/home/manage.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SuperSimpleAuth/Models/ErrorMessage.cs">
     <Files>
-      <File FileName="SSA_Test/SsaAPI.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/App.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/Repositories/MongoRepository.cs" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuth/Models/MongoRepository.cs" Line="1" Column="1" />
-      <File FileName="SSA_Test/CSharpWrapperTest.cs" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuth/Modules/IndexModule.cs" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuthCSharp/SuperSimpleAuth.cs" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuth/Views/index.cshtml" Line="1" Column="1" />
-      <File FileName="SSANancyExample/Views/index.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Bootstrapper.cs" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuth/Bootstrapper.cs" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuth/Models/User.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/User.cs" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuthCSharp/User.cs" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuth/Models/IRepository.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/Repositories/IRepository.cs" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuth/Models/Role.cs" Line="1" Column="1" />
       <File FileName="SuperSimpleAuth/Models/ErrorMessage.cs" Line="1" Column="1" />
-      <File FileName="SSANancyExample/Bootstrapper.cs" Line="1" Column="1" />
-      <File FileName="SSANancyExample/Models/NancyUser.cs" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuth/Helper/Helper.cs" Line="1" Column="1" />
-      <File FileName="SSANancyExample/Views/logon/logon.cshtml" Line="1" Column="1" />
-      <File FileName="SSANancyExample/Views/logon/signup.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/_logon.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/logon/_signup.cshtml" Line="20" Column="102" />
-      <File FileName="SSAManager/Views/logon/logon.cshtml" Line="12" Column="38" />
-      <File FileName="SSAManager/Views/index.cshtml" Line="16" Column="14" />
-      <File FileName="SSAManager/Views/_layout.cshtml" Line="53" Column="116" />
-      <File FileName="SSAManager/Content/css/ss.css" Line="24" Column="37" />
-      <File FileName="SSAManager/Modules/HomeModule.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Modules/IndexModule.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/Views/SignupModel.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/Views/LogonModel.cs" Line="8" Column="44" />
-      <File FileName="SSAManager/Views/_signup.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Modules/LogonModule.cs" Line="37" Column="39" />
-      <File FileName="SSAManager/Views/home/app.cshtml" Line="4" Column="2" />
-      <File FileName="SSAManager/Views/home/user.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/home/manage.cshtml" Line="6" Column="107" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

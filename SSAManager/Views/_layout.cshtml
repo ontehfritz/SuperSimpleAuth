@@ -1,7 +1,7 @@
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 <html>
     <head>
-        <title>SSA Alpha v0.1 - Manage Applications</title>
+        <title>SuperSimpleAuth - Manage Applications</title>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
 
@@ -15,16 +15,10 @@
     <!-- Wrap all page content here -->
     <div id="wrap">
       <!-- Fixed navbar -->
-      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">SSA v0.1alpha</a>
+            <a class="navbar-brand" href="/home"><b>[SuperSimpleAuth]</b></a>
           </div>
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -56,13 +50,17 @@
     </div>
 
     <div id="footer">
-      <div class="container">
+      <div style="float:left;margin-left:20px;">
         <p class="text-muted credit">
         <a href="https://github.com/fritzcoder/SuperSimpleAuth">
         GitHub</a> | <a href="https://github.com/fritzcoder/SuperSimpleAuth">Wiki</a> |
         <a href="">Docs</a>
         </p>
       </div>
+      <div style="float:right;margin-right:20px;">
+        <pre class="pull-right">version: 0.1 alpha</pre>
+      </div>
+      <br style="clear:both;" / >
     </div>
 
 

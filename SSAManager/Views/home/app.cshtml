@@ -2,53 +2,90 @@
 @{
   Layout = "_layout.cshtml";
 }
-   
-<h1>@Model.App.Name</h1>
-<!-- <p>@Model.App.Id</p> -->
+
+<h1>Application: @Model.App.Name</h1>
 <form action="/app/@Model.App.Name" method="post">
-    <label for="Key">Key:</label><pre>@Model.App.Key</pre><input type="submit" name="Generate" value="Generate" 
-    onclick="return confirm('All applications using this key will need the new key assigned. Are you sure you want to generate a new key for this app?');" />
-    <br /><br /><hr />
-    <label for="WhiteListIps">Allowed Server IPs:</label>
-    <input type="text" name="WhiteListIps" style="width:400px;" value="@Helpers.Values(@Model.App.WhiteListIps)" />
-    <input type="submit" name="Update" value="update" />
+<div>
+    <div style="float:left;">
+        <label for="Key">Key:</label><pre>@Model.App.Key</pre><input class="btn btn-danger" type="submit" name="Generate" value="Generate" 
+        onclick="return confirm('All applications using this key will need the new key assigned. Are you sure you want to generate a new key for this app?');" />
+    </div>
+    <div style="float:left;margin-left:20px;">
+        <p><label for="WhiteListIps">Allowed Server IPs:</label></p>
+        <p><input type="text" name="WhiteListIps" style="width:400px;" 
+        value="@Helpers.Values(@Model.App.WhiteListIps)" placeholder="Comma seprated list of allowable ips"/></p>
+        <p><input class="btn btn-success" type="submit" name="Update" value="update" /></p>
+    </div>
+    <div style="float:left;margin-left:20px;">
+    <p><label>Application Actions:</label></p>
+    <input type="submit" name="Disable" class="btn btn-warning" value="Disable" 
+    onclick="return confirm('Are you sure you want to disable this application? Applications using this key will be down!');"/>
+    <input type="submit" name="Delete" class="btn btn-danger" value="Delete" 
+    onclick="return confirm('Are you sure you want to delete this application? This will disable all applications using this key!');"/>
+    </div>
+    <br style="clear:both;" />
+</div>
 </form>
-<br />
-Roles: <a href="/app/@Model.App.Name/role/new">new</a>
+<hr />
 <div>
-    @if(@Model.Roles != null)
-    {
-    <ul>
-        @foreach(var role in @Model.Roles)
-        {
-            <li><a href="/app/@Model.App.Name/role/@role.Name">@role.Name</a></li>
-        }
-    </ul>
-    }
-</div>
-Claims: <a href="/app/@Model.App.Name/claim/new">new</a>
+    <div style="float:left;width:400px;">
+        Roles: <a href="/app/@Model.App.Name/role/new">
+            <span class="glyphicon glyphicon-plus-sign"></span> New</a>
+        <div>
+            @if(@Model.Roles != null && @Model.Roles.Count > 0)
+            {
+                int index = 0;
+                foreach(var role in @Model.Roles)
+                {
+                    if(index > 0){<span>,</span>}
+                    <a href="/app/@Model.App.Name/role/@role.Name">@role.Name</a>
+                    ++index;
+                }
+            }
+            else
+            {
+                <p>No roles for this application</p>
+            }
+        </div>
+    </div>
+    <div style="float:left;margin-left:20px;width:400px;">
+        Claims: <a href="/app/@Model.App.Name/claim/new"><span class="glyphicon glyphicon-plus-sign"></span> New</a>
 
-<div>
-    @if(@Model.App.Claims != null)
-    {
-    <ul>
-        @foreach(var claim in @Model.App.Claims)
-        {
-            <li><a href="/app/@Model.App.Name/claim/@claim">@claim</a></li>
-        }
-    </ul>
-    }
+        <div>
+            @if(@Model.App.Claims != null && @Model.App.Claims.Count > 0)
+            {
+                int index = 0;
+                foreach(var claim in @Model.App.Claims)
+                {
+                    if(index > 0){<span>,</span>}
+                    <a href="/app/@Model.App.Name/claim/@claim">@claim</a>
+                    ++index;
+                }
+            }
+            else
+            {
+                <p>No claims for this application</p>
+            }
+        </div>
+    </div>
+    <br style="clear:both;"/>
 </div>
-
+<hr />
 <div>
     Users: 
-    @if(@Model.Users != null)
+    @if(@Model.Users != null && @Model.Users.Count > 0)
     {
-    <ul>
-        @foreach(var user in @Model.Users)
+        int index = 0;
+        foreach(var user in @Model.Users)
         {
-            <li><a href="/app/@Model.App.Name/user/@user.Id">@user.Username</a></li>
+            if(index > 0){<span>,</span>}
+            <a href="/app/@Model.App.Name/user/@user.Id">@user.Username</a>
+            ++index;
         }
-    </ul>
+       
+    }
+    else
+    {
+        <p>No users have registered yet</p>
     }
 </div>

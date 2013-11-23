@@ -7,11 +7,12 @@
     <p>@Model.Message</p>
 </div>
 
-<div style="width: 300px;">
-<form class="form-signin" action="/logon" method="post">
-    <input type="text" name="Username" class="form-control" placeholder="Email address" required autofocus />
-    <input type="password" name="Secret" class="form-control" placeholder="Password" required />
-    <button class="btn btn-lg btn-primary btn-block" name="Logon" type="submit">Sign In</button>
-</form>
+<div style="width: 325px;margin-left: auto;margin-right: auto ;">
+    <form class="form-signin" action="/logon" method="post">
+        <input type="text" name="Username" class="form-control" placeholder="Email address" required autofocus />
+        <input type="password" name="Secret" class="form-control" placeholder="Password" required />
+        <button class="btn btn-lg btn-primary btn-block" name="Logon" type="submit">Sign In</button>
+    </form>
+    <a href="/">Sign up for an account</a> | <a href="~/forgot">Forgot your password?</a>
 </div>
-<a href="~/signup">Sign up</a> <a href="~/forgot">Forgot password</a>
+<br />

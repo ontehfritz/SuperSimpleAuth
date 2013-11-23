@@ -2,50 +2,74 @@
 @{
   Layout = "_layout.cshtml";
 }
+<h1>Role: @Model.Role.Name <small>Application: <a href="/app/@Model.App.Name/">@Model.App.Name</a></small></h1>
 
-<h4><a href="/app/@Model.App.Name/">@Model.App.Name</a></h4>
-Role: @Model.Role.Name
-<hr />
-Claims
-<hr />
 <form action="/app/@Model.App.Name/role/@Model.Role.Name" method="post">
-<input id="Claims" type="hidden" name="Claims" value="@Helpers.Values(@Model.Claims)" /><br />
-@if(@Model.App.Claims != null)
-{
-    foreach(string claim in @Model.App.Claims)
+<div>
+    <input id="Claims" type="hidden" name="Claims" value="@Helpers.Values(@Model.Claims)" />
+    Claims:
+    <p>
+    @if(@Model.App.Claims != null)
     {
-        if(@Model.Role.HasClaim(claim))
+        int index = 0;
+
+        foreach(string claim in @Model.App.Claims)
         {
-            <input type="checkbox" name="claim" value="@claim" checked />@claim<br />
+            if(index > 0){<span>,</span>}
+            if(@Model.Role.HasClaim(claim))
+            {
+                <input type="checkbox" name="claim" value="@claim" checked /> @claim
+            }
+            else
+            {
+                <input type="checkbox" name="claim" value="@claim" /> @claim
+            }
+            ++index;
         }
-        else
-        {
-            <input type="checkbox" name="claim" value="@claim" />@claim<br />
-        }
+       
     }
-}
+    else
+    {
+        <span>
+        There are no claims available to assign to this role. Claims can be created in the application screen:
+        <a href="/app/@Model.App.Name/">@Model.App.Name</a>. Once created they will be available to assign them 
+        to this role. 
+        </span>
+       
+    }
+    </p>
+</div>
 <hr />
 Users
-<hr />
+
 <input id="RoleUsers" type="hidden" name="RoleUsers" value="@Helpers.Values(@Model.RoleUsers)" />
-<input id="uRoleUsers" type="hidden" name="uRoleUsers"  /><br />
-@if(@Model.Users != null)
+<input id="uRoleUsers" type="hidden" name="uRoleUsers"  />
+@if(@Model.Users != null && @Model.Users.Count > 0)
 {
+    int index = 0;
     foreach(User user in @Model.Users)
     {
+        if(index > 0){<span>,</span>}
         if(user.InRole(Model.Role.Name))
         {
-            <input type="checkbox" name="user" value="@user.Id" checked />@user.Username<br />
+            <input type="checkbox" name="user" value="@user.Id" checked /> @user.Username
         }
         else
         {
-            <input type="checkbox" name="user" value="@user.Id" />@user.Username<br />
+            <input type="checkbox" name="user" value="@user.Id" /> @user.Username
         }
+        ++index;
     }
 }
+else
+{
+    <p>No users have registered for this application yet.</p>
+}
 <hr />
-<input type="submit" name="Save" value="Save" />
-<input type="submit" name="Delete" value="Delete" onclick="return confirm('Are you sure you want to delete this role?');"/>
+<input type="submit" name="Save" class="btn btn-success" value="Save" />
+<a class="btn" href="/app/@Model.App.Name/">Cancel</a>
+<input type="submit" name="Delete" class="pull-right btn btn-danger" value="Delete" 
+    onclick="return confirm('Are you sure you want to delete this role?');"/>
 </form>
 
 <script>
