@@ -1,8 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SuperSimpleAuth/Models/ErrorMessage.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Bootstrapper.cs">
     <Files>
-      <File FileName="SuperSimpleAuth/Models/ErrorMessage.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/home/role.cshtml" Line="74" Column="1" />
+      <File FileName="SSAManager/Views/home/app.cshtml" Line="5" Column="3" />
+      <File FileName="SSAManager/Views/_signup.cshtml" Line="17" Column="27" />
+      <File FileName="SSAManager/Views/_logon.cshtml" Line="9" Column="23" />
+      <File FileName="SSAManager/Views/_layout.cshtml" Line="21" Column="48" />
+      <File FileName="SSAManager/Views/index.cshtml" Line="17" Column="62" />
+      <File FileName="SSAManager/Views/logon/logon.cshtml" Line="10" Column="23" />
+      <File FileName="SSAManager/Bootstrapper.cs" Line="43" Column="39" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -2,15 +2,25 @@
 @{
   Layout = "_layout.cshtml";
 }
- 
-<h1>@Model.Name</h1>
 
+<h1>Claim: @Model.Name <small>Application: <a href="/app/@Model.App.Name/">@Model.App.Name</a></small></h1>
 <h4>Roles:</h4>
- <ul>
- @foreach(SSAManager.Role role in Model.Roles){
-    <li>@role.Name</li>
- }
- </ul>
+
+@if(@Model.Roles != null && @Model.Roles.Length > 0)
+{
+    int index = 0;
+    foreach(SSAManager.Role role in Model.Roles)
+    {
+        if(index > 0){<span>,</span>}
+        <a href="/app/@Model.App.Name/role/@role.Name">@role.Name</a>
+        ++index;
+    }
+}
+else
+{
+    <p>No roles are using this claim</p>
+}
+
  <h4>Users:</h4>
  <ul>
  @foreach(SSAManager.User user in Model.Users){
@@ -19,6 +29,7 @@
  </ul>
 
  <form action="/app/@Model.App.Name/claim/@Model.Name" method="post">
-    <input type="submit" name="Save" value="Save" />
-    <input type="submit" name="Delete" value="Delete" />
+    <!-- <input class="btn btn-success" type="submit" name="Save" value="Save" /> -->
+    <a class="btn" href="/app/@Model.App.Name/">Cancel</a>
+    <input class="pull-right btn btn-danger" type="submit" name="Delete" value="Delete" />
  </form>

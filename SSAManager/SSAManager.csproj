@@ -112,6 +112,7 @@
     <Compile Include="Models\Repositories\MongoRepository.cs" />
     <Compile Include="Models\Views\SignupModel.cs" />
     <Compile Include="Models\Views\ClaimModel.cs" />
+    <Compile Include="Models\Views\CreateRoleModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\.DS_Store" />

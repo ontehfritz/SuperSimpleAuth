@@ -10,7 +10,6 @@ namespace SSAManager
         public Manager Manager { get; set; }
         public string Title { get; set; }
         public string Name { get; set; }
-        public string AppName { get; set; }
         public App App { get; set; }
         public User[] Users { get; set; }
         public Role[] Roles { get; set; }

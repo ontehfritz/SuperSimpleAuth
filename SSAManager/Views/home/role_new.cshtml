@@ -1,11 +1,12 @@
-@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.Role>
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.CreateRoleModel>
 @{
   Layout = "_layout.cshtml";
 }   
-<h1>Create a Role</h1>
+<h4>Create a role in application <a href="~/app/@Model.App.Name">@Model.App.Name</a>:</h4>
 
 @if(@Model.Errors != null)
 {
+<div class="alert alert-danger">
     <ul>
     @foreach(var e in @Model.Errors){
         <li>
@@ -15,10 +16,14 @@
         </li>
     }
     </ul>
+</div>
 }
 
-<form action="/app/@Model.AppName/role/new" method="post">
-    <label for="Name">Name:</label>
-    <input type="text" name="Name" />
-    <input type="submit" name="Create" value="Create" />
+<form action="~/app/@Model.App.Name/role/new" method="post">
+    <p>
+        <label for="Name">Name:</label>
+        <input type="text" name="Name" required autofocus />
+    </p>
+    <input type="submit" class="btn btn-success" name="Create" value="Create" />
+    <a class="btn" href="~/app/@Model.App.Name">Cancel</a>
 </form>

@@ -2,7 +2,7 @@
 @{
   Layout = "_layout.cshtml";
 }   
-<h1>Create a Claim</h1>
+<h4>Create a claim in application <a href="~/app/@Model.App.Name">@Model.App.Name</a>:</h4>
 <p>
 Claims (or actions), can be used to determine what can be perfomed by a user or role. 
 Examples: "Read", "Write"
@@ -10,6 +10,7 @@ Examples: "Read", "Write"
 
 @if(@Model.Errors != null)
 {
+<div class="alert alert-danger">
     <ul>
     @foreach(var e in @Model.Errors){
         <li>
@@ -19,11 +20,15 @@ Examples: "Read", "Write"
         </li>
     }
     </ul>
+</div>
 }
-
-<form action="/app/@Model.AppName/claim/new" method="post">
-    <label for="Name">Name:</label>
-    <input type="text" name="Name" />
-    <input type="submit" name="Create" value="Create" />
+<form action="/app/@Model.App.Name/claim/new" method="post">
+    <div>
+        <label for="Name">Name:</label>
+        <input type="text" name="Name" required autofocus />
+    </div>
+    <br />
+    <input class="btn btn-success" type="submit" name="Create" value="Create" />
+    <a class="btn" href="/app/@Model.App.Name">Cancel</a>
 </form>
     

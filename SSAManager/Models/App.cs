@@ -39,6 +39,8 @@ namespace SSAManager
         [BsonElement]
         public string ModifiedBy { get; set; } 
 
+        [BsonElement]
+        public List<Role> Roles { get; set; }
 
         public User[] GetUsers()
         {

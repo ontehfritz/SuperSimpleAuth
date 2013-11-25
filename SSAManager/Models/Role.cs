@@ -16,12 +16,7 @@ namespace SSAManager
         public Guid AppId { get; set; }
         [BsonElement]
         public List<string> Claims { get; set; }
-        [BsonIgnore]
-        public string AppName { get; set; }
-        [BsonIgnore]
-        public Manager Manager { get; set; }
-        [BsonIgnore]
-        public IEnumerable<ModelValidationError> Errors { get; set; }
+
 
         public bool HasClaim(string claim)
         {
@@ -37,14 +32,6 @@ namespace SSAManager
             }
 
             return false;
-        }
-    }
-
-    public class RoleValidator : AbstractValidator<Role>
-    {
-        public RoleValidator()
-        {
-            RuleFor(role => role.Name).NotEmpty();
         }
     }
 }
