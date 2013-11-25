@@ -200,6 +200,7 @@ namespace SSAManager
             App app = new App ();
             app.Id = Guid.NewGuid ();
             app.Name = name;
+            app.Enabled = true;
             app.ManagerId = manager.Id;
             app.ModifiedBy = manager.UserName;
             app.Key = Guid.NewGuid ();
@@ -227,6 +228,7 @@ namespace SSAManager
                 updateApp ["Key"] = app.Key;
                 updateApp ["Claims"] = new BsonArray(app.Claims);
                 updateApp ["WhiteListIps"] = new BsonArray(app.WhiteListIps);
+                updateApp ["Enabled"] = app.Enabled;
              
                 apps.Save(updateApp);
             }

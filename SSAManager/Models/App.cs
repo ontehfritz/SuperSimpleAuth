@@ -31,6 +31,9 @@ namespace SSAManager
         public List<string> Claims { get; set; }
 
         [BsonElement]
+        public bool Enabled { get; set; }
+
+        [BsonElement]
         public DateTime CreatedAt { get; set; }
 
         [BsonElement]
@@ -38,9 +41,6 @@ namespace SSAManager
 
         [BsonElement]
         public string ModifiedBy { get; set; } 
-
-        [BsonElement]
-        public List<Role> Roles { get; set; }
 
         public User[] GetUsers()
         {

@@ -22,14 +22,24 @@ else
 }
 
  <h4>Users:</h4>
- <ul>
- @foreach(SSAManager.User user in Model.Users){
-    <li>@user.Username</li>
- }
- </ul>
+@if(@Model.Users != null && @Model.Users.Length > 0)
+{
+    int index = 0;
+    foreach(SSAManager.User user in Model.Users)
+    {
+        if(index > 0){<span>,</span>}
+        <a href="/app/@Model.App.Name/user/@user.Id">@user.Username</a>
+        ++index;
+    }
+}
+else
+{
+    <p>No users have registered for this app yet.</p>
+}
+
 
  <form action="/app/@Model.App.Name/claim/@Model.Name" method="post">
     <!-- <input class="btn btn-success" type="submit" name="Save" value="Save" /> -->
-    <a class="btn" href="/app/@Model.App.Name/">Cancel</a>
+    <a class="btn btn-default" href="/app/@Model.App.Name/">Cancel</a>
     <input class="pull-right btn btn-danger" type="submit" name="Delete" value="Delete" />
  </form>

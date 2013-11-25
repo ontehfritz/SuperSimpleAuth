@@ -83,6 +83,13 @@ namespace SSAManager
                     app.Key = Guid.NewGuid();
                 }
 
+                if(Request.Form.Delete != null)
+                {
+                    repository.DeleteApp(app.Name,model.Manager.Id);
+                    return this.Response.AsRedirect ("/");
+                }
+
+
                 model.App = repository.UpdateApp(app);
 
                 return View["app", model];
@@ -116,23 +123,18 @@ namespace SSAManager
                 model.Manager = (Manager)this.Context.CurrentUser;
                 model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
 
-                Role role = repository.GetRole(model.App.Id,(string)parameters.role);
+                model.Role = repository.GetRole(model.App.Id,(string)parameters.role);
 
                 if(Request.Form.Delete != null)
                 {
-                    repository.DeleteRole(role);
+                    repository.DeleteRole(model.Role);
                     return this.Response.AsRedirect(string.Format("/app/{0}",(string)parameters.name));
                 }
 
-                if(model.Claims != null)
-                {
-                    role.Claims = model.Claims.ToList();
-                    model.Role = repository.UpdateRole(role);
-                }
-                else
-                {
-                    model.Role = role; 
-                }
+
+                model.Role.Claims = model.Claims == null ? new List<string>() : model.Claims.ToList();
+                model.Role = repository.UpdateRole(model.Role);
+
 
                 User user = null;
 
@@ -141,14 +143,14 @@ namespace SSAManager
                     foreach(string u in model.RoleUsers){
                         user = repository.GetUser(Guid.Parse(u));
 
-                        if(!user.InRole(role.Name))
+                        if(!user.InRole(model.Role.Name))
                         {
                             if(user.Roles == null)
                             {
                                 user.Roles = new List<Role>();
                             }
 
-                            user.AddRole(role);
+                            user.AddRole(model.Role);
                             repository.UpdateUser(user);
                         }
                     }
@@ -159,7 +161,7 @@ namespace SSAManager
                     foreach(string u in model.uRoleUsers){
                         user = repository.GetUser(Guid.Parse(u));
 
-                        if(user.InRole(role.Name))
+                        if(user.InRole(model.Role.Name))
                         {
                             if(user.Roles == null)
                             {

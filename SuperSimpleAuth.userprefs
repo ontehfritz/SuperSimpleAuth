@@ -1,25 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Views/home/claim.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Views/home/manage.cshtml">
     <Files>
-      <File FileName="SSAManager/Views/home/claim.cshtml" Line="9" Column="48" />
-      <File FileName="SSAManager/Views/_layout.cshtml" Line="5" Column="77" />
+      <File FileName="SSAManager/Views/home/claim.cshtml" Line="37" Column="50" />
+      <File FileName="SSAManager/Views/_layout.cshtml" Line="1" Column="1" />
       <File FileName="SSAManager/Views/home/role.cshtml" Line="9" Column="36" />
-      <File FileName="SSAManager/Views/home/app.cshtml" Line="36" Column="14" />
+      <File FileName="SSAManager/Views/home/app.cshtml" Line="10" Column="1" />
+      <File FileName="SSAManager/Modules/HomeModule.cs" Line="89" Column="57" />
+      <File FileName="SSAManager/Views/home/claim_new.cshtml" Line="32" Column="30" />
+      <File FileName="SSAManager/Views/home/role_new.cshtml" Line="28" Column="30" />
+      <File FileName="SSAManager/Models/App.cs" Line="33" Column="22" />
+      <File FileName="SSAManager/Models/Repositories/MongoRepository.cs" Line="202" Column="29" />
+      <File FileName="SSAManager/Views/home/manage.cshtml" Line="27" Column="42" />
     </Files>
-    <Pads>
-      <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True">
-          <Node name="SSA_Test" expanded="True">
-            <Node name="SSA_Test" expanded="True">
-              <Node name="SSAManagerTest" expanded="True">
-                <Node name="Create_manager" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
