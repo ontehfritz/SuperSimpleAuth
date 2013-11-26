@@ -13,7 +13,7 @@ namespace SSAManager
         public App App { get; set; }
         public User[] Users { get; set; }
         public Role[] Roles { get; set; }
-        public IEnumerable<ModelValidationError> Errors { get; set; }
+        public List<Error> Errors { get; set; }
     }
 
     public class ClaimModelValidator : AbstractValidator<ClaimModel>

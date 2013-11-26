@@ -4,19 +4,15 @@
 }   
 <h4>Create a role in application <a href="~/app/@Model.App.Name">@Model.App.Name</a>:</h4>
 
-@if(@Model.Errors != null)
+@if(@Model.Errors != null && @Model.Errors.Count > 0)
 {
-<div class="alert alert-danger">
     <ul>
     @foreach(var e in @Model.Errors){
         <li>
-        @foreach(var member in e.MemberNames){
-            @e.GetMessage(member);
-        }
+        @e.Message
         </li>
     }
     </ul>
-</div>
 }
 
 <form action="~/app/@Model.App.Name/role/new" method="post">

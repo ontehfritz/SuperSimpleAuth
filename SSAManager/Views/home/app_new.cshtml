@@ -2,23 +2,24 @@
 @{
   Layout = "_layout.cshtml";
 }
-<h1>Create an App</h1>
+<h4>Create a new application</h4>
 
-@if(@Model.Errors != null)
+@if(@Model.Errors != null && @Model.Errors.Count > 0)
 {
     <ul>
     @foreach(var e in @Model.Errors){
         <li>
-        @foreach(var member in e.MemberNames){
-            @e.GetMessage(member);
-        }
+        @e.Message
         </li>
     }
     </ul>
 }
 
 <form action="/app/new" method="post">
-    <label for="Name">Name:</label>
-    <input type="text" name="Name" />
-    <input type="submit" name="Create" value="Create" />
+    <p>
+        <label for="Name">Name:</label>
+        <input type="text" name="Name" required autofocus />
+    </p>
+    <input type="submit" class="btn btn-success" name="Create" value="Create" />
+    <a class="btn btn-default" href="~/home">Cancel</a>
 </form>

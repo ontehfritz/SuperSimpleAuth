@@ -8,15 +8,14 @@ using System.Linq;
 using System.Collections.Specialized;
 using System.Web.Security;
 using System.Security.Cryptography.X509Certificates;
+using System;
+using Nancy;
+using Nancy.Authentication.Forms;
+using Nancy.Responses.Negotiation;
+using Nancy.Security;
 
 namespace SSAManager
 {
-    using System;
-    using Nancy;
-    using Nancy.Authentication.Forms;
-    using Nancy.Responses.Negotiation;
-    using Nancy.Security;
-
     public class HomeModule : NancyModule
     {
         IRepository repository; 
@@ -47,14 +46,27 @@ namespace SSAManager
                 AppModel model = this.Bind<AppModel>();
                 model.Manager = (Manager)this.Context.CurrentUser;
                 var result = this.Validate(model);
-                model.Errors = result.Errors;
-
+                
                 if (!result.IsValid)
                 {
+                    model.Errors = Helpers.GetValidationErrors(result);
                     return View["app_new", model];
                 }
-        
-                repository.CreateApp(model.Name, model.Manager);
+
+      		    try
+      		    {
+                    repository.CreateApp(model.Name, model.Manager);
+      		    }
+      			catch(MongoDB.Driver.WriteConcernException e)
+      		    {
+                    Error error = new Error();
+                    error.Name = "Duplicate";
+                    error.Message = "Cannot create application, name already exists.";
+                    model.Errors = new List<Error>();
+                    model.Errors.Add(error);
+
+      			    return View["app_new", model];
+      		    }
 
                 return this.Response.AsRedirect("/home");
             };
@@ -89,6 +101,15 @@ namespace SSAManager
                     return this.Response.AsRedirect ("/");
                 }
 
+                if(Request.Form.Disable != null)
+                {
+                    app.Enabled = false;
+                }
+
+                if(Request.Form.Enable != null)
+                {
+                    app.Enabled = true;
+                }
 
                 model.App = repository.UpdateApp(app);
 
@@ -192,16 +213,28 @@ namespace SSAManager
                 model.Manager  = (Manager)this.Context.CurrentUser;
                 model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
 
-
                 var result = this.Validate(model);
-                model.Errors = result.Errors;
+
 
                 if (!result.IsValid)
                 {
+                    model.Errors = Helpers.GetValidationErrors(result);
                     return View["role_new", model];
                 }
 
-                repository.CreateRole(model.App.Id, model.Name);
+                try
+                {
+                    repository.CreateRole(model.App.Id, model.Name);
+                }
+                catch(Exception e)
+                {
+                    model.Errors = new List<Error>();
+                    Error error = new Error();
+                    error.Name = e.ToString();
+                    error.Message = e.Message;
+                    model.Errors.Add(error);
+                    return View["role_new", model];
+                }
 
                 return this.Response.AsRedirect("/app/" + model.App.Name);
             };
@@ -266,13 +299,12 @@ namespace SSAManager
                 model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
 
                 var result = this.Validate(model);
-                model.Errors = result.Errors;
-
+                
                 if (!result.IsValid)
                 {
+                    model.Errors = Helpers.GetValidationErrors(result);
                     return View["claim_new", model];
                 }
-
 
                 App update = repository.GetApp(model.App.Name, model.Manager.Id);
                 List<string> claims = new List<string>(); 
@@ -282,9 +314,35 @@ namespace SSAManager
                     claims = new List<string>(update.Claims);
                 }
 
+
+                if(claims.Contains(model.Name))
+                {
+                    Error error = new Error();
+                    error.Name = "Duplicate";
+                    error.Message = "Claim already exists.";
+
+                    model.Errors = new List<Error>();
+                    model.Errors.Add(error);
+
+                    return View["claim_new", model];
+                }
+
                 claims.Add(model.Name);
                 update.Claims = claims.ToList();
-                repository.UpdateApp(update);
+
+                try
+                {
+                    repository.UpdateApp(update);
+                }
+                catch(Exception e)
+                {
+                    model.Errors = new List<Error>();
+                    Error error = new Error();
+                    error.Name = e.ToString();
+                    error.Message = e.Message;
+                    model.Errors.Add(error);
+                    return View["claim_new", model];
+                }
 
                 return this.Response.AsRedirect("/app/" + model.App.Name);
             };
@@ -343,9 +401,7 @@ namespace SSAManager
                 }
 
                 return View["user", model];
-
             };
-
         }
     }
 }

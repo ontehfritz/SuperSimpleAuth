@@ -41,11 +41,7 @@ namespace SSAManager
             };
 
             Get["/logoff"] = parameters => {
-                return this.LogoutAndRedirect("/");
-            };
-
-            Post["/logoff"] = parameters => {
-                return "logoff";
+                return this.LogoutAndRedirect("/logon");
             };
 
             Get ["/signup"] = parameters => {
@@ -54,7 +50,6 @@ namespace SSAManager
             };
 
             Post ["/signup"] = parameters => {
-
                 SignupModel signup = this.Bind<SignupModel>();
                 var result = this.Validate(signup);
                 signup.Errors = result.Errors;
@@ -71,7 +66,20 @@ namespace SSAManager
 
                 newManager = repository.CreateManager(newManager);
 
-                return this.Response.AsRedirect("/");
+                return this.Response.AsRedirect("/logon");
+            };
+
+            Get ["/settings"] = parameters => {
+                SettingsModel model = new SettingsModel();
+                model.Manager = (Manager)this.Context.CurrentUser;
+                return View["settings", model];
+            };
+
+            Post ["/settings"] = parameters => {
+                SettingsModel model = new SettingsModel();
+                model.Manager = (Manager)this.Context.CurrentUser;
+
+                return View["settings", model];
             };
         }
     }

@@ -113,6 +113,8 @@
     <Compile Include="Models\Views\SignupModel.cs" />
     <Compile Include="Models\Views\ClaimModel.cs" />
     <Compile Include="Models\Views\CreateRoleModel.cs" />
+    <Compile Include="Models\Error.cs" />
+    <Compile Include="Models\Views\SettingsModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\.DS_Store" />
@@ -132,5 +134,6 @@
     <None Include="Views\logon\_signup.cshtml" />
     <None Include="Views\_signup.cshtml" />
     <None Include="Views\logon\logon.cshtml" />
+    <None Include="Views\logon\settings.cshtml" />
   </ItemGroup>
 </Project>

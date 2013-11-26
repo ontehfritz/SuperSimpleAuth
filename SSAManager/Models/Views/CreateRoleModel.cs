@@ -11,7 +11,7 @@ namespace SSAManager
         public App App { get; set; }
         public Manager Manager { get; set; }
         public string Name { get; set; }
-        public IEnumerable<ModelValidationError> Errors { get; set; }
+        public List<Error> Errors { get; set; }
 
         public class RoleValidator : AbstractValidator<CreateRoleModel>
         {

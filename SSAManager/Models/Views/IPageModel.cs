@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace SSAManager
 {
@@ -6,6 +7,7 @@ namespace SSAManager
     {
         Manager Manager { get; set; }
         string Title { get; set; }
+        List<Error> Errors { get; set; }
     }
 }
 

@@ -1,9 +1,13 @@
-body
-{
-    background-color:#ffffff;
-    background-image:url('../images/bg.jpg');
-    height: 100%;
-    text-shadow: 0px 1px 1px #A4A4A4;
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+  background-color:#ffffff;
+  background-image:url('../images/bg.jpg');
+  height: 100%;
+  text-shadow: 0px 1px 1px #A4A4A4;
+  /* The html and body elements cannot have any padding or margin. */
 }
 
 /* Wrapper for page content to push down footer */
@@ -20,7 +24,25 @@ body
 #footer {
   height: 60px;
   background-color: #000000;
-  color:black;
-  box-shadow: 10px 10px 5px #888888;
-  border-top: groove 4px black;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+#wrap > .container {
+  padding: 10px;
+}
+.container .credit {
+  margin: 20px 0;
+}
+
+#footer > .container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+code {
+  font-size: 80%;
 }
