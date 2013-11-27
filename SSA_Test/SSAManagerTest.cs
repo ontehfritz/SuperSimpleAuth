@@ -59,6 +59,14 @@ namespace SSA_Test
         }
 
         [Test()]
+        public void Change_password()
+        {
+            repository.ChangeEmail (_manager.Id, "test", "manager@test.com");
+            Manager manager = repository.GetManager(_manager.Id);
+            Assert.AreEqual ("manager@test.com", manager.UserName);
+        }
+
+        [Test()]
         public void Delete_user()
         {
             repository.DeleteUser (_app.Id, "test1");

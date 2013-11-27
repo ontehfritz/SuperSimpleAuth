@@ -76,10 +76,30 @@ namespace SSAManager
             };
 
             Post ["/settings"] = parameters => {
-                SettingsModel model = new SettingsModel();
+                SettingsModel model = this.Bind<SettingsModel>();
                 model.Manager = (Manager)this.Context.CurrentUser;
 
-                return View["settings", model];
+                if(Request.Form.ChangeEmail != null)
+                {
+                    repository.ChangeEmail(model.Manager.Id,
+                        model.Password, model.Email);
+
+                    model.Manager.UserName = "test";
+                }
+
+                if(Request.Form.ChangePassword)
+                {
+
+                }
+
+                if(Request.Form.Delete)
+                {
+
+                }
+
+                //model.Manager = (Manager)this.Context.CurrentUser;
+
+                return this.Response.AsRedirect("/settings");
             };
         }
     }

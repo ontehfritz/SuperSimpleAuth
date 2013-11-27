@@ -121,7 +121,6 @@
     <None Include="Content\images\.DS_Store" />
     <None Include="Content\javascript\jquery-2.0.3.min.map" />
     <None Include="Views\_layout.cshtml" />
-    <None Include="Views\_logon.cshtml" />
     <None Include="Views\index.cshtml" />
     <None Include="Views\home\app.cshtml" />
     <None Include="Views\home\app_new.cshtml" />

@@ -2,23 +2,23 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Modules/LogonModule.cs">
     <Files>
-      <File FileName="SSAManager/Models/Helpers.cs" Line="40" Column="13" />
-      <File FileName="SSAManager/Modules/HomeModule.cs" Line="257" Column="67" />
-      <File FileName="SSAManager/Views/home/app_new.cshtml" Line="16" Column="2" />
-      <File FileName="SSAManager/Models/Views/CreateRoleModel.cs" Line="14" Column="27" />
-      <File FileName="SSAManager/Views/home/role_new.cshtml" Line="16" Column="2" />
+      <File FileName="SSAManager/Models/Helpers.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Modules/HomeModule.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/home/app_new.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Models/Views/CreateRoleModel.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/home/role_new.cshtml" Line="1" Column="1" />
       <File FileName="SSAManager/Views/home/claim.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/home/claim_new.cshtml" Line="21" Column="5" />
-      <File FileName="SSAManager/Models/App.cs" Line="51" Column="10" />
+      <File FileName="SSAManager/Views/home/claim_new.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Models/App.cs" Line="1" Column="1" />
       <File FileName="SSAManager/Models/Repositories/MongoRepository.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/home/app.cshtml" Line="28" Column="83" />
+      <File FileName="SSAManager/Views/home/app.cshtml" Line="1" Column="1" />
       <File FileName="SSAManager/Modules/LogonModule.cs" Line="81" Column="17" />
-      <File FileName="SSAManager/Views/_layout.cshtml" Line="37" Column="35" />
-      <File FileName="SSAManager/Views/logon/settings.cshtml" Line="6" Column="3" />
-      <File FileName="SSAManager/Views/logon/logon.cshtml" Line="4" Column="2" />
-      <File FileName="SSAManager/Views/logon/_signup.cshtml" Line="20" Column="5" />
-      <File FileName="SSAManager/Views/_signup.cshtml" Line="23" Column="5" />
-      <File FileName="SSAManager/Models/Views/SettingsModel.cs" Line="16" Column="2" />
+      <File FileName="SSAManager/Views/_layout.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/logon/settings.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/logon/logon.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/logon/_signup.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/_signup.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Models/Views/SettingsModel.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

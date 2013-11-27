@@ -20,6 +20,20 @@ namespace SSAManager
         private MongoServer server;
         private MongoDatabase database;
 
+        public void ChangeEmail(Guid id, string password, string email)
+        {
+            MongoCollection<BsonDocument> managers = database.GetCollection<BsonDocument> ("managers");
+            var query = Query.EQ ("_id", id);
+
+            BsonDocument manager = managers.FindOne(query);
+
+            if(manager["Secret"].AsString == password)
+            {
+                manager["UserName"] = email;
+                manager["IP"] = "test";
+                managers.Save (manager);
+            }
+        }
 
         public Role[] GetRolesWithClaim(Guid appId, string claim)
         {

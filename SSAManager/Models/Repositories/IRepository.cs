@@ -33,6 +33,7 @@ namespace SSAManager
         Manager GetManager(string userName);
         Manager CreateManager(Manager manager);
         Manager UpdateManager(Manager manager);
+        void ChangeEmail(Guid id, string secret, string email);
         void DeleteManager(Guid id);
     }
 }
