@@ -8,7 +8,7 @@ namespace SSAManager
     public class CreateRoleModel
     {
 
-        public App App { get; set; }
+        public Domain Domain { get; set; }
         public Manager Manager { get; set; }
         public string Name { get; set; }
         public List<Error> Errors { get; set; }

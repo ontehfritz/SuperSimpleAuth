@@ -20,6 +20,33 @@ namespace SSAManager
         private MongoServer server;
         private MongoDatabase database;
 
+
+        public void ChangePassword(Guid id, string password, string newPassword, string confirmPassword)
+        {
+
+            MongoCollection<BsonDocument> managers = database.GetCollection<BsonDocument> ("managers");
+            var query = Query.EQ ("_id", id);
+
+            BsonDocument manager = managers.FindOne(query);
+
+            if(manager["Secret"].AsString == password)
+            {
+                if(newPassword == confirmPassword)
+                {
+                    manager["Secret"] = newPassword;
+                    managers.Save (manager);
+                }
+                else
+                {
+                    throw(new Exception ("The new password does not match confirmation password."));
+                }
+            }
+            else
+            {
+                throw(new Exception ("Password not valid."));
+            }
+        }
+
         public void ChangeEmail(Guid id, string password, string email)
         {
             MongoCollection<BsonDocument> managers = database.GetCollection<BsonDocument> ("managers");
@@ -30,17 +57,20 @@ namespace SSAManager
             if(manager["Secret"].AsString == password)
             {
                 manager["UserName"] = email;
-                manager["IP"] = "test";
                 managers.Save (manager);
+            }
+            else
+            {
+                throw(new Exception ("Password not valid."));
             }
         }
 
-        public Role[] GetRolesWithClaim(Guid appId, string claim)
+        public Role[] GetRolesWithClaim(Guid domainId, string claim)
         {
             List<Role> roles = new List<Role> ();
             var collection = database.GetCollection<Role> ("roles");
 
-            var query = Query.And(Query<Role>.EQ (e => e.AppId, appId),
+            var query = Query.And(Query<Role>.EQ (e => e.DomainId, domainId),
                 Query<Role>.EQ (e => e.Claims, claim));
 
             var rolesdb = collection.Find (query);
@@ -53,12 +83,12 @@ namespace SSAManager
             return roles.ToArray ();
         }
 
-        public User[] GetUsersWithClaim(Guid appId, string claim)
+        public User[] GetUsersWithClaim(Guid domainId, string claim)
         {
             List<User> users = new List<User> ();
             var collection = database.GetCollection<User> ("users");
 
-            var query = Query.And(Query<User>.EQ (e => e.AppId, appId),
+            var query = Query.And(Query<User>.EQ (e => e.DomainId, domainId),
                 Query<User>.EQ (e => e.Claims, claim));
 
             var usersdb = collection.Find(query)
@@ -76,7 +106,7 @@ namespace SSAManager
         {
             List<User> users = new List<User> ();
             var collection = database.GetCollection<User> ("users");
-            var query = Query.And(Query<User>.EQ (e => e.AppId, role.AppId),
+            var query = Query.And(Query<User>.EQ (e => e.DomainId, role.DomainId),
                                   Query<User>.EQ (e => e.Roles, role));
 
             var usersdb = collection.Find(query)
@@ -90,11 +120,11 @@ namespace SSAManager
             return users.ToArray ();
         }
 
-        public User[] GetAppUsers(Guid appId)
+        public User[] GetDomainUsers(Guid domainId)
         {
             List<User> users = new List<User> ();
             var collection = database.GetCollection<User> ("users");
-            var query = Query<User>.EQ (e => e.AppId, appId);
+            var query = Query<User>.EQ (e => e.DomainId, domainId);
             var usersdb = collection.Find(query)
                 .SetFields(Fields.Exclude("Secret","AuthToken"));
 
@@ -128,10 +158,10 @@ namespace SSAManager
             return null;
         }
 
-        public User GetUser(Guid appId, string username)
+        public User GetUser(Guid domainId, string username)
         {
             var collection = database.GetCollection<User> ("users");
-            var query = Query.And(Query<User>.EQ (e => e.AppId, appId),
+            var query = Query.And(Query<User>.EQ (e => e.DomainId, domainId),
                 Query<User>.EQ (e => e.Username, username));
             var user = collection.Find(query)
                 .SetFields(Fields.Exclude("Secret","AuthToken"));
@@ -170,105 +200,105 @@ namespace SSAManager
             return GetUser(user.Id);
         }
 
-        public void DeleteUser(Guid appId, string userName)
+        public void DeleteUser(Guid domainId, string userName)
         {
             var collection = database.GetCollection<User> ("users");
 
             Dictionary<string, object> query = new Dictionary<string, object> ();
-            query.Add ("AppId", appId);
+            query.Add ("DomainId", domainId);
             query.Add ("Username", userName);
 
             collection.Remove(new QueryDocument(query));
         }
        
-        public App GetApp(string name, Guid managerId)
+        public Domain GetDomain(string name, Guid managerId)
         {
-            var collection = database.GetCollection<App> ("apps");
-            var query = Query.And(Query<App>.EQ (e => e.ManagerId, managerId),
-                                  Query<App>.EQ(e => e.Name, name));
+            var collection = database.GetCollection<Domain> ("domains");
+            var query = Query.And(Query<Domain>.EQ (e => e.ManagerId, managerId),
+                Query<Domain>.EQ(e => e.Name, name));
 
-            App app = collection.FindOne (query);
+            Domain domain = collection.FindOne (query);
 
-            return app;
+            return domain;
         }
 
-        public App[] GetApps(Guid managerId)
+        public Domain[] GetDomains(Guid managerId)
         {
-            var collection = database.GetCollection<App> ("apps");
-            var query = Query<App>.EQ (e => e.ManagerId, managerId);
+            var collection = database.GetCollection<Domain> ("domains");
+            var query = Query<Domain>.EQ (e => e.ManagerId, managerId);
             var cursor = collection.Find(query);
 
-            List<App> apps = new List<App>();
+            List<Domain> domains = new List<Domain>();
 
-            foreach (App a in cursor) 
+            foreach (Domain d in cursor) 
             {
-                apps.Add (a);
+                domains.Add (d);
             }
 
-            return apps.ToArray();
+            return domains.ToArray();
         }
 
-        public App CreateApp(string name, Manager manager)
+        public Domain CreateDomain(string name, Manager manager)
         {
-            var collection = database.GetCollection<App>("apps");
-            App app = new App ();
-            app.Id = Guid.NewGuid ();
-            app.Name = name;
-            app.Enabled = true;
-            app.ManagerId = manager.Id;
-            app.ModifiedBy = manager.UserName;
-            app.Key = Guid.NewGuid ();
+            var collection = database.GetCollection<Domain>("domains");
+            Domain domain = new Domain ();
+            domain.Id = Guid.NewGuid ();
+            domain.Name = name;
+            domain.Enabled = true;
+            domain.ManagerId = manager.Id;
+            domain.ModifiedBy = manager.UserName;
+            domain.Key = Guid.NewGuid ();
             //TODO: Change application salt to user salt
-            app.Salt = Guid.NewGuid ();
-            app.CreatedAt = DateTime.Now;
-            app.ModifiedAt = DateTime.Now;
+            domain.Salt = Guid.NewGuid ();
+            domain.CreatedAt = DateTime.Now;
+            domain.ModifiedAt = DateTime.Now;
 
-            collection.Insert(app);
+            collection.Insert(domain);
           
-            return app;
+            return domain;
         }
 
-        public App UpdateApp(App app)
+        public Domain UpdateDomain(Domain domain)
         {
-            app.ModifiedAt = DateTime.Now;
+            domain.ModifiedAt = DateTime.Now;
 
-            MongoCollection<BsonDocument> apps = database.GetCollection<BsonDocument> ("apps");
-            var query = Query.EQ ("_id", app.Id);
+            MongoCollection<BsonDocument> domains = database.GetCollection<BsonDocument> ("domains");
+            var query = Query.EQ ("_id", domain.Id);
 
-            BsonDocument updateApp = apps.FindOne(query);
+            BsonDocument updateDomain = domains.FindOne(query);
 
-            if (updateApp != null) 
+            if (updateDomain != null) 
             {
-                updateApp ["Key"] = app.Key;
-                updateApp ["Claims"] = new BsonArray(app.Claims);
-                updateApp ["WhiteListIps"] = new BsonArray(app.WhiteListIps);
-                updateApp ["Enabled"] = app.Enabled;
+                updateDomain ["Key"] = domain.Key;
+                updateDomain ["Claims"] = new BsonArray(domain.Claims);
+                updateDomain ["WhiteListIps"] = new BsonArray(domain.WhiteListIps);
+                updateDomain ["Enabled"] = domain.Enabled;
              
-                apps.Save(updateApp);
+                domains.Save(updateDomain);
             }
 
-            return GetApp(app.Name, app.ManagerId);
+            return GetDomain(domain.Name, domain.ManagerId);
         }
 
-        public void DeleteApp(string name, Guid managerId)
+        public void DeleteDomain(string name, Guid managerId)
         {
-            App app = this.GetApp (name, managerId);
-            Role[] roles = this.GetRoles(app.Id);
+            Domain domain = this.GetDomain (name, managerId);
+            Role[] roles = this.GetRoles(domain.Id);
 
             foreach (Role r in roles) 
             {
                 this.DeleteRole (r);
             }
 
-            User[] users = this.GetAppUsers (app.Id);
+            User[] users = this.GetDomainUsers (domain.Id);
 
             foreach (User u in users) 
             {
-                this.DeleteUser(app.Id, u.Username);
+                this.DeleteUser(domain.Id, u.Username);
             }
 
-            var collection = database.GetCollection<App>("apps");
-            collection.Remove(new QueryDocument("_id", app.Id));
+            var collection = database.GetCollection<Domain>("domains");
+            collection.Remove(new QueryDocument("_id", domain.Id));
         }
 
         public Manager CreateManager(Manager manager)
@@ -282,13 +312,17 @@ namespace SSAManager
 
         public void DeleteManager(Guid id)
         {
-            var collection = database.GetCollection<Manager>("managers");
-            collection.Remove(new QueryDocument("_id", id));
-        }
+            var managers = database.GetCollection<Manager>("managers");
+            managers.Remove(new QueryDocument("_id", id));
 
-        public Manager UpdateManager(Manager manager)
-        {
-            return manager;
+            Domain[] domains = GetDomains (id);
+
+            if (domains != null && domains.Length > 0) 
+            {
+                foreach (Domain domain in domains) {
+                    DeleteDomain (domain.Name, id);
+                }
+            }
         }
 
         public Manager GetManager(Guid id)
@@ -309,11 +343,11 @@ namespace SSAManager
             return m;
         }
 
-        public Role GetRole(Guid appId, string name)
+        public Role GetRole(Guid domainId, string name)
         {
             var collection = database.GetCollection<Role> ("roles");
             var query = Query.And (
-                Query<Role>.EQ (e => e.AppId, appId),
+                Query<Role>.EQ (e => e.DomainId, domainId),
                 Query<Role>.EQ (e => e.Name, name));
 
             var r = collection.Find(query);
@@ -344,11 +378,11 @@ namespace SSAManager
             return role;
         }
 
-        public Role[] GetRoles(Guid appId)
+        public Role[] GetRoles(Guid domainId)
         {
             List<Role> roles = new List<Role> ();
             var collection = database.GetCollection<Role> ("roles");
-            var query = Query<Role>.EQ (e => e.AppId, appId);
+            var query = Query<Role>.EQ (e => e.DomainId, domainId);
 
             var r = collection.Find(query);
           
@@ -360,13 +394,13 @@ namespace SSAManager
             return roles.ToArray();
         }
 
-        public Role CreateRole(Guid appId, string name)
+        public Role CreateRole(Guid domainId, string name)
         {
             var collection = database.GetCollection<Role>("roles");
 
             Role role = new Role ();
             role.Id = Guid.NewGuid ();
-            role.AppId = appId;
+            role.DomainId =domainId;
             role.Name = name;
             collection.Insert(role);
 
@@ -388,7 +422,7 @@ namespace SSAManager
         }
 
 
-        private void CreateAppIndexes()
+        private void CreateDomainIndexes()
         {
             var keys = new IndexKeysBuilder();
 
@@ -402,7 +436,7 @@ namespace SSAManager
             server = client.GetServer();
             database = server.GetDatabase("SsAuthDb");
 
-            var collection = database.GetCollection<App>("apps");
+            var collection = database.GetCollection<Domain>("domains");
 
             collection.EnsureIndex(keys, options);
         }
@@ -411,7 +445,7 @@ namespace SSAManager
         {
             var keys = new IndexKeysBuilder();
 
-            keys.Ascending("Username", "AppId");
+            keys.Ascending("Username", "DomainId");
            
 
             var options = new IndexOptionsBuilder();
@@ -431,7 +465,7 @@ namespace SSAManager
         {
             var keys = new IndexKeysBuilder();
 
-            keys.Ascending("Name","AppId");
+            keys.Ascending("Name","DomainId");
 
             var options = new IndexOptionsBuilder();
             options.SetSparse(true);
@@ -451,7 +485,7 @@ namespace SSAManager
         {
             connectionString = connection;
 
-            this.CreateAppIndexes ();
+            this.CreateDomainIndexes ();
             this.CreateUserIndexes ();
             this.CreateRoleIndexes ();
         }

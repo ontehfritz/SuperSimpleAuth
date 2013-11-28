@@ -73,7 +73,7 @@ namespace SSANancyExample
 
                 try
                 {
-                    ssa.CreateUser(signup.Email, signup.Secret);
+                    ssa.CreateUser(signup.UserName, signup.Secret, signup.Email);
                 }
                 catch(Exception e)
                 {

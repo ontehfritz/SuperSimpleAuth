@@ -83,18 +83,18 @@ namespace SSAManager
                 {
                     repository.ChangeEmail(model.Manager.Id,
                         model.Password, model.Email);
-
-                    model.Manager.UserName = "test";
                 }
 
                 if(Request.Form.ChangePassword)
                 {
-
+                    repository.ChangePassword(model.Manager.Id, model.OldPassword,
+                        model.NewPassword,model.ConfirmPassword);
                 }
 
                 if(Request.Form.Delete)
                 {
-
+                    repository.DeleteManager(model.Manager.Id);
+                    return this.Response.AsRedirect("/");
                 }
 
                 //model.Manager = (Manager)this.Context.CurrentUser;

@@ -16,16 +16,16 @@ namespace SuperSimple.Auth.Api
             ErrorMessage message = null;
             Guid key = new Guid();
 
-            string appKey = request.Headers["ssa_app_key"].FirstOrDefault();
-            string app = request.Headers["ssa_app"].FirstOrDefault();
+            string appKey = request.Headers["ssa_domain_key"].FirstOrDefault();
+            string app = request.Headers["ssa_domain"].FirstOrDefault();
 
             if(appKey != null && app != null)
             {               
                 try
                 {
-                    key = Guid.Parse(request.Headers["ssa_app_key"].FirstOrDefault());
+                    key = Guid.Parse(request.Headers["ssa_domain_key"].FirstOrDefault());
 
-                    if(!repository.ValidateAppKey(app,key))
+                    if(!repository.ValidateDomainKey(app,key))
                     {
                         message = new ErrorMessage{
                             Status = "InvalidKey",
@@ -39,7 +39,7 @@ namespace SuperSimple.Auth.Api
                 {
                     message = new ErrorMessage {
                         Status = "InvalidKey",
-                        Message = "App key is not in correct format."
+                        Message = "Domain key is not in correct format."
                     };
 
                     return message;
@@ -49,7 +49,7 @@ namespace SuperSimple.Auth.Api
             {
                 message = new ErrorMessage{
                     Status = "InvalidKey",
-                    Message =  "App Key and/or App Name not provided in request header"
+                    Message =  "Domain Key and/or Domain Name not provided in request header"
                 };
 
                 return message;

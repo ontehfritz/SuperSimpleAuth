@@ -94,7 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Models\App.cs" />
     <Compile Include="Models\Helpers.cs" />
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\Role.cs" />
@@ -103,8 +102,6 @@
     <Compile Include="Modules\IndexModule.cs" />
     <Compile Include="Modules\LogonModule.cs" />
     <Compile Include="Models\Views\RoleModel.cs" />
-    <Compile Include="Models\Views\AppModel.cs" />
-    <Compile Include="Models\Views\AppUserModel.cs" />
     <Compile Include="Models\Views\LogonModel.cs" />
     <Compile Include="Models\Views\IPageModel.cs" />
     <Compile Include="Models\Views\ManageModel.cs" />
@@ -115,6 +112,9 @@
     <Compile Include="Models\Views\CreateRoleModel.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\Views\SettingsModel.cs" />
+    <Compile Include="Models\Views\DomainModel.cs" />
+    <Compile Include="Models\Views\DomainUserModel.cs" />
+    <Compile Include="Models\Domain.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\.DS_Store" />
@@ -122,8 +122,6 @@
     <None Include="Content\javascript\jquery-2.0.3.min.map" />
     <None Include="Views\_layout.cshtml" />
     <None Include="Views\index.cshtml" />
-    <None Include="Views\home\app.cshtml" />
-    <None Include="Views\home\app_new.cshtml" />
     <None Include="Views\home\claim_new.cshtml" />
     <None Include="Views\home\manage.cshtml" />
     <None Include="Views\home\role.cshtml" />
@@ -134,5 +132,7 @@
     <None Include="Views\_signup.cshtml" />
     <None Include="Views\logon\logon.cshtml" />
     <None Include="Views\logon\settings.cshtml" />
+    <None Include="Views\home\domain.cshtml" />
+    <None Include="Views\home\domain_new.cshtml" />
   </ItemGroup>
 </Project>

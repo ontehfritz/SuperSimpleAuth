@@ -1,9 +1,9 @@
-@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.AppUserModel>
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.DomainUserModel>
 @{
   Layout = "_layout.cshtml";
 } 
 
-<form action="/app/@Model.App.Name/user/@Model.User.Id" method="post">
+<form action="/domain/@Model.Domain.Name/user/@Model.User.Id" method="post">
 @Model.Debug
 <table>
 <tr>
@@ -12,7 +12,7 @@
 </tr>
 <tr>
     <td>Application: </td>
-    <td><a href="/app/@Model.App.Name">@Model.App.Name</a></td>
+    <td><a href="/domain/@Model.Domain.Name">@Model.Domain.Name</a></td>
 </tr>
 <tr>
     <td>Created: </td>
@@ -45,8 +45,8 @@
 <tr>
     <td>Last Request: </td>
     <td>
-    @if(Model.User.LastRequest != null){
-        <b>@Model.User.LastRequest.ToLongDateString() @Model.User.LastRequest.ToLongTimeString()</b>
+    @if(Model.User.LastRequest.HasValue){
+        <b>@Model.User.LastRequest.Value.ToLongDateString() @Model.User.LastRequest.Value.ToLongTimeString()</b>
     }
     </td>
 </tr>
@@ -83,9 +83,9 @@
     <td>Claims: </td>
     <td>
     <input id="Claims" type="hidden" name="Claims" value="@Helpers.Values(@Model.Claims)" /><br />
-    @if(@Model.App.Claims != null)
+    @if(@Model.Domain.Claims != null)
     {
-        foreach(string claim in @Model.App.Claims)
+        foreach(string claim in @Model.Domain.Claims)
         {
             if(@Model.User.HasClaim(claim))
             {

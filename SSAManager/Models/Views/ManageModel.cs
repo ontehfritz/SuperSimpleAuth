@@ -11,7 +11,7 @@ namespace SSAManager
     {
         public Manager Manager { get; set; }
         public string Title { get; set;  }
-        public App[] Apps { get; set; }
+        public Domain[] Domains { get; set; }
         public List<Error> Errors { get; set; }
     }
 }

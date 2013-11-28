@@ -12,24 +12,24 @@ namespace SuperSimple.Auth
     public class SuperSimpleAuth
     {
         private string URI;
-        private Guid ApplicationKey { get; set; }
+        private Guid DomainKey { get; set; }
         private string Name;
 
         public SuperSimpleAuth (string name, 
-            string applicationKey, string uri = "http://api.supersimpleauth.com")
+            string domainKey, string uri = "http://api.supersimpleauth.com")
         {
             this.Name = name;
             this.URI = uri;
 
             Guid key; 
 
-            if (Guid.TryParse (applicationKey, out key)) 
+            if (Guid.TryParse (domainKey, out key)) 
             {
-                ApplicationKey = key;
+                DomainKey = key;
             } 
             else 
             {
-                throw new Exception ("Application key is in an incorrect format.");
+                throw new Exception ("Domain key is in an incorrect format.");
             }
         }
 
@@ -46,8 +46,8 @@ namespace SuperSimple.Auth
                 System.Collections.Specialized.NameValueCollection reqparm = 
                     new System.Collections.Specialized.NameValueCollection();
 
-                client.Headers["ssa_app_key"] = this.ApplicationKey.ToString();
-                client.Headers["ssa_app"] = this.Name;
+                client.Headers["ssa_domain_key"] = this.DomainKey.ToString();
+                client.Headers["ssa_domain"] = this.Name;
 
                 reqparm.Add("AuthToken", authToken.ToString());
 
@@ -91,9 +91,9 @@ namespace SuperSimple.Auth
                     reqparm.Add ("IP", IP);
                 }
 
-                client.Headers["ssa_app_key"] = this.ApplicationKey.ToString();
+                client.Headers["ssa_domain_key"] = this.DomainKey.ToString();
                 //client.Headers["ssa_app_key"] = "hjkjkj";
-                client.Headers["ssa_app"] = this.Name;
+                client.Headers["ssa_domain"] = this.Name;
 
                 string responsebody = "";
 
@@ -130,8 +130,8 @@ namespace SuperSimple.Auth
                 System.Collections.Specialized.NameValueCollection reqparm = 
                     new System.Collections.Specialized.NameValueCollection();
 
-                client.Headers["ssa_app_key"] = this.ApplicationKey.ToString();
-                client.Headers["ssa_app"] = this.Name;
+                client.Headers["ssa_domain_key"] = this.DomainKey.ToString();
+                client.Headers["ssa_domain"] = this.Name;
 
                 reqparm.Add("AuthToken", authToken.ToString());
 
@@ -180,8 +180,8 @@ namespace SuperSimple.Auth
                     reqparm.Add("Email", email);
                 }
 
-                client.Headers["ssa_app_key"] = this.ApplicationKey.ToString();
-                client.Headers["ssa_app"] = this.Name;
+                client.Headers["ssa_domain_key"] = this.DomainKey.ToString();
+                client.Headers["ssa_domain"] = this.Name;
 
                 string responsebody = "";
 

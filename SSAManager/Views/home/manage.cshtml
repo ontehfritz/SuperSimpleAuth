@@ -2,19 +2,18 @@
 @{
   Layout = "_layout.cshtml";
 }   
-
-<h4>Applications <a href="~/app/new"><small><span class="glyphicon glyphicon-plus-sign"></span> New</small></a></h4>
+<h4>Domains <a href="~/domain/new"><small><span class="glyphicon glyphicon-plus-sign"></span> New</small></a></h4>
 <div>      
-@if(@Model.Apps != null && @Model.Apps.Length > 0)
+@if(@Model.Domains != null && @Model.Domains.Length > 0)
 {
-    foreach(var app in @Model.Apps)
+    foreach(var domain in @Model.Domains)
     {
         <div style="border: 1px solid black;background:#ffffff;padding:5px;">
             <div>
-            <h4><a href="~/app/@app.Name">@app.Name</a></h4>
+            <h4><a href="~/domain/@domain.Name">@domain.Name</a></h4>
             </div>
             <div>
-            Created: @app.CreatedAt.ToLongDateString() @app.CreatedAt.ToLongTimeString()
+            Created: @domain.CreatedAt.ToLongDateString() @domain.CreatedAt.ToLongTimeString()
             </div>
         </div>
         <br />
@@ -22,6 +21,6 @@
 }
 else
 {
-    <p>No applications have been created. Click new to create an application.</p>
+    <p>No domains have been created. Click new to create an domain.</p>
 }
 </div>

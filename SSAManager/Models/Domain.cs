@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace SSAManager
 {
-    public class App
+    public class Domain
     {
         [BsonId]
         public Guid Id { get; set; }
@@ -42,20 +42,13 @@ namespace SSAManager
         [BsonElement]
         public string ModifiedBy { get; set; } 
 
-
-        public User[] GetUsers()
-        {
-            List<User> user = new List<User> ();
-
-            return user.ToArray ();
-        }
     }
 
-    public class AppValidator : AbstractValidator<App>
+    public class DomainValidator : AbstractValidator<Domain>
     {
-        public AppValidator()
+        public DomainValidator()
         {
-            RuleFor(app => app.Name).NotEmpty();
+            RuleFor(domain => domain.Name).NotEmpty();
         }
     }
 }

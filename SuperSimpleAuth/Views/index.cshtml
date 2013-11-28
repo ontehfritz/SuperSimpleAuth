@@ -7,16 +7,16 @@
     <h1>Super Simple Auth (SSA) API</h1>
     <p>
     To use this api you must sign up for an account at: <a href="http://www.supersimpleauth.com">www.supersimpleauth.com</a>
-    and create an application. Once the application is created you will be given a App Key. The application name and App key
+    and create an domain. Once the domain is created you will be given a Domain Key. The domain name and domain key
     must be provided in the header of the request:
     </p>
     <pre>
-    ssa_app_key: XXXX-XXXX-XXXX-XXXX
-    ssa_app:     app_name
+    ssa_domain_key: XXXX-XXXX-XXXX-XXXX
+    ssa_domain:     domain_name
     </pre>
     <p>
-    All request to SSA should be done over https. If not your App Key can be compromised and your application will not be secure, 
-    please keep your App Key private. 
+    All request to SSA must be done over https/ssl. If not your Domain Key can be compromised and your application will not be secure, 
+    please keep your Domain Key private. 
     </p>
     <h3>User</h3>
     Description:
@@ -51,9 +51,9 @@
     </pre>
 
     <p>
-    This method creates a user for the application. 
-    Application name and App Key need to be passed in the request header. 
-    <b>Important:</b> Always use https: when using SSA
+    This method creates a user in the domain. 
+    Domain name and Domain Key need to be passed in the request header. 
+    <b>Important:</b> Always use https/ssl when using SSA
     </p>
 
     <h3>Authenticate a user</h3>
@@ -69,8 +69,8 @@
     This method will authenticate a user, if successful it will return a user with a AuthKey value. 
     If a user cannot be authenticated an ErrorMessage will be returned. 
 
-    Application name and App Key need to be passed in the request header. 
-    <b>Important:</b> Always use https: when using SSA
+    Domain name and Domain Key need to be passed in the request header. 
+    <b>Important:</b> Always use https/ssl when using SSA
     </p>
 
     <h3>Validate a user</h3>
@@ -88,9 +88,9 @@
 
     If a user cannot be authenticated an ErrorMessage will be returned. 
 
-    Application name and App Key need to be passed in the request header. 
+    Domain name and Domain Key need to be passed in the request header. 
 
-    <b>Important:</b> Always use https: when using SSA
+    <b>Important:</b> Always use https/ssl when using SSA
     </p>
 
     <h3>Validate a user</h3>
@@ -108,9 +108,9 @@
 
     If a user cannot be authenticated an ErrorMessage will be returned. 
 
-    Application name and App Key need to be passed in the request header. 
+    Domain name and Domain Key need to be passed in the request header. 
 
-    <b>Important:</b> Always use https: when using SSA
+    <b>Important:</b> Always use https/ssl when using SSA
     </p>
 
     <h3>End a session</h3>
@@ -126,9 +126,9 @@
     If this is successful the user will have to be authenticated again to recieve a valid AuthToken. I could place to call this 
     method is in the logout process. 
 
-    Application name and App Key need to be passed in the request header. 
+    Domain name and Domain Key need to be passed in the request header. 
 
-    <b>Important:</b> Always use https: when using SSA
+    <b>Important:</b> Always use https/ssl when using SSA
     </p>
     </body>
 </html>

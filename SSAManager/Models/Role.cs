@@ -13,7 +13,7 @@ namespace SSAManager
         [BsonElement]
         public string Name { get; set; }
         [BsonElement]
-        public Guid AppId { get; set; }
+        public Guid DomainId { get; set; }
         [BsonElement]
         public List<string> Claims { get; set; }
 

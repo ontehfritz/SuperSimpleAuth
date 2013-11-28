@@ -10,6 +10,7 @@ namespace SSANancyExample
     public class SignupModel
     {
         public string Message { get; set; }
+        public string UserName { get; set; }
         public string Email { get; set; }
         public string Secret { get; set; }
         public string ComfirmSecret { get; set; }
@@ -21,9 +22,10 @@ namespace SSANancyExample
     {
         public SignupValidator()
         {
-            RuleFor(signup => signup.Email).NotEmpty();
+            RuleFor(signup => signup.UserName).NotEmpty();
             RuleFor(signup => signup.Email).EmailAddress();
             RuleFor(signup => signup.Secret).NotEmpty();
+           
             //RuleFor(product => product.Name).Matches("[A-Z]*");
 
 

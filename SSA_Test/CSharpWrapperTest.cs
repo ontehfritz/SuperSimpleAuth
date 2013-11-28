@@ -28,7 +28,7 @@ namespace SSA_Test
         private SSAManager.IRepository mRepository = 
             new SSAManager.MongoRepository ("mongodb://localhost");
 
-        private SSAManager.App _app;
+        private SSAManager.Domain _domain;
         private SSAManager.Manager _manager;
         private SuperSimpleAuth ssa;
        
@@ -42,15 +42,15 @@ namespace SSA_Test
             manager = mRepository.CreateManager (manager);
             _manager = manager;
 
-            SSAManager.App app = mRepository.CreateApp ("test", _manager);
-            app.Claims = new List<string> ();
-            app.Claims.Add ("test1");
-            app.Claims.Add ("test2");
+            SSAManager.Domain domain = mRepository.CreateDomain ("test", _manager);
+            domain.Claims = new List<string> ();
+            domain.Claims.Add ("test1");
+            domain.Claims.Add ("test2");
 
-            _app = mRepository.UpdateApp (app);
+            _domain = mRepository.UpdateDomain (domain);
 
-            SuperSimple.Auth.Api.User apiOne = _api.CreateUser (_app.Key, "test1", "test1");
-            SuperSimple.Auth.Api.User apiTwo = _api.CreateUser (_app.Key, "test2", "test2");
+            SuperSimple.Auth.Api.User apiOne = _api.CreateUser (_domain.Key, "test1", "test1");
+            SuperSimple.Auth.Api.User apiTwo = _api.CreateUser (_domain.Key, "test2", "test2");
 
             SSAManager.User one = mRepository.GetUser (apiOne.Id);
             SSAManager.User two = mRepository.GetUser (apiTwo.Id);
@@ -61,15 +61,15 @@ namespace SSA_Test
 
             mRepository.UpdateUser(one);
             mRepository.UpdateUser(two);
-            ssa = new SuperSimpleAuth (_app.Name, _app.Key.ToString(), "http://127.0.0.1:8082");
+            ssa = new SuperSimpleAuth (_domain.Name, _domain.Key.ToString(), "http://127.0.0.1:8082");
         }
 
         [TearDown] 
         public void Dispose()
         { 
-            if (_app != null) 
+            if (_domain != null) 
             {
-                mRepository.DeleteApp (_app.Name, _manager.Id);
+                mRepository.DeleteDomain (_domain.Name, _manager.Id);
             }
 
             if (_manager != null) 
@@ -151,7 +151,7 @@ namespace SSA_Test
 
             try
             {
-                User validUser = ssa.Validate (_app.Key);
+                User validUser = ssa.Validate (_domain.Key);
                 Assert.IsNull(validUser);
             }
             catch(InvalidTokenException e)

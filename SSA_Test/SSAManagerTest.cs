@@ -11,7 +11,7 @@ namespace SSA_Test
     public class SSAManagerTest
     {
         private IRepository repository = new MongoRepository ("mongodb://localhost");
-        private App _app;
+        private Domain _domain;
         private Manager _manager;
         private SuperSimple.Auth.Api.MongoRepository _api = 
             new SuperSimple.Auth.Api.MongoRepository("mongodb://localhost");
@@ -25,15 +25,15 @@ namespace SSA_Test
             manager = repository.CreateManager (manager);
             _manager = manager;
 
-            App app = repository.CreateApp ("test", _manager);
-            app.Claims = new List<string> ();
-            app.Claims.Add ("test1");
-            app.Claims.Add ("test2");
+            Domain domain = repository.CreateDomain ("test", _manager);
+            domain.Claims = new List<string> ();
+            domain.Claims.Add ("test1");
+            domain.Claims.Add ("test2");
 
-            _app = repository.UpdateApp (app);
+            _domain = repository.UpdateDomain (domain);
 
-            SuperSimple.Auth.Api.User apiOne = _api.CreateUser (_app.Key, "test1", "test1");
-            SuperSimple.Auth.Api.User apiTwo =  _api.CreateUser (_app.Key, "test2", "test2");
+            SuperSimple.Auth.Api.User apiOne = _api.CreateUser (_domain.Key, "test1", "test1");
+            SuperSimple.Auth.Api.User apiTwo =  _api.CreateUser (_domain.Key, "test2", "test2");
 
             User one = repository.GetUser (apiOne.Id);
             User two = repository.GetUser (apiTwo.Id);
@@ -49,8 +49,8 @@ namespace SSA_Test
         [TearDown] 
         public void Dispose()
         { 
-            if (_app != null) {
-                repository.DeleteApp (_app.Name, _manager.Id);
+            if (_domain != null) {
+                repository.DeleteDomain (_domain.Name, _manager.Id);
             }
 
             if (_manager != null) {
@@ -61,6 +61,14 @@ namespace SSA_Test
         [Test()]
         public void Change_password()
         {
+            repository.ChangePassword (_manager.Id,"test", "test1", "test1");
+            Manager manager = repository.GetManager(_manager.Id);
+            Assert.AreEqual ("test1", manager.Secret);
+        }
+
+        [Test()]
+        public void Change_email()
+        {
             repository.ChangeEmail (_manager.Id, "test", "manager@test.com");
             Manager manager = repository.GetManager(_manager.Id);
             Assert.AreEqual ("manager@test.com", manager.UserName);
@@ -69,16 +77,16 @@ namespace SSA_Test
         [Test()]
         public void Delete_user()
         {
-            repository.DeleteUser (_app.Id, "test1");
-            User user = repository.GetUser(_app.Id, "test1");
+            repository.DeleteUser (_domain.Id, "test1");
+            User user = repository.GetUser(_domain.Id, "test1");
             Assert.IsNull (user);
         }
 
         [Test()]
         public void Get_roles_with_claim()
         {
-            Role role1 = repository.CreateRole (_app.Id, "test1");
-            Role role2 = repository.CreateRole (_app.Id, "test2");
+            Role role1 = repository.CreateRole (_domain.Id, "test1");
+            Role role2 = repository.CreateRole (_domain.Id, "test2");
 
             role1.Claims = new List<string> ();
             role1.Claims.Add ("test1");
@@ -90,7 +98,7 @@ namespace SSA_Test
 
             role2 = repository.UpdateRole (role2);
 
-            Role[] roles = repository.GetRolesWithClaim (_app.Id, "test1");
+            Role[] roles = repository.GetRolesWithClaim (_domain.Id, "test1");
 
             Assert.Greater (roles.Length, 0);
 
@@ -108,11 +116,11 @@ namespace SSA_Test
         }
        
         [Test()]
-        public void Create_app()
+        public void Create_domain()
         {
-            App app = repository.CreateApp ("create_app_test", _manager);
-            Assert.IsNotNull (app);
-            repository.DeleteApp (app.Name, _manager.Id);
+            Domain domain = repository.CreateDomain ("create_domain_test", _manager);
+            Assert.IsNotNull (domain);
+            repository.DeleteDomain (domain.Name, _manager.Id);
         }
 
         [Test()]
@@ -123,32 +131,32 @@ namespace SSA_Test
         }
 
         [Test()]
-        public void Get_app()
+        public void Get_domain()
         {
-            App app = repository.GetApp(_app.Name, 
+            Domain domain = repository.GetDomain(_domain.Name, 
                                         _manager.Id);
 
-            Assert.AreEqual (_app.Id, app.Id);
+            Assert.AreEqual (_domain.Id, domain.Id);
         }
 
         [Test()]
-        public void Get_app_users ()
+        public void Get_domain_users ()
         {
-            User[] users = repository.GetAppUsers(_app.Id);
+            User[] users = repository.GetDomainUsers(_domain.Id);
             Assert.IsNotNull (users);
         }
 
         [Test()]
         public void Get_a_user_by_name ()
         {
-            User user = repository.GetUser(_app.Id, "test1");
+            User user = repository.GetUser(_domain.Id, "test1");
             Assert.IsNotNull (user);
         }
 
         [Test()]
         public void Update_a_user ()
         {
-            User[] users = repository.GetAppUsers(_app.Id);
+            User[] users = repository.GetDomainUsers(_domain.Id);
             User user = repository.GetUser(users[0].Id);
             user.Roles = user.Roles;
             user = repository.UpdateUser (user);
@@ -159,21 +167,21 @@ namespace SSA_Test
         [Test()]
         public void Get_all_users_with_claim()
         {
-            User[] users = repository.GetUsersWithClaim (_app.Id, "test1");
+            User[] users = repository.GetUsersWithClaim (_domain.Id, "test1");
             Assert.Greater(users.Length, 0);
         }
 
         [Test()]
-        public void Get_all_users_for_application ()
+        public void Get_all_users_for_domain ()
         {
-            User[] users = repository.GetAppUsers(_app.Id);
+            User[] users = repository.GetDomainUsers(_domain.Id);
             Assert.Greater (users.Length,0);
         }
 
         [Test()]
         public void Create_a_role()
         {
-            Role r = repository.CreateRole(_app.Id, "test_test");
+            Role r = repository.CreateRole(_domain.Id, "test_test");
             Assert.AreEqual ("test_test",r.Name);
         }
 
@@ -181,22 +189,22 @@ namespace SSA_Test
         [Test()]
         public void Get_a_role()
         {
-            Role role = repository.CreateRole (_app.Id, "test_test");
-            role = repository.GetRole (_app.Id, "test_test");
+            Role role = repository.CreateRole (_domain.Id, "test_test");
+            role = repository.GetRole (_domain.Id, "test_test");
             Assert.IsNotNull (role);
         }
 
         [Test()]
         public void Get_all_roles()
         {
-            Role[] roles = repository.GetRoles (_app.Id);
+            Role[] roles = repository.GetRoles (_domain.Id);
             Assert.IsNotNull (roles);
         }
 
         [Test()]
         public void Update_a_role()
         {
-            Role role = repository.CreateRole (_app.Id, "test_test");
+            Role role = repository.CreateRole (_domain.Id, "test_test");
 
             List<string> claims = new List<string>();
             claims.Add ("Write");
@@ -205,7 +213,7 @@ namespace SSA_Test
             role.Claims = claims;
             repository.UpdateRole (role);
 
-            role = repository.GetRole (_app.Id, "test_test");
+            role = repository.GetRole (_domain.Id, "test_test");
 
             Assert.IsNotNull (role.Claims);
         }
@@ -213,11 +221,11 @@ namespace SSA_Test
         [Test()]
         public void Delete_a_role()
         {
-            Role role = repository.CreateRole (_app.Id, "test_test");
+            Role role = repository.CreateRole (_domain.Id, "test_test");
 
             repository.DeleteRole (role);
 
-            role = repository.GetRole (_app.Id, "test_test");
+            role = repository.GetRole (_domain.Id, "test_test");
 
             Assert.IsNull (role);
         }
@@ -225,9 +233,9 @@ namespace SSA_Test
         [Test()]
         public void Get_users_in_role ()
         {
-            Role role = repository.CreateRole (_app.Id, "test_test");
+            Role role = repository.CreateRole (_domain.Id, "test_test");
 
-            User[] users = repository.GetAppUsers(_app.Id);
+            User[] users = repository.GetDomainUsers(_domain.Id);
 
             foreach (User u in users) {
 
@@ -246,9 +254,9 @@ namespace SSA_Test
         [Test()]
         public void Is_user_in_role()
         {
-            Role role = repository.CreateRole (_app.Id, "test_test");
+            Role role = repository.CreateRole (_domain.Id, "test_test");
 
-            User[] users = repository.GetAppUsers(_app.Id);
+            User[] users = repository.GetDomainUsers(_domain.Id);
             User user = repository.GetUser(users[0].Id);
 
             if (user.Roles == null) {
@@ -263,7 +271,7 @@ namespace SSA_Test
         [Test()]
         public void Get_user_claims ()
         {
-            User[] users = repository.GetAppUsers(_app.Id);
+            User[] users = repository.GetDomainUsers(_domain.Id);
             User user = repository.GetUser(users[0].Id);
 
             string[] claims = user.GetClaims ();
@@ -272,18 +280,17 @@ namespace SSA_Test
         }
 
         [Test()]
-        public void Delete_app()
+        public void Delete_domain()
         {
-            repository.DeleteApp (_app.Name,_manager.Id);
-            _app = null;
+            repository.DeleteDomain (_domain.Name,_manager.Id);
+            _domain = null;
         }
 
         [Test()]
         public void Delete_manager()
         {
             repository.DeleteManager (_manager.Id);
-            repository.DeleteApp (_app.Name,_manager.Id);
-            _app = null;
+            _domain = null;
             _manager = null;
         }
     }

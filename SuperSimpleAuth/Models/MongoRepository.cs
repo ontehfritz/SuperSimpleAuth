@@ -22,19 +22,19 @@ namespace SuperSimple.Auth.Api
             database = server.GetDatabase("SsAuthDb");
         }
 
-        public bool UsernameExists (Guid appKey, string username)
+        public bool UsernameExists (Guid domainKey, string username)
         {
             User user = null;
 
-            var appCollection = database.GetCollection<RawBsonDocument> ("apps");
-            var appQuery = Query.And(Query.EQ ("Key", appKey));
-            var app = appCollection.FindOne (appQuery);
+            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var dquery = Query.And(Query.EQ ("Key", domainKey));
+            var domain = domains.FindOne (dquery);
 
-            var collection = database.GetCollection<User> ("users");
+            var users = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.Username, username),
-                Query<User>.EQ(e => e.AppId, app["_id"].AsGuid));
+                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
-            user = collection.FindOne (query);
+            user = users.FindOne (query);
 
             if (user != null) 
             {
@@ -44,19 +44,19 @@ namespace SuperSimple.Auth.Api
             return false;
         }
 
-        public bool EmailExists (Guid appKey, string email)
+        public bool EmailExists (Guid domainKey, string email)
         {
             User user = null;
 
-            var appCollection = database.GetCollection<RawBsonDocument> ("apps");
-            var appQuery = Query.And(Query.EQ ("Key", appKey));
-            var app = appCollection.FindOne (appQuery);
+            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var dQuery = Query.And(Query.EQ ("Key", domainKey));
+            var domain = domains.FindOne (dQuery);
 
-            var collection = database.GetCollection<User> ("users");
+            var users = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.Email, email),
-                Query<User>.EQ(e => e.AppId, app["_id"].AsGuid));
+                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
-            user = collection.FindOne (query);
+            user = users.FindOne (query);
 
             if (user != null) 
             {
@@ -66,19 +66,19 @@ namespace SuperSimple.Auth.Api
             return false;
         }
 
-        public bool End(Guid appKey, Guid authToken)
+        public bool End(Guid domainKey, Guid authToken)
         {
             User user = null;
 
-            var appCollection = database.GetCollection<RawBsonDocument> ("apps");
-            var appQuery = Query.And(Query.EQ ("Key", appKey));
-            var app = appCollection.FindOne (appQuery);
+            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var dQuery = Query.And(Query.EQ ("Key", domainKey));
+            var domain = domains.FindOne (dQuery);
 
-            var collection = database.GetCollection<User> ("users");
+            var users = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.AuthToken, authToken),
-                                  Query<User>.EQ(e => e.AppId, app["_id"].AsGuid));
+                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
-            user = collection.FindOne (query);
+            user = users.FindOne (query);
 
             user.LastIp = user.CurrentIp;
             user.LastLogon = user.CurrentLogon;
@@ -86,7 +86,7 @@ namespace SuperSimple.Auth.Api
             user.AuthToken = Guid.Empty;
             user.CurrentLogon = null;
 
-            if (UpdateUser (appKey, user) == null) {
+            if (UpdateUser (domainKey, user) == null) {
                 return false;
             }
 
@@ -94,22 +94,22 @@ namespace SuperSimple.Auth.Api
 
         }
 
-        public User Authenticate (Guid appKey, string username, 
+        public User Authenticate (Guid domainKey, string username, 
                                   string secret, string IP = null)
         {
             User user = null;
 
-            var appCollection = database.GetCollection<RawBsonDocument> ("apps");
-            var appQuery = Query.And(Query.EQ ("Key", appKey));
-            var app = appCollection.FindOne (appQuery);
+            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var dQuery = Query.And(Query.EQ ("Key", domainKey));
+            var domain = domains.FindOne (dQuery);
 
-            var collection = database.GetCollection<User> ("users");
+            var users = database.GetCollection<User> ("users");
             //TODO: Change application salt to user salt
             var query = Query.And(Query<User>.EQ (e => e.Username, username),
-                        Query<User>.EQ(e => e.Secret, this.Hash(app["Salt"].AsGuid.ToString(), secret)),
-                        Query<User>.EQ(e => e.AppId, app["_id"].AsGuid));
+                Query<User>.EQ(e => e.Secret, this.Hash(domain["Salt"].AsGuid.ToString(), secret)),
+                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
-            user = collection.FindOne (query);
+            user = users.FindOne (query);
 
             if (user != null) {
                 user.CurrentIp = IP;
@@ -118,47 +118,47 @@ namespace SuperSimple.Auth.Api
                 user.LastRequest = DateTime.Now;
                 user.CurrentLogon = DateTime.Now;
 
-                UpdateUser (appKey, user);
+                UpdateUser (domainKey, user);
             }
 
             return user;
         }
 
-        public User Validate (Guid authToken, Guid appKey, string IP = null)
+        public User Validate (Guid authToken, Guid domainKey, string IP = null)
         {
             User user = null;
 
-            var appCollection = database.GetCollection<RawBsonDocument> ("apps");
-            var appQuery = Query.And(Query.EQ ("Key", appKey));
-            var app = appCollection.FindOne (appQuery);
+            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var dQuery = Query.And(Query.EQ ("Key", domainKey));
+            var domain = domains.FindOne (dQuery);
 
             var collection = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.AuthToken, authToken),
-                                  Query<User>.EQ(e => e.AppId, app["_id"].AsGuid));
+                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
             user = collection.FindOne (query);
 
             if (user != null) {
                 user.CurrentIp = IP;
                 user.LastRequest = DateTime.Now;
-                UpdateUser (appKey, user);
+                UpdateUser (domainKey, user);
             }
 
             return user;
         }
 
-        public User CreateUser (Guid appKey, string username, 
+        public User CreateUser (Guid domainKey, string username, 
             string password, string email = null)
         {
-            var appCollection = database.GetCollection<RawBsonDocument> ("apps");
-            var query = Query.And(Query.EQ ("Key", appKey));
-            var app = appCollection.FindOne (query);
+            var appCollection = database.GetCollection<RawBsonDocument> ("domains");
+            var query = Query.And(Query.EQ ("Key", domainKey));
+            var domain = appCollection.FindOne (query);
             User user = new User ();
             user.Username = username;
             user.Email = email;
             //TODO: Change application salt to user salt
-            user.Secret = this.Hash(app["Salt"].AsGuid.ToString(), password);
-            user.AppId = app["_id"].AsGuid;
+            user.Secret = this.Hash(domain["Salt"].AsGuid.ToString(), password);
+            user.DomainId = domain["_id"].AsGuid;
             user.CreatedAt = DateTime.Now;
             user.Enabled = true;
             user.ModifiedAt = DateTime.Now;
@@ -169,7 +169,7 @@ namespace SuperSimple.Auth.Api
             return user;
         }
 
-        public User UpdateUser (Guid appKey, User user)
+        public User UpdateUser (Guid domainKey, User user)
         {
             user.ModifiedAt = DateTime.Now;
 
@@ -203,11 +203,11 @@ namespace SuperSimple.Auth.Api
         }
 
 
-        public bool ValidateAppKey (string appName, Guid appKey)
+        public bool ValidateDomainKey (string domainName, Guid domainKey)
         {
-            var appCollection = database.GetCollection<RawBsonDocument> ("apps");
-            var query = Query.And(Query.EQ ("Key", appKey), 
-                                  Query.EQ("Name", appName));
+            var appCollection = database.GetCollection<RawBsonDocument> ("domains");
+            var query = Query.And(Query.EQ ("Key", domainKey), 
+                Query.EQ("Name", domainName));
 
             var app = appCollection.FindOne (query);
 

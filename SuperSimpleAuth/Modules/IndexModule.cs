@@ -38,7 +38,7 @@ namespace SuperSimple.Auth.Api
                 }
 
                 Guid appKey = 
-                Guid.Parse(Request.Headers["ssa_app_key"].FirstOrDefault());
+                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
 
                 Guid token = Guid.Parse(Request.Form["AuthToken"]);
 
@@ -58,7 +58,7 @@ namespace SuperSimple.Auth.Api
                 }
 
                 Guid appKey = 
-                Guid.Parse(Request.Headers["ssa_app_key"].FirstOrDefault());
+                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
 
                 Guid token = Guid.Parse(Request.Form["AuthToken"]);
                 string IP = Request.Form["IP"];
@@ -102,7 +102,7 @@ namespace SuperSimple.Auth.Api
                 }
 
                 Guid appKey = 
-                Guid.Parse(Request.Headers["ssa_app_key"].FirstOrDefault());
+                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
 
                 User user = null;
                 string username = Request.Form["Username"];
@@ -149,7 +149,7 @@ namespace SuperSimple.Auth.Api
                 }
 
                 Guid appKey = 
-                    Guid.Parse(Request.Headers["ssa_app_key"].FirstOrDefault());
+                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
 
                 //string app = Request.Headers["ssa_app_key"].FirstOrDefault();
 

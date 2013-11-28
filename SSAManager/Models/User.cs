@@ -9,7 +9,7 @@ namespace SSAManager
         [BsonId]
         public Guid Id { get; set; }
         [BsonElement]
-        public Guid AppId { get; set; }
+        public Guid DomainId { get; set; }
         [BsonElement]
         public string Username { get; set; }
         [BsonElement]

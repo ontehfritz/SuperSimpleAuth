@@ -29,100 +29,100 @@ namespace SSAManager
             Get["/home"] = parameters => {
                 ManageModel manage = new ManageModel();
                 manage.Manager  = (Manager)this.Context.CurrentUser;
-                manage.Apps = repository.GetApps(manage.Manager.Id);
+                manage.Domains = repository.GetDomains(manage.Manager.Id);
                
 
                 return View["manage", manage];
             };
 
-            Get ["/app/new"] = parameters => {
-                AppModel model = new AppModel();
+            Get ["/domain/new"] = parameters => {
+                DomainModel model = new DomainModel();
                 model.Manager  = (Manager)this.Context.CurrentUser;
-                model.App = new App();
-                return View["app_new", model];
+                model.Domain = new Domain();
+                return View["domain_new", model];
             };
 
-            Post ["/app/new"] = parameters => {
-                AppModel model = this.Bind<AppModel>();
+            Post ["/domain/new"] = parameters => {
+                DomainModel model = this.Bind<DomainModel>();
                 model.Manager = (Manager)this.Context.CurrentUser;
                 var result = this.Validate(model);
                 
                 if (!result.IsValid)
                 {
                     model.Errors = Helpers.GetValidationErrors(result);
-                    return View["app_new", model];
+                    return View["domain_new", model];
                 }
 
       		    try
       		    {
-                    repository.CreateApp(model.Name, model.Manager);
+                    repository.CreateDomain(model.Name, model.Manager);
       		    }
       			catch(MongoDB.Driver.WriteConcernException e)
       		    {
                     Error error = new Error();
                     error.Name = "Duplicate";
-                    error.Message = "Cannot create application, name already exists.";
+                    error.Message = "Cannot create domain, name already exists.";
                     model.Errors = new List<Error>();
                     model.Errors.Add(error);
 
-      			    return View["app_new", model];
+                    return View["domain_new", model];
       		    }
 
                 return this.Response.AsRedirect("/home");
             };
 
-            Get ["/app/{name}"] = parameters => {
-                AppModel model = new AppModel();
+            Get ["/domain/{name}"] = parameters => {
+                DomainModel model = new DomainModel();
                 model.Manager  = (Manager)this.Context.CurrentUser;
-                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
-                model.Roles = repository.GetRoles(model.App.Id).ToList();
-                model.Users = repository.GetAppUsers(model.App.Id).ToList();
+                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
+                model.Roles = repository.GetRoles(model.Domain.Id).ToList();
+                model.Users = repository.GetDomainUsers(model.Domain.Id).ToList();
 
-                return View["app", model];
+                return View["domain", model];
             };
 
-            Post["/app/{name}"] = parameters => {
-                AppModel model = this.Bind<AppModel>();
+            Post["/domain/{name}"] = parameters => {
+                DomainModel model = this.Bind<DomainModel>();
                 model.Manager  = (Manager)this.Context.CurrentUser;
-                App app = repository.GetApp((string)parameters.name, model.Manager.Id);
-                model.Roles = repository.GetRoles(app.Id).ToList();
-                model.Users = repository.GetAppUsers(app.Id).ToList();
+                Domain domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
+                model.Roles = repository.GetRoles(domain.Id).ToList();
+                model.Users = repository.GetDomainUsers(domain.Id).ToList();
 
-                app.WhiteListIps = model.WhiteListIps;
+                domain.WhiteListIps = model.WhiteListIps;
 
                 if(Request.Form.Generate != null)
                 {
-                    app.Key = Guid.NewGuid();
+                    domain.Key = Guid.NewGuid();
                 }
 
                 if(Request.Form.Delete != null)
                 {
-                    repository.DeleteApp(app.Name,model.Manager.Id);
+                    repository.DeleteDomain(domain.Name,model.Manager.Id);
                     return this.Response.AsRedirect ("/");
                 }
 
                 if(Request.Form.Disable != null)
                 {
-                    app.Enabled = false;
+                    domain.Enabled = false;
                 }
 
                 if(Request.Form.Enable != null)
                 {
-                    app.Enabled = true;
+                    domain.Enabled = true;
                 }
 
-                model.App = repository.UpdateApp(app);
+                model.Domain = repository.UpdateDomain(domain);
 
-                return View["app", model];
+                return View["domain", model];
 
             };
 
-            Get ["/app/{name}/role/{role}"] = parameters => {
+            Get ["/domain/{name}/role/{role}"] = parameters => {
                 RoleModel model = new RoleModel();
                 model.Manager  = (Manager)this.Context.CurrentUser;
-                model.App  = repository.GetApp((string)parameters.name, model.Manager.Id);
-                model.Users = repository.GetAppUsers(model.App.Id).ToList();
-                model.Role = repository.GetRole(model.App.Id,(string)parameters.role);
+                model.Domain  = repository.GetDomain((string)parameters.name, model.Manager.Id);
+                model.Users = repository.GetDomainUsers(model.Domain.Id).ToList();
+                model.Role = repository.GetRole(model.Domain.Id,(string)parameters.role);
                 User[] us = repository.GetUsersInRole(model.Role);
 
                 List<string> usStringified = new List<string>();
@@ -138,18 +138,18 @@ namespace SSAManager
             };
 
             
-            Post ["/app/{name}/role/{role}"] = parameters => {
+            Post ["/domain/{name}/role/{role}"] = parameters => {
                 RoleModel model = this.Bind<RoleModel>();
 
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
 
-                model.Role = repository.GetRole(model.App.Id,(string)parameters.role);
+                model.Role = repository.GetRole(model.Domain.Id,(string)parameters.role);
 
                 if(Request.Form.Delete != null)
                 {
                     repository.DeleteRole(model.Role);
-                    return this.Response.AsRedirect(string.Format("/app/{0}",(string)parameters.name));
+                    return this.Response.AsRedirect(string.Format("/domain/{0}",(string)parameters.name));
                 }
 
 
@@ -195,23 +195,23 @@ namespace SSAManager
                     }
                 }
 
-                model.Users = repository.GetAppUsers(model.App.Id).ToList();
+                model.Users = repository.GetDomainUsers(model.Domain.Id).ToList();
 
                 return View["role", model];
             };
 
-            Get ["/app/{name}/role/new"] = parameters => {
+            Get ["/domain/{name}/role/new"] = parameters => {
                 CreateRoleModel model = new CreateRoleModel ();
                 model.Manager  = (Manager)this.Context.CurrentUser;
-                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
            
                 return View["role_new", model];
             };
 
-            Post ["/app/{name}/role/new"] = parameters => {
+            Post ["/domain/{name}/role/new"] = parameters => {
                 CreateRoleModel model = this.Bind<CreateRoleModel>();
                 model.Manager  = (Manager)this.Context.CurrentUser;
-                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
 
                 var result = this.Validate(model);
 
@@ -224,7 +224,7 @@ namespace SSAManager
 
                 try
                 {
-                    repository.CreateRole(model.App.Id, model.Name);
+                    repository.CreateRole(model.Domain.Id, model.Name);
                 }
                 catch(Exception e)
                 {
@@ -236,31 +236,31 @@ namespace SSAManager
                     return View["role_new", model];
                 }
 
-                return this.Response.AsRedirect("/app/" + model.App.Name);
+                return this.Response.AsRedirect("/domain/" + model.Domain.Name);
             };
 
-            Get ["/app/{name}/claim/{cname}"] = parameters => {
+            Get ["/domain/{name}/claim/{cname}"] = parameters => {
                 ClaimModel model = new ClaimModel ();
                 model.Name = (string)parameters.cname;
                 model.Title = "Claim";
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
-                model.Users = repository.GetUsersWithClaim(model.App.Id,(string)parameters.cname);
-                model.Roles = repository.GetRolesWithClaim(model.App.Id,(string)parameters.cname);
+                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
+                model.Users = repository.GetUsersWithClaim(model.Domain.Id,(string)parameters.cname);
+                model.Roles = repository.GetRolesWithClaim(model.Domain.Id,(string)parameters.cname);
 
                 return View["claim", model];
             };
 
-            Post ["/app/{name}/claim/{cname}"] = parameters => {
+            Post ["/domain/{name}/claim/{cname}"] = parameters => {
                 ClaimModel model = new ClaimModel ();
                 model.Name = (string)parameters.cname;
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
 
                 if (Request.Form.Delete != null) {
-                    model.App.Claims.Remove(model.Name);
-                    model.App = repository.UpdateApp(model.App);
-                    Role[] roles = repository.GetRolesWithClaim(model.App.Id, model.Name);
+                    model.Domain.Claims.Remove(model.Name);
+                    model.Domain = repository.UpdateDomain(model.Domain);
+                    Role[] roles = repository.GetRolesWithClaim(model.Domain.Id, model.Name);
 
                     if(roles != null)
                     {
@@ -270,7 +270,7 @@ namespace SSAManager
                         }
                     }
 
-                    User[] users = repository.GetUsersWithClaim(model.App.Id, model.Name);
+                    User[] users = repository.GetUsersWithClaim(model.Domain.Id, model.Name);
 
                     if(users != null){
                         foreach(User u in users){
@@ -279,24 +279,24 @@ namespace SSAManager
                         }
                     }
 
-                    return this.Response.AsRedirect (string.Format ("/app/{0}", model.App.Name));
+                    return this.Response.AsRedirect (string.Format ("/domain/{0}", model.Domain.Name));
                 }
 
                 return View["claim", model];
             };
 
-            Get ["/app/{name}/claim/new"] = parameters => {
+            Get ["/domain/{name}/claim/new"] = parameters => {
                 ClaimModel model = new ClaimModel ();
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
              
                 return View["claim_new", model];
             };
 
-            Post ["/app/{name}/claim/new"] = parameters => {
+            Post ["/domain/{name}/claim/new"] = parameters => {
                 ClaimModel model = this.Bind<ClaimModel>();
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
 
                 var result = this.Validate(model);
                 
@@ -306,7 +306,7 @@ namespace SSAManager
                     return View["claim_new", model];
                 }
 
-                App update = repository.GetApp(model.App.Name, model.Manager.Id);
+                Domain update = repository.GetDomain(model.Domain.Name, model.Manager.Id);
                 List<string> claims = new List<string>(); 
 
                 if(update.Claims != null)
@@ -332,7 +332,7 @@ namespace SSAManager
 
                 try
                 {
-                    repository.UpdateApp(update);
+                    repository.UpdateDomain(update);
                 }
                 catch(Exception e)
                 {
@@ -344,16 +344,16 @@ namespace SSAManager
                     return View["claim_new", model];
                 }
 
-                return this.Response.AsRedirect("/app/" + model.App.Name);
+                return this.Response.AsRedirect("/domain/" + model.Domain.Name);
             };
 
-            Get ["/app/{name}/user/{id}"] = parameters => {
-                AppUserModel model = new AppUserModel();
+            Get ["/domain/{name}/user/{id}"] = parameters => {
+                DomainUserModel model = new DomainUserModel();
 
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
                 model.User = repository.GetUser(Guid.Parse((string)parameters.id));
-                model.Roles = repository.GetRoles(model.App.Id).ToList();
+                model.Roles = repository.GetRoles(model.Domain.Id).ToList();
 
                 List<string> uRoles = new List<string>();
 
@@ -371,12 +371,12 @@ namespace SSAManager
                 return View["user", model];
             };
 
-            Post ["/app/{name}/user/{id}"] = parameters => {
-                AppUserModel model = this.Bind<AppUserModel>();
+            Post ["/domain/{name}/user/{id}"] = parameters => {
+                DomainUserModel model = this.Bind<DomainUserModel>();
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.App = repository.GetApp((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
                 model.User = repository.GetUser(Guid.Parse((string)parameters.id));
-                model.Roles = repository.GetRoles(model.App.Id).ToList();
+                model.Roles = repository.GetRoles(model.Domain.Id).ToList();
 
                 List<Role> uroles = new List<Role>();
             
@@ -384,7 +384,7 @@ namespace SSAManager
                 {
                     foreach(string r in model.NewRoles)
                     {
-                        uroles.Add(repository.GetRole(model.App.Id, r));
+                        uroles.Add(repository.GetRole(model.Domain.Id, r));
                     }
                 }
                

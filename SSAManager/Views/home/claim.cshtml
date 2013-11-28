@@ -3,7 +3,7 @@
   Layout = "_layout.cshtml";
 }
 
-<h1>Claim: @Model.Name <small>Application: <a href="/app/@Model.App.Name/">@Model.App.Name</a></small></h1>
+<h1>Claim: @Model.Name <small>Domain: <a href="/domain/@Model.Domain.Name/">@Model.Domain.Name</a></small></h1>
 <h4>Roles:</h4>
 
 @if(@Model.Roles != null && @Model.Roles.Length > 0)
@@ -12,7 +12,7 @@
     foreach(SSAManager.Role role in Model.Roles)
     {
         if(index > 0){<span>,</span>}
-        <a href="/app/@Model.App.Name/role/@role.Name">@role.Name</a>
+        <a href="/domain/@Model.Domain.Name/role/@role.Name">@role.Name</a>
         ++index;
     }
 }
@@ -28,18 +28,18 @@ else
     foreach(SSAManager.User user in Model.Users)
     {
         if(index > 0){<span>,</span>}
-        <a href="/app/@Model.App.Name/user/@user.Id">@user.Username</a>
+        <a href="/domain/@Model.Domain.Name/user/@user.Id">@user.Username</a>
         ++index;
     }
 }
 else
 {
-    <p>No users have registered for this app yet.</p>
+    <p>No users have registered for this domain yet.</p>
 }
 
 
- <form action="/app/@Model.App.Name/claim/@Model.Name" method="post">
+ <form action="/domain/@Model.Domain.Name/claim/@Model.Name" method="post">
     <!-- <input class="btn btn-success" type="submit" name="Save" value="Save" /> -->
-    <a class="btn btn-default" href="/app/@Model.App.Name/">Cancel</a>
+    <a class="btn btn-default" href="/domain/@Model.Domain.Name/">Cancel</a>
     <input class="pull-right btn btn-danger" type="submit" name="Delete" value="Delete" />
  </form>
