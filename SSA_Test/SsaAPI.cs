@@ -30,6 +30,7 @@ namespace SSA_Test
             domain.Claims = new List<string> ();
             domain.Claims.Add ("test1");
             domain.Claims.Add ("test2");
+            domain.WhiteListIps = new string[]{"127.0.0.1","127.1.1.1"};
 
             _domain = mRepository.UpdateDomain (domain);
 
@@ -61,6 +62,19 @@ namespace SSA_Test
             }
         }
 
+        [Test()]
+        public void IpNotAllowed()
+        {
+            bool allowed = repository.IpAllowed (_domain.Key, "127.0.0.2");
+            Assert.IsFalse (allowed);
+        }
+
+        [Test()]
+        public void IpAllowed()
+        {
+            bool allowed = repository.IpAllowed (_domain.Key, "127.0.0.1");
+            Assert.IsTrue (allowed);
+        }
 
         [Test()]
         public void Does_username_exist()

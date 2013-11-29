@@ -4,6 +4,7 @@ using MongoDB.Driver.Builders;
 using MongoDB.Bson;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography;
+using System.Linq;
 
 namespace SuperSimple.Auth.Api
 {
@@ -20,6 +21,23 @@ namespace SuperSimple.Auth.Api
             client = new MongoClient(connectionString);
             server = client.GetServer();
             database = server.GetDatabase("SsAuthDb");
+        }
+
+        public bool IpAllowed(Guid domainKey, string ip)
+        {
+            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var dquery = Query.And(Query.EQ ("Key", domainKey));
+            var domain = domains.FindOne (dquery);
+
+            string[] ips = 
+                domain ["WhiteListIps"].AsBsonArray.Select(p => p.AsString).ToArray();
+
+            if(ips.Length > 0)
+            {
+                return ips.Contains (ip);
+            }
+
+            return true;
         }
 
         public bool UsernameExists (Guid domainKey, string username)

@@ -255,6 +255,8 @@ namespace SuperSimple.Auth
                     throw new AuthenticationFailedException(error.Message);
                 case "InvalidToken":
                     throw new InvalidTokenException(error.Message);
+                case "IpNotAllowed":
+                    throw new InvalidIpException(error.Message);
                 default:
                     throw exception;
             }

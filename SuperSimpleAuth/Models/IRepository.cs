@@ -1,5 +1,6 @@
 using System;
 using System.Web.Security;
+using Nancy;
 
 namespace SuperSimple.Auth.Api
 {
@@ -13,6 +14,7 @@ namespace SuperSimple.Auth.Api
         bool EmailExists (Guid domainKey, string email);
         bool End (Guid domainKey, Guid authToken);
         bool ValidateDomainKey (string domainName, Guid domainKey);
+        bool IpAllowed (Guid domainKey, string ip);
 	}
 }
 

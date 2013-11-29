@@ -28,5 +28,11 @@ namespace SuperSimple.Auth
         public InvalidTokenException(){}
         public InvalidTokenException(string message): base(message){}
     }
+
+    public class InvalidIpException : Exception
+    {
+        public InvalidIpException(){}
+        public InvalidIpException(string message): base(message){}
+    }
 }
 

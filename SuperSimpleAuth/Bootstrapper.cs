@@ -26,6 +26,8 @@ namespace SuperSimple.Auth.Api
         {
             base.RequestStartup (container, pipelines, context);
 
+
+
 //            string app_key = context.Request.Headers ["ssa_app_key"];
 //            string app = context.Request.Headers ["ssa_app"];
 //

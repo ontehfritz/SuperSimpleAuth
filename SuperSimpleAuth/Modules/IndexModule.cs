@@ -34,15 +34,25 @@ namespace SuperSimple.Auth.Api
                 if(error != null)
                 {
                     return Response.AsJson(error,
-                                           Nancy.HttpStatusCode.UnprocessableEntity);
+                        Nancy.HttpStatusCode.UnprocessableEntity);
                 }
 
-                Guid appKey = 
+                Guid domainKey = 
                     Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
+
+                if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
+                {
+                    ErrorMessage e = new ErrorMessage();
+                    e.Message = "Server IP not accepted";
+                    e.Status = "IpNotAllowed";
+
+                    return Response.AsJson(e,
+                        Nancy.HttpStatusCode.Unauthorized);
+                }
 
                 Guid token = Guid.Parse(Request.Form["AuthToken"]);
 
-                bool end = repository.End(appKey,token);
+                bool end = repository.End(domainKey,token);
 
                 return Response.AsJson(end);
 
