@@ -23,6 +23,47 @@ namespace SuperSimple.Auth.Api
                 return View["index"];
             };
 
+
+            Post ["/forgot"] = parameters => {
+                ErrorMessage error = Helper.VerifyRequest(Request,repository);
+            
+                if(error != null)
+                {
+                    return Response.AsJson(error,
+                        Nancy.HttpStatusCode.UnprocessableEntity);
+                }
+
+                Guid domainKey = 
+                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
+
+                if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
+                {
+                    ErrorMessage e = new ErrorMessage();
+                    e.Message = "Server IP not accepted";
+                    e.Status = "IpNotAllowed";
+
+                    return Response.AsJson(e,
+                        Nancy.HttpStatusCode.UnprocessableEntity);
+                }
+
+                string email = Request.Form["Email"];
+                string website = Request.Form["website"];
+
+                if(repository.EmailExists(domainKey, email))
+                {
+
+                    
+                    return Response.AsJson(true);
+                }
+
+                ErrorMessage emailNotFound = new ErrorMessage();
+                error.Status = "EmailNotFound";
+                error.Message = "Email does not exist";
+
+                return Response.AsJson(emailNotFound,
+                    Nancy.HttpStatusCode.UnprocessableEntity);
+            };
+
             /// <summary>
             /// End the user's session and erase auth token.
             /// After this is called the user must logon again
@@ -47,7 +88,7 @@ namespace SuperSimple.Auth.Api
                     e.Status = "IpNotAllowed";
 
                     return Response.AsJson(e,
-                        Nancy.HttpStatusCode.Unauthorized);
+                        Nancy.HttpStatusCode.UnprocessableEntity);
                 }
 
                 Guid token = Guid.Parse(Request.Form["AuthToken"]);
@@ -67,14 +108,25 @@ namespace SuperSimple.Auth.Api
                                            Nancy.HttpStatusCode.UnprocessableEntity);
                 }
 
-                Guid appKey = 
+
+                Guid domainKey = 
                     Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
+
+                if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
+                {
+                    ErrorMessage e = new ErrorMessage();
+                    e.Message = "Server IP not accepted";
+                    e.Status = "IpNotAllowed";
+
+                    return Response.AsJson(e,
+                        Nancy.HttpStatusCode.UnprocessableEntity);
+                }
 
                 Guid token = Guid.Parse(Request.Form["AuthToken"]);
                 string IP = Request.Form["IP"];
                 User user = null;
 
-                user = repository.Validate(token,appKey,IP);
+                user = repository.Validate(token,domainKey,IP);
 
                 if(user == null)
                 {
@@ -111,15 +163,25 @@ namespace SuperSimple.Auth.Api
                                            Nancy.HttpStatusCode.UnprocessableEntity);
                 }
 
-                Guid appKey = 
+                Guid domainKey = 
                     Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
+
+                if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
+                {
+                    ErrorMessage e = new ErrorMessage();
+                    e.Message = "Server IP not accepted";
+                    e.Status = "IpNotAllowed";
+
+                    return Response.AsJson(e,
+                        Nancy.HttpStatusCode.UnprocessableEntity);
+                }
 
                 User user = null;
                 string username = Request.Form["Username"];
                 string secret = Request.Form["Secret"];
                 string IP = Request.Form["IP"];
 
-                user = repository.Authenticate(appKey, username, secret,IP);
+                user = repository.Authenticate(domainKey, username, secret,IP);
 
                 if(user == null)
                 {
@@ -158,10 +220,18 @@ namespace SuperSimple.Auth.Api
                                            Nancy.HttpStatusCode.UnprocessableEntity);
                 }
 
-                Guid appKey = 
+                Guid domainKey = 
                     Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
 
-                //string app = Request.Headers["ssa_app_key"].FirstOrDefault();
+                if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
+                {
+                    ErrorMessage e = new ErrorMessage();
+                    e.Message = "Server IP not accepted";
+                    e.Status = "IpNotAllowed";
+
+                    return Response.AsJson(e,
+                        Nancy.HttpStatusCode.UnprocessableEntity);
+                }
 
                 User user = new User ();
 
@@ -169,7 +239,7 @@ namespace SuperSimple.Auth.Api
                 {
                     if(Request.Form["Email"] != null && 
                         Request.Form["Email"] != "" &&
-                       repository.EmailExists(appKey, Request.Form["Email"]))
+                        repository.EmailExists(domainKey, Request.Form["Email"]))
                     {
                         ErrorMessage message = new ErrorMessage{
                             Status = "DuplicateUser",
@@ -180,7 +250,7 @@ namespace SuperSimple.Auth.Api
                             Nancy.HttpStatusCode.UnprocessableEntity);
                     }
 
-                    user = repository.CreateUser (appKey, 
+                    user = repository.CreateUser (domainKey, 
                         Request.Form["Username"],
                         Request.Form["Secret"],
                         Request.Form["Email"]);

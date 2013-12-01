@@ -13,6 +13,10 @@ namespace SuperSimple.Auth.Api
         bool UsernameExists (Guid domainKey, string username);
         bool EmailExists (Guid domainKey, string email);
         bool End (Guid domainKey, Guid authToken);
+        bool Forgot (Guid domainKey, string email);
+        bool ChangePassword (Guid domainKey, Guid authToken, string newPassword);
+        bool ChangeUserName (Guid domainKey, Guid authToken, string newUserName);
+        bool ChangeEmail (Guid domainKey, Guid authToken, string newEmail);
         bool ValidateDomainKey (string domainName, Guid domainKey);
         bool IpAllowed (Guid domainKey, string ip);
 	}

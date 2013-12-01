@@ -23,6 +23,50 @@ namespace SuperSimple.Auth.Api
             database = server.GetDatabase("SsAuthDb");
         }
 
+        private string PasswordGenerator(int passwordLength)
+        {
+            Random r = new Random ();
+            int seed = r.Next(1, int.MaxValue);
+            const string allowedChars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789";
+
+            var chars = new char[passwordLength];
+            var rd = new Random(seed);
+
+            for (var i = 0 ; i < passwordLength; i++)
+            {
+                chars[i] = allowedChars[rd.Next(0 , allowedChars.Length)];
+            }
+
+            return new string(chars);
+        }
+
+
+        public bool Forgot(Guid domainKey, string email)
+        {
+            User user = null;
+            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var dQuery = Query.And(Query.EQ ("Key", domainKey));
+            var domain = domains.FindOne (dQuery);
+
+            var users = database.GetCollection<User> ("users");
+            var query = Query.And(Query<User>.EQ (e => e.Email, email),
+                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
+
+            user = users.FindOne (query);
+
+            if(user != null)
+            {
+                user.Secret = this.PasswordGenerator (8);
+                UpdateUser (domainKey, user);
+
+                //Email the password
+
+            }
+
+
+            return false;
+        }
+
         public bool IpAllowed(Guid domainKey, string ip)
         {
             var domains = database.GetCollection<RawBsonDocument> ("domains");
