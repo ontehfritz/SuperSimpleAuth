@@ -40,13 +40,87 @@ namespace SuperSimple.Auth.Api
             return new string(chars);
         }
 
+        public bool ChangeEmail (Guid domainKey, Guid authToken, string newEmail)
+        {
+            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var dQuery = Query.And(Query.EQ ("Key", domainKey));
+            var domain = domains.FindOne (dQuery);
 
-        public bool Forgot(Guid domainKey, string email)
+            var users = database.GetCollection<User> ("users");
+            var query = Query.And(Query<User>.EQ (e => e.AuthToken, authToken),
+                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
+
+            User user = users.FindOne (query);
+
+            if(user != null)
+            {
+                user.Email = newEmail;
+                WriteConcernResult result = users.Save (user);
+
+                return result.UpdatedExisting;
+            }
+
+            return false;
+
+        }
+
+
+        public bool ChangeUserName (Guid domainKey, Guid authToken, string newUserName)
+        {
+            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var dQuery = Query.And(Query.EQ ("Key", domainKey));
+            var domain = domains.FindOne (dQuery);
+
+            var users = database.GetCollection<User> ("users");
+            var query = Query.And(Query<User>.EQ (e => e.AuthToken, authToken),
+                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
+
+            User user = users.FindOne (query);
+
+            if(user != null)
+            {
+                user.Username = newUserName;
+                WriteConcernResult result = users.Save (user);
+
+                return result.UpdatedExisting;
+            }
+
+            return false;
+        }
+
+
+        public bool ChangePassword (Guid domainKey, Guid authToken, string newPassword)
+        {
+            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var dQuery = Query.And(Query.EQ ("Key", domainKey));
+            var domain = domains.FindOne (dQuery);
+
+            var users = database.GetCollection<User> ("users");
+            var query = Query.And(Query<User>.EQ (e => e.AuthToken, authToken),
+                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
+
+            User user = users.FindOne (query);
+
+            if(user != null)
+            {
+                user.Secret = this.Hash(domain["Salt"].AsGuid.ToString(), newPassword);
+                WriteConcernResult result = users.Save (user);
+
+                return result.UpdatedExisting;
+            }
+
+            return false;
+        }
+
+        public bool Forgot(Guid domainKey, string domainName, string email)
         {
             User user = null;
             var domains = database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And(Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dQuery);
+            string body = "You have requested a new password for: {0}";
+            body += "\n User: {1}";
+            body += "\n Password:{2}";
 
             var users = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.Email, email),
@@ -54,15 +128,20 @@ namespace SuperSimple.Auth.Api
 
             user = users.FindOne (query);
 
-            if(user != null)
+            if(user != null && user.Email != null)
             {
                 user.Secret = this.PasswordGenerator (8);
-                UpdateUser (domainKey, user);
+                WriteConcernResult result = users.Save (user);
 
-                //Email the password
+                if (result.UpdatedExisting) 
+                {
+                    Email.Send (domainName, user.Email, 
+                        string.Format ("New password request from: {0}", domainName),
+                        string.Format (body, domainName, user.Username, user.Secret));
 
+                    return true;
+                }
             }
-
 
             return false;
         }
@@ -148,11 +227,9 @@ namespace SuperSimple.Auth.Api
             user.AuthToken = Guid.Empty;
             user.CurrentLogon = null;
 
-            if (UpdateUser (domainKey, user) == null) {
-                return false;
-            }
+            WriteConcernResult result = users.Save (user);
 
-            return true; 
+            return result.UpdatedExisting;
 
         }
 
@@ -180,7 +257,12 @@ namespace SuperSimple.Auth.Api
                 user.LastRequest = DateTime.Now;
                 user.CurrentLogon = DateTime.Now;
 
-                UpdateUser (domainKey, user);
+                WriteConcernResult result = users.Save (user);
+
+                if(!result.UpdatedExisting)
+                {
+                    return null;
+                }
             }
 
             return user;
@@ -194,16 +276,21 @@ namespace SuperSimple.Auth.Api
             var dQuery = Query.And(Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dQuery);
 
-            var collection = database.GetCollection<User> ("users");
+            var users = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.AuthToken, authToken),
                 Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
-            user = collection.FindOne (query);
+            user = users.FindOne (query);
 
             if (user != null) {
                 user.CurrentIp = IP;
                 user.LastRequest = DateTime.Now;
-                UpdateUser (domainKey, user);
+                WriteConcernResult result = users.Save (user);
+
+                if(!result.UpdatedExisting)
+                {
+                    return null;
+                }
             }
 
             return user;
@@ -231,38 +318,37 @@ namespace SuperSimple.Auth.Api
             return user;
         }
 
-        public User UpdateUser (Guid domainKey, User user)
-        {
-            user.ModifiedAt = DateTime.Now;
-
-            MongoCollection<User> users = database.GetCollection<User> ("users");
-            var query = Query<User>.EQ (e => e.Id, user.Id);
-
-            var u = users.Find(query);
-
-            User updateUser = null;
-
-            foreach (User temp in u) {
-                updateUser = temp;
-            }
-
-            if (updateUser != null) {
-                updateUser.AuthToken = user.AuthToken;
-                updateUser.LastRequest = user.LastRequest;
-                updateUser.LogonCount = user.LogonCount;
-                updateUser.Secret = user.Secret;
-                updateUser.CurrentIp = user.CurrentIp;
-                updateUser.CurrentLogon = user.CurrentLogon;
-                updateUser.LastLogon = user.LastLogon;
-                updateUser.LastIp = user.LastIp;
-
-                users.Save (updateUser);
-            } else {
-                user = null;
-            }
-
-            return user;
-        }
+//        private User UpdateUser (Guid domainKey, User user)
+//        {
+//            user.ModifiedAt = DateTime.Now;
+//
+//            MongoCollection<User> users = database.GetCollection<User> ("users");
+//            var query = Query<User>.EQ (e => e.Id, user.Id);
+//
+//            var u = users.Find(query);
+//
+//            User updateUser = null;
+//
+//            foreach (User temp in u) {
+//                updateUser = temp;
+//            }
+//
+//            if (updateUser != null) {
+//                updateUser.AuthToken = user.AuthToken;
+//                updateUser.LastRequest = user.LastRequest;
+//                updateUser.LogonCount = user.LogonCount;
+//                updateUser.CurrentIp = user.CurrentIp;
+//                updateUser.CurrentLogon = user.CurrentLogon;
+//                updateUser.LastLogon = user.LastLogon;
+//                updateUser.LastIp = user.LastIp;
+//
+//                users.Save (updateUser);
+//            } else {
+//                user = null;
+//            }
+//
+//            return user;
+//        }
 
 
         public bool ValidateDomainKey (string domainName, Guid domainKey)

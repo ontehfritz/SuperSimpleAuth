@@ -23,7 +23,35 @@ namespace SuperSimple.Auth.Api
                 return View["index"];
             };
 
+            Post ["/password"] = parameters => {
+                ErrorMessage error = Helper.VerifyRequest(Request,repository);
 
+                if(error != null)
+                {
+                    return Response.AsJson(error,
+                        Nancy.HttpStatusCode.UnprocessableEntity);
+                }
+
+                Guid domainKey = 
+                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
+
+                if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
+                {
+                    ErrorMessage e = new ErrorMessage();
+                    e.Message = "Server IP not accepted";
+                    e.Status = "IpNotAllowed";
+
+                    return Response.AsJson(e,
+                        Nancy.HttpStatusCode.UnprocessableEntity);
+                }
+
+                Guid token = Guid.Parse(Request.Form["AuthToken"]);
+                string newPassword = Request.Form["NewPassword"];
+                //string IP = Request.Form["IP"];
+
+                return Response.AsJson(repository.ChangePassword(domainKey, token, newPassword));
+            };
+           
             Post ["/forgot"] = parameters => {
                 ErrorMessage error = Helper.VerifyRequest(Request,repository);
             
@@ -51,8 +79,6 @@ namespace SuperSimple.Auth.Api
 
                 if(repository.EmailExists(domainKey, email))
                 {
-
-                    
                     return Response.AsJson(true);
                 }
 

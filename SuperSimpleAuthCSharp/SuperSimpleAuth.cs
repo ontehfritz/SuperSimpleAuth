@@ -37,6 +37,52 @@ namespace SuperSimple.Auth
         /// End the specified authToken.
         /// </summary>
         /// <param name="authToken">Auth token.</param>
+        public bool ChangePassword(Guid authToken, string newPassword)
+        {
+            bool end = false;
+
+            using(WebClient client = new WebClient())
+            {
+                System.Collections.Specialized.NameValueCollection reqparm = 
+                    new System.Collections.Specialized.NameValueCollection();
+
+                client.Headers["ssa_domain_key"] = this.DomainKey.ToString();
+                client.Headers["ssa_domain"] = this.Name;
+
+                reqparm.Add("AuthToken", authToken.ToString());
+                reqparm.Add("NewPassword", newPassword);
+
+                string responsebody = "";
+
+                try
+                {
+                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+                    byte[] responsebytes = 
+                        client.UploadValues(string.Format("{0}/password",URI), 
+                            "Post", reqparm);
+
+                    responsebody = Encoding.UTF8.GetString(responsebytes);
+
+                }
+                catch(WebException e) 
+                {
+                    HandleWebException (e);
+                }
+
+                end = JsonConvert.DeserializeObject<bool>(responsebody);
+            }
+
+            return end;
+        }
+
+
+
+
+
+        /// <summary>
+        /// End the specified authToken.
+        /// </summary>
+        /// <param name="authToken">Auth token.</param>
         public bool End(Guid authToken)
         {
             bool end = false;

@@ -8,25 +8,15 @@ namespace SuperSimple.Auth.Api
 {
     public class Email
     {
-        public string fromAddress = "@gmail.com";
-        public string toAddress = "@gmail.com";
-        public const string fromPassword = "password";
-        public string subject = "";
-        public string body = "";
-
-
-        public Email(){
-        }
-
-        public Email(string domain)
+        private static string _logon = "";
+        private const string _password = "";
+  
+        public static void Send(string domain, string to, string subject,
+            string body)
         {
-            fromAddress = "no-reply@" + domain;
-            subject = "Reset password request";
 
-        }
+            string from = string.Format ("no-reply@{0}", domain);
 
-        public void send()
-        {
             var smtp = new SmtpClient
             {
                 Host = "smtp.gmail.com",
@@ -34,16 +24,15 @@ namespace SuperSimple.Auth.Api
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(fromAddress, fromPassword)
+                Credentials = new NetworkCredential(_logon, _password)
             };
 
-            using (var message = new MailMessage(fromAddress, toAddress)
+            using (var message = new MailMessage(from, to)
                 {
                     Subject = subject,
                     Body = body
                 })
             {
-
                 ServicePointManager.ServerCertificateValidationCallback = 
                     delegate(object s, X509Certificate certificate, X509Chain chain, 
                         SslPolicyErrors sslPolicyErrors) 

@@ -63,6 +63,42 @@ namespace SSA_Test
         }
 
         [Test()]
+        public void Change_email()
+        {
+            User user = repository.Authenticate(_domain.Key,"test1","test1");
+            Assert.IsTrue (repository.ChangeEmail (_domain.Key,user.AuthToken,"test3@test3.com"));
+            user = repository.Authenticate(_domain.Key,"test1","test1");
+            Assert.AreEqual ("test3@test3.com", user.Email);
+        }
+     
+        [Test()]
+        public void Change_username()
+        {
+            User user = repository.Authenticate(_domain.Key,"test1","test1");
+            Assert.IsTrue (repository.ChangeUserName (_domain.Key,user.AuthToken,"test3"));
+            user = repository.Authenticate(_domain.Key,"test3","test1");
+            Assert.IsNotNull (user);
+        }
+
+        [Test()]
+        public void Change_password()
+        {
+            User user = repository.Authenticate(_domain.Key,"test1","test1");
+            Assert.IsTrue (repository.ChangePassword (_domain.Key,user.AuthToken,"test3"));
+            user = repository.Authenticate(_domain.Key,"test1","test3");
+            Assert.IsNotNull (user);
+        }
+
+        [Test()]
+        public void Forgot_password()
+        {
+            bool sent = repository.Forgot (_domain.Key, 
+                "supersimpleauth.com","test1@test1.com");
+
+            Assert.IsTrue (sent);
+        }
+
+        [Test()]
         public void IpNotAllowed()
         {
             bool allowed = repository.IpAllowed (_domain.Key, "127.0.0.2");
@@ -101,20 +137,20 @@ namespace SSA_Test
             Assert.IsNotNull (user);
         }
 
-        [Test()]
-        public void Update_a_users ()
-        {
-            User user = 
-                repository.CreateUser (_domain.Key,
-                    "testuser_api", "test", "testuser_api@test.com");
-
-            user = repository.Authenticate(_domain.Key,"testuser_api","test");
-            DateTime before = user.ModifiedAt;
-            user = repository.UpdateUser (_domain.Key,
-                                   user);
-
-            Assert.Greater (user.ModifiedAt,before);
-        }
+//        [Test()]
+//        public void Update_a_users ()
+//        {
+//            User user = 
+//                repository.CreateUser (_domain.Key,
+//                    "testuser_api", "test", "testuser_api@test.com");
+//
+//            user = repository.Authenticate(_domain.Key,"testuser_api","test");
+//            DateTime before = user.ModifiedAt;
+//            user = repository.UpdateUser (_domain.Key,
+//                                   user);
+//
+//            Assert.Greater (user.ModifiedAt,before);
+//        }
 
         [Test()]
         public void Validate_key()
@@ -133,6 +169,8 @@ namespace SSA_Test
                     "testuser_api", "test", "testuser_api@test.com");
 
             user = repository.Authenticate (_domain.Key, "testuser_api", "test");
+            user = repository.Authenticate (_domain.Key, "testuser_api", "test");
+
 
             Assert.IsNotNull (user);
         }

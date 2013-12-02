@@ -80,11 +80,17 @@ namespace SSA_Test
             }
         }
 
+        [Test()]
+        public void Change_user_password ()
+        {
+            User user = ssa.Authenticate("test1", "test1");
+            Assert.IsTrue (ssa.ChangePassword (user.AuthToken,"test3"));
+        }
 
         [Test()]
         public void Check_for_duplicate_email ()
         {
-            User user1 = ssa.CreateUser("test_api_wrapper", "test1",
+            ssa.CreateUser("test_api_wrapper", "test1",
                 "test_api_wrapper@test.com");
 
             User user2 = null;
