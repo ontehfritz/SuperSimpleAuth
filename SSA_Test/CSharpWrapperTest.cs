@@ -51,8 +51,8 @@ namespace SSA_Test
 
             _domain = mRepository.UpdateDomain (domain);
 
-            SuperSimple.Auth.Api.User apiOne = _api.CreateUser (_domain.Key, "test1", "test1");
-            SuperSimple.Auth.Api.User apiTwo = _api.CreateUser (_domain.Key, "test2", "test2");
+            SuperSimple.Auth.Api.User apiOne = _api.CreateUser (_domain.Key, "test1", "test1","test1@test1.com");
+            SuperSimple.Auth.Api.User apiTwo = _api.CreateUser (_domain.Key, "test2", "test2", "test2@test2.com");
 
             SSAManager.User one = mRepository.GetUser (apiOne.Id);
             SSAManager.User two = mRepository.GetUser (apiTwo.Id);
@@ -78,6 +78,20 @@ namespace SSA_Test
             {
                 mRepository.DeleteManager (_manager.Id);
             }
+        }
+
+        [Test()]
+        public void Change_user_name ()
+        {
+            User user = ssa.Authenticate("test1", "test1");
+            Assert.IsTrue (ssa.ChangeUserName (user.AuthToken,"test3"));
+        }
+
+        [Test()]
+        public void Change_user_email ()
+        {
+            User user = ssa.Authenticate("test1", "test1");
+            Assert.IsTrue (ssa.ChangeEmail (user.AuthToken,"test3@test3.com"));
         }
 
         [Test()]

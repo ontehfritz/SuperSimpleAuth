@@ -14,6 +14,38 @@ namespace SSAManager
         {
             this.repository = repository;
 
+
+            Get["/forgot"] = parameters => {
+                ForgotPasswordModel model = new ForgotPasswordModel();
+
+                return View["forgot",model];
+            };
+
+            Post["/forgot"] = parameters => {
+                ForgotPasswordModel model = this.Bind<ForgotPasswordModel>();
+                string password = repository.ForgotPassword(model.Email);
+
+                string body = "You have requested a new password.\n";
+                body += string.Format("password: {0}\n", password);
+                body += "login at: https://www.supersimpleauth.com\n\n\n";
+                body += "If you did not request this password please report this activity to: abuse@supersimpleauth.com \n";
+                body += string.Format("The request was generated from IP: {0}", Request.UserHostAddress);
+
+//                Email.Send("supersimpleauth.com",model.Email,
+//                    string.Format("New password for: {0}", model.Email), body);
+
+                if(password == null)
+                {
+                    model.Message = "Account does not exist. Please sign up for an account.";
+                }
+                else
+                {
+                    model.Message = "Your new password has been sent to your email.";
+                }
+
+                return View["forgot", model];
+            };
+           
             Get["/logon"] = parameters => {
                 LogonModel logon = new LogonModel();
                

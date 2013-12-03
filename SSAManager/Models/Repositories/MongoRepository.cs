@@ -47,6 +47,43 @@ namespace SSAManager
             }
         }
 
+
+        private string PasswordGenerator(int passwordLength)
+        {
+            Random r = new Random ();
+            int seed = r.Next(1, int.MaxValue);
+            const string allowedChars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789";
+
+            var chars = new char[passwordLength];
+            var rd = new Random(seed);
+
+            for (var i = 0 ; i < passwordLength; i++)
+            {
+                chars[i] = allowedChars[rd.Next(0 , allowedChars.Length)];
+            }
+
+            return new string(chars);
+        }
+
+
+        public string ForgotPassword(string email)
+        {
+            MongoCollection<BsonDocument> managers = database.GetCollection<BsonDocument> ("managers");
+            var query = Query.EQ ("UserName", email);
+
+            BsonDocument manager = managers.FindOne(query);
+
+            string newPassword = null;
+          
+            if (manager != null) {
+                newPassword = this.PasswordGenerator (8);
+                manager ["Secret"] = newPassword;
+                managers.Save (manager);
+            }
+
+            return newPassword;
+        }
+
         public void ChangeEmail(Guid id, string password, string email)
         {
             MongoCollection<BsonDocument> managers = database.GetCollection<BsonDocument> ("managers");

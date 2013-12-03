@@ -35,5 +35,6 @@ namespace SSAManager
         void ChangeEmail(Guid id, string secret, string email);
         void ChangePassword(Guid id, string password, string newPassword, string confirmPassword);
         void DeleteManager(Guid id);
+        string ForgotPassword(string email);
     }
 }

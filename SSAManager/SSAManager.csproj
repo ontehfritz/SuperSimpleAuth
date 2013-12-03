@@ -115,6 +115,8 @@
     <Compile Include="Models\Views\DomainModel.cs" />
     <Compile Include="Models\Views\DomainUserModel.cs" />
     <Compile Include="Models\Domain.cs" />
+    <Compile Include="Models\Email.cs" />
+    <Compile Include="Models\Views\ForgotPasswordModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\.DS_Store" />
@@ -134,5 +136,6 @@
     <None Include="Views\logon\settings.cshtml" />
     <None Include="Views\home\domain.cshtml" />
     <None Include="Views\home\domain_new.cshtml" />
+    <None Include="Views\logon\forgot.cshtml" />
   </ItemGroup>
 </Project>

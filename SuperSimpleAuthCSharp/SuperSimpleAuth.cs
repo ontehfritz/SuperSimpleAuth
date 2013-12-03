@@ -14,7 +14,7 @@ namespace SuperSimple.Auth
         private string URI;
         private Guid DomainKey { get; set; }
         private string Name;
-
+ 
         public SuperSimpleAuth (string name, 
             string domainKey, string uri = "http://api.supersimpleauth.com")
         {
@@ -32,6 +32,89 @@ namespace SuperSimple.Auth
                 throw new Exception ("Domain key is in an incorrect format.");
             }
         }
+
+
+        public bool ChangeUserName(Guid authToken, string newUserName)
+        {
+            bool end = false;
+
+            using(WebClient client = new WebClient())
+            {
+                System.Collections.Specialized.NameValueCollection reqparm = 
+                    new System.Collections.Specialized.NameValueCollection();
+
+                client.Headers["ssa_domain_key"] = this.DomainKey.ToString();
+                client.Headers["ssa_domain"] = this.Name;
+
+                reqparm.Add("AuthToken", authToken.ToString());
+                reqparm.Add("NewUserName", newUserName);
+
+                string responsebody = "";
+
+                try
+                {
+                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+
+                    byte[] responsebytes = 
+                        client.UploadValues(string.Format("{0}/username",URI), 
+                            "Post", reqparm);
+
+                    responsebody = Encoding.UTF8.GetString(responsebytes);
+
+                }
+                catch(WebException e) 
+                {
+                    HandleWebException (e);
+                }
+
+                end = JsonConvert.DeserializeObject<bool>(responsebody);
+            }
+
+            return end;
+        }
+
+
+
+        public bool ChangeEmail(Guid authToken, string newEmail)
+        {
+            bool end = false;
+
+            using(WebClient client = new WebClient())
+            {
+                System.Collections.Specialized.NameValueCollection reqparm = 
+                    new System.Collections.Specialized.NameValueCollection();
+
+                client.Headers["ssa_domain_key"] = this.DomainKey.ToString();
+                client.Headers["ssa_domain"] = this.Name;
+
+                reqparm.Add("AuthToken", authToken.ToString());
+                reqparm.Add("NewEmail", newEmail);
+
+                string responsebody = "";
+
+                try
+                {
+                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+
+                    byte[] responsebytes = 
+                        client.UploadValues(string.Format("{0}/email",URI), 
+                            "Post", reqparm);
+
+                    responsebody = Encoding.UTF8.GetString(responsebytes);
+
+                }
+                catch(WebException e) 
+                {
+                    HandleWebException (e);
+                }
+
+                end = JsonConvert.DeserializeObject<bool>(responsebody);
+            }
+
+            return end;
+        }
+
+
 
         /// <summary>
         /// End the specified authToken.
@@ -74,11 +157,7 @@ namespace SuperSimple.Auth
 
             return end;
         }
-
-
-
-
-
+       
         /// <summary>
         /// End the specified authToken.
         /// </summary>

@@ -22,6 +22,88 @@ namespace SuperSimple.Auth.Api
             Get ["/"] = parameters => {
                 return View["index"];
             };
+           
+            Post ["/email"] = parameters => {
+                ErrorMessage error = Helper.VerifyRequest(Request,repository);
+
+                if(error != null)
+                {
+                    return Response.AsJson(error,
+                        Nancy.HttpStatusCode.UnprocessableEntity);
+                }
+
+                Guid domainKey = 
+                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
+
+                if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
+                {
+                    ErrorMessage e = new ErrorMessage();
+                    e.Message = "Server IP not accepted";
+                    e.Status = "IpNotAllowed";
+
+                    return Response.AsJson(e,
+                        Nancy.HttpStatusCode.UnprocessableEntity);
+                }
+
+                Guid token = Guid.Parse(Request.Form["AuthToken"]);
+                string newEmail= Request.Form["NewEmail"];
+                //string IP = Request.Form["IP"];
+
+                if(repository.EmailExists(domainKey, newEmail))
+                {
+                    ErrorMessage e = new ErrorMessage();
+                    e.Message = "Email already exist. Please choose another.";
+                    e.Status = "DuplicateUser";
+
+                    return Response.AsJson(e,
+                        Nancy.HttpStatusCode.UnprocessableEntity);
+                }
+
+
+                return Response.AsJson(repository.ChangeEmail(domainKey, token, newEmail));
+            };
+
+            Post ["/username"] = parameters => {
+                ErrorMessage error = Helper.VerifyRequest(Request,repository);
+
+                if(error != null)
+                {
+                    return Response.AsJson(error,
+                        Nancy.HttpStatusCode.UnprocessableEntity);
+                }
+
+                Guid domainKey = 
+                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
+
+                if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
+                {
+                    ErrorMessage e = new ErrorMessage();
+                    e.Message = "Server IP not accepted";
+                    e.Status = "IpNotAllowed";
+
+                    return Response.AsJson(e,
+                        Nancy.HttpStatusCode.UnprocessableEntity);
+                }
+
+                Guid token = Guid.Parse(Request.Form["AuthToken"]);
+                string newUserName = Request.Form["NewUserName"];
+                //string IP = Request.Form["IP"];
+
+                if(repository.UsernameExists(domainKey, newUserName))
+                {
+                    ErrorMessage e = new ErrorMessage();
+                    e.Message = "Username already exist. Please choose another.";
+                    e.Status = "DuplicateUser";
+
+                    return Response.AsJson(e,
+                        Nancy.HttpStatusCode.UnprocessableEntity);
+                }
+
+
+                return Response.AsJson(repository.ChangeUserName(domainKey, token, newUserName));
+            };
+
+
 
             Post ["/password"] = parameters => {
                 ErrorMessage error = Helper.VerifyRequest(Request,repository);
