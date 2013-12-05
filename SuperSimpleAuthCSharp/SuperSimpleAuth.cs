@@ -241,12 +241,6 @@ namespace SuperSimple.Auth
             return user;
         }
 
-        public bool Authorize(User user, string action)
-        {
-            bool isAuthorized = false;
-            return isAuthorized;
-        }
-
         public User Validate(Guid authToken, string IP = null)
         {
             User user = null;
