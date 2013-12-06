@@ -31,8 +31,8 @@ namespace SSAManager
                 body += "If you did not request this password please report this activity to: abuse@supersimpleauth.com \n";
                 body += string.Format("The request was generated from IP: {0}", Request.UserHostAddress);
 
-//                Email.Send("supersimpleauth.com",model.Email,
-//                    string.Format("New password for: {0}", model.Email), body);
+                Email.Send("supersimpleauth.com", model.Email,
+                    string.Format("New password for: {0}", model.Email), body);
 
                 if(password == null)
                 {

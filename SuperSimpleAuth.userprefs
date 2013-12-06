@@ -1,13 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Views/index.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Modules/LogonModule.cs">
     <Files>
-      <File FileName="SSAManager/Modules/LogonModule.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Modules/LogonModule.cs" Line="34" Column="51" />
       <File FileName="SSAManager/Views/_layout.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/Repositories/MongoRepository.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/Email.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Models/Repositories/MongoRepository.cs" Line="27" Column="18" />
+      <File FileName="SSAManager/Models/Email.cs" Line="29" Column="59" />
       <File FileName="SuperSimpleAuth/Models/Email.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/index.cshtml" Line="41" Column="13" />
+      <File FileName="SSAManager/Views/index.cshtml" Line="1" Column="1" />
+      <File FileName="SuperSimpleAuthCSharp/SuperSimpleAuth.cs" Line="1" Column="1" />
+      <File FileName="SuperSimpleAuthCSharp/User.cs" Line="27" Column="18" />
+      <File FileName="SuperSimpleAuth/Models/MongoRepository.cs" Line="376" Column="10" />
+      <File FileName="SSAManager/Models/Domain.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Models/Manager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

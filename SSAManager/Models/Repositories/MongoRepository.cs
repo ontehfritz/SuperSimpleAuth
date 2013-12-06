@@ -9,6 +9,7 @@ using MongoDB.Driver.Linq;
 using System.Web.Hosting;
 using System.Web.Configuration;
 using System.Xml.Serialization;
+using System.Security.Cryptography;
 
 
 namespace SSAManager
@@ -20,6 +21,14 @@ namespace SSAManager
         private MongoServer server;
         private MongoDatabase database;
 
+
+        public string Hash(string Salt, string Password) 
+        {
+            Rfc2898DeriveBytes Hasher = new Rfc2898DeriveBytes(Password,
+                System.Text.Encoding.Default.GetBytes(Salt), 10000);
+
+            return Convert.ToBase64String(Hasher.GetBytes(25));
+        }
 
         public void ChangePassword(Guid id, string password, string newPassword, string confirmPassword)
         {
