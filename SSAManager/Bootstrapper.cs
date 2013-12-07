@@ -3,6 +3,7 @@ using Nancy;
 using Nancy.TinyIoc;
 using Nancy.Authentication.Forms;
 using Nancy.Bootstrapper;
+using System.Configuration;
 
 
 namespace SSAManager
@@ -19,9 +20,8 @@ namespace SSAManager
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
             base.ConfigureApplicationContainer(container);
-            IRepository repository = new MongoRepository ("mongodb://localhost");
+            IRepository repository = new MongoRepository (ConfigurationManager.AppSettings.Get("db"));
             container.Register<IRepository>(repository);
-
         }
 
 

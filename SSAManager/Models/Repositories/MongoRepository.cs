@@ -21,28 +21,20 @@ namespace SSAManager
         private MongoServer server;
         private MongoDatabase database;
 
-
-        public string Hash(string Salt, string Password) 
-        {
-            Rfc2898DeriveBytes Hasher = new Rfc2898DeriveBytes(Password,
-                System.Text.Encoding.Default.GetBytes(Salt), 10000);
-
-            return Convert.ToBase64String(Hasher.GetBytes(25));
-        }
-
         public void ChangePassword(Guid id, string password, string newPassword, string confirmPassword)
         {
-
             MongoCollection<BsonDocument> managers = database.GetCollection<BsonDocument> ("managers");
             var query = Query.EQ ("_id", id);
 
             BsonDocument manager = managers.FindOne(query);
 
-            if(manager["Secret"].AsString == password)
+            if(manager["Secret"].AsString == Helpers.Hash (manager["_id"].AsGuid.ToString(), 
+                password))
             {
                 if(newPassword == confirmPassword)
                 {
-                    manager["Secret"] = newPassword;
+                    manager["Secret"] = Helpers.Hash (manager["_id"].AsGuid.ToString(), 
+                        newPassword);
                     managers.Save (manager);
                 }
                 else
@@ -86,7 +78,8 @@ namespace SSAManager
           
             if (manager != null) {
                 newPassword = this.PasswordGenerator (8);
-                manager ["Secret"] = newPassword;
+                manager ["Secret"] = Helpers.Hash (manager["_id"].AsGuid.ToString(), 
+                    newPassword);
                 managers.Save (manager);
             }
 
@@ -100,7 +93,8 @@ namespace SSAManager
 
             BsonDocument manager = managers.FindOne(query);
 
-            if(manager["Secret"].AsString == password)
+            if(manager["Secret"].AsString == Helpers.Hash (manager["_id"].AsGuid.ToString(), 
+                password))
             {
                 manager["UserName"] = email;
                 managers.Save (manager);
@@ -351,6 +345,7 @@ namespace SSAManager
         {
             var collection = database.GetCollection<Manager>("managers");
             manager.Id = Guid.NewGuid();
+            manager.Secret = Helpers.Hash (manager.Id.ToString(),manager.Secret);
             collection.Insert(manager);
 
             return manager;

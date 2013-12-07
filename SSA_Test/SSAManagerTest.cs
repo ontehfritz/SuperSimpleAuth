@@ -63,7 +63,8 @@ namespace SSA_Test
         {
             repository.ChangePassword (_manager.Id,"test", "test1", "test1");
             Manager manager = repository.GetManager(_manager.Id);
-            Assert.AreEqual ("test1", manager.Secret);
+            Assert.AreEqual (Helpers.Hash (manager.Id.ToString(), 
+                "test1"), manager.Secret);
         }
 
         [Test()]

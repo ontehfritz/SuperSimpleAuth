@@ -64,7 +64,9 @@ namespace SSAManager
                     return View["logon", model];
                 }
   
-                if (manager != null && manager.Secret != model.Secret)
+                if (manager != null && 
+                    Helpers.Hash (manager.Id.ToString(), 
+                        model.Secret) != manager.Secret)
                 {
                     return View["logon", model];
                 }
