@@ -112,15 +112,13 @@ namespace SuperSimple.Auth.Api
             return false;
         }
 
-        public bool Forgot(Guid domainKey, string domainName, string email)
+        public string Forgot(Guid domainKey, string email)
         {
             User user = null;
             var domains = database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And(Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dQuery);
-            string body = "You have requested a new password for: {0}";
-            body += "\n User: {1}";
-            body += "\n Password:{2}";
+
 
             var users = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.Email, email),
@@ -130,20 +128,17 @@ namespace SuperSimple.Auth.Api
 
             if(user != null && user.Email != null)
             {
-                user.Secret = this.PasswordGenerator (8);
+                string newPassword = this.PasswordGenerator (8);
+                user.Secret = this.Hash(domain["Salt"].AsGuid.ToString(), newPassword);
                 WriteConcernResult result = users.Save (user);
 
                 if (result.UpdatedExisting) 
                 {
-                    Email.Send (domainName, user.Email, 
-                        string.Format ("New password request from: {0}", domainName),
-                        string.Format (body, domainName, user.Username, user.Secret));
-
-                    return true;
+                    return newPassword;
                 }
             }
 
-            return false;
+            return null;
         }
 
         public bool IpAllowed(Guid domainKey, string ip)
@@ -349,8 +344,6 @@ namespace SuperSimple.Auth.Api
 //
 //            return user;
 //        }
-
-
         public bool ValidateDomainKey (string domainName, Guid domainKey)
         {
             var appCollection = database.GetCollection<RawBsonDocument> ("domains");

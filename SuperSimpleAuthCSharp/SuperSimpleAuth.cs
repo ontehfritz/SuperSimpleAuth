@@ -33,7 +33,38 @@ namespace SuperSimple.Auth
             }
         }
 
+        public bool Forgot(string email, string website)
+        {
+            using (WebClient client = new WebClient ()) {
+                System.Collections.Specialized.NameValueCollection reqparm = 
+                    new System.Collections.Specialized.NameValueCollection ();
+             
+                reqparm.Add ("Email", email);
+                reqparm.Add ("Website", website);
+               
+                client.Headers ["ssa_domain_key"] = this.DomainKey.ToString ();
+                client.Headers ["ssa_domain"] = this.Name;
 
+                string responsebody = "";
+
+                try {
+                    ServicePointManager.ServerCertificateValidationCallback = delegate {
+                        return true;
+                    };
+
+                    byte[] responsebytes = client.UploadValues (string.Format ("{0}/forgot", URI), 
+                                               "Post", reqparm);
+
+                    responsebody = Encoding.UTF8.GetString (responsebytes);
+
+                } catch (WebException e) {
+                    HandleWebException (e);
+                }
+
+                return JsonConvert.DeserializeObject<bool> (responsebody);
+            }
+        }
+       
         public bool ChangeUserName(Guid authToken, string newUserName)
         {
             bool end = false;
@@ -73,8 +104,6 @@ namespace SuperSimple.Auth
             return end;
         }
 
-
-
         public bool ChangeEmail(Guid authToken, string newEmail)
         {
             bool end = false;
@@ -113,8 +142,6 @@ namespace SuperSimple.Auth
 
             return end;
         }
-
-
 
         /// <summary>
         /// End the specified authToken.
@@ -199,6 +226,12 @@ namespace SuperSimple.Auth
             return end;
         }
 
+        /// <summary>
+        /// Authenticate the specified username, secret and IP.
+        /// </summary>
+        /// <param name="username">Username.</param>
+        /// <param name="secret">Secret.</param>
+        /// <param name="IP">I.</param>
         public User Authenticate(string username, string secret, string IP = null)
         {
             User user = null;
@@ -241,6 +274,11 @@ namespace SuperSimple.Auth
             return user;
         }
 
+        /// <summary>
+        /// Validate the specified authToken and IP.
+        /// </summary>
+        /// <param name="authToken">Auth token.</param>
+        /// <param name="IP">I.</param>
         public User Validate(Guid authToken, string IP = null)
         {
             User user = null;
@@ -282,6 +320,13 @@ namespace SuperSimple.Auth
             return user;
         }
 
+        /// <summary>
+        /// Creates the user.
+        /// </summary>
+        /// <returns>The user.</returns>
+        /// <param name="userName">User name.</param>
+        /// <param name="secret">Secret.</param>
+        /// <param name="email">Email.</param>
         public User CreateUser(string userName, string secret, string email = null)
         {
             User user = null;
@@ -324,6 +369,11 @@ namespace SuperSimple.Auth
             return user;
         }
 
+        /// <summary>
+        /// Reads the response.
+        /// </summary>
+        /// <returns>The response.</returns>
+        /// <param name="response">Response.</param>
         private string ReadResponse(WebResponse response)
         {
             string responseText = "";
@@ -344,6 +394,10 @@ namespace SuperSimple.Auth
             return responseText;
         }
 
+        /// <summary>
+        /// Handles the web exception.
+        /// </summary>
+        /// <param name="exception">Exception.</param>
         private void HandleWebException(WebException exception)
         {
             if (exception.Status != WebExceptionStatus.ProtocolError) 

@@ -59,6 +59,13 @@ namespace SSA_Test
         }
 
         [Test()]
+        public void Forgot_password()
+        {
+            string newPassword = repository.ForgotPassword ("manager@test.ing");
+            Assert.IsNotNull (newPassword);
+        }
+
+        [Test()]
         public void Change_password()
         {
             repository.ChangePassword (_manager.Id,"test", "test1", "test1");

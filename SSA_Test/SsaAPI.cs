@@ -92,10 +92,10 @@ namespace SSA_Test
         [Test()]
         public void Forgot_password()
         {
-            bool sent = repository.Forgot (_domain.Key, 
-                "supersimpleauth.com","test1@test1.com");
+            string newPassword = repository.Forgot (_domain.Key, 
+                "test1@test1.com");
 
-            Assert.IsTrue (sent);
+            Assert.IsNotNull (newPassword);
         }
 
         [Test()]

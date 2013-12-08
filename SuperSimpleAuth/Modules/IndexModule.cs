@@ -135,6 +135,9 @@ namespace SuperSimple.Auth.Api
             };
            
             Post ["/forgot"] = parameters => {
+                string email = Request.Form["Email"];
+                string website = Request.Form["Website"];
+
                 ErrorMessage error = Helper.VerifyRequest(Request,repository);
             
                 if(error != null)
@@ -146,6 +149,7 @@ namespace SuperSimple.Auth.Api
                 Guid domainKey = 
                     Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
 
+
                 if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
                 {
                     ErrorMessage e = new ErrorMessage();
@@ -155,21 +159,34 @@ namespace SuperSimple.Auth.Api
                     return Response.AsJson(e,
                         Nancy.HttpStatusCode.UnprocessableEntity);
                 }
-
-                string email = Request.Form["Email"];
-                string website = Request.Form["website"];
-
+              
                 if(repository.EmailExists(domainKey, email))
                 {
-                    return Response.AsJson(true);
+                    string body = "You have requested a new password for: {0}";
+                    body += "\n User: {1}";
+                    body += "\n Password:{2}";
+
+                    string newPassword = repository.Forgot(domainKey, email);
+
+                    if(newPassword != null)
+                    {
+                        Email.Send (website, email, 
+                            string.Format ("New password request from: {0}", website),
+                            string.Format (body, website, email, newPassword));
+
+                        return Response.AsJson(true);
+                    }
+
+                    return Response.AsJson(false);
                 }
 
                 ErrorMessage emailNotFound = new ErrorMessage();
-                error.Status = "EmailNotFound";
-                error.Message = "Email does not exist";
+                emailNotFound.Status = "EmailNotFound";
+                emailNotFound.Message = "Email does not exist";
 
                 return Response.AsJson(emailNotFound,
                     Nancy.HttpStatusCode.UnprocessableEntity);
+
             };
 
             /// <summary>

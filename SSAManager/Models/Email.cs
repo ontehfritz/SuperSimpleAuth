@@ -9,8 +9,8 @@ namespace SSAManager
 {
     public class Email
     {
-        private static string _logon =      ConfigurationManager.AppSettings.Get("smtp:Logon");
-        private static string _password =   ConfigurationManager.AppSettings.Get("smtp:Password");
+        private static string _logon =    ConfigurationManager.AppSettings.Get("smtp:Logon");
+        private static string _password =  ConfigurationManager.AppSettings.Get("smtp:Password");
         private static string _smtp =       ConfigurationManager.AppSettings.Get("smtp:Server");
         private static string _port =       ConfigurationManager.AppSettings.Get("smtp:Port");
   

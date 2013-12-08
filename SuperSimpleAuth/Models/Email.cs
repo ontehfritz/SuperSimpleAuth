@@ -24,8 +24,6 @@ namespace SuperSimple.Auth.Api
             {
                 Credentials = new NetworkCredential(_logon, _password),
                 EnableSsl = true
-                            //DeliveryMethod = SmtpDeliveryMethod.Network,
-                            //UseDefaultCredentials = false,
             };
 
             using (var message = new MailMessage(from, to){

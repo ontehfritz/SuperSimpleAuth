@@ -51,7 +51,7 @@ namespace SSA_Test
 
             _domain = mRepository.UpdateDomain (domain);
 
-            SuperSimple.Auth.Api.User apiOne = _api.CreateUser (_domain.Key, "test1", "test1","test1@test1.com");
+            SuperSimple.Auth.Api.User apiOne = _api.CreateUser (_domain.Key, "test1", "test1","fredrick.seitz@gmail.com");
             SuperSimple.Auth.Api.User apiTwo = _api.CreateUser (_domain.Key, "test2", "test2", "test2@test2.com");
 
             SSAManager.User one = mRepository.GetUser (apiOne.Id);
@@ -78,6 +78,12 @@ namespace SSA_Test
             {
                 mRepository.DeleteManager (_manager.Id);
             }
+        }
+
+        [Test()]
+        public void Forgot_password ()
+        {
+            Assert.IsTrue (ssa.Forgot("fredrick.seitz@gmail.com","website.com"));
         }
 
         [Test()]
@@ -190,7 +196,7 @@ namespace SSA_Test
             User user = ssa.Authenticate("test1", "test1");
             bool end = ssa.End (user.AuthToken);
 
-            //Assert.AreEqual (true, end);
+            Assert.AreEqual (true, end);
         }
     }
 }

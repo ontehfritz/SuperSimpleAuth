@@ -1,0 +1,13 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+  background-color:#ffffff;
+  background-image:url('../images/bg.jpg');
+  height: 100%;
+  padding: 20px;
+  margin: 20px;
+  text-shadow: 0px 1px 1px #A4A4A4;
+  /* The html and body elements cannot have any padding or margin. */
+}
