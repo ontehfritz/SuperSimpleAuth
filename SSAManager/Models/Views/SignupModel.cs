@@ -11,8 +11,8 @@ namespace SSAManager
     {
         public string Email { get; set; }
         public string Secret { get; set; }
-        public string ComfirmSecret { get; set; }
-        public IEnumerable<ModelValidationError> Errors { get; set; }
+        public string ConfirmSecret { get; set; }
+        public List<Error> Errors { get; set; }
 
     }
 
@@ -23,12 +23,8 @@ namespace SSAManager
             RuleFor(signup => signup.Email).NotEmpty();
             RuleFor(signup => signup.Email).EmailAddress();
             RuleFor(signup => signup.Secret).NotEmpty();
-            //RuleFor(product => product.Name).Matches("[A-Z]*");
-
-
-            //RuleFor(product => product.Price).ExclusiveBetween(10, 15);
-            //RuleFor(product => product.Price).InclusiveBetween(10, 15);
-            //RuleFor(product => product.Price).Equal(5);
+            RuleFor(signup => signup.ConfirmSecret).Must((signup, confirmSecret) => 
+                confirmSecret == signup.Secret).WithMessage("Passwords do not match.");
         }
     }
 }

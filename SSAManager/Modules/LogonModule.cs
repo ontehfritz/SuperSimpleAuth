@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace SSAManager
 {
     using System;
@@ -79,26 +81,40 @@ namespace SSAManager
             };
 
             Get ["/signup"] = parameters => {
-                SignupModel signup = new SignupModel();
-                return View["signup", signup];
+                SignupModel model = new SignupModel();
+                return View["index", model];
             };
 
             Post ["/signup"] = parameters => {
-                SignupModel signup = this.Bind<SignupModel>();
-                var result = this.Validate(signup);
-                signup.Errors = result.Errors;
+                SignupModel model = this.Bind<SignupModel>();
+                model.Errors = new List<Error>();
+                var result = this.Validate(model);
 
                 if (!result.IsValid)
                 {
-                    return View["signup", signup];
+                    model.Errors = Helpers.GetValidationErrors(result);
+                    return View["index", model];
                 }
 
                 Manager newManager = new Manager(){
-                    UserName = signup.Email,
-                    Secret = signup.Secret
+                    UserName = model.Email,
+                    Secret = model.Secret
                 };
 
-                newManager = repository.CreateManager(newManager);
+                try
+                {
+                    newManager = repository.CreateManager(newManager);
+                }
+                catch(MongoDB.Driver.WriteConcernException e)
+                {
+                    Error error = new Error(){
+                        Name = "Duplicate",
+                        Message = "This email has an account."
+                    };
+
+                    model.Errors.Add(error);
+                    return View["index", model];
+                }
 
                 return this.Response.AsRedirect("/logon");
             };

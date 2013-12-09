@@ -516,7 +516,26 @@ namespace SSAManager
             server = client.GetServer();
             database = server.GetDatabase("SsAuthDb");
 
-            var collection = database.GetCollection<User>("roles");
+            var collection = database.GetCollection<Role>("roles");
+
+            collection.EnsureIndex(keys, options);
+        }
+
+        private void CreateManagerIndexes()
+        {
+            var keys = new IndexKeysBuilder();
+
+            keys.Ascending("UserName");
+
+            var options = new IndexOptionsBuilder();
+            options.SetSparse(true);
+            options.SetUnique(true);
+
+            client = new MongoClient(connectionString);
+            server = client.GetServer();
+            database = server.GetDatabase("SsAuthDb");
+
+            var collection = database.GetCollection<Manager>("managers");
 
             collection.EnsureIndex(keys, options);
         }
@@ -525,7 +544,7 @@ namespace SSAManager
         public MongoRepository (string connection)
         {
             connectionString = connection;
-
+            this.CreateManagerIndexes ();
             this.CreateDomainIndexes ();
             this.CreateUserIndexes ();
             this.CreateRoleIndexes ();

@@ -1,17 +1,16 @@
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.SignupModel>
       
-@if(@Model.Errors != null)
+@if(@Model.Errors != null && @Model.Errors.Count > 0)
 {
-<ul>
-@foreach(var e in @Model.Errors){
-    <li>
-    @foreach(var member in e.MemberNames){
-        @e.GetMessage(member);
+    <ul>
+    @foreach(var e in @Model.Errors){
+        <li>
+        @e.Message
+        </li>
     }
-    </li>
+    </ul>
 }
-</ul>
-}
+
 <div style="width: 300px;">
 <form class="form-signin" action="/signup" method="post">
     <input type="email" name="Email" class="form-control" placeholder="Email address" required autofocus />

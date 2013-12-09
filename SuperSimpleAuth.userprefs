@@ -1,30 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SuperSimpleAuth/web.config">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Models/Repositories/MongoRepository.cs">
     <Files>
-      <File FileName="SSAManager/Modules/LogonModule.cs" Line="70" Column="18" />
-      <File FileName="SSAManager/Views/_layout.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/Repositories/MongoRepository.cs" Line="25" Column="10" />
-      <File FileName="SSAManager/Models/Email.cs" Line="45" Column="6" />
-      <File FileName="SuperSimpleAuth/Models/Email.cs" Line="45" Column="6" />
-      <File FileName="SSAManager/Views/index.cshtml" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuthCSharp/SuperSimpleAuth.cs" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuthCSharp/User.cs" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuth/Models/MongoRepository.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/Domain.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/Manager.cs" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/Helpers.cs" Line="45" Column="23" />
-      <File FileName="SSA_Test/SSAManagerTest.cs" Line="67" Column="25" />
-      <File FileName="SSAManager/web.config" Line="35" Column="41" />
-      <File FileName="SSAManager/Bootstrapper.cs" Line="23" Column="101" />
-      <File FileName="SuperSimpleAuth/Bootstrapper.cs" Line="33" Column="64" />
-      <File FileName="SuperSimpleAuth/web.config" Line="1" Column="1" />
+      <File FileName="SSAManager/web.config" Line="35" Column="37" />
+      <File FileName="SSAManager/Models/Repositories/MongoRepository.cs" Line="1" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True" selected="True" />
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
