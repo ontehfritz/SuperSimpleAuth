@@ -13,6 +13,7 @@ using Nancy;
 using Nancy.Authentication.Forms;
 using Nancy.Responses.Negotiation;
 using Nancy.Security;
+using MongoDB.Driver;
 
 namespace SSAManager
 {
@@ -226,12 +227,12 @@ namespace SSAManager
                 {
                     repository.CreateRole(model.Domain.Id, model.Name);
                 }
-                catch(Exception e)
+                catch(WriteConcernException e)
                 {
                     model.Errors = new List<Error>();
                     Error error = new Error();
-                    error.Name = e.ToString();
-                    error.Message = e.Message;
+                    error.Name = "Duplicate";
+                    error.Message = "Role already exists.";
                     model.Errors.Add(error);
                     return View["role_new", model];
                 }

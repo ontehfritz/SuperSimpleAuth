@@ -1,10 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Models/Repositories/MongoRepository.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/web.config">
     <Files>
-      <File FileName="SSAManager/web.config" Line="35" Column="37" />
-      <File FileName="SSAManager/Models/Repositories/MongoRepository.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/index.cshtml" Line="27" Column="15" />
+      <File FileName="SSAManager/Modules/LogonModule.cs" Line="103" Column="17" />
+      <File FileName="SSAManager/Models/Views/SignupModel.cs" Line="19" Column="66" />
+      <File FileName="SSAManager/web.config" Line="9" Column="31" />
     </Files>
+    <Pads>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State expanded="True" selected="True">
+          <Node name="SSA_Test" expanded="True">
+            <Node name="SSA_Test" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
