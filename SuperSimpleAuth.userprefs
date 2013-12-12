@@ -1,21 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/web.config">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Views/logon/_signup.cshtml">
     <Files>
-      <File FileName="SSAManager/Views/index.cshtml" Line="27" Column="15" />
-      <File FileName="SSAManager/Modules/LogonModule.cs" Line="103" Column="17" />
-      <File FileName="SSAManager/Models/Views/SignupModel.cs" Line="19" Column="66" />
       <File FileName="SSAManager/web.config" Line="9" Column="31" />
+      <File FileName="SSAManager/Modules/HomeModule.cs" Line="235" Column="58" />
+      <File FileName="SSAManager/Views/index.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/_signup.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/logon/_signup.cshtml" Line="7" Column="97" />
     </Files>
-    <Pads>
-      <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True" selected="True">
-          <Node name="SSA_Test" expanded="True">
-            <Node name="SSA_Test" expanded="True" />
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

@@ -7,6 +7,7 @@ namespace SSAManager
 {
     public class DomainModel : IPageModel
     {
+        public List<string> Messages { get; set; }
         public List<Error> Errors { get; set; }
         public Manager Manager { get; set; }
         public List<Role> Roles { get; set; }
@@ -15,7 +16,14 @@ namespace SSAManager
         public string[] WhiteListIps { get; set; }
         public string Name { get; set; }
         public string Title { get; set; }
+
+        public DomainModel() 
+        {
+            Messages = new List<string> ();
+            Errors = new List<Error> ();
+        }
     }
+
 
     public class DomainModelValidator : AbstractValidator<DomainModel>
     {

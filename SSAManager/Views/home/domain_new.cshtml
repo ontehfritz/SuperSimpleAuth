@@ -6,6 +6,7 @@
 
 @if(@Model.Errors != null && @Model.Errors.Count > 0)
 {
+    <div class="alert alert-danger alert-dismissable">
     <ul>
     @foreach(var e in @Model.Errors){
         <li>
@@ -13,6 +14,7 @@
         </li>
     }
     </ul>
+    </div>
 }
 
 <form action="/domain/new" method="post">

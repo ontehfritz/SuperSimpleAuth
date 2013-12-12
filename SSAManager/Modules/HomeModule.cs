@@ -112,7 +112,19 @@ namespace SSAManager
                     domain.Enabled = true;
                 }
 
-                model.Domain = repository.UpdateDomain(domain);
+                try
+                {
+                    model.Domain = repository.UpdateDomain(domain);
+                    model.Messages.Add("Domain successfully updated");
+                }
+                catch(Exception e)
+                {
+                    Error error = new Error();
+                    error.Name = e.GetType().ToString();
+                    error.Message = e.Message;
+
+                    model.Errors.Add(error);
+                }
 
                 return View["domain", model];
 

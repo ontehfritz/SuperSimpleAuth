@@ -7,6 +7,7 @@ namespace SSAManager
     {
         Manager Manager { get; set; }
         string Title { get; set; }
+        List<string> Messages { get; set; }
         List<Error> Errors { get; set; }
     }
 }

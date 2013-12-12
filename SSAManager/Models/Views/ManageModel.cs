@@ -12,6 +12,7 @@ namespace SSAManager
         public Manager Manager { get; set; }
         public string Title { get; set;  }
         public Domain[] Domains { get; set; }
+        public List<string> Messages { get; set; }
         public List<Error> Errors { get; set; }
     }
 }

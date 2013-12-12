@@ -3,6 +3,19 @@
   Layout = "_layout.cshtml";
 }
 
+@if(@Model.Messages != null && @Model.Messages.Count > 0)
+{
+    <div class="alert alert-success alert-dismissable">
+    <ul>
+    @foreach(var message in @Model.Messages){
+        <li>
+        @message
+        </li>
+    }
+    </ul>
+    </div>
+}
+
 <h1>Domain: @Model.Domain.Name</h1>
 <form action="/domain/@Model.Domain.Name" method="post">
 <div>
