@@ -333,8 +333,6 @@ namespace SSAManager
                     Error error = new Error();
                     error.Name = "Duplicate";
                     error.Message = "Claim already exists.";
-
-                    model.Errors = new List<Error>();
                     model.Errors.Add(error);
 
                     return View["claim_new", model];
@@ -349,7 +347,6 @@ namespace SSAManager
                 }
                 catch(Exception e)
                 {
-                    model.Errors = new List<Error>();
                     Error error = new Error();
                     error.Name = e.ToString();
                     error.Message = e.Message;
@@ -407,10 +404,14 @@ namespace SSAManager
                 try
                 {
                     model.User = repository.UpdateUser(model.User);
+                    model.Messages.Add("Successfully updated.");
                 }
                 catch(Exception e)
                 {
-                    model.Debug = e.Message;
+                    Error error = new Error();
+                    error.Name = e.GetType().ToString();
+                    error.Message = e.Message;
+                    model.Errors.Add(error);
                 }
 
                 return View["user", model];

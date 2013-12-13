@@ -3,20 +3,6 @@
   Layout = "_layout.cshtml";
 }
 <h4>Create a new domain</h4>
-
-@if(@Model.Errors != null && @Model.Errors.Count > 0)
-{
-    <div class="alert alert-danger alert-dismissable">
-    <ul>
-    @foreach(var e in @Model.Errors){
-        <li>
-        @e.Message
-        </li>
-    }
-    </ul>
-    </div>
-}
-
 <form action="/domain/new" method="post">
     <p>
         <label for="Name">Name:</label>

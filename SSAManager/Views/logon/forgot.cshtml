@@ -4,13 +4,6 @@
 }
 
 <div style="width: 325px;margin-left: auto;margin-right: auto ;">
-    @if(@Model.Message != null && @Model.Message != "")
-    {
-        <div style="width:200px;color:red;">
-            <p>@Model.Message</p>
-        </div>
-    }
-
     <h4>Forgot your password?</h4>
     <p>Enter your email address below, your new password will be emailed to you.</p>
     <form class="form-signin" action="/forgot" method="post">

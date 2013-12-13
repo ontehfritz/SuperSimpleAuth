@@ -8,20 +8,6 @@
 Claims (or actions), can be used to determine what can be perfomed by a user or role. 
 Examples: "Read", "Write"
 </p>
-
-@if(@Model.Errors != null && @Model.Errors.Count > 0)
-{
-    <div class="alert alert-danger alert-dismissable">
-    <ul>
-    @foreach(var e in @Model.Errors){
-        <li>
-        @e.Message
-        </li>
-    }
-    </ul>
-    </div>
-}
-
 <form action="/domain/@Model.Domain.Name/claim/new" method="post">
     <div>
         <label for="Name">Name:</label>

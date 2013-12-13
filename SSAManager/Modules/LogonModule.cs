@@ -38,11 +38,14 @@ namespace SSAManager
 
                 if(password == null)
                 {
-                    model.Message = "Account does not exist. Please sign up for an account.";
+                    Error error = new Error();
+                    error.Name = "NoAccount";
+                    error.Message = "Account does not exist. Please sign up for an account.";
+                    model.Errors.Add(error);
                 }
                 else
                 {
-                    model.Message = "Your new password has been sent to your email.";
+                    model.Messages.Add("Your new password has been sent to your email.");
                 }
 
                 return View["forgot", model];
@@ -58,8 +61,10 @@ namespace SSAManager
                 LogonModel model = this.Bind<LogonModel>();
 
                 Manager manager = repository.GetManager(model.Username);
-
-                model.Message = "Password or/and Username is incorrect.";
+                Error error = new Error();
+                error.Name = "SignInError";
+                error.Message = "Password or username incorrect.";
+                model.Errors.Add(error);
 
                 if(manager == null)
                 {
@@ -116,7 +121,12 @@ namespace SSAManager
                     return View["index", model];
                 }
 
-                return this.Response.AsRedirect("/logon");
+                LogonModel logon = new LogonModel();
+                logon.Messages.Add("Successully created you account. Please Sign In.");
+
+                return View["logon", logon];
+
+                //return this.Response.AsRedirect("/logon");
             };
 
             Get ["/settings"] = parameters => {

@@ -132,7 +132,6 @@
     <None Include="Views\home\user.cshtml" />
     <None Include="Views\home\claim.cshtml" />
     <None Include="Views\logon\_signup.cshtml" />
-    <None Include="Views\_signup.cshtml" />
     <None Include="Views\logon\logon.cshtml" />
     <None Include="Views\logon\settings.cshtml" />
     <None Include="Views\home\domain.cshtml" />
