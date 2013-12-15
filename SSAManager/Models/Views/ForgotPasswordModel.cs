@@ -11,6 +11,12 @@ namespace SSAManager
         public string Title { get; set; }
         public string Email { get; set; }
 
+        public ForgotPasswordModel()
+        {
+            Messages = new List<string> ();
+            Errors = new List<Error> ();
+        }
+
     }
 }
 

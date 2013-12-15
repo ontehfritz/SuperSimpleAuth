@@ -33,14 +33,18 @@ namespace SuperSimple.Auth
             }
         }
 
-        public bool Forgot(string email, string website)
+        /// <summary>
+        /// /*Forgot the specified email.*/
+        /// </summary>
+        /// <param name="email">Email.</param>
+        public string Forgot(string email)
         {
             using (WebClient client = new WebClient ()) {
                 System.Collections.Specialized.NameValueCollection reqparm = 
                     new System.Collections.Specialized.NameValueCollection ();
              
                 reqparm.Add ("Email", email);
-                reqparm.Add ("Website", website);
+
                
                 client.Headers ["ssa_domain_key"] = this.DomainKey.ToString ();
                 client.Headers ["ssa_domain"] = this.Name;
@@ -61,7 +65,7 @@ namespace SuperSimple.Auth
                     HandleWebException (e);
                 }
 
-                return JsonConvert.DeserializeObject<bool> (responsebody);
+                return JsonConvert.DeserializeObject<string> (responsebody);
             }
         }
        

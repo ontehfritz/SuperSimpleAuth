@@ -49,12 +49,14 @@ namespace SSA_Test
         [TearDown] 
         public void Dispose()
         { 
-            if (_domain != null) {
+            if (_domain != null) 
+            {
                 repository.DeleteDomain (_domain.Name, _manager.Id);
             }
 
-            if (_manager != null) {
-                repository.DeleteManager (_manager.Id);
+            if (_manager != null) 
+            {
+                repository.DeleteManager (_manager.Id, "test");
             }
         }
 
@@ -63,6 +65,7 @@ namespace SSA_Test
         {
             string newPassword = repository.ForgotPassword ("manager@test.ing");
             Assert.IsNotNull (newPassword);
+            repository.ChangePassword (_manager.Id, newPassword, "test", "test");
         }
 
         [Test()]
@@ -72,6 +75,8 @@ namespace SSA_Test
             Manager manager = repository.GetManager(_manager.Id);
             Assert.AreEqual (Helpers.Hash (manager.Id.ToString(), 
                 "test1"), manager.Secret);
+
+            repository.ChangePassword (_manager.Id,"test1", "test", "test");
         }
 
         [Test()]
@@ -120,7 +125,7 @@ namespace SSA_Test
             manager.Secret = "test";
             manager = repository.CreateManager (manager);
             Assert.IsNotNull (manager.Id);
-            repository.DeleteManager (manager.Id);
+            repository.DeleteManager (manager.Id, "test");
         }
        
         [Test()]
@@ -297,7 +302,7 @@ namespace SSA_Test
         [Test()]
         public void Delete_manager()
         {
-            repository.DeleteManager (_manager.Id);
+            repository.DeleteManager (_manager.Id, "test");
             _domain = null;
             _manager = null;
         }

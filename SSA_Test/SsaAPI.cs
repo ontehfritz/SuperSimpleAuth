@@ -58,7 +58,7 @@ namespace SSA_Test
 
             if (_manager != null) 
             {
-                mRepository.DeleteManager (_manager.Id);
+                mRepository.DeleteManager (_manager.Id,"test");
             }
         }
 

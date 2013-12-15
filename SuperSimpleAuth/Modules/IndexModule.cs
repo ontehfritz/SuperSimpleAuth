@@ -136,8 +136,7 @@ namespace SuperSimple.Auth.Api
            
             Post ["/forgot"] = parameters => {
                 string email = Request.Form["Email"];
-                string website = Request.Form["Website"];
-
+             
                 ErrorMessage error = Helper.VerifyRequest(Request,repository);
             
                 if(error != null)
@@ -162,22 +161,12 @@ namespace SuperSimple.Auth.Api
               
                 if(repository.EmailExists(domainKey, email))
                 {
-                    string body = "You have requested a new password for: {0}";
-                    body += "\n User: {1}";
-                    body += "\n Password:{2}";
-
                     string newPassword = repository.Forgot(domainKey, email);
 
                     if(newPassword != null)
                     {
-                        Email.Send (website, email, 
-                            string.Format ("New password request from: {0}", website),
-                            string.Format (body, website, email, newPassword));
-
-                        return Response.AsJson(true);
+                        return Response.AsJson(newPassword);
                     }
-
-                    return Response.AsJson(false);
                 }
 
                 ErrorMessage emailNotFound = new ErrorMessage();
@@ -232,7 +221,6 @@ namespace SuperSimple.Auth.Api
                     return Response.AsJson(error,
                                            Nancy.HttpStatusCode.UnprocessableEntity);
                 }
-
 
                 Guid domainKey = 
                     Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
@@ -331,10 +319,6 @@ namespace SuperSimple.Auth.Api
                 return Response.AsJson(u);
                
 			};
-
-            Post ["/Authorize"] = parameters => {
-                return "Authorize";
-            };
 
             Post ["/user"] = parameters => {
                 ErrorMessage error = Helper.VerifyRequest(Request,repository);

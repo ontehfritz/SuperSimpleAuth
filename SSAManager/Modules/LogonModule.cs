@@ -27,15 +27,6 @@ namespace SSAManager
                 ForgotPasswordModel model = this.Bind<ForgotPasswordModel>();
                 string password = repository.ForgotPassword(model.Email);
 
-                string body = "You have requested a new password.\n";
-                body += string.Format("password: {0}\n", password);
-                body += "login at: https://www.supersimpleauth.com\n\n\n";
-                body += "If you did not request this password please report this activity to: abuse@supersimpleauth.com \n";
-                body += string.Format("The request was generated from IP: {0}", Request.UserHostAddress);
-
-                Email.Send("supersimpleauth.com", model.Email,
-                    string.Format("New password for: {0}", model.Email), body);
-
                 if(password == null)
                 {
                     Error error = new Error();
@@ -45,6 +36,15 @@ namespace SSAManager
                 }
                 else
                 {
+                    string body = "You have requested a new password.\n";
+                    body += string.Format("password: {0}\n", password);
+                    body += "login at: https://www.supersimpleauth.com\n\n\n";
+                    body += "If you did not request this password please report this activity to: abuse@supersimpleauth.com \n";
+                    body += string.Format("The request was generated from IP: {0}", Request.UserHostAddress);
+
+                    Email.Send("supersimpleauth.com", model.Email,
+                        string.Format("New password for: {0}", model.Email), body);
+
                     model.Messages.Add("Your new password has been sent to your email.");
                 }
 
@@ -120,13 +120,11 @@ namespace SSAManager
                     model.Errors.Add(error);
                     return View["index", model];
                 }
-
+               
                 LogonModel logon = new LogonModel();
-                logon.Messages.Add("Successully created you account. Please Sign In.");
+                logon.Messages.Add("Successully created your account. Please Sign In.");
 
                 return View["logon", logon];
-
-                //return this.Response.AsRedirect("/logon");
             };
 
             Get ["/settings"] = parameters => {
@@ -153,11 +151,20 @@ namespace SSAManager
 
                 if(Request.Form.Delete)
                 {
-                    repository.DeleteManager(model.Manager.Id);
-                    return this.Response.AsRedirect("/");
+                    if(model.DeletePassword != null && model.DeletePassword != "")
+                    {
+                        repository.DeleteManager(model.Manager.Id, model.DeletePassword);
+                        return this.Response.AsRedirect("/");
+                    }
+                    else
+                    {
+                        Error error = new Error();
+                        error.Name = "Password";
+                        error.Message = "Please supply a valid password to delete account.";
+                        model.Errors.Add(error);
+                        return View["settings", model];
+                    }
                 }
-
-                //model.Manager = (Manager)this.Context.CurrentUser;
 
                 return this.Response.AsRedirect("/settings");
             };

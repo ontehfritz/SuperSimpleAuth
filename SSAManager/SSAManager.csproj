@@ -92,6 +92,7 @@
     <Folder Include="Views\" />
     <Folder Include="Models\Views\" />
     <Folder Include="Models\Repositories\" />
+    <Folder Include="Content\downloads\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />

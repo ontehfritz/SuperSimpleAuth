@@ -101,25 +101,75 @@
     <b>Important:</b> Always use https/ssl when using SSA
     </p>
 
-    <h3>Validate a user</h3>
+    <h3>User forgot password</h3>
     <pre>
-    Post http://api.supersimpleauth.com/validate
+    Post http://api.supersimpleauth.com/forgot
     Provide request parameters:
-    "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user.
-    "IP"        Optional, but is important for logging.
+    "Email" The email of the user.
     </pre>
+    <p>
+    This method used to reset a users password with a randomly generated password. The new password is returned
+    on successful reset. It is up to the application developer to send it via email or other perferred method. 
+    </p>
 
     <p>
-    This method will validate a user, this can be done per request. Most web frameworks provide an event to be executed 
-    before a request this is a good place to call validate with the AuthKey of the user. If validated it will return a
-    user with an authkey if not it will return an error message. 
-
-    If a user cannot be authenticated an ErrorMessage will be returned. 
-
     Domain name and Domain Key need to be passed in the request header. 
-
-    <b>Important:</b> Always use https/ssl when using SSA
     </p>
+    <p><b>Important:</b> Always use https/ssl when using SSA</p>
+
+
+    <h3>Change username</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/username
+    Provide request parameters:
+     "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user.
+     "NewUserName" The new username for the user. 
+    </pre>
+    <p>
+    This method is used to change a user's username. The user must have a valid authtoken, the web method will turn true 
+    on success. There cannot exist more than one of the same usernames in a domain and an exception will be thrown. 
+    </p>
+
+    <p>
+    Domain name and Domain Key need to be passed in the request header. 
+    </p>
+    <p><b>Important:</b> Always use https/ssl when using SSA</p>
+
+
+    <h3>Change user email</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/username
+    Provide request parameters:
+     "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user.
+     "NewEmail" The new email for the user. 
+    </pre>
+    <p>
+    This method is used to change a user's email. The user must have a valid authtoken, the web method will turn true 
+    on success. There cannot exist more than one of the same emails in a domain and an exception will be thrown, if a 
+    duplicate is found. 
+    </p>
+
+    <p>
+    Domain name and Domain Key need to be passed in the request header. 
+    </p>
+    <p><b>Important:</b> Always use https/ssl when using SSA</p>
+
+    <h3>User change password</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/forgot
+    Provide request parameters:
+     "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user.
+     "NewPassword" The new password for the user. 
+    </pre>
+    <p>
+    This method used to change a users password. The user must have a valid authtoken, the web method will turn true 
+    or false. 
+    </p>
+
+    <p>
+    Domain name and Domain Key need to be passed in the request header. 
+    </p>
+    <p><b>Important:</b> Always use https/ssl when using SSA</p>
 
     <h3>End a session</h3>
     <pre>

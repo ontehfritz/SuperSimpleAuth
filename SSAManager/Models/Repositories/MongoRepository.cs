@@ -351,17 +351,25 @@ namespace SSAManager
             return manager;
         }
 
-        public void DeleteManager(Guid id)
+        public void DeleteManager(Guid id, string password)
         {
-            var managers = database.GetCollection<Manager>("managers");
-            managers.Remove(new QueryDocument("_id", id));
+            MongoCollection<BsonDocument> managers = database.GetCollection<BsonDocument>("managers");
+            //var managers = database.GetCollection<Manager>("managers");
+            var query = Query.EQ ("_id", id);
 
-            Domain[] domains = GetDomains (id);
+            BsonDocument manager = managers.FindOne(query);
 
-            if (domains != null && domains.Length > 0) 
+            if (manager ["Secret"].AsString == Helpers.Hash (manager ["_id"].AsGuid.ToString (), 
+                   password)) 
             {
-                foreach (Domain domain in domains) {
-                    DeleteDomain (domain.Name, id);
+                managers.Remove (new QueryDocument ("_id", id));
+
+                Domain[] domains = GetDomains (id);
+
+                if (domains != null && domains.Length > 0) {
+                    foreach (Domain domain in domains) {
+                        DeleteDomain (domain.Name, id);
+                    }
                 }
             }
         }

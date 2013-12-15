@@ -17,7 +17,8 @@ namespace SSANancyExample
 
             //some encryption on the keys could be used. 
             SuperSimpleAuth ssa = 
-                new SuperSimpleAuth ("testing", "3a3891af-0125-4d12-9230-d11bedfb45b0","http://127.0.0.1:8082/");
+                new SuperSimpleAuth ("testing", 
+                    "e7cfb785-4b37-4350-8897-cbd85af8fde9");
 
             container.Register<SuperSimpleAuth>(ssa);
         }
