@@ -6,24 +6,26 @@ namespace SuperSimple.Auth.Api
 {
     public static class Helper
     {
+        private const string _headerDomainKey = "Ssa-Domain-Key";
+        private const string _headerDomain = "Ssa-Domain";
         /// <summary>
         /// Checks the request header if the proper keys exist and are in correct format
         /// </summary>
         /// <returns>The request.</returns>
         /// <param name="request">Request.</param>
-       public static ErrorMessage VerifyRequest(Request request,IRepository repository)
-       {
+        public static ErrorMessage VerifyRequest(Request request,IRepository repository)
+        {
             ErrorMessage message = null;
             Guid key = new Guid();
 
-            string appKey = request.Headers["ssa_domain_key"].FirstOrDefault();
-            string app = request.Headers["ssa_domain"].FirstOrDefault();
+            string appKey = request.Headers[_headerDomainKey].FirstOrDefault();
+            string app = request.Headers[_headerDomain].FirstOrDefault();
 
             if(appKey != null && app != null)
             {               
                 try
                 {
-                    key = Guid.Parse(request.Headers["ssa_domain_key"].FirstOrDefault());
+                    key = Guid.Parse(request.Headers[_headerDomainKey].FirstOrDefault());
 
                     if(!repository.ValidateDomainKey(app,key))
                     {

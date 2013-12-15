@@ -11,6 +11,9 @@ namespace SuperSimple.Auth
 {
     public class SuperSimpleAuth
     {
+        private const string _headerDomainKey = "SSA_DOMAIN_KEY";
+        private const string _headerDomain = "SSA_DOMAIN";
+
         private string URI;
         private Guid DomainKey { get; set; }
         private string Name;
@@ -46,8 +49,8 @@ namespace SuperSimple.Auth
                 reqparm.Add ("Email", email);
 
                
-                client.Headers ["ssa_domain_key"] = this.DomainKey.ToString ();
-                client.Headers ["ssa_domain"] = this.Name;
+                client.Headers [_headerDomainKey] = this.DomainKey.ToString ();
+                client.Headers [_headerDomain] = this.Name;
 
                 string responsebody = "";
 
@@ -78,8 +81,8 @@ namespace SuperSimple.Auth
                 System.Collections.Specialized.NameValueCollection reqparm = 
                     new System.Collections.Specialized.NameValueCollection();
 
-                client.Headers["ssa_domain_key"] = this.DomainKey.ToString();
-                client.Headers["ssa_domain"] = this.Name;
+                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
+                client.Headers[_headerDomain] = this.Name;
 
                 reqparm.Add("AuthToken", authToken.ToString());
                 reqparm.Add("NewUserName", newUserName);
@@ -117,8 +120,8 @@ namespace SuperSimple.Auth
                 System.Collections.Specialized.NameValueCollection reqparm = 
                     new System.Collections.Specialized.NameValueCollection();
 
-                client.Headers["ssa_domain_key"] = this.DomainKey.ToString();
-                client.Headers["ssa_domain"] = this.Name;
+                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
+                client.Headers[_headerDomain] = this.Name;
 
                 reqparm.Add("AuthToken", authToken.ToString());
                 reqparm.Add("NewEmail", newEmail);
@@ -160,8 +163,8 @@ namespace SuperSimple.Auth
                 System.Collections.Specialized.NameValueCollection reqparm = 
                     new System.Collections.Specialized.NameValueCollection();
 
-                client.Headers["ssa_domain_key"] = this.DomainKey.ToString();
-                client.Headers["ssa_domain"] = this.Name;
+                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
+                client.Headers[_headerDomain] = this.Name;
 
                 reqparm.Add("AuthToken", authToken.ToString());
                 reqparm.Add("NewPassword", newPassword);
@@ -202,8 +205,8 @@ namespace SuperSimple.Auth
                 System.Collections.Specialized.NameValueCollection reqparm = 
                     new System.Collections.Specialized.NameValueCollection();
 
-                client.Headers["ssa_domain_key"] = this.DomainKey.ToString();
-                client.Headers["ssa_domain"] = this.Name;
+                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
+                client.Headers[_headerDomain] = this.Name;
 
                 reqparm.Add("AuthToken", authToken.ToString());
 
@@ -253,9 +256,8 @@ namespace SuperSimple.Auth
                     reqparm.Add ("IP", IP);
                 }
 
-                client.Headers["ssa_domain_key"] = this.DomainKey.ToString();
-                //client.Headers["ssa_app_key"] = "hjkjkj";
-                client.Headers["ssa_domain"] = this.Name;
+                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
+                client.Headers[_headerDomain] = this.Name;
 
                 string responsebody = "";
 
@@ -291,8 +293,8 @@ namespace SuperSimple.Auth
                 System.Collections.Specialized.NameValueCollection reqparm = 
                     new System.Collections.Specialized.NameValueCollection();
 
-                client.Headers["ssa_domain_key"] = this.DomainKey.ToString();
-                client.Headers["ssa_domain"] = this.Name;
+                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
+                client.Headers[_headerDomain] = this.Name;
 
                 reqparm.Add("AuthToken", authToken.ToString());
 
@@ -348,8 +350,8 @@ namespace SuperSimple.Auth
                     reqparm.Add("Email", email);
                 }
 
-                client.Headers["ssa_domain_key"] = this.DomainKey.ToString();
-                client.Headers["ssa_domain"] = this.Name;
+                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
+                client.Headers[_headerDomain] = this.Name;
 
                 string responsebody = "";
 

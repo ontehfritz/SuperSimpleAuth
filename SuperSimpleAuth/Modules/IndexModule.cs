@@ -14,6 +14,7 @@ namespace SuperSimple.Auth.Api
 	public class IndexModule : NancyModule
 	{
         IRepository repository;
+        private const string _headerDomainKey = "Ssa-Domain-Key";
 
         public IndexModule (IRepository repository)
 		{
@@ -21,6 +22,11 @@ namespace SuperSimple.Auth.Api
 
             Get ["/"] = parameters => {
                 return View["index"];
+            };
+
+            Get ["/test"] = parameters => {
+                return Response.AsJson(Request.Headers);
+
             };
            
             Post ["/email"] = parameters => {
@@ -33,7 +39,7 @@ namespace SuperSimple.Auth.Api
                 }
 
                 Guid domainKey = 
-                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
+                    Guid.Parse(Request.Headers[_headerDomainKey].FirstOrDefault());
 
                 if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
                 {
@@ -73,7 +79,7 @@ namespace SuperSimple.Auth.Api
                 }
 
                 Guid domainKey = 
-                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
+                    Guid.Parse(Request.Headers[_headerDomainKey].FirstOrDefault());
 
                 if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
                 {
@@ -115,7 +121,7 @@ namespace SuperSimple.Auth.Api
                 }
 
                 Guid domainKey = 
-                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
+                    Guid.Parse(Request.Headers[_headerDomainKey].FirstOrDefault());
 
                 if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
                 {
@@ -146,7 +152,7 @@ namespace SuperSimple.Auth.Api
                 }
 
                 Guid domainKey = 
-                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
+                    Guid.Parse(Request.Headers[_headerDomainKey].FirstOrDefault());
 
 
                 if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
@@ -193,7 +199,7 @@ namespace SuperSimple.Auth.Api
                 }
 
                 Guid domainKey = 
-                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
+                    Guid.Parse(Request.Headers[_headerDomainKey].FirstOrDefault());
 
                 if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
                 {
@@ -223,7 +229,7 @@ namespace SuperSimple.Auth.Api
                 }
 
                 Guid domainKey = 
-                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
+                    Guid.Parse(Request.Headers[_headerDomainKey].FirstOrDefault());
 
                 if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
                 {
@@ -277,7 +283,7 @@ namespace SuperSimple.Auth.Api
                 }
 
                 Guid domainKey = 
-                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
+                    Guid.Parse(Request.Headers[_headerDomainKey].FirstOrDefault());
 
                 if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
                 {
@@ -330,7 +336,7 @@ namespace SuperSimple.Auth.Api
                 }
 
                 Guid domainKey = 
-                    Guid.Parse(Request.Headers["ssa_domain_key"].FirstOrDefault());
+                    Guid.Parse(Request.Headers[_headerDomainKey].FirstOrDefault());
 
                 if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
                 {
