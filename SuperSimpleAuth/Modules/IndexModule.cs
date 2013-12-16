@@ -26,7 +26,6 @@ namespace SuperSimple.Auth.Api
 
             Get ["/test"] = parameters => {
                 return Response.AsJson(Request.Headers);
-
             };
            
             Post ["/email"] = parameters => {
@@ -391,6 +390,7 @@ namespace SuperSimple.Auth.Api
                 };
             
                 return Response.AsJson(u);
+                //return Response.AsJson(true);
             };
 		}
 	}

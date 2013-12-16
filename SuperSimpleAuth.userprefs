@@ -1,25 +1,22 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Modules/LogonModule.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SuperSimpleAuth/Modules/IndexModule.cs">
     <Files>
-      <File FileName="SSAManager/Views/_layout.cshtml" Line="67" Column="101" />
-      <File FileName="SSAManager/Models/Views/LogonModel.cs" Line="19" Column="41" />
-      <File FileName="SSAManager/Modules/LogonModule.cs" Line="52" Column="15" />
-      <File FileName="SSAManager/Views/logon/logon.cshtml" Line="4" Column="2" />
-      <File FileName="SSAManager/Views/home/domain_new.cshtml" Line="5" Column="29" />
-      <File FileName="SSAManager/Views/home/role.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/home/role_new.cshtml" Line="5" Column="95" />
-      <File FileName="SSAManager/Views/home/user.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/index.cshtml" Line="28" Column="34" />
-      <File FileName="SSAManager/Views/logon/_signup.cshtml" Line="2" Column="7" />
-      <File FileName="SSAManager/Views/home/claim.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/home/claim_new.cshtml" Line="10" Column="5" />
-      <File FileName="SSAManager/Views/home/domain.cshtml" Line="5" Column="1" />
-      <File FileName="SSAManager/Views/home/manage.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/logon/forgot.cshtml" Line="6" Column="66" />
-      <File FileName="SSAManager/Views/logon/settings.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Models/Views/ForgotPasswordModel.cs" Line="12" Column="42" />
+      <File FileName="SuperSimpleAuth/Modules/IndexModule.cs" Line="28" Column="57" />
     </Files>
+    <Pads>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State expanded="True">
+          <Node name="SSA_Test" expanded="True">
+            <Node name="SSA_Test" expanded="True">
+              <Node name="CSharpWrapperTest" expanded="True" />
+              <Node name="SsaAPI" expanded="True" />
+              <Node name="SSAManagerTest" expanded="True" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

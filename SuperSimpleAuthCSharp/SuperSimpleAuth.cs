@@ -11,8 +11,10 @@ namespace SuperSimple.Auth
 {
     public class SuperSimpleAuth
     {
-        private const string _headerDomainKey = "SSA_DOMAIN_KEY";
-        private const string _headerDomain = "SSA_DOMAIN";
+//        private const string _headerDomainKey = "SSA_DOMAIN_KEY";
+//        private const string _headerDomain = "SSA_DOMAIN";
+        private const string _headerDomainKey = "Ssa-Domain-Key";
+        private const string _headerDomain = "Ssa-Domain";
 
         private string URI;
         private Guid DomainKey { get; set; }

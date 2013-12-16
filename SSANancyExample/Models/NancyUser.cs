@@ -23,6 +23,7 @@ namespace SSANancyExample
             NancyUserIdentity user = new NancyUserIdentity {
                 UserName = ssaUser.UserName,
                 AuthToken = ssaUser.AuthToken,
+                Email = ssaUser.Email,
                 Id = ssaUser.Id,
                 Claims = ssaUser.Claims,
                 Roles = ssaUser.Roles

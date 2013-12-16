@@ -4,15 +4,16 @@
 } 
 
 <form action="/domain/@Model.Domain.Name/user/@Model.User.Id" method="post">
-@Model.Debug
+
+<h1>Domain: <a href="/domain/@Model.Domain.Name">@Model.Domain.Name</a></h1>
 <table>
 <tr>
     <td>UserName: </td>
     <td>@Model.User.Username</td>
 </tr>
 <tr>
-    <td>Application: </td>
-    <td><a href="/domain/@Model.Domain.Name">@Model.Domain.Name</a></td>
+    <td>Email: </td>
+    <td>@Model.User.Email</td>
 </tr>
 <tr>
     <td>Created: </td>
@@ -33,8 +34,9 @@
 <tr>
     <td>Current Logon: </td>
     <td>
-    @if(Model.User.CurrentLogon.HasValue){
-        <b>@Model.User.CurrentLogon.Value.ToLongTimeString() @Model.User.CurrentLogon.Value.ToLongTimeString()</b>
+    @if(Model.User.CurrentLogon.HasValue)
+    {
+        <b>@Model.User.CurrentLogon.Value.ToLongDateString() @Model.User.CurrentLogon.Value.ToLongTimeString()</b>
     }
     </td>
 </tr>
@@ -54,7 +56,7 @@
     <td>Last Logon: </td>
     <td>
     @if(Model.User.LastLogon.HasValue){
-        <b>@Model.User.LastLogon.Value.ToLongTimeString() @Model.User.LastLogon.Value.ToLongTimeString()</b>
+        <b>@Model.User.LastLogon.Value.ToLongDateString() @Model.User.LastLogon.Value.ToLongTimeString()</b>
     }
     </td>
 </tr>

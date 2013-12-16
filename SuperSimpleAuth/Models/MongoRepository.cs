@@ -147,12 +147,14 @@ namespace SuperSimple.Auth.Api
             var dquery = Query.And(Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dquery);
 
-            string[] ips = 
-                domain ["WhiteListIps"].AsBsonArray.Select(p => p.AsString).ToArray();
-
-            if(ips.Length > 0)
+            if (!domain ["WhiteListIps"].IsBsonNull) 
             {
-                return ips.Contains (ip);
+                string[] ips = 
+                    domain ["WhiteListIps"].AsBsonArray.Select (p => p.AsString).ToArray ();
+
+                if (ips.Length > 0) {
+                    return ips.Contains (ip);
+                }
             }
 
             return true;
