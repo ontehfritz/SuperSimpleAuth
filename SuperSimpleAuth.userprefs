@@ -1,23 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SuperSimpleAuth/Modules/IndexModule.cs">
-    <Files>
-      <File FileName="SuperSimpleAuth/Modules/IndexModule.cs" Line="28" Column="57" />
-    </Files>
-    <Pads>
-      <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True">
-          <Node name="SSA_Test" expanded="True">
-            <Node name="SSA_Test" expanded="True">
-              <Node name="CSharpWrapperTest" expanded="True" />
-              <Node name="SsaAPI" expanded="True" />
-              <Node name="SSAManagerTest" expanded="True" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
