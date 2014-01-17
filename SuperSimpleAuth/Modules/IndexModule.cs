@@ -270,6 +270,32 @@ namespace SuperSimple.Auth.Api
                
             };
 
+            Post ["/disable"] = parameters => {
+                ErrorMessage error = Helper.VerifyRequest(Request,repository);
+
+                if(error != null)
+                {
+                    return Response.AsJson(error,
+                        Nancy.HttpStatusCode.UnprocessableEntity);
+                }
+
+                Guid domainKey = 
+                    Guid.Parse(Request.Headers[_headerDomainKey].FirstOrDefault());
+
+                if(!repository.IpAllowed(domainKey, Request.UserHostAddress))
+                {
+                    ErrorMessage e = new ErrorMessage();
+                    e.Message = "Server IP not accepted";
+                    e.Status = "IpNotAllowed";
+
+                    return Response.AsJson(e,
+                        Nancy.HttpStatusCode.UnprocessableEntity);
+                }
+
+                Guid token = Guid.Parse(Request.Form["AuthToken"]);
+
+                return Response.AsJson(repository.Disable(token,domainKey));
+            };
 
 	        Post ["/authenticate"] = parameters => {
                

@@ -52,7 +52,7 @@ namespace SuperSimple.Auth.Api
 
             User user = users.FindOne (query);
 
-            if(user != null)
+            if(user != null && user.Enabled)
             {
                 user.Email = newEmail;
                 WriteConcernResult result = users.Save (user);
@@ -77,7 +77,7 @@ namespace SuperSimple.Auth.Api
 
             User user = users.FindOne (query);
 
-            if(user != null)
+            if(user != null && user.Enabled)
             {
                 user.Username = newUserName;
                 WriteConcernResult result = users.Save (user);
@@ -101,7 +101,7 @@ namespace SuperSimple.Auth.Api
 
             User user = users.FindOne (query);
 
-            if(user != null)
+            if(user != null && user.Enabled)
             {
                 user.Secret = this.Hash(domain["Salt"].AsGuid.ToString(), newPassword);
                 WriteConcernResult result = users.Save (user);
@@ -126,7 +126,7 @@ namespace SuperSimple.Auth.Api
 
             user = users.FindOne (query);
 
-            if(user != null && user.Email != null)
+            if(user != null && user.Email != null && user.Enabled)
             {
                 string newPassword = this.PasswordGenerator (8);
                 user.Secret = this.Hash(domain["Salt"].AsGuid.ToString(), newPassword);
@@ -247,7 +247,8 @@ namespace SuperSimple.Auth.Api
 
             user = users.FindOne (query);
 
-            if (user != null) {
+            if (user != null &&
+                user.Enabled) {
                 user.CurrentIp = IP;
                 user.AuthToken = Guid.NewGuid ();
                 user.LogonCount += 1;
@@ -260,6 +261,10 @@ namespace SuperSimple.Auth.Api
                 {
                     return null;
                 }
+            }
+            else
+            {
+                return null;
             }
 
             return user;
@@ -279,7 +284,7 @@ namespace SuperSimple.Auth.Api
 
             user = users.FindOne (query);
 
-            if (user != null) {
+            if (user != null && user.Enabled) {
                 user.CurrentIp = IP;
                 user.LastRequest = DateTime.Now;
                 WriteConcernResult result = users.Save (user);
@@ -288,6 +293,10 @@ namespace SuperSimple.Auth.Api
                 {
                     return null;
                 }
+            }
+            else
+            {
+                return null;
             }
 
             return user;
@@ -315,37 +324,37 @@ namespace SuperSimple.Auth.Api
             return user;
         }
 
-//        private User UpdateUser (Guid domainKey, User user)
-//        {
-//            user.ModifiedAt = DateTime.Now;
-//
-//            MongoCollection<User> users = database.GetCollection<User> ("users");
-//            var query = Query<User>.EQ (e => e.Id, user.Id);
-//
-//            var u = users.Find(query);
-//
-//            User updateUser = null;
-//
-//            foreach (User temp in u) {
-//                updateUser = temp;
-//            }
-//
-//            if (updateUser != null) {
-//                updateUser.AuthToken = user.AuthToken;
-//                updateUser.LastRequest = user.LastRequest;
-//                updateUser.LogonCount = user.LogonCount;
-//                updateUser.CurrentIp = user.CurrentIp;
-//                updateUser.CurrentLogon = user.CurrentLogon;
-//                updateUser.LastLogon = user.LastLogon;
-//                updateUser.LastIp = user.LastIp;
-//
-//                users.Save (updateUser);
-//            } else {
-//                user = null;
-//            }
-//
-//            return user;
-//        }
+        public bool Disable (Guid authToken, Guid domainKey, string IP = null)
+        {
+            User user = null;
+
+            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var dQuery = Query.And(Query.EQ ("Key", domainKey));
+            var domain = domains.FindOne (dQuery);
+
+            var users = database.GetCollection<User> ("users");
+            var query = Query.And(Query<User>.EQ (e => e.AuthToken, authToken),
+                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
+
+            user = users.FindOne (query);
+
+            if (user != null) {
+                user.CurrentIp = IP;
+                user.LastRequest = DateTime.Now;
+                user.Enabled = false;
+                WriteConcernResult result = users.Save (user);
+
+                if(!result.UpdatedExisting)
+                {
+                    return false;
+                }
+
+                this.End (domainKey, authToken);
+            }
+
+            return true;
+        }
+
         public bool ValidateDomainKey (string domainName, Guid domainKey)
         {
             var appCollection = database.GetCollection<RawBsonDocument> ("domains");

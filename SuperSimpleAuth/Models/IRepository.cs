@@ -8,6 +8,7 @@ namespace SuperSimple.Auth.Api
 	{
         User Authenticate (Guid domainKey, string username, string secret, string IP = null);
         User CreateUser (Guid domainKey, string username, string password, string email = null);
+        bool Disable (Guid authToken, Guid domainKey, string IP = null);
         User Validate (Guid authToken, Guid domainKey, string IP = null);
         bool UsernameExists (Guid domainKey, string username);
         bool EmailExists (Guid domainKey, string email);

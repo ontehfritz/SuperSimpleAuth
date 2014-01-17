@@ -63,6 +63,15 @@ namespace SSA_Test
         }
 
         [Test()]
+        public void Disable_account()
+        {
+            User user = repository.Authenticate(_domain.Key,"test1","test1");
+            Assert.IsTrue (repository.Disable(user.AuthToken, _domain.Key));
+            user = repository.Authenticate(_domain.Key,"test1","test1");
+            Assert.IsNull (user);
+        }
+
+        [Test()]
         public void Change_email()
         {
             User user = repository.Authenticate(_domain.Key,"test1","test1");

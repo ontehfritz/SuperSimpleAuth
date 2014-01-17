@@ -480,11 +480,7 @@ namespace SSAManager
             var options = new IndexOptionsBuilder();
             options.SetSparse(true);
             options.SetUnique(true);
-
-            client = new MongoClient(connectionString);
-            server = client.GetServer();
-            database = server.GetDatabase("SsAuthDb");
-
+           
             var collection = database.GetCollection<Domain>("domains");
 
             collection.EnsureIndex(keys, options);
@@ -496,15 +492,11 @@ namespace SSAManager
 
             keys.Ascending("Username", "DomainId");
            
-
             var options = new IndexOptionsBuilder();
             options.SetSparse(true);
             options.SetUnique(true);
 
-            client = new MongoClient(connectionString);
-            server = client.GetServer();
-            database = server.GetDatabase("SsAuthDb");
-
+           
             var collection = database.GetCollection<User>("users");
 
             collection.EnsureIndex(keys, options);
@@ -519,10 +511,6 @@ namespace SSAManager
             var options = new IndexOptionsBuilder();
             options.SetSparse(true);
             options.SetUnique(true);
-
-            client = new MongoClient(connectionString);
-            server = client.GetServer();
-            database = server.GetDatabase("SsAuthDb");
 
             var collection = database.GetCollection<Role>("roles");
 
@@ -539,9 +527,6 @@ namespace SSAManager
             options.SetSparse(true);
             options.SetUnique(true);
 
-            client = new MongoClient(connectionString);
-            server = client.GetServer();
-            database = server.GetDatabase("SsAuthDb");
 
             var collection = database.GetCollection<Manager>("managers");
 
@@ -552,6 +537,10 @@ namespace SSAManager
         public MongoRepository (string connection)
         {
             connectionString = connection;
+            client = new MongoClient(connectionString);
+            server = client.GetServer();
+            database = server.GetDatabase("SsAuthDb");
+
             this.CreateManagerIndexes ();
             this.CreateDomainIndexes ();
             this.CreateUserIndexes ();

@@ -81,6 +81,34 @@ namespace SSA_Test
         }
 
         [Test()]
+        public void Disable_account ()
+        {
+            User user = ssa.Authenticate("test1", "test1");
+            Assert.IsTrue (ssa.Disable (user.AuthToken));
+
+            try
+            {
+                ssa.Validate (user.AuthToken);
+                Assert.IsTrue (false);
+            }
+            catch(Exception e)
+            {
+                Assert.IsTrue (true);
+            }
+
+            try
+            {
+                ssa.Authenticate("test1", "test1");
+                Assert.IsTrue (false);
+            }
+            catch(Exception e)
+            {
+                Assert.IsTrue (true);
+            }
+        }
+
+
+        [Test()]
         public void Forgot_password ()
         {
             string newPassword = ssa.Forgot("test1@test1.com");

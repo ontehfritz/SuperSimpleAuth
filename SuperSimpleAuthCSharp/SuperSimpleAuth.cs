@@ -377,6 +377,43 @@ namespace SuperSimple.Auth
             return user;
         }
 
+        public bool Disable(Guid authToken)
+        {
+            bool disabled = false;
+
+            using(WebClient client = new WebClient())
+            {
+                System.Collections.Specialized.NameValueCollection reqparm = 
+                    new System.Collections.Specialized.NameValueCollection();
+
+                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
+                client.Headers[_headerDomain] = this.Name;
+
+                reqparm.Add("AuthToken", authToken.ToString());
+
+                string responsebody = "";
+
+                try
+                {
+                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+                    byte[] responsebytes = 
+                        client.UploadValues(string.Format("{0}/disable",URI), 
+                            "Post", reqparm);
+
+                    responsebody = Encoding.UTF8.GetString(responsebytes);
+
+                }
+                catch(WebException e) 
+                {
+                    HandleWebException (e);
+                }
+
+                disabled = JsonConvert.DeserializeObject<bool>(responsebody);
+            }
+
+            return disabled;
+        }
+
         /// <summary>
         /// Reads the response.
         /// </summary>
