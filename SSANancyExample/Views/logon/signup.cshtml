@@ -10,9 +10,7 @@
         <ul>
         @foreach(var e in @Model.Errors){
             <li>
-            @foreach(var member in e.MemberNames){
-                @e.GetMessage(member);
-            }
+            @e
             </li>
         }
         </ul>

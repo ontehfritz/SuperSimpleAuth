@@ -42,19 +42,19 @@
       <HintPath>..\packages\FluentValidation.5.0.0.1\lib\Net40\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="Nancy">
-      <HintPath>..\packages\Nancy.0.21.1\lib\net40\Nancy.dll</HintPath>
+      <HintPath>..\packages\Nancy.0.22.1\lib\net40\Nancy.dll</HintPath>
     </Reference>
     <Reference Include="Nancy.Authentication.Forms">
-      <HintPath>..\packages\Nancy.Authentication.Forms.0.21.1\lib\net40\Nancy.Authentication.Forms.dll</HintPath>
+      <HintPath>..\packages\Nancy.Authentication.Forms.0.22.1\lib\net40\Nancy.Authentication.Forms.dll</HintPath>
     </Reference>
     <Reference Include="Nancy.Hosting.Aspnet">
-      <HintPath>..\packages\Nancy.Hosting.Aspnet.0.21.1\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
+      <HintPath>..\packages\Nancy.Hosting.Aspnet.0.22.1\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
     </Reference>
     <Reference Include="Nancy.Validation.FluentValidation">
-      <HintPath>..\packages\Nancy.Validation.FluentValidation.0.21.1\lib\net40\Nancy.Validation.FluentValidation.dll</HintPath>
+      <HintPath>..\packages\Nancy.Validation.FluentValidation.0.22.1\lib\net40\Nancy.Validation.FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="Nancy.ViewEngines.Razor">
-      <HintPath>..\packages\Nancy.Viewengines.Razor.0.21.1\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
+      <HintPath>..\packages\Nancy.Viewengines.Razor.0.22.1\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -77,6 +77,7 @@
     <Compile Include="Models\SignupModel.cs" />
     <Compile Include="Modules\IndexModule.cs" />
     <Compile Include="Modules\LogonModule.cs" />
+    <Compile Include="Models\Helpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />

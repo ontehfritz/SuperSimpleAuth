@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Nancy.Validation;
 using System.Security.Cryptography;
 
-namespace SSAManager
+namespace SSANancyExample
 {
     public static class Helpers
     {
@@ -24,18 +24,15 @@ namespace SSAManager
         /// Used to convert fluent validation errors from nancyfx to a simple error object
         /// </summary>
         /// <returns>The validation errors.</returns>
-        public static List<Error> GetValidationErrors(ModelValidationResult result)
+        public static List<string> GetValidationErrors(ModelValidationResult result)
         {
-            List<Error> errors = new List<Error>();
+            List<string> errors = new List<string>();
 
             foreach(var e in result.Errors)
             {
                 foreach(var message in e.Value)
                 {
-                    Error error = new Error();
-                    error.Name = e.Key;
-                    error.Message = message.ErrorMessage;
-                    errors.Add(error);
+                    errors.Add(message.ErrorMessage);
                 }
             }
             

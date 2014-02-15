@@ -39,6 +39,6 @@ Global
 		{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = SSAManager\SSAManager.csproj
+		StartupItem = SuperSimpleAuth\SuperSimpleAuth.csproj
 	EndGlobalSection
 EndGlobal

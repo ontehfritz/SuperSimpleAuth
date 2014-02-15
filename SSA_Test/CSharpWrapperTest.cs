@@ -107,7 +107,6 @@ namespace SSA_Test
             }
         }
 
-
         [Test()]
         public void Forgot_password ()
         {

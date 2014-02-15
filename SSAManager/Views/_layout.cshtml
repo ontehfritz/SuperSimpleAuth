@@ -8,7 +8,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>SuperSimpleAuth - Manage Applications</title>
-    <script src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
+    <script src="//codeorigin.jquery.com/jquery-2.0.3.js"></script>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" type="text/css" href="/content/css/ss.css" />
@@ -46,13 +46,6 @@
   <br style="clear:both;"/>
   <br style="clear:both;"/>
   <!-- Begin page content -->
-  <div class="alert alert-danger alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <p>
-        ATTENTION: Please do not use SSA for production applications there will be no SSL in the ALPHA stage.
-        SSA Service is going through extensive testing. SSL will be available in the BETA release. 
-        </p>
-  </div>
   <div class="container" style="border: 1px solid; background-color: #D8D8D8;box-shadow: 10px 10px 5px #888888;">
     @if(@Model.Messages != null && @Model.Messages.Count > 0)
     {

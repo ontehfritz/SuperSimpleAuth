@@ -64,7 +64,7 @@ namespace SSANancyExample
 
                 SignupModel signup = this.Bind<SignupModel>();
                 var result = this.Validate(signup);
-                signup.Errors = result.Errors;
+                signup.Errors = Helpers.GetValidationErrors(result);
 
                 if (!result.IsValid)
                 {

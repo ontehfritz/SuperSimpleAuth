@@ -21,7 +21,7 @@ namespace SuperSimple.Auth
         private string Name;
  
         public SuperSimpleAuth (string name, 
-            string domainKey, string uri = "http://api.supersimpleauth.com")
+            string domainKey, string uri = "https://api.supersimpleauth.com")
         {
             this.Name = name;
             this.URI = uri;
