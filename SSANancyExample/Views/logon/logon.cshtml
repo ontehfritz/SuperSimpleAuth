@@ -1,0 +1,12 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSANancyExample.LogonModel>
+
+<p>@Model.Message</p>
+
+<form action="/logon" method="post">
+    <label for="Username">Username:</label>
+    <input type="text" name="Username" />
+    <label for="Secret">Password:</label>
+    <input type="password" name="Secret" />
+    <input type="submit" name="Logon" value="Logon" />
+</form>
+<a href="~/signup">Sign up</a> <a href="~/forgot">Forgot password</a>

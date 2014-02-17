@@ -1,0 +1,106 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.RoleModel>
+@{
+  Layout = "_layout.cshtml";
+}
+<h1>Role: @Model.Role.Name <small>Domain: <a href="/domain/@Model.Domain.Name/">@Model.Domain.Name</a></small></h1>
+
+<form action="/domain/@Model.Domain.Name/role/@Model.Role.Name" method="post">
+<div>
+    <input id="Claims" type="hidden" name="Claims" value="@Helpers.Values(@Model.Claims)" />
+    Claims:
+    <p>
+    @if(@Model.Domain.Claims != null)
+    {
+        int index = 0;
+
+        foreach(string claim in @Model.Domain.Claims)
+        {
+            if(index > 0){<span>,</span>}
+            if(@Model.Role.HasClaim(claim))
+            {
+                <input type="checkbox" name="claim" value="@claim" checked /> @claim
+            }
+            else
+            {
+                <input type="checkbox" name="claim" value="@claim" /> @claim
+            }
+            ++index;
+        }
+       
+    }
+    else
+    {
+        <span>
+        There are no claims available to assign to this role. Claims can be created in the domain screen:
+        <a href="/domain/@Model.Domain.Name/">@Model.Domain.Name</a>. Once created they will be available to assign them 
+        to this role. 
+        </span>
+       
+    }
+    </p>
+</div>
+<hr />
+Users
+
+<input id="RoleUsers" type="hidden" name="RoleUsers" value="@Helpers.Values(@Model.RoleUsers)" />
+<input id="uRoleUsers" type="hidden" name="uRoleUsers"  />
+@if(@Model.Users != null && @Model.Users.Count > 0)
+{
+    int index = 0;
+    foreach(User user in @Model.Users)
+    {
+        if(index > 0){<span>,</span>}
+        if(user.InRole(Model.Role.Name))
+        {
+            <input type="checkbox" name="user" value="@user.Id" checked /> @user.Username
+        }
+        else
+        {
+            <input type="checkbox" name="user" value="@user.Id" /> @user.Username
+        }
+        ++index;
+    }
+}
+else
+{
+    <p>No users have registered for this domain yet.</p>
+}
+<hr />
+<input type="submit" name="Save" class="btn btn-success" value="Save" />
+<a class="btn btn-default" href="/domain/@Model.Domain.Name/">Cancel</a>
+<input type="submit" name="Delete" class="pull-right btn btn-danger" value="Delete" 
+    onclick="return confirm('Are you sure you want to delete this role?');"/>
+</form>
+
+<script>
+$("input[name='claim']").change(function() {
+    $("#Claims").val($("input[name='claim']").map(function() {
+        if(this.checked)
+        {
+            return $(this).val();
+        }
+    })
+    .get()
+    .join());
+});
+
+$("input[name='user']").change(function() {
+    $("#RoleUsers").val($("input[name='user']").map(function() {
+        if(this.checked)
+        {
+            return $(this).val();
+        }
+    })
+    .get()
+    .join());
+    
+     $("#uRoleUsers").val($("input[name='user']").map(function() {
+        if(!this.checked)
+        {
+            return $(this).val();
+        }
+    })
+    .get()
+    .join());
+});
+</script>

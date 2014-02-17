@@ -1,0 +1,32 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.SettingsModel>
+@{
+  Layout = "_layout.cshtml";
+}
+
+<div>
+    <h4>Settings for: @Model.Manager.UserName</h4>
+    <form action="/settings" method="post">
+        <div>
+            <p><input type="password" name="Password" placeholder="Password" /></p>
+            <p><input type="text" name="Email" placeholder="@Model.Manager.UserName" /></p>
+            <button class="btn btn-primary" name="ChangeEmail" value="ChangeEmail" type="submit">Change Email</button>
+        </div>
+        <br />
+        <h4>Change password:</h4>
+        <div>
+            <p><input type="password" name="OldPassword" placeholder="Old Password" /></p>
+            <p><input type="password" name="NewPassword" placeholder="New Password" /></p>
+            <p><input type="password" name="ConfirmPassword" placeholder="Confirm Password" /></p>
+            <button class="btn btn-primary" name="ChangePassword" type="submit">New Password</button>
+        </div>
+        <br />
+        <h4>Delete account:</h4>
+        <div>
+            <p>To delete account please provide password.</p> 
+            <p>Deleting your account will disable all apps using this account.</p>
+            <p>This is permanent and all data will be lost!</p>
+            <p><input type="password" name="DeletePassword" placeholder="Password" /></p>
+            <button class="btn btn-danger" name="Delete" type="submit">Delete Account</button>
+        </div>
+    </form>
+</div>

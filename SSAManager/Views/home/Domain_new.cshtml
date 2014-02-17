@@ -1,0 +1,13 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.DomainModel>
+@{
+  Layout = "_layout.cshtml";
+}
+<h4>Create a new domain</h4>
+<form action="/domain/new" method="post">
+    <p>
+        <label for="Name">Name:</label>
+        <input type="text" name="Name" required autofocus />
+    </p>
+    <input type="submit" class="btn btn-success" name="Create" value="Create" />
+    <a class="btn btn-default" href="~/home">Cancel</a>
+</form>

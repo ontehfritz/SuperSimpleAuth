@@ -1,0 +1,26 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.ManageModel>
+@{
+  Layout = "_layout.cshtml";
+}   
+<h4>Domains <a href="~/domain/new"><small><span class="glyphicon glyphicon-plus-sign"></span> New</small></a></h4>
+<div>      
+@if(@Model.Domains != null && @Model.Domains.Length > 0)
+{
+    foreach(var domain in @Model.Domains)
+    {
+        <div style="border: 1px solid black;background:#ffffff;padding:5px;">
+            <div>
+            <h4><a href="~/domain/@domain.Name">@domain.Name</a></h4>
+            </div>
+            <div>
+            Created: @domain.CreatedAt.ToLongDateString() @domain.CreatedAt.ToLongTimeString()
+            </div>
+        </div>
+        <br />
+    }
+}
+else
+{
+    <p>No domains have been created. Click new to create an domain.</p>
+}
+</div>

@@ -1,0 +1,16 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.ForgotPasswordModel>
+@{
+  Layout = "_layout.cshtml";
+}
+
+<div style="width: 325px;margin-left: auto;margin-right: auto ;">
+    <h4>Forgot your password?</h4>
+    <p>Enter your email address below, your new password will be emailed to you.</p>
+    <form class="form-signin" action="/forgot" method="post">
+        <input type="text" name="Email" class="form-control" placeholder="your@email.com" required />
+        <button class="btn btn-lg btn-primary btn-block" name="new" type="submit">New Password</button>
+    </form>
+    <a href="/">Sign up for an account</a> | <a href="~/logon">Sign In</a>
+</div>
+<br />
+

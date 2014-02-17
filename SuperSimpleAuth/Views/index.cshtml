@@ -1,0 +1,200 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+<html>
+    <head>
+        <title>Super Simple Auth (SSA) API - v0.1 Alpha</title>
+        <script src="//codeorigin.jquery.com/jquery-2.0.3.js"></script>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" type="text/css" href="/content/css/ss.css" />
+    </head>
+    <body>
+<div style="padding:20px;margin:10px;">
+    <div style="float:right;margin-right:20px;padding: 5px;">
+        <pre class="pull-right">Version: 0.1 ALPHA</pre>
+    </div>
+    <h1>Super Simple Auth (SSA) API</h1>
+    <p>
+    To use this api you must sign up for an account at: <a href="http://www.supersimpleauth.com">www.supersimpleauth.com</a>
+    and create an domain. Once the domain is created you will be given a Domain Key. The domain name and domain key
+    must be provided in the header of the request:
+    </p>
+    <pre>
+    ssa_domain_key: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+    ssa_domain:     domain_name
+    </pre>
+    <p>
+    All request to SSA must be done over https/ssl. If not your Domain Key can be compromised and your application will not be secure, 
+    please keep your Domain Key private. 
+    </p>
+    <h3>User</h3>
+    Description:
+    <p>
+    This is the definition of <b>user</b> used for authorization and authentication.
+    </p>
+
+    <pre>
+    Id          Guid        system identification,
+    UserName    string      this is the email of the user, must use and email for username
+    Email       string      this is optional, but is used for account recovery
+    AuthToken   Guid        the users current authentication token,
+    Claims      string[]    an array of simple claims
+    Roles       string[]    an array of roles the user belongs to
+    </pre>
+
+    <h3>ErrorMessage</h3>
+    Description:
+    <p>Errors occured while making an api request will be in the following format.</p>
+    <pre>
+    Status          string       error type,
+    Message         string       details of the error
+    </pre>
+
+    <h1>API Methods </h1>
+    <h3>Create a user:</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/user
+    Provide request parameters:
+    "Username"  This is the username to create
+    "Secret"    The password for the user
+    </pre>
+
+    <p>
+    This method creates a user in the domain. 
+    Domain name and Domain Key need to be passed in the request header. 
+    <b>Important:</b> Always use https/ssl when using SSA
+    </p>
+
+    <h3>Authenticate a user</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/authenticate
+    Provide request parameters:
+    "Username"  This is the username to authenticate
+    "Secret"    The password for the user
+    "IP"        Optional, but is important for logging
+    </pre>
+
+    <p>
+    This method will authenticate a user, if successful it will return a user with a AuthKey value. 
+    If a user cannot be authenticated an ErrorMessage will be returned. 
+
+    Domain name and Domain Key need to be passed in the request header. 
+    <b>Important:</b> Always use https/ssl when using SSA
+    </p>
+
+    <h3>Validate a user</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/validate
+    Provide request parameters:
+    "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user
+    "IP"        Optional, but is important for logging
+    </pre>
+
+    <p>
+    This method will validate a user, this can be done per request. Most web frameworks provide an event to be executed 
+    before a request this is a good place to call validate with the AuthKey of the user. If validated it will return a
+    user with an authkey if not it will return an error message. 
+
+    If a user cannot be authenticated an ErrorMessage will be returned. 
+
+    Domain name and Domain Key need to be passed in the request header. 
+
+    <b>Important:</b> Always use https/ssl when using SSA
+    </p>
+
+    <h3>User forgot password</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/forgot
+    Provide request parameters:
+    "Email" The email of the user.
+    </pre>
+    <p>
+    This method used to reset a users password with a randomly generated password. The new password is returned
+    on successful reset. It is up to the application developer to send it via email or other perferred method. 
+    </p>
+
+    <p>
+    Domain name and Domain Key need to be passed in the request header. 
+    </p>
+    <p><b>Important:</b> Always use https/ssl when using SSA</p>
+
+
+    <h3>Change username</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/username
+    Provide request parameters:
+     "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user.
+     "NewUserName" The new username for the user. 
+    </pre>
+    <p>
+    This method is used to change a user's username. The user must have a valid authtoken, the web method will turn true 
+    on success. There cannot exist more than one of the same usernames in a domain and an exception will be thrown. 
+    </p>
+
+    <p>
+    Domain name and Domain Key need to be passed in the request header. 
+    </p>
+    <p><b>Important:</b> Always use https/ssl when using SSA</p>
+
+
+    <h3>Change user email</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/username
+    Provide request parameters:
+     "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user.
+     "NewEmail" The new email for the user. 
+    </pre>
+    <p>
+    This method is used to change a user's email. The user must have a valid authtoken, the web method will turn true 
+    on success. There cannot exist more than one of the same emails in a domain and an exception will be thrown, if a 
+    duplicate is found. 
+    </p>
+
+    <p>
+    Domain name and Domain Key need to be passed in the request header. 
+    </p>
+    <p><b>Important:</b> Always use https/ssl when using SSA</p>
+
+    <h3>User change password</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/forgot
+    Provide request parameters:
+     "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user.
+     "NewPassword" The new password for the user. 
+    </pre>
+    <p>
+    This method used to change a users password. The user must have a valid authtoken, the web method will turn true 
+    or false. 
+    </p>
+
+    <p>
+    Domain name and Domain Key need to be passed in the request header. 
+    </p>
+    <p><b>Important:</b> Always use https/ssl when using SSA</p>
+
+    <h3>End a session</h3>
+    <pre>
+    Post http://api.supersimpleauth.com/end
+    Provide request parameters:
+    "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user.
+    "IP"        Optional, but is important for logging.
+    </pre>
+
+    <p>
+    This method will end a users session, it will return a boolean value, true if successfully ended and false if cannot. 
+    If this is successful the user will have to be authenticated again to recieve a valid AuthToken. I could place to call this 
+    method is in the logout process. 
+
+    Domain name and Domain Key need to be passed in the request header. 
+
+    <b>Important:</b> Always use https/ssl when using SSA
+    </p>
+    <div style="float:right;margin-right:20px;padding: 5px;">
+        <pre class="pull-right">version: 0.1 ALPHA</pre>
+    </div>
+    <div style="float:left;margin-right:20px;padding: 5px;">
+        <span class="pull-left">© SuperSimpleSuperRad 2013</span>
+    </div>
+</div>
+
+    </body>
+</html>

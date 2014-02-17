@@ -1,0 +1,45 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.ClaimModel>
+@{
+  Layout = "_layout.cshtml";
+}
+
+<h1>Claim: @Model.Name <small>Domain: <a href="/domain/@Model.Domain.Name/">@Model.Domain.Name</a></small></h1>
+<h4>Roles:</h4>
+
+@if(@Model.Roles != null && @Model.Roles.Length > 0)
+{
+    int index = 0;
+    foreach(SSAManager.Role role in Model.Roles)
+    {
+        if(index > 0){<span>,</span>}
+        <a href="/domain/@Model.Domain.Name/role/@role.Name">@role.Name</a>
+        ++index;
+    }
+}
+else
+{
+    <p>No roles are using this claim</p>
+}
+
+ <h4>Users:</h4>
+@if(@Model.Users != null && @Model.Users.Length > 0)
+{
+    int index = 0;
+    foreach(SSAManager.User user in Model.Users)
+    {
+        if(index > 0){<span>,</span>}
+        <a href="/domain/@Model.Domain.Name/user/@user.Id">@user.UserName</a>
+        ++index;
+    }
+}
+else
+{
+    <p>No users have registered for this domain yet.</p>
+}
+
+
+ <form action="/domain/@Model.Domain.Name/claim/@Model.Name" method="post">
+    <!-- <input class="btn btn-success" type="submit" name="Save" value="Save" /> -->
+    <a class="btn btn-default" href="/domain/@Model.Domain.Name/">Cancel</a>
+    <input class="pull-right btn btn-danger" type="submit" name="Delete" value="Delete" />
+ </form>

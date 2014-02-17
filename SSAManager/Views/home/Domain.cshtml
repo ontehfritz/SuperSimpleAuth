@@ -1,0 +1,109 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.DomainModel>
+@{
+  Layout = "_layout.cshtml";
+}
+<h1>Domain: @Model.Domain.Name</h1>
+<form action="/domain/@Model.Domain.Name" method="post">
+<div>
+    <div style="float:left;">
+        <label for="Key">Key:</label><pre>@Model.Domain.Key</pre><input class="btn btn-danger" type="submit" name="Generate" value="Generate" 
+        onclick="return confirm('All applications using this key will need the new key assigned. Are you sure you want to generate a new key for this domain?');" />
+    </div>
+    <div style="float:left;margin-left:20px;">
+        <p><label for="WhiteListIps">Allowed Server IPs:</label></p>
+        <p><input type="text" name="WhiteListIps" style="width:400px;" 
+        value="@Helpers.Values(@Model.Domain.WhiteListIps)" placeholder="Comma seprated list of allowable ips"/></p>
+        <p><input class="btn btn-success" type="submit" name="Update" value="update" /></p>
+    </div>
+    <br style="clear:both;" />
+</div>
+</form>
+<hr />
+<div>
+    <div style="float:left;width:400px;">
+        Roles: <a href="/domain/@Model.Domain.Name/role/new">
+            <span class="glyphicon glyphicon-plus-sign"></span> New</a>
+        <div>
+            @if(@Model.Roles != null && @Model.Roles.Count > 0)
+            {
+                int index = 0;
+                foreach(var role in @Model.Roles)
+                {
+                    if(index > 0){<span>,</span>}
+                    <a href="/Domain/@Model.Domain.Name/role/@role.Name">@role.Name</a>
+                    ++index;
+                }
+            }
+            else
+            {
+                <p>No roles for this domain</p>
+            }
+        </div>
+    </div>
+    <div style="float:left;margin-left:20px;width:400px;">
+        Claims: <a href="/domain/@Model.Domain.Name/claim/new"><span class="glyphicon glyphicon-plus-sign"></span> New</a>
+
+        <div>
+            @if(@Model.Domain.Claims != null && @Model.Domain.Claims.Count > 0)
+            {
+                int index = 0;
+                foreach(var claim in @Model.Domain.Claims)
+                {
+                    if(index > 0){<span>,</span>}
+                    <a href="/domain/@Model.Domain.Name/claim/@claim">@claim</a>
+                    ++index;
+                }
+            }
+            else
+            {
+                <p>No claims for this domain</p>
+            }
+        </div>
+    </div>
+    <br style="clear:both;"/>
+</div>
+<hr />
+<div>
+    Users: 
+    <div>
+    @if(@Model.Users != null && @Model.Users.Count > 0)
+    {
+        int index = 0;
+        foreach(var user in @Model.Users)
+        {
+            if(index > 0){<span>,</span>}
+            if(user.Enabled)
+            {
+                <a href="/domain/@Model.Domain.Name/user/@user.Id">@user.UserName</a>
+            }
+            else
+            {
+                <a href="/domain/@Model.Domain.Name/user/@user.Id">
+                <span class="label label-warning">@user.UserName</span>
+                </a>
+            }
+            ++index;
+        }
+    }
+    else
+    {
+        <p>No users have registered yet</p>
+    }
+    </div>
+</div>
+<hr />
+<div style="clear:both;">
+    <p><label>Domain Actions:</label></p>
+    @if(@Model.Domain.Enabled)
+    {
+        <input type="submit" name="Disable" class="btn btn-warning" value="Disable" 
+        onclick="return confirm('Are you sure you want to disable this domain? Applications using this key will be down!');"/>
+    }
+    else
+    {
+        <input type="submit" name="Enable" class="btn btn-success" value="Enable" />
+    }
+
+    <input type="submit" name="Delete" class="btn btn-danger" value="Delete" 
+    onclick="return confirm('Are you sure you want to delete this domain? This will disable all applications using this key!');"/>
+</div>
