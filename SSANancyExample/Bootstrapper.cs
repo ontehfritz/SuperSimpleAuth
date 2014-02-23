@@ -25,8 +25,8 @@ namespace SSANancyExample
             //some encryption on the keys could be used. 
 
             SuperSimpleAuth ssa = 
-                new SuperSimpleAuth ("test", 
-                    "6e8bc122-b28f-4805-8ea0-b50d342aa97e","http://127.0.0.1:8082");
+                new SuperSimpleAuth ("mtgdb.info", 
+                    "5e61fe35-1f96-4cf8-8f4b-54ba43e79903");
 
 //            SuperSimpleAuth ssa = 
 //                new SuperSimpleAuth ("testing", 

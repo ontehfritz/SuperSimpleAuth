@@ -98,7 +98,7 @@ namespace SSAManager
 
                 if(Request.Form.Delete != null)
                 {
-                    repository.DeleteDomain(domain.Name,model.Manager.Id);
+                    repository.DeleteDomain(domain.Name, model.Manager.Id);
                     return this.Response.AsRedirect ("/");
                 }
 
