@@ -42,6 +42,7 @@ namespace SuperSimple.Auth.Api
 
         public bool ChangeEmail (Guid domainKey, Guid authToken, string newEmail)
         {
+            newEmail = newEmail.ToLower ();
             var domains = database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And(Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dQuery);
@@ -67,6 +68,7 @@ namespace SuperSimple.Auth.Api
 
         public bool ChangeUserName (Guid domainKey, Guid authToken, string newUserName)
         {
+            newUserName = newUserName.ToLower ();
             var domains = database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And(Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dQuery);
@@ -115,6 +117,7 @@ namespace SuperSimple.Auth.Api
         public string Forgot(Guid domainKey, string email)
         {
             User user = null;
+            email = email.ToLower ();
             var domains = database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And(Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dQuery);
@@ -163,6 +166,7 @@ namespace SuperSimple.Auth.Api
         public bool UsernameExists (Guid domainKey, string username)
         {
             User user = null;
+            username = username.ToLower ();
 
             var domains = database.GetCollection<RawBsonDocument> ("domains");
             var dquery = Query.And(Query.EQ ("Key", domainKey));
@@ -185,6 +189,8 @@ namespace SuperSimple.Auth.Api
         public bool EmailExists (Guid domainKey, string email)
         {
             User user = null;
+
+            email = email.ToLower ();
 
             var domains = database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And(Query.EQ ("Key", domainKey));
@@ -234,6 +240,8 @@ namespace SuperSimple.Auth.Api
                                   string secret, string IP = null)
         {
             User user = null;
+
+            username = username.ToLower ();
 
             var domains = database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And(Query.EQ ("Key", domainKey));
@@ -305,6 +313,13 @@ namespace SuperSimple.Auth.Api
         public User CreateUser (Guid domainKey, string username, 
             string password, string email = null)
         {
+            username = username.ToLower ();
+
+            if(email != null)
+            {
+                email = email.ToLower ();
+            }
+
             var appCollection = database.GetCollection<RawBsonDocument> ("domains");
             var query = Query.And(Query.EQ ("Key", domainKey));
             var domain = appCollection.FindOne (query);

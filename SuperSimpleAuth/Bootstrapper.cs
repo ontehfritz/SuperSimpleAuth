@@ -26,17 +26,6 @@ namespace SuperSimple.Auth.Api
                                                 NancyContext context)
         {
             base.RequestStartup (container, pipelines, context);
-
-
-
-//            string app_key = context.Request.Headers ["ssa_app_key"];
-//            string app = context.Request.Headers ["ssa_app"];
-//
-//            IRepository repository = container.Resolve<IRepository> ();
-//
-//            if (repository.ValidateAppKey (app, Guid.Parse (app_key)) == false) {
-//                throw new Exception ("App key not valid");
-//            }
         }
 	}
 }
