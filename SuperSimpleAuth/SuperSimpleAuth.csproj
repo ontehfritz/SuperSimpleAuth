@@ -93,6 +93,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Modules\IndexModule.cs" />
     <Compile Include="Models\Email.cs" />
+    <Compile Include="Modules\AuthModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\index.cshtml" />
