@@ -41,10 +41,13 @@ namespace SSAManager
         [BsonElement]
         public DateTime ModifiedAt { get; set; }
 
-
-
         public void AddRole(Role role)
         {
+            if(this.Roles == null)
+            {
+                this.Roles = new List<Role> ();
+            }
+
             Roles.Add (role);
         }
 

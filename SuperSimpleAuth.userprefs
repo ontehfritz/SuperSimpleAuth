@@ -1,11 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SuperSimpleAuth/web.config">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SuperSimpleAuth/Modules/AuthModule.cs">
     <Files>
-      <File FileName="SuperSimpleAuth/Bootstrapper.cs" Line="28" Column="65" />
+      <File FileName="SuperSimpleAuth/Bootstrapper.cs" Line="1" Column="1" />
       <File FileName="SuperSimpleAuth/web.config" Line="1" Column="1" />
-      <File FileName="SuperSimpleAuth/Models/MongoRepository.cs" Line="45" Column="44" />
-      <File FileName="SSA_Test/CSharpWrapperTest.cs" Line="15" Column="4" />
+      <File FileName="SuperSimpleAuth/Models/MongoRepository.cs" Line="1" Column="1" />
+      <File FileName="SSA_Test/CSharpWrapperTest.cs" Line="32" Column="45" />
+      <File FileName="SuperSimpleAuth/Modules/IndexModule.cs" Line="28" Column="12" />
+      <File FileName="SuperSimpleAuth/Modules/AuthModule.cs" Line="46" Column="63" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.NUnit.TestPad">

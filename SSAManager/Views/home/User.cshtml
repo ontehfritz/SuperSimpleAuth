@@ -118,8 +118,11 @@
 </tr>
 </table>
 <div>
+<hr />
 <input type="submit" class="btn btn-success" name="Save" value="Save" />
-<input type="submit" class="btn btn-danger"  name="Delete" value="Delete" onclick="return confirm('Are you sure you want to delete this user?');" />
+<a class="btn btn-default" href="/domain/@Model.Domain.Name/">Cancel</a>
+<input type="submit" class="pull-right btn btn-danger"  name="Delete" value="Delete" 
+    onclick="return confirm('Are you sure you want to delete this user?');" />
 </div>
 </form>
 <script>

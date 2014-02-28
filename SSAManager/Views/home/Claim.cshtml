@@ -3,7 +3,9 @@
   Layout = "_layout.cshtml";
 }
 
-<h1>Claim: @Model.Name <small>Domain: <a href="/domain/@Model.Domain.Name/">@Model.Domain.Name</a></small></h1>
+<h1>Claim: @Model.Name <small>Domain: 
+<a href="/domain/@Model.Domain.Name/">@Model.Domain.Name</a></small></h1>
+
 <h4>Roles:</h4>
 
 @if(@Model.Roles != null && @Model.Roles.Length > 0)
@@ -21,7 +23,7 @@ else
     <p>No roles are using this claim</p>
 }
 
- <h4>Users:</h4>
+<h4>Users:</h4>
 @if(@Model.Users != null && @Model.Users.Length > 0)
 {
     int index = 0;
@@ -34,12 +36,12 @@ else
 }
 else
 {
-    <p>No users have registered for this domain yet.</p>
+    <p>No users have this claim.</p>
 }
 
-
- <form action="/domain/@Model.Domain.Name/claim/@Model.Name" method="post">
+<hr />
+<form action="/domain/@Model.Domain.Name/claim/@Model.Name" method="post">
     <!-- <input class="btn btn-success" type="submit" name="Save" value="Save" /> -->
     <a class="btn btn-default" href="/domain/@Model.Domain.Name/">Cancel</a>
     <input class="pull-right btn btn-danger" type="submit" name="Delete" value="Delete" />
- </form>
+</form>

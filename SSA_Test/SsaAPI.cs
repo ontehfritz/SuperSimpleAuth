@@ -30,9 +30,11 @@ namespace SSA_Test
             domain.Claims = new List<string> ();
             domain.Claims.Add ("test1");
             domain.Claims.Add ("test2");
+
             domain.WhiteListIps = new string[]{"127.0.0.1","127.1.1.1"};
 
             _domain = mRepository.UpdateDomain (domain);
+            mRepository.CreateRole (domain.Id, "admin");
 
             User apiOne = repository.CreateUser (_domain.Key, "test1", "test1", "test1@test1.com");
             User apiTwo = repository.CreateUser (_domain.Key, "test2", "test2", "test2@test2.com");
@@ -43,6 +45,8 @@ namespace SSA_Test
             two.Claims = new List<string> ();
             one.Claims.Add ("test1");
             two.Claims.Add ("test2");
+
+            one.AddRole (mRepository.GetRole (domain.Id, "admin"));
 
             mRepository.UpdateUser(one);
             mRepository.UpdateUser(two);
@@ -146,21 +150,6 @@ namespace SSA_Test
             Assert.IsNotNull (user);
         }
 
-//        [Test()]
-//        public void Update_a_users ()
-//        {
-//            User user = 
-//                repository.CreateUser (_domain.Key,
-//                    "testuser_api", "test", "testuser_api@test.com");
-//
-//            user = repository.Authenticate(_domain.Key,"testuser_api","test");
-//            DateTime before = user.ModifiedAt;
-//            user = repository.UpdateUser (_domain.Key,
-//                                   user);
-//
-//            Assert.Greater (user.ModifiedAt,before);
-//        }
-
         [Test()]
         public void Validate_key()
         {
@@ -176,6 +165,7 @@ namespace SSA_Test
             User user = 
                 repository.CreateUser (_domain.Key,
                     "testuser_api", "test", "testuser_api@test.com");
+
 
             user = repository.Authenticate (_domain.Key, "testuser_api", "test");
           

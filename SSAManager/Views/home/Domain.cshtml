@@ -92,18 +92,18 @@
 </div>
 <hr />
 <div style="clear:both;">
-    <p><label>Domain Actions:</label></p>
+    <a class="btn btn-default" href="/home">Cancel</a>
+    <input type="submit" name="Delete" class="pull-right btn btn-danger" value="Delete" 
+    onclick="return confirm('Are you sure you want to delete this domain? This will disable all applications using this key!');"/>
+
     @if(@Model.Domain.Enabled)
     {
-        <input type="submit" name="Disable" class="btn btn-warning" value="Disable" 
+        <input type="submit" name="Disable" class="pull-right  btn btn-warning" value="Disable" 
         onclick="return confirm('Are you sure you want to disable this domain? Applications using this key will be down!');"/>
     }
     else
     {
-        <input type="submit" name="Enable" class="btn btn-success" value="Enable" />
+        <input type="submit" name="Enable" class="pull-right  btn btn-success" value="Enable" />
     }
-
-    <input type="submit" name="Delete" class="btn btn-danger" value="Delete" 
-    onclick="return confirm('Are you sure you want to delete this domain? This will disable all applications using this key!');"/>
 </div>
 </form>

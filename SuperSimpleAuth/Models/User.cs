@@ -46,8 +46,10 @@ namespace SuperSimple.Auth.Api
         {
             List<string> roles = new List<string> ();
 
-            if (this.Roles != null) {
-                foreach (Role role in this.Roles) {
+            if (this.Roles != null) 
+            {
+                foreach (Role role in this.Roles) 
+                {
                     roles.Add (role.Name);
                 }
             }
@@ -60,18 +62,22 @@ namespace SuperSimple.Auth.Api
         {
             List<string> claims = new List<string>();
 
-            if (this.Claims != null) {
+            if (this.Claims != null) 
+            {
                 claims.AddRange (this.Claims);
             }
 
             if (this.Roles != null) {
 
                 claims = new List<string> ();
-                foreach (Role role in this.Roles) {
-                    if (role.Claims != null) {
+                foreach (Role role in this.Roles) 
+                {
+                    if (role.Claims != null) 
+                    {
                         claims.AddRange (role.Claims);
                     }
                 }
+
                 return claims.ToArray ();
             }
 
@@ -80,13 +86,15 @@ namespace SuperSimple.Auth.Api
 
         public bool InRole(string role)
         {
-            if (Roles == null) {
+            if (Roles == null) 
+            {
                 return false;
             }
 
             foreach(Role r in Roles)
             {
-                if (r.Name == role) {
+                if (r.Name == role) 
+                {
                     return true;
                 }
             }
@@ -98,13 +106,15 @@ namespace SuperSimple.Auth.Api
         {
             string[] claims = this.GetClaims ();
 
-            if (claims == null) {
+            if (claims == null) 
+            {
                 return false;
             }
 
             foreach(string c in claims)
             {
-                if (c == claim) {
+                if (c == claim) 
+                {
                     return true;
                 }
             }

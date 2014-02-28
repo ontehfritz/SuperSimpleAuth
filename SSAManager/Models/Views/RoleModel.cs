@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SSAManager
 {
-    public class RoleModel
+    public class RoleModel : PageModel
     {
         public Manager Manager { get; set; }
         public Domain Domain { get; set; }

@@ -40,7 +40,7 @@
     </p>
 </div>
 <hr />
-Users
+<h4>Users in this Role:</h4>
 
 <input id="RoleUsers" type="hidden" name="RoleUsers" value="@Helpers.Values(@Model.RoleUsers)" />
 <input id="uRoleUsers" type="hidden" name="uRoleUsers"  />
@@ -52,11 +52,11 @@ Users
         if(index > 0){<span>,</span>}
         if(user.InRole(Model.Role.Name))
         {
-            <input type="checkbox" name="user" value="@user.Id" checked /> @user.Username
+            <input type="checkbox" name="user" value="@user.Id" checked /> @user.UserName
         }
         else
         {
-            <input type="checkbox" name="user" value="@user.Id" /> @user.Username
+            <input type="checkbox" name="user" value="@user.Id" /> @user.UserName
         }
         ++index;
     }

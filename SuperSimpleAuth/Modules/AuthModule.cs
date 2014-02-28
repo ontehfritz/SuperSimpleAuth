@@ -205,7 +205,9 @@ namespace SuperSimple.Auth.Api
                 string secret = Request.Form["Secret"];
                 string IP = Request.Form["IP"];
 
-                user = repository.Authenticate(domainKey, username, secret,IP);
+                user = repository.Authenticate(domainKey, 
+                    username, secret,
+                    IP);
 
                 if(user == null)
                 {
