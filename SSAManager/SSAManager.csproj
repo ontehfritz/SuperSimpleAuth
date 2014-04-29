@@ -123,6 +123,7 @@
     <Compile Include="Models\Email.cs" />
     <Compile Include="Models\Views\ForgotPasswordModel.cs" />
     <Compile Include="Models\Views\PageModel.cs" />
+    <Compile Include="Models\Administrator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\.DS_Store" />

@@ -21,6 +21,47 @@ namespace SSAManager
         private MongoServer server;
         private MongoDatabase database;
 
+        public void DeleteAdministrator(Guid domainId, Guid adminId)
+        {
+            var collection = database.GetCollection<Administrator> ("administrators");
+
+            Dictionary<string, object> query = new Dictionary<string, object> ();
+            query.Add ("DomainId", domainId);
+            query.Add ("ManagerId", adminId);
+
+            collection.Remove(new QueryDocument(query));
+        }
+
+        public Manager[] GetAdministrators(Guid domainId)
+        {
+            List<Manager> admins = new List<Manager>();
+            var collection = database.GetCollection<Administrator> ("administrators");
+            var query = Query<Administrator>.EQ (e => e.DomainId, domainId);
+            var cursor = collection.Find(query);
+
+            foreach (Administrator a in cursor) 
+            {
+                admins.Add(this.GetManager(a.ManagerId));
+            }
+                
+            return admins.ToArray();
+        }
+
+        public Manager AddAdministrator(Guid domainId, string email)
+        {
+            Manager admin = this.GetManager(email);
+
+            Administrator addAdmin = new Administrator();
+            addAdmin.DomainId = domainId;
+            addAdmin.ManagerId = admin.Id;
+            addAdmin.CreatedAt = DateTime.Now;
+
+            var collection = database.GetCollection<Administrator>("administrators");
+            collection.Insert(addAdmin);
+
+            return admin;
+        }
+
         public void ChangePassword(Guid id, string password, string newPassword, string confirmPassword)
         {
             MongoCollection<BsonDocument> managers = database.GetCollection<BsonDocument> ("managers");

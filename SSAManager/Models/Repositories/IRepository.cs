@@ -28,6 +28,10 @@ namespace SSAManager
         Domain CreateDomain(string name, Manager manager);
         Domain UpdateDomain(Domain domain);
         void DeleteDomain(string name, Guid managerId);
+       
+        Manager[] GetAdministrators(Guid domainId);
+        Manager AddAdministrator(Guid domainId, string email);
+        void DeleteAdministrator(Guid domainId, Guid adminId);
 
         Manager GetManager(Guid managerId);
         Manager GetManager(string userName);
