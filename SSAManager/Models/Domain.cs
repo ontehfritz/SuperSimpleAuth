@@ -42,6 +42,15 @@ namespace SSAManager
         [BsonElement]
         public string ModifiedBy { get; set; } 
 
+        public bool IsOwner(Manager manager)
+        {
+            if(manager.Id == this.ManagerId)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 
     public class DomainValidator : AbstractValidator<Domain>

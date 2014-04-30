@@ -9,13 +9,10 @@ namespace SSAManager
 {
     public class ManageModel : PageModel
     {
-        public Domain[] Domains { get; set; }
+        public Domain[] Domains      { get; set; }
+        public Domain[] AdminDomains { get; set; }
 
-
-        public ManageModel() : base()
-        {
-
-        }
+        public ManageModel() : base(){ }
     }
 }
 

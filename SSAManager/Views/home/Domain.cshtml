@@ -19,7 +19,7 @@
 </div>
 <hr />
 <div>
-    <div style="float:left;width:400px;">
+    <div style="float:left;width:200px;">
         Roles: <a href="/domain/@Model.Domain.Name/role/new">
             <span class="glyphicon glyphicon-plus-sign"></span> New</a>
         <div>
@@ -39,7 +39,7 @@
             }
         </div>
     </div>
-    <div style="float:left;margin-left:20px;width:400px;">
+    <div style="float:left;margin-left:20px;width:200px;">
         Claims: <a href="/domain/@Model.Domain.Name/claim/new"><span class="glyphicon glyphicon-plus-sign"></span> New</a>
 
         <div>
@@ -56,6 +56,26 @@
             else
             {
                 <p>No claims for this domain</p>
+            }
+        </div>
+    </div>
+    <div style="float:left;margin-left:20px;width:200px;">
+        Admins: <a href="/domain/@Model.Domain.Name/admin/new"><span class="glyphicon glyphicon-plus-sign"></span> New</a>
+
+        <div>
+            @if(@Model.Admins != null && @Model.Admins.Count > 0)
+            {
+                int index = 0;
+                foreach(var admin in @Model.Admins)
+                {
+                    if(index > 0){<span>,</span>}
+                    <a href="">@admin.UserName</a>
+                    ++index;
+                }
+            }
+            else
+            {
+                <p>No admins for this domain</p>
             }
         </div>
     </div>

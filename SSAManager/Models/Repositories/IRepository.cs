@@ -25,6 +25,7 @@ namespace SSAManager
 
         Domain GetDomain(string name, Guid managerId);
         Domain[] GetDomains(Guid managerID);
+        Domain[] GetDomainsAdmin(Guid managerID);
         Domain CreateDomain(string name, Manager manager);
         Domain UpdateDomain(Domain domain);
         void DeleteDomain(string name, Guid managerId);

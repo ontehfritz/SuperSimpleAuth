@@ -11,8 +11,10 @@ namespace SSA_Test
     public class SSAManagerTest
     {
         private IRepository repository = new MongoRepository ("mongodb://localhost");
-        private Domain _domain;
+        private Domain  _domain;
         private Manager _manager;
+        private Manager _admin;
+   
         private SuperSimple.Auth.Api.MongoRepository _api = 
             new SuperSimple.Auth.Api.MongoRepository("mongodb://localhost");
 
@@ -24,6 +26,12 @@ namespace SSA_Test
             manager.Secret = "test";
             manager = repository.CreateManager (manager);
             _manager = manager;
+
+            Manager admin = new Manager ();
+            admin.UserName = "admin@test.ing";
+            admin.Secret = "test";
+            admin = repository.CreateManager (admin);
+            _admin = admin;
 
             Domain domain = repository.CreateDomain ("test", _manager);
             domain.Claims = new List<string> ();
@@ -57,6 +65,11 @@ namespace SSA_Test
             if (_manager != null) 
             {
                 repository.DeleteManager (_manager.Id, "test");
+            }
+
+            if (_admin != null) 
+            {
+                repository.DeleteManager (_admin.Id, "test");
             }
         }
 
@@ -140,6 +153,13 @@ namespace SSA_Test
         public void Get_manager()
         {
             Manager manager = repository.GetManager ("manager@test.ing");
+            Assert.AreEqual ("manager@test.ing", manager.UserName);
+        }
+
+        [Test()]
+        public void Get_manager_by_id()
+        {
+            Manager manager = repository.GetManager (_manager.Id);
             Assert.AreEqual ("manager@test.ing", manager.UserName);
         }
 
@@ -305,6 +325,51 @@ namespace SSA_Test
             repository.DeleteManager (_manager.Id, "test");
             _domain = null;
             _manager = null;
+        }
+
+        [Test()]
+        public void Add_admin()
+        {
+            Manager admin = 
+                repository.AddAdministrator(_domain.Id, "admin@test.ing");
+            Assert.NotNull(admin);
+            repository.DeleteAdministrator(_domain.Id,_admin.Id);
+        }
+
+        [Test()]
+        public void Get_domains_by_admin()
+        {
+            Manager admin = 
+                repository.AddAdministrator(_domain.Id, "admin@test.ing");
+
+            Domain [] domains = repository.GetDomainsAdmin(admin.Id);
+
+            Assert.Greater(domains.Length, 0);
+
+            repository.DeleteAdministrator(_domain.Id,_admin.Id);
+        }
+
+        [Test()]
+        public void Delete_admin()
+        {
+            Manager admin = 
+                repository.AddAdministrator(_domain.Id, "admin@test.ing");
+                
+            repository.DeleteAdministrator(_domain.Id, admin.Id);
+        }
+
+        [Test()]
+        public void Get_admins()
+        {
+            Manager admin = 
+                repository.AddAdministrator(_domain.Id, "admin@test.ing");
+
+            Manager [] admins = 
+                repository.GetAdministrators(_domain.Id);
+
+            Assert.Greater(admins.Length, 0);
+
+            repository.DeleteAdministrator(_domain.Id, _admin.Id);
         }
     }
 }

@@ -21,18 +21,18 @@ namespace SSAManager
     {
         IRepository repository; 
 
-        public HomeModule(IRepository repository){
-
+        public HomeModule(IRepository repository)
+        {
             this.repository = repository;
 
             this.RequiresAuthentication ();
             
             Get["/home"] = parameters => {
-                ManageModel manage = new ManageModel();
-                manage.Manager  = (Manager)this.Context.CurrentUser;
-                manage.Domains = repository.GetDomains(manage.Manager.Id);
+                ManageModel manage =    new ManageModel();
+                manage.Manager  =       (Manager)this.Context.CurrentUser;
+                manage.Domains =        repository.GetDomains(manage.Manager.Id);
+                manage.AdminDomains =   repository.GetDomainsAdmin(manage.Manager.Id);
                
-
                 return View["Manage", manage];
             };
 
@@ -72,17 +72,30 @@ namespace SSAManager
                 return this.Response.AsRedirect("/home");
             };
 
-            Get ["/domain/{name}"] = parameters => {
+            Get ["/domain/{name}/{owner?}"] = parameters => {
                 DomainModel model = new DomainModel();
-                model.Manager  = (Manager)this.Context.CurrentUser;
-                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
-                model.Roles = repository.GetRoles(model.Domain.Id).ToList();
-                model.Users = repository.GetDomainUsers(model.Domain.Id).ToList();
+                string owner =      (string)parameters.owner;
+                model.Manager  =    (Manager)this.Context.CurrentUser;
+
+                if(owner != null)
+                {
+                    Manager o =     repository.GetManager(owner);
+                    model.Domain =  repository.GetDomain((string)parameters.name,o.Id);
+
+                }
+                else
+                {
+                    model.Domain =  repository.GetDomain((string)parameters.name, model.Manager.Id);
+                }
+
+                model.Roles =       repository.GetRoles(model.Domain.Id).ToList();
+                model.Users =       repository.GetDomainUsers(model.Domain.Id).ToList();
+                model.Admins =      repository.GetAdministrators(model.Domain.Id).ToList();
 
                 return View["Domain", model];
             };
 
-            Post["/domain/{name}"] = parameters => {
+            Post["/domain/{name}/{owner?}"] = parameters => {
                 DomainModel model = this.Bind<DomainModel>();
                 model.Manager  = (Manager)this.Context.CurrentUser;
                 Domain domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
@@ -150,7 +163,59 @@ namespace SSAManager
                 return View["role", model];
             };
 
-            
+            Get ["/domain/{name}/admin/new"] = parameters => {
+                AdminModel model =  new AdminModel();
+                model.Manager =     (Manager)this.Context.CurrentUser;
+                model.Domain = repository.GetDomain((string)parameters.name, 
+                    model.Manager.Id);
+
+                if(!model.Domain.IsOwner(model.Manager))
+                {
+                    Error error = new Error();
+                    error.Name = "Not Authorized";
+                    error.Message = "You are not the owner of this domain.";
+                    model.Errors.Add(error);
+                }
+
+                return View["Admin_new", model];
+            };
+
+            Post ["/domain/{name}/admin/new"] = parameters => {
+                AdminModel model =  this.Bind<AdminModel>();
+                model.Manager  =    (Manager)this.Context.CurrentUser;
+                model.Domain = repository.GetDomain((string)parameters.name, 
+                    model.Manager.Id);
+                    
+                if(model.Domain.IsOwner(model.Manager))
+                {
+                    Manager admin = repository.AddAdministrator(model.Domain.Id, 
+                        model.Email);
+
+                    if(admin != null)
+                    {
+                        return this.Response
+                                .AsRedirect(string.Format("/domain/{0}",
+                                    (string)parameters.name));
+                    }
+                    else
+                    {
+                        Error error = new Error();
+                        error.Name = "Manager error.";
+                        error.Message = "Manager's email could not be found.";
+                        model.Errors.Add(error);
+                    }
+                }
+                else
+                {
+                    Error error = new Error();
+                    error.Name = "Not Authorized";
+                    error.Message = "You are not the owner of this domain.";
+                    model.Errors.Add(error);
+                }
+                    
+                return View["Admin_new", model];
+            };
+                
             Post ["/domain/{name}/role/{role}"] = parameters => {
                 RoleModel model = this.Bind<RoleModel>();
 

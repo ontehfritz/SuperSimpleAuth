@@ -1,0 +1,17 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SSAManager.AdminModel>
+@{
+  Layout = "_layout.cshtml";
+}
+
+@if(@Model.Domain.IsOwner(Model.Manager))
+{
+    <h4>Add a administrator</h4>
+    <form action="/domain/@Model.Domain.Name/admin/new" method="post">
+        <p>
+            <label for="Name">Email:</label>
+            <input type="text" name="Email" required autofocus />
+        </p>
+        <input type="submit" class="btn btn-success" name="Add" value="Add" />
+        <a class="btn btn-default" href="~/home">Cancel</a>
+    </form>
+}

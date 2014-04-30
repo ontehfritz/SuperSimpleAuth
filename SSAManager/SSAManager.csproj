@@ -124,6 +124,7 @@
     <Compile Include="Models\Views\ForgotPasswordModel.cs" />
     <Compile Include="Models\Views\PageModel.cs" />
     <Compile Include="Models\Administrator.cs" />
+    <Compile Include="Models\Views\AdminModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\.DS_Store" />
@@ -143,5 +144,6 @@
     <None Include="Views\home\Role.cshtml" />
     <None Include="Views\home\Role_new.cshtml" />
     <None Include="Views\home\User.cshtml" />
+    <None Include="Views\home\Admin_new.cshtml" />
   </ItemGroup>
 </Project>

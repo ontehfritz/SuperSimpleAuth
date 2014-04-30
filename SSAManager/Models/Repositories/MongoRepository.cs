@@ -49,15 +49,19 @@ namespace SSAManager
 
         public Manager AddAdministrator(Guid domainId, string email)
         {
-            Manager admin = this.GetManager(email);
+            Manager admin =          this.GetManager(email);
 
-            Administrator addAdmin = new Administrator();
-            addAdmin.DomainId = domainId;
-            addAdmin.ManagerId = admin.Id;
-            addAdmin.CreatedAt = DateTime.Now;
+            if(admin != null)
+            {
+                Administrator addAdmin = new Administrator();
+                addAdmin.Id =            Guid.NewGuid();
+                addAdmin.DomainId =      domainId;
+                addAdmin.ManagerId =     admin.Id;
+                addAdmin.CreatedAt =     DateTime.Now;
 
-            var collection = database.GetCollection<Administrator>("administrators");
-            collection.Insert(addAdmin);
+                var collection = database.GetCollection<Administrator>("administrators");
+                collection.Insert(addAdmin);
+            }
 
             return admin;
         }
@@ -110,7 +114,9 @@ namespace SSAManager
 
         public string ForgotPassword(string email)
         {
-            MongoCollection<BsonDocument> managers = database.GetCollection<BsonDocument> ("managers");
+            MongoCollection<BsonDocument> managers = 
+                database.GetCollection<BsonDocument> ("managers");
+
             var query = Query.EQ ("UserName", email);
 
             BsonDocument manager = managers.FindOne(query);
@@ -296,6 +302,16 @@ namespace SSAManager
             collection.Remove(new QueryDocument(query));
         }
        
+        private Domain GetDomain(Guid id)
+        {
+            var collection = database.GetCollection<Domain> ("domains");
+            var query = Query.And(Query<Domain>.EQ (e => e.Id, id));
+
+            Domain domain = collection.FindOne (query);
+
+            return domain;
+        }
+
         public Domain GetDomain(string name, Guid managerId)
         {
             var collection = database.GetCollection<Domain> ("domains");
@@ -305,6 +321,28 @@ namespace SSAManager
             Domain domain = collection.FindOne (query);
 
             return domain;
+        }
+
+        public Domain[] GetDomainsAdmin(Guid managerId)
+        {
+            var collection = database.GetCollection<Administrator> ("administrators");
+            var query = Query<Administrator>.EQ (e => e.ManagerId, managerId);
+            var cursor = collection.Find(query);
+
+            List<Domain> domains = new List<Domain>();
+
+            Domain domain = null;
+            foreach (Administrator admin in cursor) 
+            {
+                domain = this.GetDomain(admin.DomainId);
+
+                if(domain != null)
+                {
+                    domains.Add (domain);
+                }
+            }
+
+            return domains.ToArray();
         }
 
         public Domain[] GetDomains(Guid managerId)
@@ -319,7 +357,7 @@ namespace SSAManager
             {
                 domains.Add (d);
             }
-
+                
             return domains.ToArray();
         }
 
@@ -578,6 +616,21 @@ namespace SSAManager
             collection.EnsureIndex(keys, options);
         }
 
+        private void CreateAdminIndexes()
+        {
+            var keys = new IndexKeysBuilder();
+
+            keys.Ascending("DomainId", "ManagerId");
+
+            var options = new IndexOptionsBuilder();
+            options.SetSparse(true);
+            options.SetUnique(true);
+
+            var collection = database.GetCollection<Administrator>("administrators");
+
+            collection.EnsureIndex(keys, options);
+        }
+
 
         public MongoRepository (string connection)
         {
@@ -587,9 +640,10 @@ namespace SSAManager
             database = server.GetDatabase("SsAuthDb");
 
             this.CreateManagerIndexes ();
-            this.CreateDomainIndexes ();
-            this.CreateUserIndexes ();
-            this.CreateRoleIndexes ();
+            this.CreateDomainIndexes  ();
+            this.CreateUserIndexes    ();
+            this.CreateRoleIndexes    ();
+            this.CreateAdminIndexes   ();
         }
     }
 }
