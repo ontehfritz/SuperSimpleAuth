@@ -63,7 +63,8 @@ namespace SSA_Test
 
             mRepository.UpdateUser(one);
             mRepository.UpdateUser(two);
-            ssa = new SuperSimpleAuth (_domain.Name, _domain.Key.ToString(), "http://127.0.0.1:8082");
+            ssa = new SuperSimpleAuth (_domain.Name, 
+                _domain.Key.ToString(), "http://127.0.0.1:8082");
         }
 
         [TearDown] 
@@ -71,7 +72,7 @@ namespace SSA_Test
         { 
             if (_domain != null) 
             {
-                mRepository.DeleteDomain (_domain.Name, _manager.Id);
+                mRepository.DeleteDomain (_domain.Id);
             }
 
             if (_manager != null) 

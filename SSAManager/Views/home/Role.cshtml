@@ -2,9 +2,9 @@
 @{
   Layout = "_layout.cshtml";
 }
-<h1>Role: @Model.Role.Name <small>Domain: <a href="/domain/@Model.Domain.Name/">@Model.Domain.Name</a></small></h1>
+<h1>Role: @Model.Role.Name <small>Domain: <a href="/domain/@Model.Domain.Id">@Model.Domain.Name</a></small></h1>
 
-<form action="/domain/@Model.Domain.Name/role/@Model.Role.Name" method="post">
+<form action="/domain/@Model.Domain.Id/role/@Model.Role.Name" method="post">
 <div>
     <input id="Claims" type="hidden" name="Claims" value="@Helpers.Values(@Model.Claims)" />
     Claims:
@@ -32,7 +32,7 @@
     {
         <span>
         There are no claims available to assign to this role. Claims can be created in the domain screen:
-        <a href="/domain/@Model.Domain.Name/">@Model.Domain.Name</a>. Once created they will be available to assign them 
+        <a href="/domain/@Model.Domain.Id/">@Model.Domain.Name</a>. Once created they will be available to assign them 
         to this role. 
         </span>
        
@@ -67,7 +67,7 @@ else
 }
 <hr />
 <input type="submit" name="Save" class="btn btn-success" value="Save" />
-<a class="btn btn-default" href="/domain/@Model.Domain.Name/">Cancel</a>
+<a class="btn btn-default" href="/domain/@Model.Domain.Id/">Cancel</a>
 <input type="submit" name="Delete" class="pull-right btn btn-danger" value="Delete" 
     onclick="return confirm('Are you sure you want to delete this role?');"/>
 </form>

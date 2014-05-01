@@ -4,7 +4,7 @@
 }
 
 <h1>Claim: @Model.Name <small>Domain: 
-<a href="/domain/@Model.Domain.Name/">@Model.Domain.Name</a></small></h1>
+<a href="/domain/@Model.Domain.Id/">@Model.Domain.Name</a></small></h1>
 
 <h4>Roles:</h4>
 
@@ -14,7 +14,7 @@
     foreach(SSAManager.Role role in Model.Roles)
     {
         if(index > 0){<span>,</span>}
-        <a href="/domain/@Model.Domain.Name/role/@role.Name">@role.Name</a>
+        <a href="/domain/@Model.Domain.Id/role/@role.Name">@role.Name</a>
         ++index;
     }
 }
@@ -30,7 +30,7 @@ else
     foreach(SSAManager.User user in Model.Users)
     {
         if(index > 0){<span>,</span>}
-        <a href="/domain/@Model.Domain.Name/user/@user.Id">@user.UserName</a>
+        <a href="/domain/@Model.Domain.Id/user/@user.Id">@user.UserName</a>
         ++index;
     }
 }
@@ -40,8 +40,8 @@ else
 }
 
 <hr />
-<form action="/domain/@Model.Domain.Name/claim/@Model.Name" method="post">
+<form action="/domain/@Model.Domain.Id/claim/@Model.Name" method="post">
     <!-- <input class="btn btn-success" type="submit" name="Save" value="Save" /> -->
-    <a class="btn btn-default" href="/domain/@Model.Domain.Name/">Cancel</a>
+    <a class="btn btn-default" href="/domain/@Model.Domain.Id/">Cancel</a>
     <input class="pull-right btn btn-danger" type="submit" name="Delete" value="Delete" />
 </form>

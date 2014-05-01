@@ -23,12 +23,12 @@ namespace SSAManager
         Role UpdateRole(Role role);
         void DeleteRole(Role role);
 
-        Domain GetDomain(string name, Guid managerId);
+        Domain GetDomain(Guid id);
         Domain[] GetDomains(Guid managerID);
         Domain[] GetDomainsAdmin(Guid managerID);
         Domain CreateDomain(string name, Manager manager);
         Domain UpdateDomain(Domain domain);
-        void DeleteDomain(string name, Guid managerId);
+        void DeleteDomain(Guid id);
        
         Manager[] GetAdministrators(Guid domainId);
         Manager AddAdministrator(Guid domainId, string email);

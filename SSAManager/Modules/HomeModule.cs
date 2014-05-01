@@ -72,33 +72,34 @@ namespace SSAManager
                 return this.Response.AsRedirect("/home");
             };
 
-            Get ["/domain/{name}/{owner?}"] = parameters => {
+            Get ["/domain/{id}"] = parameters => {
                 DomainModel model = new DomainModel();
-                string owner =      (string)parameters.owner;
                 model.Manager  =    (Manager)this.Context.CurrentUser;
+                model.Domain =      repository.GetDomain((Guid)parameters.id);
 
-                if(owner != null)
+                if(model.Domain == null || !model.Domain.HasAccess(model.Manager))
                 {
-                    Manager o =     repository.GetManager(owner);
-                    model.Domain =  repository.GetDomain((string)parameters.name,o.Id);
-
-                }
-                else
-                {
-                    model.Domain =  repository.GetDomain((string)parameters.name, model.Manager.Id);
+                    return View["NoAccess"];
                 }
 
                 model.Roles =       repository.GetRoles(model.Domain.Id).ToList();
                 model.Users =       repository.GetDomainUsers(model.Domain.Id).ToList();
                 model.Admins =      repository.GetAdministrators(model.Domain.Id).ToList();
 
+
                 return View["Domain", model];
             };
 
-            Post["/domain/{name}/{owner?}"] = parameters => {
+            Post["/domain/{id}"] = parameters => {
                 DomainModel model = this.Bind<DomainModel>();
                 model.Manager  = (Manager)this.Context.CurrentUser;
-                Domain domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
+                Domain domain = repository.GetDomain((Guid)parameters.id);
+
+                if(model.Domain == null || !model.Domain.HasAccess(model.Manager))
+                {
+                    return View["NoAccess"];
+                }
+
                 model.Roles = repository.GetRoles(domain.Id).ToList();
                 model.Users = repository.GetDomainUsers(domain.Id).ToList();
 
@@ -111,7 +112,7 @@ namespace SSAManager
 
                 if(Request.Form.Delete != null)
                 {
-                    repository.DeleteDomain(domain.Name, model.Manager.Id);
+                    repository.DeleteDomain(domain.Id);
                     return this.Response.AsRedirect ("/");
                 }
 
@@ -142,32 +143,16 @@ namespace SSAManager
                 return View["Domain", model];
 
             };
-
-            Get ["/domain/{name}/role/{role}"] = parameters => {
-                RoleModel model = new RoleModel();
-                model.Manager  = (Manager)this.Context.CurrentUser;
-                model.Domain  = repository.GetDomain((string)parameters.name, model.Manager.Id);
-                model.Users = repository.GetDomainUsers(model.Domain.Id).ToList();
-                model.Role = repository.GetRole(model.Domain.Id,(string)parameters.role);
-                User[] us = repository.GetUsersInRole(model.Role);
-
-                List<string> usStringified = new List<string>();
-
-                foreach(User u in us)
-                {
-                    usStringified.Add(u.Id.ToString());
-                }
-
-                model.Claims = model.Role.Claims;
-                model.RoleUsers = usStringified;
-                return View["role", model];
-            };
-
-            Get ["/domain/{name}/admin/new"] = parameters => {
+                
+            Get ["/domain/{id}/admin/new"] = parameters => {
                 AdminModel model =  new AdminModel();
                 model.Manager =     (Manager)this.Context.CurrentUser;
-                model.Domain = repository.GetDomain((string)parameters.name, 
-                    model.Manager.Id);
+                model.Domain = repository.GetDomain((Guid)parameters.id);
+
+                if(model.Domain == null || !model.Domain.HasAccess(model.Manager))
+                {
+                    return View["NoAccess"];
+                }
 
                 if(!model.Domain.IsOwner(model.Manager))
                 {
@@ -180,11 +165,15 @@ namespace SSAManager
                 return View["Admin_new", model];
             };
 
-            Post ["/domain/{name}/admin/new"] = parameters => {
+            Post ["/domain/{id}/admin/new"] = parameters => {
                 AdminModel model =  this.Bind<AdminModel>();
                 model.Manager  =    (Manager)this.Context.CurrentUser;
-                model.Domain = repository.GetDomain((string)parameters.name, 
-                    model.Manager.Id);
+                model.Domain = repository.GetDomain((Guid)parameters.id);
+
+                if(model.Domain == null || !model.Domain.HasAccess(model.Manager))
+                {
+                    return View["NoAccess"];
+                }
                     
                 if(model.Domain.IsOwner(model.Manager))
                 {
@@ -215,12 +204,42 @@ namespace SSAManager
                     
                 return View["Admin_new", model];
             };
-                
-            Post ["/domain/{name}/role/{role}"] = parameters => {
-                RoleModel model = this.Bind<RoleModel>();
+              
+            Get ["/domain/{id}/role/{role}"] = parameters => {
+                RoleModel model = new RoleModel();
+                model.Manager  = (Manager)this.Context.CurrentUser;
+                model.Domain = repository.GetDomain((Guid)parameters.id);
 
+                if(model.Domain == null || !model.Domain.HasAccess(model.Manager))
+                {
+                    return View["NoAccess"];
+                }
+
+                model.Users = repository.GetDomainUsers(model.Domain.Id).ToList();
+                model.Role = repository.GetRole(model.Domain.Id,(string)parameters.role);
+                User[] us = repository.GetUsersInRole(model.Role);
+
+                List<string> usStringified = new List<string>();
+
+                foreach(User u in us)
+                {
+                    usStringified.Add(u.Id.ToString());
+                }
+
+                model.Claims = model.Role.Claims;
+                model.RoleUsers = usStringified;
+                return View["role", model];
+            };
+
+            Post ["/domain/{id}/role/{role}"] = parameters => {
+                RoleModel model = this.Bind<RoleModel>();
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((Guid)parameters.id);
+
+                if(model.Domain == null || !model.Domain.HasAccess(model.Manager))
+                {
+                    return View["NoAccess"];
+                }
 
                 model.Role = repository.GetRole(model.Domain.Id,(string)parameters.role);
 
@@ -278,18 +297,28 @@ namespace SSAManager
                 return View["Role", model];
             };
 
-            Get ["/domain/{name}/role/new"] = parameters => {
+            Get ["/domain/{id}/role/new"] = parameters => {
                 CreateRoleModel model = new CreateRoleModel ();
                 model.Manager  = (Manager)this.Context.CurrentUser;
-                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
-           
+                model.Domain = repository.GetDomain((Guid)parameters.id);
+
+                if(model.Domain == null || !model.Domain.HasAccess(model.Manager))
+                {
+                    return View["NoAccess"];
+                }
+
                 return View["Role_new", model];
             };
 
-            Post ["/domain/{name}/role/new"] = parameters => {
+            Post ["/domain/{id}/role/new"] = parameters => {
                 CreateRoleModel model = this.Bind<CreateRoleModel>();
                 model.Manager  = (Manager)this.Context.CurrentUser;
-                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((Guid)parameters.id);
+
+                if(model.Domain == null || !model.Domain.HasAccess(model.Manager))
+                {
+                    return View["NoAccess"];
+                }
 
                 var result = this.Validate(model);
 
@@ -318,23 +347,34 @@ namespace SSAManager
                 return this.Response.AsRedirect("/domain/" + model.Domain.Name);
             };
 
-            Get ["/domain/{name}/claim/{cname}"] = parameters => {
+            Get ["/domain/{id}/claim/{cname}"] = parameters => {
                 ClaimModel model = new ClaimModel ();
                 model.Name = (string)parameters.cname;
                 model.Title = "Claim";
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((Guid)parameters.id);
+
+                if(model.Domain == null || !model.Domain.HasAccess(model.Manager))
+                {
+                    return View["NoAccess"];
+                }
+
                 model.Users = repository.GetUsersWithClaim(model.Domain.Id,(string)parameters.cname);
                 model.Roles = repository.GetRolesWithClaim(model.Domain.Id,(string)parameters.cname);
 
                 return View["Claim", model];
             };
 
-            Post ["/domain/{name}/claim/{cname}"] = parameters => {
+            Post ["/domain/{id}/claim/{cname}"] = parameters => {
                 ClaimModel model = new ClaimModel ();
                 model.Name = (string)parameters.cname;
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((Guid)parameters.id);
+
+                if(model.Domain == null || !model.Domain.HasAccess(model.Manager))
+                {
+                    return View["NoAccess"];
+                }
 
                 if (Request.Form.Delete != null) {
                     model.Domain.Claims.Remove(model.Name);
@@ -364,18 +404,28 @@ namespace SSAManager
                 return View["Claim", model];
             };
 
-            Get ["/domain/{name}/claim/new"] = parameters => {
+            Get ["/domain/{id}/claim/new"] = parameters => {
                 ClaimModel model = new ClaimModel ();
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((Guid)parameters.id);
+
+                if(model.Domain == null || !model.Domain.HasAccess(model.Manager))
+                {
+                    return View["NoAccess"];
+                }
              
                 return View["Claim_new", model];
             };
 
-            Post ["/domain/{name}/claim/new"] = parameters => {
+            Post ["/domain/{id}/claim/new"] = parameters => {
                 ClaimModel model = this.Bind<ClaimModel>();
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((Guid)parameters.id);
+
+                if(model.Domain == null || !model.Domain.HasAccess(model.Manager))
+                {
+                    return View["NoAccess"];
+                }
 
                 var result = this.Validate(model);
                 
@@ -385,7 +435,7 @@ namespace SSAManager
                     return View["Claim_new", model];
                 }
 
-                Domain update = repository.GetDomain(model.Domain.Name, model.Manager.Id);
+                Domain update =  repository.GetDomain((Guid)parameters.id);
                 List<string> claims = new List<string>(); 
 
                 if(update.Claims != null)
@@ -420,14 +470,20 @@ namespace SSAManager
                     return View["Claim_new", model];
                 }
 
-                return this.Response.AsRedirect("/domain/" + model.Domain.Name);
+                return this.Response.AsRedirect("/domain/" + model.Domain.Id);
             };
 
-            Get ["/domain/{name}/user/{id}"] = parameters => {
+            Get ["/domain/{id}/user/{id}"] = parameters => {
                 DomainUserModel model = new DomainUserModel();
 
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((Guid)parameters.id);
+
+                if(model.Domain == null || !model.Domain.HasAccess(model.Manager))
+                {
+                    return View["NoAccess"];
+                }
+
                 model.User = repository.GetUser(Guid.Parse((string)parameters.id));
                 model.Roles = repository.GetRoles(model.Domain.Id).ToList();
                 model.Enabled = model.User.Enabled;
@@ -448,11 +504,16 @@ namespace SSAManager
                 return View["User", model];
             };
 
-            Post ["/domain/{name}/user/{id}"] = parameters => {
+            Post ["/domain/{id}/user/{id}"] = parameters => {
                 DomainUserModel model = this.Bind<DomainUserModel>();
-
                 model.Manager = (Manager)this.Context.CurrentUser;
-                model.Domain = repository.GetDomain((string)parameters.name, model.Manager.Id);
+                model.Domain = repository.GetDomain((Guid)parameters.id);
+
+                if(model.Domain == null || !model.Domain.HasAccess(model.Manager))
+                {
+                    return View["NoAccess"];
+                }
+
                 model.User = repository.GetUser(Guid.Parse((string)parameters.id));
                 model.Roles = repository.GetRoles(model.Domain.Id).ToList();
 

@@ -6,7 +6,7 @@
 @if(@Model.Domain.IsOwner(Model.Manager))
 {
     <h4>Add a administrator</h4>
-    <form action="/domain/@Model.Domain.Name/admin/new" method="post">
+    <form action="/domain/@Model.Domain.Id/admin/new" method="post">
         <p>
             <label for="Name">Email:</label>
             <input type="text" name="Email" required autofocus />

@@ -302,7 +302,7 @@ namespace SSAManager
             collection.Remove(new QueryDocument(query));
         }
        
-        private Domain GetDomain(Guid id)
+        public Domain GetDomain(Guid id)
         {
             var collection = database.GetCollection<Domain> ("domains");
             var query = Query.And(Query<Domain>.EQ (e => e.Id, id));
@@ -312,16 +312,16 @@ namespace SSAManager
             return domain;
         }
 
-        public Domain GetDomain(string name, Guid managerId)
-        {
-            var collection = database.GetCollection<Domain> ("domains");
-            var query = Query.And(Query<Domain>.EQ (e => e.ManagerId, managerId),
-                Query<Domain>.EQ(e => e.Name, name));
-
-            Domain domain = collection.FindOne (query);
-
-            return domain;
-        }
+//        public Domain GetDomain(string name, Guid managerId)
+//        {
+//            var collection = database.GetCollection<Domain> ("domains");
+//            var query = Query.And(Query<Domain>.EQ (e => e.ManagerId, managerId),
+//                Query<Domain>.EQ(e => e.Name, name));
+//
+//            Domain domain = collection.FindOne (query);
+//
+//            return domain;
+//        }
 
         public Domain[] GetDomainsAdmin(Guid managerId)
         {
@@ -400,12 +400,12 @@ namespace SSAManager
                 domains.Save(updateDomain);
             }
 
-            return GetDomain(domain.Name, domain.ManagerId);
+            return GetDomain(domain.Id);
         }
 
-        public void DeleteDomain(string name, Guid managerId)
+        public void DeleteDomain(Guid id)
         {
-            Domain domain = this.GetDomain (name, managerId);
+            Domain domain = this.GetDomain (id);
             Role[] roles = this.GetRoles(domain.Id);
 
             foreach (Role r in roles) 
@@ -451,7 +451,7 @@ namespace SSAManager
 
                 if (domains != null && domains.Length > 0) {
                     foreach (Domain domain in domains) {
-                        DeleteDomain (domain.Name, id);
+                        DeleteDomain (domain.Id);
                     }
                 }
             }

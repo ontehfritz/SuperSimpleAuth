@@ -59,7 +59,7 @@ namespace SSA_Test
         { 
             if (_domain != null) 
             {
-                repository.DeleteDomain (_domain.Name, _manager.Id);
+                repository.DeleteDomain (_domain.Id);
             }
 
             if (_manager != null) 
@@ -146,7 +146,7 @@ namespace SSA_Test
         {
             Domain domain = repository.CreateDomain ("create_domain_test", _manager);
             Assert.IsNotNull (domain);
-            repository.DeleteDomain (domain.Name, _manager.Id);
+            repository.DeleteDomain (domain.Id);
         }
 
         [Test()]
@@ -166,8 +166,7 @@ namespace SSA_Test
         [Test()]
         public void Get_domain()
         {
-            Domain domain = repository.GetDomain(_domain.Name, 
-                                        _manager.Id);
+            Domain domain = repository.GetDomain(_domain.Id);
 
             Assert.AreEqual (_domain.Id, domain.Id);
         }
@@ -315,7 +314,7 @@ namespace SSA_Test
         [Test()]
         public void Delete_domain()
         {
-            repository.DeleteDomain (_domain.Name,_manager.Id);
+            repository.DeleteDomain (_domain.Id);
             _domain = null;
         }
 

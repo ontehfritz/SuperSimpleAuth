@@ -5,7 +5,7 @@
 
 <form action="/domain/@Model.Domain.Name/user/@Model.User.Id" method="post">
 
-<h1>Domain: <a href="/domain/@Model.Domain.Name">@Model.Domain.Name</a></h1>
+<h1>Domain: <a href="/domain/@Model.Domain.Id">@Model.Domain.Name</a></h1>
 @Model.Enabled
 <table>
 <tr>
@@ -120,7 +120,7 @@
 <div>
 <hr />
 <input type="submit" class="btn btn-success" name="Save" value="Save" />
-<a class="btn btn-default" href="/domain/@Model.Domain.Name/">Cancel</a>
+<a class="btn btn-default" href="/domain/@Model.Domain.Id/">Cancel</a>
 <input type="submit" class="pull-right btn btn-danger"  name="Delete" value="Delete" 
     onclick="return confirm('Are you sure you want to delete this user?');" />
 </div>

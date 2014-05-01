@@ -145,5 +145,6 @@
     <None Include="Views\home\Role_new.cshtml" />
     <None Include="Views\home\User.cshtml" />
     <None Include="Views\home\Admin_new.cshtml" />
+    <None Include="Views\home\NoAccess.cshtml" />
   </ItemGroup>
 </Project>

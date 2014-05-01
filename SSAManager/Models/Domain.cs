@@ -4,6 +4,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using FluentValidation;
 using System.Collections.Generic;
+using System.Configuration;
 
 namespace SSAManager
 {
@@ -50,6 +51,44 @@ namespace SSAManager
             }
 
             return false;
+        }
+
+        public bool HasAccess(Manager manager)
+        {
+            if(manager.Id == this.ManagerId)
+            {
+                return true;
+            }
+
+            IRepository repository = 
+                new MongoRepository (ConfigurationManager.AppSettings.Get("db"));
+           
+            Manager[] admins = repository.GetAdministrators(this.Id);
+
+            foreach(Manager admin in admins)
+            {
+                if(admin.Id == manager.Id)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+            
+        public string GetOwnerName()
+        {
+            IRepository repository = 
+                new MongoRepository (ConfigurationManager.AppSettings.Get("db"));
+
+            Manager manager = repository.GetManager(this.ManagerId);
+
+            if(manager != null)
+            {
+                return manager.UserName;
+            }
+
+            return null;
         }
     }
 
