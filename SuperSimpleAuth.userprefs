@@ -4,17 +4,6 @@
     <Files>
       <File FileName="SSAManager/Views/home/User.cshtml" Line="99" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True">
-          <Node name="SSA_Test" expanded="True">
-            <Node name="SSA_Test" expanded="True">
-              <Node name="SSAManagerTest" expanded="True" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

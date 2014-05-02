@@ -92,10 +92,10 @@ namespace SSAManager
 
             Post["/domain/{id}"] = parameters => {
                 DomainModel model = this.Bind<DomainModel>();
-                model.Manager  = (Manager)this.Context.CurrentUser;
-                Domain domain = repository.GetDomain((Guid)parameters.id);
+                model.Manager  =    (Manager)this.Context.CurrentUser;
+                Domain domain =     repository.GetDomain((Guid)parameters.id);
 
-                if(model.Domain == null || !model.Domain.HasAccess(model.Manager))
+                if(domain == null || !domain.HasAccess(model.Manager))
                 {
                     return View["NoAccess"];
                 }
@@ -177,14 +177,43 @@ namespace SSAManager
                     
                 if(model.Domain.IsOwner(model.Manager))
                 {
-                    Manager admin = repository.AddAdministrator(model.Domain.Id, 
-                        model.Email);
+                    Manager admin = null;
 
+                    if(model.Manager.UserName.ToLower() !=
+                        model.Email.ToLower())
+                    {
+                        try
+                        {
+                            admin = repository.AddAdministrator(model.Domain.Id, 
+                                            model.Email);
+                        }
+                        catch(WriteConcernException e)
+                        {
+                            model.Errors = new List<Error>();
+                            Error error = new Error();
+                            error.Name = "Duplicate";
+                            error.Message = "Admin already exists.";
+                            model.Errors.Add(error);
+
+                            return View["Admin_new", model];
+                        }
+                    }
+                    else
+                    {
+                        model.Errors = new List<Error>();
+                        Error error = new Error();
+                        error.Name = "Duplicate";
+                        error.Message = "That is your email.";
+                        model.Errors.Add(error);
+
+                        return View["Admin_new", model];
+                    }
+                        
                     if(admin != null)
                     {
                         return this.Response
                                 .AsRedirect(string.Format("/domain/{0}",
-                                    (string)parameters.name));
+                                (string)parameters.id));
                     }
                     else
                     {
@@ -246,7 +275,7 @@ namespace SSAManager
                 if(Request.Form.Delete != null)
                 {
                     repository.DeleteRole(model.Role);
-                    return this.Response.AsRedirect(string.Format("/domain/{0}",(string)parameters.name));
+                    return this.Response.AsRedirect(string.Format("/domain/{0}",(string)parameters.id));
                 }
 
 
@@ -344,7 +373,7 @@ namespace SSAManager
                     return View["Role_new", model];
                 }
 
-                return this.Response.AsRedirect("/domain/" + model.Domain.Name);
+                return this.Response.AsRedirect("/domain/" + model.Domain.Id);
             };
 
             Get ["/domain/{id}/claim/{cname}"] = parameters => {
