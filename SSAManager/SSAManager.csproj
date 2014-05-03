@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}</ProjectGuid>
     <ProjectTypeGuids>{349C5851-65DF-11DA-9384-00065B846F21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
@@ -84,10 +82,8 @@
     <Content Include="Content\images\bg.jpg" />
     <Content Include="Content\images\logo.jpg" />
     <Content Include="Content\images\logo.png" />
-    <Content Include="Content\javascript\jquery-2.0.3-vsdoc.js" />
-    <Content Include="Content\javascript\jquery-2.0.3.js" />
-    <Content Include="Content\javascript\jquery-2.0.3.min.js" />
     <Content Include="packages.config" />
+    <Content Include="Content\javascript\ssa.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
@@ -97,6 +93,7 @@
     <Folder Include="Models\Views\" />
     <Folder Include="Models\Repositories\" />
     <Folder Include="Content\downloads\" />
+    <Folder Include="Content\javascript\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
@@ -129,7 +126,6 @@
   <ItemGroup>
     <None Include="Content\.DS_Store" />
     <None Include="Content\images\.DS_Store" />
-    <None Include="Content\javascript\jquery-2.0.3.min.map" />
     <None Include="Views\Index.cshtml" />
     <None Include="Views\_Layout.cshtml" />
     <None Include="Views\logon\_Signup.cshtml" />
@@ -146,5 +142,6 @@
     <None Include="Views\home\User.cshtml" />
     <None Include="Views\home\Admin_new.cshtml" />
     <None Include="Views\home\NoAccess.cshtml" />
+    <None Include="Views\home\Admin.cshtml" />
   </ItemGroup>
 </Project>

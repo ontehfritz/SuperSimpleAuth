@@ -1,8 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Views/home/User.cshtml">
     <Files>
-      <File FileName="SSAManager/Views/home/User.cshtml" Line="99" Column="1" />
+      <File FileName="SSAManager/Views/home/User.cshtml" Line="6" Column="39" />
+      <File FileName="SSAManager/Views/logon/_Signup.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/logon/Forgot.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/logon/Logon.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/logon/Settings.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/_Layout.cshtml" Line="16" Column="36" />
+      <File FileName="SSAManager/Modules/HomeModule.cs" Line="568" Column="22" />
+      <File FileName="SuperSimpleAuth/Modules/AuthModule.cs" Line="43" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

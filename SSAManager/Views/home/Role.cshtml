@@ -71,36 +71,3 @@ else
 <input type="submit" name="Delete" class="pull-right btn btn-danger" value="Delete" 
     onclick="return confirm('Are you sure you want to delete this role?');"/>
 </form>
-
-<script>
-$("input[name='claim']").change(function() {
-    $("#Claims").val($("input[name='claim']").map(function() {
-        if(this.checked)
-        {
-            return $(this).val();
-        }
-    })
-    .get()
-    .join());
-});
-
-$("input[name='user']").change(function() {
-    $("#RoleUsers").val($("input[name='user']").map(function() {
-        if(this.checked)
-        {
-            return $(this).val();
-        }
-    })
-    .get()
-    .join());
-    
-     $("#uRoleUsers").val($("input[name='user']").map(function() {
-        if(!this.checked)
-        {
-            return $(this).val();
-        }
-    })
-    .get()
-    .join());
-});
-</script>

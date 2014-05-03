@@ -73,7 +73,7 @@
                 foreach(var admin in @Model.Admins)
                 {
                     if(index > 0){<span>,</span>}
-                    <a href="">@admin.UserName</a>
+                    <a href="/domain/@Model.Domain.Id/admin/@admin.Id">@admin.UserName</a>
                     ++index;
                 }
             }
