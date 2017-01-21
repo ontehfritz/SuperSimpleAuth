@@ -1,4 +1,3 @@
-fritzs-mac-mini.home.p12
 SSA_Test/bin/
 SSAManager/bin/
 SuperSimpleAuth/bin
@@ -11,5 +10,4 @@ SSA_Test/obj/Debug/
 SuperSimpleAuthCSharp/obj/
 bin/
 .DS_Store
-packages.config
 obj/
