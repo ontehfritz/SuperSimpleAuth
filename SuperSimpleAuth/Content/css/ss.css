@@ -1,0 +1,9 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+  background-color:#ffffff;
+  height: 100%;
+  padding: 20px;
+}
