@@ -2,44 +2,43 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Super Simple Auth (SSA) - Alpha v0.1</title>
+        <title>Super Simple Auth (SSA) -  Beta</title>
         <!-- Latest compiled and minified CSS -->
         <script src="//codeorigin.jquery.com/jquery-2.0.3.js"></script>
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css" />
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+		<script src="//use.fontawesome.com/713af367b4.js"></script>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="content/css/ss.css" />
     </head>
     <body>
     <div class="container">
       <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li><a href="/logon">Sign In</a></li>
-          <li><a href="/forgot">Forgot?</a></li>
-        </ul>
-        <h3 class="text-muted">[SuperSimpleAuth] <small>ALPHA</small></h3>
+        <div class="pull-right">
+          <a class="btn btn-default" href="/logon">Sign In</a>
+          <a class="btn btn-default" href="/forgot">Forgot?</a>
+        </div>		
+        <h3 class="text-muted">
+				<i class="fa fa-shield" aria-hidden="true">
+				</i>SuperSimpleAuth <small>BETA</small>
+		</h3>
       </div>
-      <br />
-      <div class="alert alert-danger alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <p>
-        ATTENTION: Please do not use SSA for production. If you do, use at your own risk as this is experimental project. 
-        </p>
-      </div>
-      <div class="jumbotron" style="border: 1px solid black;">
-        <div style="float:left;">
+	  <br /> 
+      <div class="container jumbotron">
+        <div class="pull-left">
             <h1>Simple. Secure.</h1>
             <p>Web Authentication and Authorization Service</p>
             <p>
             @Html.Partial("logon/_signup", Model)
             </p>
         </div>
-        <div style="float:right;">
+	    <br /><br /><br /><br /> <br /><br />
+        <div class="pull-left">
         <h4>Steps:</h4>
-            <ol>
-                <li> Sign Up or Sign In</li>
-                <li> Create an Application</li>
-                <li> Download wrapper</li>
+            <ol style="font-size:18px;">
+                <li>Sign up or sign in</li>
+			    <li>Download wrapper</li>
+                <li>Create a web application</li>
             </ol>
             <p>See <a href="https://github.com/fritzcoder/SuperSimpleAuth/wiki">wiki</a> 
             for examples and How Tos.</p>
@@ -48,25 +47,25 @@
       </div>
       <div class="row marketing">
         <div class="col-lg-6">
-          <h4>Language Support:</h4>
+          Language Support:
             <ul>
             <li><a href="/content/downloads/SuperSimpleAuthCSharp.dll.zip">Mono/.Net C#</a></li>
             <li>Ruby (Coming soon)</li>
             </ul>
-            Don't see your favorite language? You can develop your own wrapper from: 
-            api.supersimpleauth.com 
+        </div>
+		<div class="pull right">
+		Don't see your favorite language? You can develop your own wrapper from: 
+        api.supersimpleauth.com 
         </div>
         <div class="col-lg-6">
         </div>
       </div>
 
       <div class="footer">
-        <p>&copy; SuperSimpleSuperRad 2013</p>
+        <p>&copy; Fritz @DateTime.Now.Year</p>
       </div>
 
     </div> <!-- /container -->
-
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
