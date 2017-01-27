@@ -1,6 +1,6 @@
 ﻿<Properties StartupConfiguration="{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}|">
   <MonoDevelop.Ide.ItemProperties.SSAManager PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Content/css/ss.css">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Views/_Layout.cshtml">
     <Files>
       <File FileName="SSAManager/Views/home/User.cshtml" Line="6" Column="39" />
       <File FileName="SuperSimpleAuth/Views/index.cshtml" Line="198" Column="1" />
@@ -9,8 +9,10 @@
       <File FileName="SSAManager/packages.config" Line="1" Column="1" />
       <File FileName="SSAManager/Bootstrapper.cs" Line="22" Column="63" />
       <File FileName="SSAManager/Views/_Layout.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/Index.cshtml" Line="67" Column="31" />
-      <File FileName="SSAManager/Content/css/ss.css" Line="29" Column="2" />
+      <File FileName="SSAManager/Views/Index.cshtml" Line="49" Column="31" />
+      <File FileName="SSAManager/Content/css/ss.css" Line="7" Column="16" />
+      <File FileName="SSAManager/Views/home/NoAccess.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/logon/Logon.cshtml" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
