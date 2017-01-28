@@ -1,6 +1,6 @@
 ﻿<Properties StartupConfiguration="{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}|">
   <MonoDevelop.Ide.ItemProperties.SSAManager PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Views/home/Domain.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SSAManager/Views/home/Domain_new.cshtml">
     <Files>
       <File FileName="SSAManager/Views/home/User.cshtml" Line="6" Column="39" />
       <File FileName="SuperSimpleAuth/Views/index.cshtml" Line="198" Column="1" />
@@ -14,12 +14,19 @@
       <File FileName="SSAManager/Views/home/NoAccess.cshtml" Line="1" Column="1" />
       <File FileName="SSAManager/Views/logon/Logon.cshtml" Line="15" Column="58" />
       <File FileName="SSAManager/Views/logon/_Signup.cshtml" Line="26" Column="5" />
-      <File FileName="SSAManager/Views/logon/Forgot.cshtml" Line="19" Column="1" />
+      <File FileName="SSAManager/Views/logon/Forgot.cshtml" Line="6" Column="66" />
       <File FileName="SSAManager/Modules/LogonModule.cs" Line="17" Column="13" />
       <File FileName="SSAManager/Models/Views/SignupModel.cs" Line="25" Column="6" />
       <File FileName="SSAManager/Models/Views/ForgotPasswordModel.cs" Line="20" Column="1" />
       <File FileName="SSAManager/Views/logon/Settings.cshtml" Line="1" Column="1" />
-      <File FileName="SSAManager/Views/home/Domain.cshtml" Line="1" Column="1" />
+      <File FileName="SSAManager/Views/home/Domain.cshtml" Line="136" Column="8" />
+      <File FileName="SSAManager/Models/Domain.cs" Line="54" Column="13" />
+      <File FileName="SSAManager/Views/home/Manage.cshtml" Line="59" Column="13" />
+      <File FileName="SSAManager/Models/Repositories/MongoRepository.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Models/Views/DomainModel.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Modules/IndexModule.cs" Line="1" Column="1" />
+      <File FileName="SSAManager/Modules/HomeModule.cs" Line="46" Column="31" />
+      <File FileName="SSAManager/Views/home/Domain_new.cshtml" Line="15" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

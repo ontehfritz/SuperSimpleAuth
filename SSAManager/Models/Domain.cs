@@ -43,6 +43,8 @@ namespace SSAManager
         [BsonElement]
         public string ModifiedBy { get; set; } 
 
+        public int UserCount { get; set; }
+
         public bool IsOwner(Manager manager)
         {
             if(manager.Id == this.ManagerId)
