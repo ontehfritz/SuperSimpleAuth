@@ -2,22 +2,38 @@
 @{
   Layout = "_layout.cshtml";
 }   
-<h4>Domains you own <a href="~/domain/new"><small><span class="glyphicon glyphicon-plus-sign"></span> New</small></a></h4>
+<h3><i class="fa fa-building-o" aria-hidden="true"></i> Domains you own <a href="~/domain/new"><small><span class="glyphicon glyphicon-plus-sign"></span> New</small></a></h3>
 <div>      
 @if(@Model.Domains != null && @Model.Domains.Length > 0)
 {
-    foreach(var domain in @Model.Domains)
+    <table class="table table-striped">
+	<tr>
+    <th></th>
+	<th>Name</th>
+    <th>Users</th>
+	<th>Active</th>
+    <th>Created</th>
+	</tr>
+    @foreach(var domain in @Model.Domains)
     {
-        <div style="border: 1px solid black;background:#ffffff;padding:5px;">
-            <div>
-            <h4><a href="~/domain/@domain.Id">@domain.Name</a></h4>
-            </div>
-            <div>
-            Created: @domain.CreatedAt.ToLongDateString() @domain.CreatedAt.ToLongTimeString()
-            </div>
-        </div>
-        <br />
+		<tr>
+        <td>
+        @if(@domain.Enabled)
+        { 
+            <i class="fa fa-check" aria-hidden="true" style="color:green"></i> 
+        }
+	    else
+	    {
+            <i class="fa fa-minus-circle" aria-hidden="true" style="color:red"></i>
+        }
+        </td>
+        <td><a href="~/domain/@domain.Id">@domain.Name</a></td>
+		<td>@domain.UserCount</td>
+        <td>@domain.Enabled</td>
+        <td>@domain.CreatedAt.ToLongDateString() @domain.CreatedAt.ToLongTimeString()</td>
+        </tr>
     }
+	</table>
 }
 else
 {
@@ -25,22 +41,38 @@ else
 }
 </div>
 
-<h4>Domains you administrate</h4>
+<h3><i class="fa fa-building" aria-hidden="true"></i> Domains you administrate</h3>
 <div>      
 @if(@Model.AdminDomains != null && @Model.AdminDomains.Length > 0)
 {
-    foreach(var domain in @Model.AdminDomains)
+    <table class="table table-striped">
+    <tr>
+    <th></th>
+    <th>Name</th>
+    <th>Users</th>
+    <th>Active</th>
+    <th>Created</th>
+    </tr>
+    @foreach(var domain in @Model.AdminDomains)
     {
-        <div style="border: 1px solid black;background:#ffffff;padding:5px;">
-            <div>
-            <h4><a href="~/domain/@domain.Id">@domain.Name</a></h4>
-            </div>
-            <div>
-            Created: @domain.CreatedAt.ToLongDateString() @domain.CreatedAt.ToLongTimeString()
-            </div>
-        </div>
-        <br />
+        <tr>
+        <td>
+        @if(@domain.Enabled)
+        { 
+            <i class="fa fa-check" aria-hidden="true" style="color:green"></i> 
+        }
+        else
+        {
+            <i class="fa fa-minus-circle" aria-hidden="true" style="color:red"></i>
+        }
+        </td>
+        <td><a href="~/domain/@domain.Id">@domain.Name</a></td>
+        <td>@domain.UserCount</td>
+        <td>@domain.Enabled</td>
+        <td>@domain.CreatedAt.ToLongDateString() @domain.CreatedAt.ToLongTimeString()</td>
+        </tr>
     }
+	</table>
 }
 else
 {

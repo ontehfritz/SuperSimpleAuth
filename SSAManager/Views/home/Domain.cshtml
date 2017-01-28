@@ -2,26 +2,42 @@
 @{
   Layout = "_layout.cshtml";
 }
-<h1>Domain: @Model.Domain.Name</h1>
 <form action="/domain/@Model.Domain.Id" method="post">
+<h1><i class="fa fa-building-o" aria-hidden="true"></i> Domain Details</h1>
+@if(Model.Domain.IsOwner(Model.Manager))
+{
+    <input type="submit" name="Delete" class="btn btn-danger pull-right" value="Delete" style="margin:5px;"
+    onclick="return confirm('Are you sure you want to delete this domain? This will disable all applications using this key!');"/>
+
+    if(Model.Domain.Enabled)
+    {
+        <input type="submit" name="Disable" class="btn btn-warning pull-right" value="Disable" style="margin:5px;"
+        onclick="return confirm('Are you sure you want to disable this domain? Applications using this key will be down!');"/>
+    }
+    else
+    {
+        <input type="submit" name="Enable" class="pull-right btn btn-success" value="Enable" style="margin:5px;"/>
+    }
+}
+<h3>Name : @Model.Domain.Name</h3>
+
 <div>
     <div style="float:left;">
-        <label for="Key">Key:</label><pre>@Model.Domain.Key</pre><input class="btn btn-danger" type="submit" name="Generate" value="Generate" 
+        <label for="Key"><i class="fa fa-key" aria-hidden="true"></i> Key:</label><pre>@Model.Domain.Key</pre><input class="btn btn-danger" type="submit" name="Generate" value="Generate" 
         onclick="return confirm('All applications using this key will need the new key assigned. Are you sure you want to generate a new key for this domain?');" />
     </div>
-    <div style="float:left;margin-left:20px;">
-        <p><label for="WhiteListIps">Allowed Server IPs:</label></p>
-        <p><input type="text" name="WhiteListIps" style="width:400px;" 
-        value="@Helpers.Values(@Model.Domain.WhiteListIps)" placeholder="Comma seprated list of allowable ips"/></p>
+    <div style="float:left;margin-left:20px;width:70%;">
+        <p><label for="WhiteListIps"><i class="fa fa-server" aria-hidden="true"></i> Allowed Server IPs:</label></p>
+        <p><input type="text" name="WhiteListIps" style="width:100%;" 
+        value="@Helpers.Values(@Model.Domain.WhiteListIps)" placeholder="0.0.0.0, 0.0.0.0"/></p>
         <p><input class="btn btn-success" type="submit" name="Update" value="update" /></p>
     </div>
     <br style="clear:both;" />
 </div>
-<hr />
 <div>
     <div style="float:left;width:200px;">
-        Roles: <a href="/domain/@Model.Domain.Id/role/new">
-            <span class="glyphicon glyphicon-plus-sign"></span> New</a>
+        <h3><i class="fa fa-user-circle-o" aria-hidden="true"></i> Roles: <small><a href="/domain/@Model.Domain.Id/role/new">
+            <span class="glyphicon glyphicon-plus-sign"></span> New</a></small></h3>
         <div>
             @if(@Model.Roles != null && @Model.Roles.Count > 0)
             {
@@ -40,7 +56,8 @@
         </div>
     </div>
     <div style="float:left;margin-left:20px;width:200px;">
-        Claims: <a href="/domain/@Model.Domain.Id/claim/new"><span class="glyphicon glyphicon-plus-sign"></span> New</a>
+        <h3><i class="fa fa-lock" aria-hidden="true"></i> Claims: <small><a href="/domain/@Model.Domain.Id/claim/new"><span class="glyphicon glyphicon-plus-sign">
+			</span> New</a></small></h3>
 
         <div>
             @if(@Model.Domain.Claims != null && @Model.Domain.Claims.Count > 0)
@@ -60,12 +77,14 @@
         </div>
     </div>
     <div style="float:left;margin-left:20px;width:200px;">
-        Admins: 
+        <h3><i class="fa fa-user-o" aria-hidden="true"></i> Admins: 
         @if(Model.Domain.IsOwner(Model.Manager))
         {
-            <a href="/domain/@Model.Domain.Id/admin/new">
+            <small><a href="/domain/@Model.Domain.Id/admin/new">
             <span class="glyphicon glyphicon-plus-sign"></span> New</a>
+			</small>
         }
+		</h3>
         <div>
             @if(@Model.Admins != null && @Model.Admins.Count > 0)
             {
@@ -85,52 +104,36 @@
     </div>
     <br style="clear:both;"/>
 </div>
-<hr />
 <div>
-    Users: 
+    <h3><i class="fa fa-users" aria-hidden="true"></i> Users:</h3> 
     <div>
+	<table class="table table-striped">
+    <tr>
+    <th></th>
+    <th>Name</th>
+    <th>Online</th>
+    <th>Last logon</th>
+    <th>Created</th>
+    </tr>
     @if(@Model.Users != null && @Model.Users.Count > 0)
     {
-        int index = 0;
         foreach(var user in @Model.Users)
         {
-            if(index > 0){<span>,</span>}
-            if(user.Enabled)
-            {
-                <a href="/domain/@Model.Domain.Id/user/@user.Id">@user.UserName</a>
-            }
-            else
-            {
-                <a href="/domain/@Model.Domain.Id/user/@user.Id">
-                <span class="label label-warning">@user.UserName</span>
-                </a>
-            }
-            ++index;
+            <tr>
+		    <td><i class="fa fa-user" aria-hidden="true"></i></td>
+            <td><a href="/domain/@Model.Domain.Id/user/@user.Id">@user.UserName</a></td>
+			<td>@user.LastRequest</td>
+            <td>@user.LastLogon</td>
+            <td>@user.CreatedAt</td>
+		    </tr>
         }
     }
-    else
-    {
-        <p>No users have registered yet</p>
-    }
+    </table>
+     @if(@Model.Users != null && @Model.Users.Count > 0) { <div> No Users Yet! </div>}
     </div>
 </div>
 <hr />
 <div style="clear:both;">
-    <a class="btn btn-default" href="/home">Cancel</a>
-    @if(Model.Domain.IsOwner(Model.Manager))
-    {
-        <input type="submit" name="Delete" class="pull-right btn btn-danger" value="Delete" 
-        onclick="return confirm('Are you sure you want to delete this domain? This will disable all applications using this key!');"/>
-
-        if(Model.Domain.Enabled)
-        {
-            <input type="submit" name="Disable" class="pull-right  btn btn-warning" value="Disable" 
-            onclick="return confirm('Are you sure you want to disable this domain? Applications using this key will be down!');"/>
-        }
-        else
-        {
-            <input type="submit" name="Enable" class="pull-right  btn btn-success" value="Enable" />
-        }
-    }
+	<a class="btn btn-default pull-right" href="/home">Cancel</a>
 </div>
 </form>

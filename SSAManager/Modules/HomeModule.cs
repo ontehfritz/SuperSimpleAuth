@@ -19,28 +19,34 @@ namespace SSAManager
 {
     public class HomeModule : NancyModule
     {
-        IRepository repository; 
-
         public HomeModule(IRepository repository)
         {
-            this.repository = repository;
-
             this.RequiresAuthentication ();
             
             Get["/home"] = parameters => {
-                ManageModel manage =    new ManageModel();
-                manage.Manager  =       (Manager)this.Context.CurrentUser;
+                var model =    new ManageModel();
+                model.Manager  =       (Manager)this.Context.CurrentUser;
                 try
                 {
-                    manage.Domains =        repository.GetDomains(manage.Manager.Id);
-                    manage.AdminDomains =   repository.GetDomainsAdmin(manage.Manager.Id);
+                    model.Domains = repository.GetDomains(model.Manager.Id);
+                    foreach(var domain in model.Domains)
+                    {
+                        domain.UserCount = 
+                            repository.GetDomainUsers(domain.Id).Count();
+                    }
+                    model.AdminDomains = repository.GetDomainsAdmin(model.Manager.Id);
+                    foreach(var domain in model.AdminDomains)
+                    {
+                        domain.UserCount = 
+                            repository.GetDomainUsers(domain.Id).Count();
+                    }
                 }
                 catch(Exception exc)
                 {
                     throw exc;
                 }
                
-                return View["Manage", manage];
+                return View["Manage", model];
             };
 
             Get ["/domain/new"] = parameters => {
