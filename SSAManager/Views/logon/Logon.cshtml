@@ -2,13 +2,17 @@
 @{
   Layout = "_layout.cshtml";
 }
+
 <div style="width: 325px;margin-left: auto;margin-right: auto ;">
-    <h4>Sign In</h4>
+    <h2>Sign In</h2>
     <form class="form-signin" action="/logon" method="post">
-        <input type="text" name="Username" class="form-control" placeholder="Email address" required autofocus />
-        <input type="password" name="Secret" class="form-control" placeholder="Password" required />
-        <button class="btn btn-lg btn-primary btn-block" name="Logon" type="submit">Sign In</button>
+        <input type="text" name="Username" class="form-control" placeholder="Email address" style="margin:5px;" required autofocus />
+        <input type="password" name="Secret" class="form-control" placeholder="Password" style="margin:5px;" required />
+		<br />
+        <button class="btn btn-lg btn-primary btn-block" name="Logon" style="margin:5px;" type="submit">Sign In</button>
     </form>
-	
-    <a href="/">Sign up for an account</a> | <a href="~/forgot">Forgot your password?</a>
+	<div style="text-align: center;padding:10px;">
+        <a href="/" class="btn btn-default" role="button">Sign up</a>
+		<a href="~/forgot" class="btn btn-default" role="button">Forgot?</a>
+	</div>
 </div>

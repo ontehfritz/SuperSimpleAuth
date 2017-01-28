@@ -4,13 +4,15 @@
 }
 
 <div style="width: 325px;margin-left: auto;margin-right: auto ;">
-    <h4>Forgot your password?</h4>
-    <p>Enter your email address below, your new password will be emailed to you.</p>
+    <h2>Forgot your password?</h2>
     <form class="form-signin" action="/forgot" method="post">
-        <input type="text" name="Email" class="form-control" placeholder="your@email.com" required />
-        <button class="btn btn-lg btn-primary btn-block" name="new" type="submit">New Password</button>
+        <input type="text" name="Email" class="form-control" placeholder="your@email.com" style="margin:5px;" required />
+		<br />
+        <button class="btn btn-lg btn-primary btn-block" name="new" style="margin:5px;" type="submit">New Password</button>
     </form>
-    <a href="/">Sign up for an account</a> | <a href="~/logon">Sign In</a>
+	<div style="text-align: center;padding:10px;">
+        <a href="/" class="btn btn-default" role="button">Sign up</a>
+		<a href="~/logon" class="btn btn-default" role="button">Sign in</a>
+	</div>
 </div>
-<br />
 
