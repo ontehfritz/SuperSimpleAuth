@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimpleAuth", "SuperSimpleAuth\SuperSimpleAuth.csproj", "{3E96487D-52AE-4A0B-8D29-B4F4EBEC5CC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimpleAuth", "src\SuperSimpleAuth\SuperSimpleAuth.csproj", "{3E96487D-52AE-4A0B-8D29-B4F4EBEC5CC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimpleAuthCSharp", "SuperSimpleAuthCSharp\SuperSimpleAuthCSharp.csproj", "{7EF26E89-0BDF-4A21-8045-47CA3288EABC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimpleAuthCSharp", "src\SuperSimpleAuthCSharp\SuperSimpleAuthCSharp.csproj", "{7EF26E89-0BDF-4A21-8045-47CA3288EABC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSAManager", "SSAManager\SSAManager.csproj", "{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSAManager", "src\SSAManager\SSAManager.csproj", "{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSA_Test", "SSA_Test\SSA_Test.csproj", "{7C0E40A0-E53C-450B-A8DF-2AD5474132CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSA_Test", "test\SSA_Test\SSA_Test.csproj", "{7C0E40A0-E53C-450B-A8DF-2AD5474132CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSANancyExample", "SSANancyExample\SSANancyExample.csproj", "{7CEC59C0-3066-4EF5-B541-74271176F26B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSANancyExample", "examples\SSANancyExample\SSANancyExample.csproj", "{7CEC59C0-3066-4EF5-B541-74271176F26B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
