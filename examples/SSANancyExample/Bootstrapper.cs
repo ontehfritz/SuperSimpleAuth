@@ -1,11 +1,8 @@
-using System;
 using Nancy;
-using Nancy.TinyIoc;
 using Nancy.Authentication.Forms;
 using Nancy.Bootstrapper;
-using SSANancyExample;
+using Nancy.TinyIoc;
 using SuperSimple.Auth;
-
 
 namespace SSANancyExample
 {

@@ -1,8 +1,28 @@
 ﻿<Properties StartupConfiguration="{3E96487D-52AE-4A0B-8D29-B4F4EBEC5CC7}|">
   <MonoDevelop.Ide.ItemProperties.SSAManager PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SuperSimpleAuth" expanded="True">
+            <Node name="SSA_Test" expanded="True" selected="True">
+              <Node name="References" expanded="True" />
+            </Node>
+            <Node name="SSAManager" expanded="True">
+              <Node name="Modules" expanded="True" />
+            </Node>
+            <Node name="SuperSimpleAuthCSharp" expanded="True">
+              <Node name="References" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.SuperSimpleAuth PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>

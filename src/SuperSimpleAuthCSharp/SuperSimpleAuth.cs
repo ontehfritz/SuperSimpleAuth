@@ -1,14 +1,11 @@
-using System;
-using System.Net.Security;
-using System.Net;
-using System.Text;
-using Newtonsoft.Json;
-using System.IO;
-using System.Runtime.Remoting.Messaging;
-using System.Collections;
-
 namespace SuperSimple.Auth
 {
+    using System;
+    using System.IO;
+    using System.Net;
+    using System.Text;
+    using Newtonsoft.Json;
+
     public class SuperSimpleAuth
     {
 //        private const string _headerDomainKey = "SSA_DOMAIN_KEY";

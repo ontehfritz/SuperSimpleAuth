@@ -10,6 +10,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>SSANancyExample</RootNamespace>
     <AssemblyName>SSANancyExample</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,26 +36,35 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Web.Services" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Web.Razor.Unofficial">
-      <HintPath>..\packages\System.Web.Razor.Unofficial.2.0.2\lib\net40\System.Web.Razor.Unofficial.dll</HintPath>
+    <Reference Include="FluentValidation">
+      <HintPath>..\..\packages\FluentValidation.1.3.0.0\lib\NET35\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Driver.dll</HintPath>
     </Reference>
     <Reference Include="Nancy">
-      <HintPath>..\packages\Nancy.0.22.1\lib\net40\Nancy.dll</HintPath>
+      <HintPath>..\..\packages\Nancy.0.22.1\lib\net40\Nancy.dll</HintPath>
     </Reference>
     <Reference Include="Nancy.Authentication.Forms">
-      <HintPath>..\packages\Nancy.Authentication.Forms.0.22.1\lib\net40\Nancy.Authentication.Forms.dll</HintPath>
+      <HintPath>..\..\packages\Nancy.Authentication.Forms.0.22.1\lib\net40\Nancy.Authentication.Forms.dll</HintPath>
     </Reference>
     <Reference Include="Nancy.Hosting.Aspnet">
-      <HintPath>..\packages\Nancy.Hosting.Aspnet.0.22.1\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
-    </Reference>
-    <Reference Include="Nancy.ViewEngines.Razor">
-      <HintPath>..\packages\Nancy.Viewengines.Razor.0.22.1\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentValidation">
-      <HintPath>..\packages\FluentValidation.1.3.0.0\lib\NET35\FluentValidation.dll</HintPath>
+      <HintPath>..\..\packages\Nancy.Hosting.Aspnet.0.22.1\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
     </Reference>
     <Reference Include="Nancy.Validation.FluentValidation">
-      <HintPath>..\packages\Nancy.Validation.FluentValidation.0.22.1\lib\net40\Nancy.Validation.FluentValidation.dll</HintPath>
+      <HintPath>..\..\packages\Nancy.Validation.FluentValidation.0.22.1\lib\net40\Nancy.Validation.FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.ViewEngines.Razor">
+      <HintPath>..\..\packages\Nancy.Viewengines.Razor.0.22.1\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Dynamic">
+      <HintPath>..\..\packages\System.Linq.Dynamic.1.0.0\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor.Unofficial">
+      <HintPath>..\..\packages\System.Web.Razor.Unofficial.2.0.2\lib\net40\System.Web.Razor.Unofficial.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -86,14 +96,14 @@
     <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SuperSimpleAuthCSharp\SuperSimpleAuthCSharp.csproj">
-      <Project>{7EF26E89-0BDF-4A21-8045-47CA3288EABC}</Project>
-      <Name>SuperSimpleAuthCSharp</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Views\index.cshtml" />
     <None Include="Views\logon\logon.cshtml" />
     <None Include="Views\logon\signup.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\SuperSimpleAuthCSharp\SuperSimpleAuthCSharp.csproj">
+      <Project>{7EF26E89-0BDF-4A21-8045-47CA3288EABC}</Project>
+      <Name>SuperSimpleAuthCSharp</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
