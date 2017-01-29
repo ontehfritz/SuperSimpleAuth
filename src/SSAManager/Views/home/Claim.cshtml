@@ -3,19 +3,17 @@
   Layout = "_layout.cshtml";
 }
 
-<h1>Claim: @Model.Name <small>Domain: 
-<a href="/domain/@Model.Domain.Id/">@Model.Domain.Name</a></small></h1>
+<h1>Claim Details</h1>
+<h3>Name: @Model.Name</h3>
+<h3>Domain: <a href="/domain/@Model.Domain.Id/">@Model.Domain.Name</a></h3>
 
-<h4>Roles:</h4>
 
+<h4><i class="fa fa-user-circle-o" aria-hidden="true"></i> Roles:</h4>
 @if(@Model.Roles != null && @Model.Roles.Length > 0)
 {
-    int index = 0;
     foreach(SSAManager.Role role in Model.Roles)
     {
-        if(index > 0){<span>,</span>}
         <a href="/domain/@Model.Domain.Id/role/@role.Name">@role.Name</a>
-        ++index;
     }
 }
 else
@@ -23,15 +21,12 @@ else
     <p>No roles are using this claim</p>
 }
 
-<h4>Users:</h4>
+<h4><i class="fa fa-users" aria-hidden="true"></i> Users:</h4>
 @if(@Model.Users != null && @Model.Users.Length > 0)
 {
-    int index = 0;
     foreach(SSAManager.User user in Model.Users)
     {
-        if(index > 0){<span>,</span>}
         <a href="/domain/@Model.Domain.Id/user/@user.Id">@user.UserName</a>
-        ++index;
     }
 }
 else

@@ -2,21 +2,22 @@
 @{
   Layout = "_layout.cshtml";
 }
-<h1>Role: @Model.Role.Name <small>Domain: <a href="/domain/@Model.Domain.Id">@Model.Domain.Name</a></small></h1>
-
 <form action="/domain/@Model.Domain.Id/role/@Model.Role.Name" method="post">
+<h1><i class="fa fa-user-circle-o" aria-hidden="true"></i> Role Details </h1>
+<input type="submit" name="Delete" class="pull-right btn btn-danger" value="Delete" 
+    onclick="return confirm('Are you sure you want to delete this role?');"/>
+<h3>Name: @Model.Role.Name </h3>
+<h3><i class="fa fa-building-o" aria-hidden="true"></i> Domain <small><a href="/domain/@Model.Domain.Id">@Model.Domain.Name</a></small></h3>
 <div>
     <input id="Claims" type="hidden" name="Claims" value="@Helpers.Values(@Model.Claims)" />
-    Claims:
-    <p>
+    <h3><i class="fa fa-lock" aria-hidden="true"></i> Claims:</h3>
     @if(@Model.Domain.Claims != null)
     {
-        int index = 0;
-
         foreach(string claim in @Model.Domain.Claims)
         {
-            if(index > 0){<span>,</span>}
-            if(@Model.Role.HasClaim(claim))
+            <div class="checkbox-inline">
+            <label>
+            @if(@Model.Role.HasClaim(claim))
             {
                 <input type="checkbox" name="claim" value="@claim" checked /> @claim
             }
@@ -24,9 +25,9 @@
             {
                 <input type="checkbox" name="claim" value="@claim" /> @claim
             }
-            ++index;
+		    </label>
+			</div>
         }
-       
     }
     else
     {
@@ -37,20 +38,19 @@
         </span>
        
     }
-    </p>
 </div>
 <hr />
-<h4>Users in this Role:</h4>
+<h3><i class="fa fa-users" aria-hidden="true"></i> Users in this Role:</h3>
 
 <input id="RoleUsers" type="hidden" name="RoleUsers" value="@Helpers.Values(@Model.RoleUsers)" />
 <input id="uRoleUsers" type="hidden" name="uRoleUsers"  />
 @if(@Model.Users != null && @Model.Users.Count > 0)
 {
-    int index = 0;
     foreach(User user in @Model.Users)
     {
-        if(index > 0){<span>,</span>}
-        if(user.InRole(Model.Role.Name))
+        <div class="checkbox-inline">
+        <label>
+        @if(user.InRole(Model.Role.Name))
         {
             <input type="checkbox" name="user" value="@user.Id" checked /> @user.UserName
         }
@@ -58,7 +58,8 @@
         {
             <input type="checkbox" name="user" value="@user.Id" /> @user.UserName
         }
-        ++index;
+		</label>
+        </div>
     }
 }
 else
@@ -67,7 +68,5 @@ else
 }
 <hr />
 <input type="submit" name="Save" class="btn btn-success" value="Save" />
-<a class="btn btn-default" href="/domain/@Model.Domain.Id/">Cancel</a>
-<input type="submit" name="Delete" class="pull-right btn btn-danger" value="Delete" 
-    onclick="return confirm('Are you sure you want to delete this role?');"/>
+<a class="btn btn-default pull-right" href="/domain/@Model.Domain.Id/">Cancel</a>
 </form>

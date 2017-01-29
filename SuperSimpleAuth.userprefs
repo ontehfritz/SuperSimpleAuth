@@ -1,18 +1,35 @@
-﻿<Properties StartupConfiguration="{3E96487D-52AE-4A0B-8D29-B4F4EBEC5CC7}|">
+﻿<Properties StartupConfiguration="{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}|">
   <MonoDevelop.Ide.ItemProperties.SSAManager PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/SSAManager/Views/logon/Settings.cshtml">
+    <Files>
+      <File FileName="src/SSAManager/Views/home/Role.cshtml" Line="43" Column="51" />
+      <File FileName="src/SSAManager/Views/home/Role_new.cshtml" Line="5" Column="65" />
+      <File FileName="src/SSAManager/Views/home/Manage.cshtml" Line="1" Column="1" />
+      <File FileName="src/SSAManager/Views/home/Domain.cshtml" Line="80" Column="14" />
+      <File FileName="src/SSAManager/Views/home/Domain_new.cshtml" Line="6" Column="56" />
+      <File FileName="src/SSAManager/Views/home/User.cshtml" Line="1" Column="1" />
+      <File FileName="src/SSAManager/Views/home/Claim_new.cshtml" Line="22" Column="5" />
+      <File FileName="src/SSAManager/Views/home/NoAccess.cshtml" Line="12" Column="1" />
+      <File FileName="src/SSAManager/Views/home/Claim.cshtml" Line="35" Column="2" />
+      <File FileName="src/SSAManager/Views/home/Admin_new.cshtml" Line="11" Column="33" />
+      <File FileName="src/SSAManager/Views/home/Admin.cshtml" Line="16" Column="2" />
+      <File FileName="src/SSAManager/Views/_Layout.cshtml" Line="81" Column="7" />
+      <File FileName="src/SSAManager/Views/Index.cshtml" Line="41" Column="18" />
+      <File FileName="src/SSAManager/Views/logon/Settings.cshtml" Line="10" Column="67" />
+      <File FileName="src/SSAManager/Views/logon/Logon.cshtml" Line="9" Column="112" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
+          <Option id="ShowAllFiles" value="True" />
           <Node name="SuperSimpleAuth" expanded="True">
-            <Node name="SSA_Test" expanded="True" selected="True">
-              <Node name="References" expanded="True" />
-            </Node>
             <Node name="SSAManager" expanded="True">
-              <Node name="Modules" expanded="True" />
-            </Node>
-            <Node name="SuperSimpleAuthCSharp" expanded="True">
-              <Node name="References" expanded="True" />
+              <Node name="Views" expanded="True">
+                <Node name="home" expanded="True" />
+                <Node name="logon" expanded="True">
+                  <Node name="Settings.cshtml" selected="True" />
+                </Node>
+              </Node>
             </Node>
           </Node>
         </State>
@@ -24,5 +41,6 @@
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <AuthorInfo Name="Fritz (Fredrick Seitz)" Email="fredrick.seitz@gmail.com" Copyright="Fritz (Fredrick Seitz)" Company="Fritz" Trademark="Fritz" />
   <MonoDevelop.Ide.ItemProperties.SuperSimpleAuth PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>
