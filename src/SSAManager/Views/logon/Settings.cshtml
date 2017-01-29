@@ -2,31 +2,30 @@
 @{
   Layout = "_layout.cshtml";
 }
-
-<div>
-    <h4>Settings for: @Model.Manager.UserName</h4>
+<div style="width: 325px;margin-left: auto;margin-right: auto ;">
+    <h3>Settings for: @Model.Manager.UserName</h3>
     <form action="/settings" method="post">
-        <div>
-            <p><input type="password" name="Password" placeholder="Password" /></p>
-            <p><input type="text" name="Email" placeholder="@Model.Manager.UserName" /></p>
-            <button class="btn btn-primary" name="ChangeEmail" value="ChangeEmail" type="submit">Change Email</button>
+        <div class="form-group">
+            <input type="password" name="Password" class="form-control" placeholder="Password" style="margin:5px;"/>
+            <input type="text" name="Email" class="form-control" placeholder="@Model.Manager.UserName" style="margin:5px;"/>
+            <button class="btn btn-primary" name="ChangeEmail" value="ChangeEmail" type="submit" style="margin:5px;">Change Email</button>
         </div>
         <br />
         <h4>Change password:</h4>
-        <div>
-            <p><input type="password" name="OldPassword" placeholder="Old Password" /></p>
-            <p><input type="password" name="NewPassword" placeholder="New Password" /></p>
-            <p><input type="password" name="ConfirmPassword" placeholder="Confirm Password" /></p>
-            <button class="btn btn-primary" name="ChangePassword" type="submit">New Password</button>
+        <div class="form-group">
+            <input type="password" name="OldPassword" class="form-control" placeholder="Old Password" style="margin:5px;"/>
+            <input type="password" name="NewPassword" class="form-control" placeholder="New Password" style="margin:5px;"/>
+            <input type="password" name="ConfirmPassword" class="form-control" placeholder="Confirm Password" style="margin:5px;"/>
+            <button class="btn btn-primary" name="ChangePassword" type="submit" style="margin:5px;">New Password</button>
         </div>
         <br />
         <h4>Delete account:</h4>
-        <div>
+        <div class="form-group">
             <p>To delete account please provide password.</p> 
             <p>Deleting your account will disable all apps using this account.</p>
             <p>This is permanent and all data will be lost!</p>
-            <p><input type="password" name="DeletePassword" placeholder="Password" /></p>
-            <button class="btn btn-danger" name="Delete" type="submit">Delete Account</button>
+            <input type="password" name="DeletePassword" class="form-control" placeholder="Password" style="margin:5px;"/>
+            <button class="btn btn-danger" name="Delete" type="submit" style="margin:5px;">Delete Account</button>
         </div>
     </form>
 </div>

@@ -5,13 +5,17 @@
 
 @if(@Model.Domain.IsOwner(Model.Manager))
 {
-    <h4>Add a administrator</h4>
+    <div style="width: 325px;margin-left: auto;margin-right: auto ;">
+    <h2><i class="fa fa-user-o" aria-hidden="true"></i> Add Administrator</h2>
     <form action="/domain/@Model.Domain.Id/admin/new" method="post">
-        <p>
+        <div class="form-group">
             <label for="Name">Email:</label>
-            <input type="text" name="Email" required autofocus />
-        </p>
+            <input type="text" name="Email" class="form-control" required autofocus />
+        </div>
         <input type="submit" class="btn btn-success" name="Add" value="Add" />
         <a class="btn btn-default" href="/domain/@Model.Domain.Id">Cancel</a>
     </form>
+	<br />
+	<br />
+	</div>
 }

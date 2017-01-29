@@ -2,12 +2,16 @@
 @{
   Layout = "_layout.cshtml";
 }   
-<h4>Create a role in domain <a href="~/domain/@Model.Domain.Id">@Model.Domain.Name</a>:</h4>
+<div style="width: 325px;margin-left: auto;margin-right: auto ;">
+<h2><i class="fa fa-user-circle-o" aria-hidden="true"></i> Create a Role</h2>
 <form action="~/domain/@Model.Domain.Id/role/new" method="post">
-    <p>
+    <div class="form-group">
         <label for="Name">Name:</label>
-        <input type="text" name="Name" required autofocus />
-    </p>
-    <input type="submit" class="btn btn-success" name="Create" value="Create" />
+        <input type="text" name="Name" class="form-control" placeholder="New role in domain: @Model.Domain.Name" required autofocus />
+    </div>
+	<input type="submit" class="btn btn-success" name="Create" value="Create" />
     <a class="btn btn-default" href="~/domain/@Model.Domain.Id">Cancel</a>
 </form>
+<br />
+<br />
+</div>
