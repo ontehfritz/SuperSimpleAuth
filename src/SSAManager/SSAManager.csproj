@@ -81,8 +81,6 @@
     <Content Include="favicon.png" />
     <Content Include="Content\css\ss.css" />
     <Content Include="Content\images\bg.jpg" />
-    <Content Include="Content\images\logo.jpg" />
-    <Content Include="Content\images\logo.png" />
     <Content Include="packages.config" />
     <Content Include="Content\javascript\ssa.js" />
   </ItemGroup>
