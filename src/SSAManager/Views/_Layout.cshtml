@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Simple. Secure. Web Authentication and Authorization." />
     <meta name="author" content="Fritz" />
     <title>Super Simple Auth (SSA) -  Beta</title>
@@ -12,80 +12,66 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/content/css/ss.css" />
 </head>
-<body>
-<!-- Wrap all page content here -->s
-<div id="wrap">
-  <!-- Fixed navbar -->
-  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<body style="padding-top:60px;padding-bottom:60px;">		
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
-      <div class="navbar-header">
+        <div class="navbar-header">
         <a class="navbar-brand" href="/home">
             <i class="fa fa-shield" aria-hidden="true">
-            </i>SuperSimpleAuth <small>BETA</small>
-       </a>
-      </div>
-      <div class="collapse navbar-collapse">
+            </i> SuperSimpleAuth <small>BETA</small>
+        </a>
+        </div>
         <ul class="nav navbar-nav navbar-right">
-        @if(@Model.Manager != null)
-        {
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            @Model.Manager.UserName 
-            <b class="caret">
-            </b></a>
-            <ul class="dropdown-menu">
-              <li><a href="/settings">Settings</a></li>
-              <li class="divider"></li>
-              <li><a href="/logoff">Sign Out</a></li>
-            </ul>
-          </li>
-        }
+			@if(@Model.Manager != null)
+            {
+            <li role="presentation"><a href="/home">Home</a></li>
+            <li role="presentation"><a href="/settings">@Model.Manager.UserName</a></li>
+            <li role="presentation"><a href="/logoff">Sign Out</a></li>
+            }
         </ul>
-      </div><!--/.nav-collapse -->
     </div>
-  </div>
-  <br style="clear:both;"/>
-  <br style="clear:both;"/>
-  <!-- Begin page content -->
-  <div class="container" style="border: 1px solid; background-color: #f2f2f2;box-shadow: 5px 5px 5px #888888;-moz-border-radius: 10px; -webkit-border-radius: 10px;border-radius: 10px;">
-    @if(@Model.Messages != null && @Model.Messages.Count > 0)
-    {
-        <div class="alert alert-success alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <ul>
-        @foreach(var message in @Model.Messages){
-            <li>
-            @message
-            </li>
-        }
-        </ul>
-        </div>
+</nav>
+<!-- Begin page content -->
+<div class="container">
+<div style="border: 1px solid; background-color: #f2f2f2;box-shadow: 5px 5px 5px #888888;-moz-border-radius: 10px; -webkit-border-radius: 10px;border-radius: 10px;padding:10px;">
+@if(@Model.Messages != null && @Model.Messages.Count > 0)
+{
+    <div class="alert alert-success alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <ul>
+    @foreach(var message in @Model.Messages){
+        <li>
+        @message
+        </li>
     }
+    </ul>
+    </div>
+}
 
-    @if(@Model.Errors != null && @Model.Errors.Count > 0)
-    {
-        <div class="alert alert-danger alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <ul>
-        @foreach(var e in @Model.Errors){
-            <li>
-            @e.Message
-            </li>
-        }
-        </ul>
-        </div>
+@if(@Model.Errors != null && @Model.Errors.Count > 0)
+{
+    <div class="alert alert-danger alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <ul>
+    @foreach(var e in @Model.Errors){
+        <li>
+        @e.Message
+        </li>
     }
-				
-    @RenderBody()
-  </div>
+    </ul>
+    </div>
+}
+@RenderBody()
+</div>
 </div>
 <footer>
-    <div class="navbar navbar-default navbar-fixed-bottom" role="navigation" style="padding:5px;">
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 	    <div class="container">
     		<div class="navbar-header">
             <a class="navbar-brand" href="/home">
                 <i class="fa fa-shield" aria-hidden="true">
-                </i>SuperSimpleAuth <small>BETA</small>
+                </i> SuperSimpleAuth <small>BETA</small>
            </a>
            </div>
             <ul class="nav navbar-nav navbar-left">
@@ -94,7 +80,7 @@
                 <li role="presentation"><a href="#">API SDKs</a></li>
             </ul>
 	    </div>
-     </div>
+     </nav>
 </footer>
 <!-- Bootstrap core JavaScript
 ================================================== -->

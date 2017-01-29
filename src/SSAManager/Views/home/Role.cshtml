@@ -7,7 +7,9 @@
 <input type="submit" name="Delete" class="pull-right btn btn-danger" value="Delete" 
     onclick="return confirm('Are you sure you want to delete this role?');"/>
 <h3>Name: @Model.Role.Name </h3>
-<h3><i class="fa fa-building-o" aria-hidden="true"></i> Domain <small><a href="/domain/@Model.Domain.Id">@Model.Domain.Name</a></small></h3>
+<h3>
+	<i class="fa fa-building-o" aria-hidden="true"></i> Domain: <a href="/domain/@Model.Domain.Id">@Model.Domain.Name</a>
+</h3>
 <div>
     <input id="Claims" type="hidden" name="Claims" value="@Helpers.Values(@Model.Claims)" />
     <h3><i class="fa fa-lock" aria-hidden="true"></i> Claims:</h3>
