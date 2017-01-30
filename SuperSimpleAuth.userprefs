@@ -1,12 +1,9 @@
 ﻿<Properties StartupConfiguration="{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}|">
   <MonoDevelop.Ide.ItemProperties.SSAManager PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/SSAManager/Views/home/Role_new.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/SSAManager/Content/css/ss.css">
     <Files>
-      <File FileName="src/SSAManager/Views/home/Domain.cshtml" Line="34" Column="11" />
-      <File FileName="src/SSAManager/Views/_Layout.cshtml" Line="26" Column="31" />
-      <File FileName="src/SSAManager/Views/home/Role.cshtml" Line="12" Column="1" />
-      <File FileName="src/SSAManager/Views/home/Domain_new.cshtml" Line="10" Column="56" />
-      <File FileName="src/SSAManager/Views/home/Role_new.cshtml" Line="8" Column="29" />
+      <File FileName="src/SSAManager/Views/home/Domain.cshtml" Line="37" Column="7" />
+      <File FileName="src/SSAManager/Content/css/ss.css" Line="3" Column="28" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,12 +11,12 @@
           <Option id="ShowAllFiles" value="True" />
           <Node name="SuperSimpleAuth" expanded="True">
             <Node name="SSAManager" expanded="True">
-              <Node name="Content" expanded="True" />
-              <Node name="Views" expanded="True">
-                <Node name="home" expanded="True">
-                  <Node name="Role_new.cshtml" selected="True" />
+              <Node name="Content" expanded="True">
+                <Node name="css" expanded="True">
+                  <Node name="ss.css" selected="True" />
                 </Node>
               </Node>
+              <Node name="Views" expanded="True" />
             </Node>
           </Node>
         </State>
