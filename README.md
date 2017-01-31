@@ -1,4 +1,4 @@
-# Super Simple Auth (SSA)
+# Super Simple Auth (SSA) Micro-Service
 **Only use SSA with HTTPS**
 
 Is a simple secure web authentication and authorization tool for any web based project.
