@@ -4,10 +4,11 @@
 } 
 
 <form action="/domain/@Model.Domain.Id/user/@Model.User.Id" method="post">
-
-<h1>Domain: <a href="/domain/@Model.Domain.Id">@Model.Domain.Name</a></h1>
-@Model.Enabled
-<table>
+<h1><i class="fa fa-user-circle-o" aria-hidden="true"></i> User Details</h1>
+<input type="submit" class="pull-right btn btn-danger"  name="Delete" value="Delete" 
+    onclick="return confirm('Are you sure you want to delete this user?');" />
+<h3>Domain: <a href="/domain/@Model.Domain.Id">@Model.Domain.Name</a></h3>
+<table class="table table-condensed">
 <tr>
     <td>User Name: </td>
     <td>@Model.User.UserName</td>
@@ -48,7 +49,8 @@
 <tr>
     <td>Last Request: </td>
     <td>
-    @if(Model.User.LastRequest.HasValue){
+    @if(Model.User.LastRequest.HasValue)
+    {
         <b>@Model.User.LastRequest.Value.ToLongDateString() @Model.User.LastRequest.Value.ToLongTimeString()</b>
     }
     </td>
@@ -56,7 +58,8 @@
 <tr>
     <td>Last Logon: </td>
     <td>
-    @if(Model.User.LastLogon.HasValue){
+    @if(Model.User.LastLogon.HasValue)
+    {
         <b>@Model.User.LastLogon.Value.ToLongDateString() @Model.User.LastLogon.Value.ToLongTimeString()</b>
     }
     </td>
@@ -78,7 +81,7 @@
 <tr>
     <td>Roles: </td>
     <td>
-    <input id="Roles" type="hidden" name="NewRoles" value="@Helpers.Values(@Model.NewRoles)"/><br />
+    <input id="Roles" type="hidden" name="NewRoles" value="@Helpers.Values(@Model.NewRoles)"/>
     
     @if(@Model.Roles != null)
     {
@@ -86,11 +89,11 @@
         {
             if(@Model.User.InRole(@role.Name))
             {
-                <input type="checkbox" name="role" value="@role.Name" checked />@role.Name<br />
+                <input type="checkbox" name="role" value="@role.Name" checked /> @role.Name
             }
             else
             {
-                <input type="checkbox" name="role" value="@role.Name" />@role.Name<br />
+                <input type="checkbox" name="role" value="@role.Name" /> @role.Name
             }
         }
     }
@@ -99,18 +102,18 @@
 <tr>
     <td>Claims: </td>
     <td>
-    <input id="Claims" type="hidden" name="Claims" value="@Helpers.Values(@Model.Claims)" /><br />
+    <input id="Claims" type="hidden" name="Claims" value="@Helpers.Values(@Model.Claims)" />
     @if(@Model.Domain.Claims != null)
     {
         foreach(string claim in @Model.Domain.Claims)
         {
             if(@Model.User.HasClaim(claim))
             {
-                <input type="checkbox" name="claim" value="@claim" checked />@claim<br />
+                <input type="checkbox" name="claim" value="@claim" checked /> @claim
             }
             else
             {
-                <input type="checkbox" name="claim" value="@claim" />@claim<br />
+                <input type="checkbox" name="claim" value="@claim" /> @claim
             }
         }
     }
@@ -120,8 +123,7 @@
 <div>
 <hr />
 <input type="submit" class="btn btn-success" name="Save" value="Save" />
-<a class="btn btn-default" href="/domain/@Model.Domain.Id">Cancel</a>
-<input type="submit" class="pull-right btn btn-danger"  name="Delete" value="Delete" 
-    onclick="return confirm('Are you sure you want to delete this user?');" />
+<a class="btn btn-default pull-right" href="/domain/@Model.Domain.Id">Cancel</a>
+
 </div>
 </form>

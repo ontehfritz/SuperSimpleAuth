@@ -1,24 +1,57 @@
 ﻿<Properties StartupConfiguration="{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}|">
   <MonoDevelop.Ide.ItemProperties.SSAManager PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/SSAManager/Views/_Layout.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/SSAManager/SSAManager.csproj">
     <Files>
-      <File FileName="src/SSAManager/Views/home/Domain.cshtml" Line="37" Column="7" />
-      <File FileName="src/SSAManager/Content/css/ss.css" Line="3" Column="28" />
+      <File FileName="src/SSAManager/Views/home/Domain.cshtml" Line="115" Column="20" />
+      <File FileName="src/SSAManager/Content/css/ss.css" Line="4" Column="20" />
       <File FileName="src/SSAManager/Views/Index.cshtml" Line="45" Column="35" />
       <File FileName="README.md" Line="2" Column="28" />
-      <File FileName="src/SuperSimpleAuth/Views/index.cshtml" Line="30" Column="8" />
-      <File FileName="src/SSAManager/Views/_Layout.cshtml" Line="8" Column="95" />
+      <File FileName="src/SuperSimpleAuth/Views/index.cshtml" Line="27" Column="9" />
+      <File FileName="src/SSAManager/Views/_Layout.cshtml" Line="29" Column="107" />
+      <File FileName="examples/SSANancyExample/Models/Helpers.cs" Line="1" Column="1" />
+      <File FileName="examples/SSANancyExample/Models/LogonModel.cs" Line="1" Column="1" />
+      <File FileName="examples/SSANancyExample/Models/NancyUser.cs" Line="1" Column="1" />
+      <File FileName="examples/SSANancyExample/Models/SignupModel.cs" Line="1" Column="1" />
+      <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="1" Column="1" />
+      <File FileName="src/SSAManager/Bootstrapper.cs" Line="37" Column="8" />
+      <File FileName="src/SuperSimpleAuthCSharp/SuperSimpleAuth.cs" Line="20" Column="16" />
+      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="17" Column="18" />
+      <File FileName="src/SSAManager/Views/home/User.cshtml" Line="14" Column="34" />
+      <File FileName="src/SSAManager/Views/home/Claim.cshtml" Line="6" Column="23" />
+      <File FileName="src/SSAManager/Views/home/Role.cshtml" Line="1" Column="1" />
+      <File FileName="src/SSAManager/Models/Repositories/IRepository.cs" Line="39" Column="31" />
+      <File FileName="src/SSAManager/Models/Repositories/MongoRepository.cs" Line="633" Column="9" />
+      <File FileName="src/SSAManager/Models/Manager.cs" Line="37" Column="24" />
+      <File FileName="src/SSAManager/Models/Domain.cs" Line="1" Column="1" />
+      <File FileName="src/SSAManager/Models/Administrator.cs" Line="8" Column="17" />
+      <File FileName="src/SSAManager/Models/User.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimpleAuth/Models/MongoRepository.cs" Line="18" Column="51" />
+      <File FileName="src/SuperSimpleAuth/Models/IRepository.cs" Line="25" Column="1" />
+      <File FileName="src/SSAManager/Modules/LogonModule.cs" Line="133" Column="18" />
+      <File FileName="src/SuperSimpleAuth/Helper/Helper.cs" Line="20" Column="13" />
+      <File FileName="src/SuperSimpleAuth/Modules/AuthModule.cs" Line="13" Column="10" />
+      <File FileName="src/SuperSimpleAuth/Bootstrapper.cs" Line="34" Column="1" />
+      <File FileName="examples/SSANancyExample/Modules/LogonModule.cs" Line="29" Column="11" />
+      <File FileName="src/SSAManager/SSAManager.csproj" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Option id="ShowAllFiles" value="True" />
           <Node name="SuperSimpleAuth" expanded="True">
+            <Node name="SsaCsharpTest" expanded="True" />
             <Node name="SSAManager" expanded="True">
-              <Node name="Views" expanded="True">
-                <Node name="_Layout.cshtml" selected="True" />
-              </Node>
+              <Node name="SSAManager.csproj" selected="True" />
             </Node>
+            <Node name="SSANancyExample" expanded="True">
+              <Node name="Modules" expanded="True" />
+            </Node>
+            <Node name="SuperSimpleAuth" expanded="True">
+              <Node name="Helper" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="Modules" expanded="True" />
+            </Node>
+            <Node name="SuperSimpleAuthCSharp" expanded="True" />
           </Node>
         </State>
       </Pad>

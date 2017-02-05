@@ -72,7 +72,7 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties VerifyCodeBehindFields="True" VerifyCodeBehindEvents="True">
-        <XspParameters Port="8081" Address="127.0.0.1" SslMode="None" SslProtocol="Ssl3" KeyType="Pkcs12" CertFile="" KeyFile="/Users/fritz/Dropbox/Projects/SuperSimpleAuth/SSAManager/fritzs-mac-mini.home.p12" PasswordOptions="Store" Password="" Verbose="True" />
+        <XspParameters Port="8085" Address="127.0.0.1" SslMode="None" SslProtocol="Ssl3" KeyType="Pkcs12" CertFile="" KeyFile="/Users/fritz/Dropbox/Projects/SuperSimpleAuth/SSAManager/fritzs-mac-mini.home.p12" PasswordOptions="Store" Password="" Verbose="True" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>

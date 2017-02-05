@@ -13,7 +13,7 @@ namespace SuperSimple.Auth.Api
         /// </summary>
         /// <returns>The request.</returns>
         /// <param name="request">Request.</param>
-        public static ErrorMessage VerifyRequest(Request request,IRepository repository)
+        public static ErrorMessage VerifyRequest(Request request,IApiRepository repository)
         {
             ErrorMessage message = null;
             Guid key = new Guid();

@@ -18,8 +18,9 @@ namespace SuperSimple.Auth.Api
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
             base.ConfigureApplicationContainer(container);
-            IRepository repository = new MongoRepository (ConfigurationManager.AppSettings.Get("db"));
-            container.Register<IRepository>(repository);
+            IApiRepository repository = 
+                new MongoRepository (ConfigurationManager.AppSettings.Get("db"));
+            container.Register<IApiRepository>(repository);
         }
 
         protected override void RequestStartup (TinyIoCContainer container, Nancy.Bootstrapper.IPipelines pipelines, 

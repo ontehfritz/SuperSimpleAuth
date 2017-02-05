@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace SuperSimple.Auth.Api
 {
-    public class MongoRepository : IRepository
+    public class MongoRepository : IApiRepository
     {
         private string connectionString { get; set; }
         private MongoClient client;

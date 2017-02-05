@@ -6,10 +6,10 @@ namespace SuperSimple.Auth.Api
 {
     public class AuthModule : NancyModule
     {
-        IRepository repository;
+        IApiRepository repository;
         private const string _headerDomainKey = "Ssa-Domain-Key";
 
-        public AuthModule (IRepository repository)
+        public AuthModule (IApiRepository repository)
         {
             this.repository = repository;
 
