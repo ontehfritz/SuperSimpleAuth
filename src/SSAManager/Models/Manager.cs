@@ -3,9 +3,6 @@ using Nancy;
 using Nancy.Security;
 using Nancy.Authentication.Forms;
 using System.Collections.Generic;
-using System.Web.Razor.Text;
-using MongoDB;
-using MongoDB.Bson; 
 
 
 namespace SSAManager
@@ -22,7 +19,7 @@ namespace SSAManager
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
             Manager manager = Repository.GetManager (identifier);
-       
+
             if (manager == null) 
             {
                 return null;
@@ -34,12 +31,25 @@ namespace SSAManager
 
     public class Manager : IUserIdentity
     {
-        public Guid Id { get; set; }
-        public string UserName { get; set; }
-        public DateTime LastLogon { get; set; }
-        public string Secret { get; set; }
-        public string IP { get; set; }
-        public IEnumerable<string> Claims { get; set; }
+        private SuperSimple.Auth.Api.User User   { get; }
+
+        public Guid Id                          { get; }
+        public string UserName                  { get; }
+        public DateTime? LastLogon              { get; }
+        public string Secret                    { get; }
+        public string IP                        { get; }
+        public IEnumerable<string> Claims       { get; }
+
+
+        public Manager(SuperSimple.Auth.Api.User user)
+        {
+            Id = user.Id;
+            UserName = user.UserName;
+            LastLogon = user.LastLogon;
+            Secret = user.Secret;
+            IP = user.CurrentIp;
+            Claims = user.Claims;
+        }
     }
 }
 

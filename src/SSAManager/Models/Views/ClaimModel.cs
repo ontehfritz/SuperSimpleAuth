@@ -1,10 +1,8 @@
-using System;
-using FluentValidation;
-using Nancy.Validation;
-using System.Collections.Generic;
-
 namespace SSAManager
 {
+    using FluentValidation;
+    using SuperSimple.Auth.Api;
+
     public class ClaimModel : PageModel
     {
         public string Name { get; set; }

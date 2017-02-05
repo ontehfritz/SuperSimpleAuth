@@ -1,25 +1,38 @@
-using System;
-using MongoDB;
-using System.Collections.Generic;
-using System.Configuration;
-using MongoDB.Driver;
-using MongoDB.Bson;
-using MongoDB.Driver.Builders;
-using MongoDB.Driver.Linq;
-using System.Web.Hosting;
-using System.Web.Configuration;
-using System.Xml.Serialization;
-using System.Security.Cryptography;
-
-
 namespace SSAManager
 {
+    using System;
+    using MongoDB;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using MongoDB.Driver;
+    using MongoDB.Bson;
+    using MongoDB.Driver.Builders;
+    using MongoDB.Driver.Linq;
+    using System.Web.Hosting;
+    using System.Web.Configuration;
+    using System.Xml.Serialization;
+    using System.Security.Cryptography;
+    using System.Linq;
+    using SuperSimple.Auth.Api;
+
     public class MongoRepository : IRepository
     {
         private string connectionString { get; set; }
-        private MongoClient client;
-        private MongoServer server;
-        private MongoDatabase database;
+
+        public Domain SsaDomain
+        {
+            get
+            {
+                return _ssaDomain;
+            }
+        }
+
+        private const string SSA_DOMAIN = "ssa";
+        private readonly MongoClient client;
+        private readonly MongoServer server;
+        private readonly MongoDatabase database;
+        private Domain _ssaDomain;
+        IApiRepository _api;
 
         public void DeleteAdministrator(Guid domainId, Guid adminId)
         {
@@ -43,7 +56,7 @@ namespace SSAManager
             {
                 admins.Add(this.GetManager(a.ManagerId));
             }
-                
+
             return admins.ToArray();
         }
 
@@ -74,12 +87,12 @@ namespace SSAManager
             BsonDocument manager = managers.FindOne(query);
 
             if(manager["Secret"].AsString == Helpers.Hash (manager["_id"].AsGuid.ToString(), 
-                password))
+                                                           password))
             {
                 if(newPassword == confirmPassword)
                 {
                     manager["Secret"] = Helpers.Hash (manager["_id"].AsGuid.ToString(), 
-                        newPassword);
+                                                      newPassword);
                     managers.Save (manager);
                 }
                 else
@@ -122,11 +135,11 @@ namespace SSAManager
             BsonDocument manager = managers.FindOne(query);
 
             string newPassword = null;
-          
+
             if (manager != null) {
                 newPassword = this.PasswordGenerator (8);
                 manager ["Secret"] = Helpers.Hash (manager["_id"].AsGuid.ToString(), 
-                    newPassword);
+                                                   newPassword);
                 managers.Save (manager);
             }
 
@@ -141,7 +154,7 @@ namespace SSAManager
             BsonDocument manager = managers.FindOne(query);
 
             if(manager["Secret"].AsString == Helpers.Hash (manager["_id"].AsGuid.ToString(), 
-                password))
+                                                           password))
             {
                 manager["UserName"] = email;
                 managers.Save (manager);
@@ -158,7 +171,7 @@ namespace SSAManager
             var collection = database.GetCollection<Role> ("roles");
 
             var query = Query.And(Query<Role>.EQ (e => e.DomainId, domainId),
-                Query<Role>.EQ (e => e.Claims, claim));
+                                  Query<Role>.EQ (e => e.Claims, claim));
 
             var rolesdb = collection.Find (query);
 
@@ -176,11 +189,11 @@ namespace SSAManager
             var collection = database.GetCollection<User> ("users");
 
             var query = Query.And(Query<User>.EQ (e => e.DomainId, domainId),
-                Query<User>.EQ (e => e.Claims, claim));
+                                  Query<User>.EQ (e => e.Claims, claim));
 
             var usersdb = collection.Find(query)
-                .SetFields(Fields.Exclude("Secret","AuthToken"))
-                .SetSortOrder(SortBy.Ascending("UserName"));
+                                    .SetFields(Fields.Exclude("Secret","AuthToken"))
+                                    .SetSortOrder(SortBy.Ascending("UserName"));
 
             foreach(var user in usersdb )
             {
@@ -198,8 +211,8 @@ namespace SSAManager
                                   Query<User>.EQ (e => e.Roles, role));
 
             var usersdb = collection.Find(query)
-                .SetFields(Fields.Exclude("Secret","AuthToken"))
-                .SetSortOrder(SortBy.Ascending("UserName"));
+                                    .SetFields(Fields.Exclude("Secret","AuthToken"))
+                                    .SetSortOrder(SortBy.Ascending("UserName"));
 
             foreach(var user in usersdb )
             {
@@ -215,8 +228,8 @@ namespace SSAManager
             var collection = database.GetCollection<User> ("users");
             var query = Query<User>.EQ (e => e.DomainId, domainId);
             var usersdb = collection.Find(query)
-                .SetFields(Fields.Exclude("Secret","AuthToken"))
-                .SetSortOrder(SortBy.Ascending("UserName"));
+                                    .SetFields(Fields.Exclude("Secret","AuthToken"))
+                                    .SetSortOrder(SortBy.Ascending("UserName"));
 
             foreach(var user in usersdb )
             {
@@ -238,7 +251,7 @@ namespace SSAManager
             var collection = database.GetCollection<User> ("users");
             var query = Query<User>.EQ (e => e.Id, userId);
             var user = collection.Find(query)
-                .SetFields(Fields.Exclude("Secret","AuthToken"));
+                                 .SetFields(Fields.Exclude("Secret","AuthToken"));
 
             foreach (var u in user) 
             {
@@ -252,9 +265,9 @@ namespace SSAManager
         {
             var collection = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.DomainId, domainId),
-                Query<User>.EQ (e => e.UserName, username));
+                                  Query<User>.EQ (e => e.UserName, username));
             var user = collection.Find(query)
-                .SetFields(Fields.Exclude("Secret","AuthToken"));
+                                 .SetFields(Fields.Exclude("Secret","AuthToken"));
 
             foreach (var u in user) 
             {
@@ -284,7 +297,7 @@ namespace SSAManager
                 updateUser.Roles = user.Roles;
                 updateUser.Claims = user.Claims;
                 updateUser.Enabled = user.Enabled;
-         
+
                 users.Save(updateUser);
             }
 
@@ -301,7 +314,7 @@ namespace SSAManager
 
             collection.Remove(new QueryDocument(query));
         }
-       
+
         public Domain GetDomain(Guid id)
         {
             var collection = database.GetCollection<Domain> ("domains");
@@ -312,16 +325,16 @@ namespace SSAManager
             return domain;
         }
 
-//        public Domain GetDomain(string name, Guid managerId)
-//        {
-//            var collection = database.GetCollection<Domain> ("domains");
-//            var query = Query.And(Query<Domain>.EQ (e => e.ManagerId, managerId),
-//                Query<Domain>.EQ(e => e.Name, name));
-//
-//            Domain domain = collection.FindOne (query);
-//
-//            return domain;
-//        }
+        //        public Domain GetDomain(string name, Guid managerId)
+        //        {
+        //            var collection = database.GetCollection<Domain> ("domains");
+        //            var query = Query.And(Query<Domain>.EQ (e => e.ManagerId, managerId),
+        //                Query<Domain>.EQ(e => e.Name, name));
+        //
+        //            Domain domain = collection.FindOne (query);
+        //
+        //            return domain;
+        //        }
 
         public Domain[] GetDomainsAdmin(Guid managerId)
         {
@@ -357,7 +370,7 @@ namespace SSAManager
             {
                 domains.Add (d);
             }
-                
+
             return domains.ToArray();
         }
 
@@ -377,7 +390,7 @@ namespace SSAManager
             domain.ModifiedAt = DateTime.Now;
 
             collection.Insert(domain);
-          
+
             return domain;
         }
 
@@ -385,7 +398,8 @@ namespace SSAManager
         {
             domain.ModifiedAt = DateTime.Now;
 
-            MongoCollection<BsonDocument> domains = database.GetCollection<BsonDocument> ("domains");
+            MongoCollection<BsonDocument> domains = 
+                database.GetCollection<BsonDocument> ("domains");
             var query = Query.EQ ("_id", domain.Id);
 
             BsonDocument updateDomain = domains.FindOne(query);
@@ -396,7 +410,7 @@ namespace SSAManager
                 updateDomain ["Claims"] = new BsonArray(domain.Claims);
                 updateDomain ["WhiteListIps"] = new BsonArray(domain.WhiteListIps);
                 updateDomain ["Enabled"] = domain.Enabled;
-             
+
                 domains.Save(updateDomain);
             }
 
@@ -424,26 +438,32 @@ namespace SSAManager
             collection.Remove(new QueryDocument("_id", domain.Id));
         }
 
-        public Manager CreateManager(Manager manager)
+        public Manager CreateManager(string userName, string secret)
         {
             var collection = database.GetCollection<Manager>("managers");
-            manager.Id = Guid.NewGuid();
-            manager.Secret = Helpers.Hash (manager.Id.ToString(),manager.Secret);
+
+
+            var user = _api.CreateUser(_ssaDomain.Key,userName,
+                                       secret, userName);
+
+            var manager = new Manager(user);
             collection.Insert(manager);
+
 
             return manager;
         }
 
         public void DeleteManager(Guid id, string password)
         {
-            MongoCollection<BsonDocument> managers = database.GetCollection<BsonDocument>("managers");
+            MongoCollection<BsonDocument> managers = 
+                database.GetCollection<BsonDocument>("managers");
             //var managers = database.GetCollection<Manager>("managers");
             var query = Query.EQ ("_id", id);
 
             BsonDocument manager = managers.FindOne(query);
 
             if (manager ["Secret"].AsString == Helpers.Hash (manager ["_id"].AsGuid.ToString (), 
-                   password)) 
+                                                             password)) 
             {
                 managers.Remove (new QueryDocument ("_id", id));
 
@@ -459,20 +479,33 @@ namespace SSAManager
 
         public Manager GetManager(Guid id)
         {
-            var collection = database.GetCollection<Manager> ("managers");
-            var query = Query<Manager>.EQ (e => e.Id, id);
-            Manager m = collection.FindOne (query);
+            MongoCollection<BsonDocument> managers = 
+                database.GetCollection<BsonDocument>("managers");
+            var query = Query.EQ ("_id", id);
 
-            return m;
+            var managerBson = managers.FindOne(query);
+            Guid managerId = managerBson["_id"].AsGuid;
+            var user = GetUser(managerId);
+
+
+            var manager = new Manager(user);
+
+            return manager;
         }
 
         public Manager GetManager(string username)
         {
-            var collection = database.GetCollection<Manager> ("managers");
-            var query = Query<Manager>.EQ (e => e.UserName, username);
-            Manager m = collection.FindOne (query);
-             
-            return m;
+            var collection = database.GetCollection<User> ("users");
+
+            var query = Query.And (
+                Query<User>.EQ (e => e.UserName, username),
+                Query<User>.EQ (e => e.DomainId, _ssaDomain.Id));
+            
+            User user = collection.FindOne (query);
+
+            if(user == null) return null;
+
+            return new Manager(user);
         }
 
         public Role GetRole(Guid domainId, string name)
@@ -517,7 +550,7 @@ namespace SSAManager
             var query = Query<Role>.EQ (e => e.DomainId, domainId);
 
             var r = collection.Find(query);
-          
+
             foreach (Role role in r) 
             {
                 roles.Add (role);
@@ -563,7 +596,7 @@ namespace SSAManager
             var options = new IndexOptionsBuilder();
             options.SetSparse(true);
             options.SetUnique(true);
-           
+
             var collection = database.GetCollection<Domain>("domains");
 
             collection.EnsureIndex(keys, options);
@@ -574,12 +607,12 @@ namespace SSAManager
             var keys = new IndexKeysBuilder();
 
             keys.Ascending("UserName", "DomainId");
-           
+
             var options = new IndexOptionsBuilder();
             options.SetSparse(true);
             options.SetUnique(true);
 
-           
+
             var collection = database.GetCollection<User>("users");
 
             collection.EnsureIndex(keys, options);
@@ -631,20 +664,47 @@ namespace SSAManager
             collection.EnsureIndex(keys, options);
         }
 
+        private void CreateSsaDomain()
+        {
+            var collection = database.GetCollection<Domain>("domains");
+            var ssaDomain = GetDomains(Guid.Empty);
 
-        public MongoRepository (string connection)
+            if(ssaDomain.Any()) 
+            {
+                _ssaDomain = ssaDomain.First();
+                return;
+            }
+
+            var domain = new Domain ();
+            domain.Id = Guid.NewGuid ();
+            domain.Name = "ssa";
+            domain.Enabled = true;
+            domain.ManagerId = Guid.Empty;
+            domain.Key = Guid.NewGuid ();
+            domain.Salt = Guid.NewGuid ();
+            domain.CreatedAt = DateTime.Now;
+            domain.ModifiedAt = DateTime.Now;
+
+            collection.Insert(domain);
+            _ssaDomain = domain;
+        }
+
+        public MongoRepository (string connection,IApiRepository api)
         {
             connectionString = connection;
             client = new MongoClient(connectionString);
             server = client.GetServer();
             database = server.GetDatabase("SsAuthDb");
+            _api = api;
 
-            this.CreateManagerIndexes ();
-            this.CreateDomainIndexes  ();
-            this.CreateUserIndexes    ();
-            this.CreateRoleIndexes    ();
-            this.CreateAdminIndexes   ();
-        }
+            CreateSsaDomain      ();
+            CreateManagerIndexes ();
+            CreateDomainIndexes  ();
+            CreateUserIndexes    ();
+            CreateRoleIndexes    ();
+            CreateAdminIndexes   ();
+
+        } 
     }
 }
 

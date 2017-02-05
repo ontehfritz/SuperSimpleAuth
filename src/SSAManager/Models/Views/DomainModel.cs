@@ -1,10 +1,11 @@
-using System;
-using System.Collections.Generic;
-using Nancy.Validation;
-using FluentValidation;
-
 namespace SSAManager
 {
+    using System;
+    using System.Collections.Generic;
+    using Nancy.Validation;
+    using FluentValidation;
+    using SuperSimple.Auth.Api;
+
     public class DomainModel : PageModel
     {
         public List<Role> Roles         { get; set; }

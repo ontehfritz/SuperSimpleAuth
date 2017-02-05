@@ -1,7 +1,7 @@
-using System;
-
 namespace SSAManager
 {
+    using System;
+    using SuperSimple.Auth.Api;
     /// <summary>
     /// Interface for database access.
     /// </summary>
@@ -23,6 +23,7 @@ namespace SSAManager
         Role UpdateRole(Role role);
         void DeleteRole(Role role);
 
+        Domain SsaDomain { get; }
         Domain GetDomain(Guid id);
         Domain[] GetDomains(Guid managerID);
         Domain[] GetDomainsAdmin(Guid managerID);
@@ -36,7 +37,7 @@ namespace SSAManager
 
         Manager GetManager(Guid managerId);
         Manager GetManager(string userName);
-        Manager CreateManager(Manager manager);
+        Manager CreateManager(string userName, string secret);
         void ChangeEmail(Guid id, string secret, string email);
         void ChangePassword(Guid id, string password, string newPassword, string confirmPassword);
         void DeleteManager(Guid id, string password);
