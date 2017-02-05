@@ -1,6 +1,4 @@
 using System;
-using System.Web.Security;
-using Nancy;
 
 namespace SuperSimple.Auth.Api
 {

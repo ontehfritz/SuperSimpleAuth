@@ -92,15 +92,17 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Models\ErrorMessage.cs" />
-    <Compile Include="Models\IRepository.cs" />
-    <Compile Include="Models\MongoRepository.cs" />
-    <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Modules\IndexModule.cs" />
     <Compile Include="Models\Email.cs" />
     <Compile Include="Modules\AuthModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SsaApiRepository\SsaApiRepository.csproj">
+      <Project>{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}</Project>
+      <Name>SsaApiRepository</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

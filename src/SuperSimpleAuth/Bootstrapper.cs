@@ -19,7 +19,7 @@ namespace SuperSimple.Auth.Api
         {
             base.ConfigureApplicationContainer(container);
             IApiRepository repository = 
-                new MongoRepository (ConfigurationManager.AppSettings.Get("db"));
+                new ApiMongoRepository (ConfigurationManager.AppSettings.Get("db"));
             container.Register<IApiRepository>(repository);
         }
 
