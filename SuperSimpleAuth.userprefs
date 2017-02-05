@@ -1,32 +1,24 @@
-﻿<Properties StartupConfiguration="{3E96487D-52AE-4A0B-8D29-B4F4EBEC5CC7}|">
+﻿<Properties StartupConfiguration="{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}|">
   <MonoDevelop.Ide.ItemProperties.SSAManager PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimpleAuth/Bootstrapper.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/SSAManager/Views/home/Claim.cshtml">
     <Files>
-      <File FileName="src/SSAManager/Bootstrapper.cs" Line="37" Column="8" />
-      <File FileName="src/SsaApiRepository/AoiMongoRepository.cs" Line="21" Column="56" />
-      <File FileName="src/SuperSimpleAuth/Helper/Helper.cs" Line="16" Column="66" />
-      <File FileName="src/SsaApiRepository/IApiRepository.cs" Line="1" Column="14" />
-      <File FileName="src/SuperSimpleAuth/Bootstrapper.cs" Line="22" Column="21" />
+      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="36" Column="57" />
+      <File FileName="src/SSAManager/Views/home/User.cshtml" Line="117" Column="14" />
+      <File FileName="src/SSAManager/Views/home/Claim.cshtml" Line="14" Column="13" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Option id="ShowAllFiles" value="True" />
           <Node name="SuperSimpleAuth" expanded="True">
-            <Node name="SsaApiRepository" expanded="True" />
-            <Node name="SsaCsharpTest" expanded="True" />
-            <Node name="SSAManager" expanded="True" />
-            <Node name="SSANancyExample" expanded="True">
-              <Node name="Modules" expanded="True" />
+            <Node name="SSAManager" expanded="True">
+              <Node name="Views" expanded="True">
+                <Node name="home" expanded="True">
+                  <Node name="Claim.cshtml" selected="True" />
+                </Node>
+              </Node>
             </Node>
-            <Node name="SuperSimpleAuth" expanded="True">
-              <Node name="Packages" expanded="True" />
-              <Node name="Helper" expanded="True" />
-              <Node name="Models" expanded="True" />
-              <Node name="Modules" expanded="True" />
-              <Node name="Bootstrapper.cs" selected="True" />
-            </Node>
-            <Node name="SuperSimpleAuthCSharp" expanded="True" />
+            <Node name="SuperSimpleAuth" expanded="True" />
           </Node>
         </State>
       </Pad>

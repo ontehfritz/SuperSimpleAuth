@@ -5,16 +5,15 @@ namespace SSAManager
     using Nancy.ModelBinding;
     using Nancy.Validation;
     using System.Collections.Generic;
+    using SuperSimple.Auth.Api;
 
     public class LogonModule : NancyModule
     {
         IRepository repository;
 
-        public LogonModule (IRepository repository)
+        public LogonModule (IRepository repository, IApiRepository api)
         {
-            this.repository = repository;
-
-
+            
             Get ["/forgot"] = parameters =>
             {
                 var model = new ForgotPasswordModel ();
@@ -71,20 +70,15 @@ namespace SSAManager
             {
                 var model = this.Bind<LogonModel> ();
 
-                var manager = repository.GetManager (model.Username);
+                var manager = api.Authenticate(repository.SsaDomain.Key,
+                                               model.Username,
+                                               model.Secret);
                 var error = new Error ();
                 error.Name = "SignInError";
                 error.Message = "Password or username incorrect.";
                 model.Errors.Add (error);
 
                 if (manager == null)
-                {
-                    return View ["Logon", model];
-                }
-
-                if (manager != null &&
-                    Helpers.Hash (manager.Id.ToString (),
-                        model.Secret) != manager.Secret)
                 {
                     return View ["Logon", model];
                 }
@@ -115,15 +109,10 @@ namespace SSAManager
                     return View ["Index", model];
                 }
 
-                var newManager = new Manager ()
-                {
-                    UserName = model.Email,
-                    Secret = model.Secret
-                };
-
+                Manager newManager = null;
                 try
                 {
-                    newManager = repository.CreateManager (newManager);
+                    newManager = repository.CreateManager (model.Email,model.Secret);
                 }
                 catch (MongoDB.Driver.WriteConcernException e)
                 {

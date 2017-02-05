@@ -36,7 +36,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AoiMongoRepository.cs" />
+    <Compile Include="ApiMongoRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IApiRepository.cs" />
     <Compile Include="Role.cs" />

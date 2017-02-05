@@ -11,7 +11,7 @@
 <h4><i class="fa fa-user-circle-o" aria-hidden="true"></i> Roles:</h4>
 @if(@Model.Roles != null && @Model.Roles.Length > 0)
 {
-    foreach(SSAManager.Role role in Model.Roles)
+    foreach(Role role in Model.Roles)
     {
         <a href="/domain/@Model.Domain.Id/role/@role.Name">@role.Name</a>
     }
@@ -24,7 +24,7 @@ else
 <h4><i class="fa fa-users" aria-hidden="true"></i> Users:</h4>
 @if(@Model.Users != null && @Model.Users.Length > 0)
 {
-    foreach(SSAManager.User user in Model.Users)
+    foreach(User user in Model.Users)
     {
         <a href="/domain/@Model.Domain.Id/user/@user.Id">@user.UserName</a>
     }

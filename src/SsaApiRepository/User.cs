@@ -7,33 +7,33 @@ namespace SuperSimple.Auth.Api
 	public class User
 	{
         [BsonId]
-		public Guid Id { get; set; }
+        public Guid Id { get; set; }
         [BsonElement]
-        public Guid DomainId { get; set;}
+        public Guid DomainId { get; set; }
         [BsonElement]
-        public string UserName { get; set;}
+        public string UserName { get; set; }
         [BsonElement]
         public string Email { get; set;}
         [BsonElement]
-        public string Secret { get; set;}
-        [BsonElement]
-        public bool Enabled { get; set; }
+        public string Secret { get; set; }
         [BsonElement]
         public Guid AuthToken { get; set; }
         [BsonElement]
-        public string[] Claims { get; set; }
+        public bool Enabled { get; set; }
         [BsonElement]
-        public Role[] Roles { get; set; }
+        public List<Role> Roles { get; set; }
+        [BsonElement]
+        public List<string> Claims { get; set; }
         [BsonElement]
         public string CurrentIp { get; set; }
         [BsonElement]
-        public string LastIp { get; set; }
-        [BsonElement]
-        public DateTime ?LastRequest { get; set; }
-        [BsonElement]
         public DateTime ?CurrentLogon { get; set; }
         [BsonElement]
+        public string LastIp { get; set; }
+        [BsonElement]
         public DateTime ?LastLogon { get; set; }
+        [BsonElement]
+        public DateTime ?LastRequest { get; set; }
         [BsonElement]
         public int LogonCount { get; set; }
         [BsonElement]
@@ -57,28 +57,36 @@ namespace SuperSimple.Auth.Api
             return roles.ToArray ();
         }
 
-        
+
+        public void AddRole(Role role)
+        {
+            if(this.Roles == null)
+            {
+                this.Roles = new List<Role> ();
+            }
+
+            Roles.Add (role);
+        }
+
+        public void RemoveRole(Role role)
+        {
+            Roles.Remove (Roles.Find (x => x.Name == role.Name));
+        }
+
         public string[] GetClaims()
         {
-            List<string> claims = new List<string>();
+            List<string> claims = new List<string> ();
 
-            if (this.Claims != null) 
-            {
-                claims.AddRange (this.Claims);
+            if (this.Claims != null) {
+                claims = this.Claims;
             }
 
             if (this.Roles != null) {
-
-                claims = new List<string> ();
-                foreach (Role role in this.Roles) 
-                {
-                    if (role.Claims != null) 
-                    {
+                foreach (Role role in this.Roles) {
+                    if (role.Claims != null) {
                         claims.AddRange (role.Claims);
                     }
                 }
-
-                return claims.ToArray ();
             }
 
             return claims.ToArray();
@@ -86,15 +94,13 @@ namespace SuperSimple.Auth.Api
 
         public bool InRole(string role)
         {
-            if (Roles == null) 
-            {
+            if (Roles == null || Roles.Count == 0) {
                 return false;
             }
 
             foreach(Role r in Roles)
             {
-                if (r.Name == role) 
-                {
+                if (r.Name == role) {
                     return true;
                 }
             }
@@ -106,15 +112,13 @@ namespace SuperSimple.Auth.Api
         {
             string[] claims = this.GetClaims ();
 
-            if (claims == null) 
-            {
+            if (claims == null) {
                 return false;
             }
 
             foreach(string c in claims)
             {
-                if (c == claim) 
-                {
+                if (c == claim) {
                     return true;
                 }
             }

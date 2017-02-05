@@ -4,7 +4,7 @@ using Nancy.TinyIoc;
 using Nancy.Authentication.Forms;
 using Nancy.Bootstrapper;
 using System.Configuration;
-
+using SuperSimple.Auth.Api;
 
 namespace SSAManager
 {
@@ -22,9 +22,18 @@ namespace SSAManager
                                                               container)
         {
             base.ConfigureApplicationContainer(container);
-            IRepository repository = new MongoRepository (ConfigurationManager
-                                                          .AppSettings.Get("db"));
+
+            IApiRepository apiRepository = 
+                new ApiMongoRepository(ConfigurationManager
+                                       .AppSettings.Get("db"));
+
+            container.Register<IApiRepository>(apiRepository);
+            IRepository repository = 
+                new MongoRepository (ConfigurationManager.AppSettings.Get("db"),
+                                     apiRepository);
             container.Register<IRepository>(repository);
+
+
         }
 
 

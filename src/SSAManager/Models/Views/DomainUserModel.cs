@@ -1,8 +1,9 @@
-using System;
-using System.Collections.Generic;
-
 namespace SSAManager
 {
+    using System;
+    using System.Collections.Generic;
+    using SuperSimple.Auth.Api;
+
     public class DomainUserModel: PageModel
     {
 

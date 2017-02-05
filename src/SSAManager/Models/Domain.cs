@@ -5,6 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using FluentValidation;
 using System.Collections.Generic;
 using System.Configuration;
+using SuperSimple.Auth.Api;
 
 namespace SSAManager
 {
@@ -63,7 +64,8 @@ namespace SSAManager
             }
 
             IRepository repository = 
-                new MongoRepository (ConfigurationManager.AppSettings.Get("db"));
+                new MongoRepository (ConfigurationManager.AppSettings.Get("db"), 
+                                     new ApiMongoRepository(ConfigurationManager.AppSettings.Get("db")));
            
             Manager[] admins = repository.GetAdministrators(this.Id);
 
@@ -81,7 +83,8 @@ namespace SSAManager
         public string GetOwnerName()
         {
             IRepository repository = 
-                new MongoRepository (ConfigurationManager.AppSettings.Get("db"));
+                new MongoRepository (ConfigurationManager.AppSettings.Get("db"), 
+                                     new ApiMongoRepository(ConfigurationManager.AppSettings.Get("db")));
 
             Manager manager = repository.GetManager(this.ManagerId);
 

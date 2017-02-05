@@ -85,7 +85,7 @@
     
     @if(@Model.Roles != null)
     {
-        foreach(SSAManager.Role role in @Model.Roles)
+        foreach(Role role in @Model.Roles)
         {
             if(@Model.User.InRole(@role.Name))
             {
