@@ -25,16 +25,16 @@
         <ul class="nav navbar-nav navbar-right">
 			@if(@Model.Manager != null)
             {
-            <li role="presentation"><a href="/home">Home</a></li>
-            <li role="presentation"><a href="/settings">@Model.Manager.UserName</a></li>
-            <li role="presentation"><a href="/logoff">Sign Out</a></li>
+            <li role="presentation"><a href="/home"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+            <li role="presentation"><a href="/settings"><i class="fa fa-user-circle-o" aria-hidden="true"></i> @Model.Manager.UserName</a></li>
+            <li role="presentation"><a href="/logoff"><i class="fa fa-sign-out" aria-hidden="true"></i> Sign out</a></li>
             }
         </ul>
     </div>
 </nav>
 <!-- Begin page content -->
 <div class="container">
-<div style="border: 1px solid; background-color: #f2f2f2;box-shadow: 5px 5px 5px #888888;-moz-border-radius: 10px; -webkit-border-radius: 10px;border-radius: 10px;padding:10px;">
+<div class="content">
 @if(@Model.Messages != null && @Model.Messages.Count > 0)
 {
     <div class="alert alert-success alert-dismissable">
@@ -77,9 +77,11 @@
            </a>
            </div>
             <ul class="nav navbar-nav navbar-left">
-                <li role="presentation"><a href="#">Github</a></li>
-                <li role="presentation"><a href="#">Wiki</a></li>
-                <li role="presentation"><a href="#">API SDKs</a></li>
+                <li role="presentation"><a href="https://github.com/fritzcoder/SuperSimpleAuth">
+						<i class="fa fa-github" aria-hidden="true"></i> Github</a></li>
+                <li role="presentation"><a href="https://github.com/fritzcoder/SuperSimpleAuth/wiki">
+						<i class="fa fa-wikipedia-w" aria-hidden="true"></i>iki</a></li>
+                <li role="presentation"><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> API SDKs</a></li>
             </ul>
 	    </div>
      </nav>

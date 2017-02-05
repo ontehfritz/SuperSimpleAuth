@@ -4,7 +4,7 @@ using Nancy;
 
 namespace SuperSimple.Auth.Api
 {
-	public interface IRepository
+	public interface IApiRepository
 	{
         User Authenticate (Guid domainKey, string username, string secret, string IP = null);
         User CreateUser (Guid domainKey, string username, string password, string email = null);

@@ -130,7 +130,7 @@
         }
     }
     </table>
-     @if(@Model.Users != null && @Model.Users.Count > 0) { <div> No Users Yet! </div>}
+     @if(@Model.Users == null && @Model.Users.Count == 0) { <div> No Users Yet! </div>}
     </div>
 </div>
 </form>
