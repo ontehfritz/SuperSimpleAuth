@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSANancyExample", "examples
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SsaCsharpTest", "test\SsaCsharpTest\SsaCsharpTest.csproj", "{8E398D1E-316B-4EA6-8A6F-E4B8C40D6B8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SsaApiRepository", "src\SsaApiRepository\SsaApiRepository.csproj", "{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{8E398D1E-316B-4EA6-8A6F-E4B8C40D6B8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E398D1E-316B-4EA6-8A6F-E4B8C40D6B8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E398D1E-316B-4EA6-8A6F-E4B8C40D6B8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = SSAManager\SSAManager.csproj

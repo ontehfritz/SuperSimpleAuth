@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Bson;
@@ -8,14 +8,14 @@ using System.Linq;
 
 namespace SuperSimple.Auth.Api
 {
-    public class MongoRepository : IApiRepository
+    public class ApiMongoRepository : IApiRepository
     {
         private string connectionString { get; set; }
         private MongoClient client;
         private MongoServer server;
         private MongoDatabase database;
 
-        public MongoRepository (string connection)
+        public ApiMongoRepository (string connection)
         {
             connectionString = connection;
             client = new MongoClient(connectionString);
@@ -49,7 +49,7 @@ namespace SuperSimple.Auth.Api
 
             var users = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.AuthToken, authToken),
-                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
+                                  Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
             User user = users.FindOne (query);
 
@@ -75,7 +75,7 @@ namespace SuperSimple.Auth.Api
 
             var users = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.AuthToken, authToken),
-                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
+                                  Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
             User user = users.FindOne (query);
 
@@ -99,7 +99,7 @@ namespace SuperSimple.Auth.Api
 
             var users = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.AuthToken, authToken),
-                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
+                                  Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
             User user = users.FindOne (query);
 
@@ -125,7 +125,7 @@ namespace SuperSimple.Auth.Api
 
             var users = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.Email, email),
-                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
+                                  Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
             user = users.FindOne (query);
 
@@ -174,7 +174,7 @@ namespace SuperSimple.Auth.Api
 
             var users = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.UserName, username),
-                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
+                                  Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
             user = users.FindOne (query);
 
@@ -182,7 +182,7 @@ namespace SuperSimple.Auth.Api
             {
                 return true;
             }
-          
+
             return false;
         }
 
@@ -198,7 +198,7 @@ namespace SuperSimple.Auth.Api
 
             var users = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.Email, email),
-                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
+                                  Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
             user = users.FindOne (query);
 
@@ -220,7 +220,7 @@ namespace SuperSimple.Auth.Api
 
             var users = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.AuthToken, authToken),
-                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
+                                  Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
             user = users.FindOne (query);
 
@@ -250,8 +250,8 @@ namespace SuperSimple.Auth.Api
             var users = database.GetCollection<User> ("users");
             //TODO: Change application salt to user salt
             var query = Query.And(Query<User>.EQ (e => e.UserName, username),
-                Query<User>.EQ(e => e.Secret, this.Hash(domain["Salt"].AsGuid.ToString(), secret)),
-                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
+                                  Query<User>.EQ(e => e.Secret, this.Hash(domain["Salt"].AsGuid.ToString(), secret)),
+                                  Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
             user = users.FindOne (query);
 
@@ -288,7 +288,7 @@ namespace SuperSimple.Auth.Api
 
             var users = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.AuthToken, authToken),
-                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
+                                  Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
             user = users.FindOne (query);
 
@@ -311,7 +311,7 @@ namespace SuperSimple.Auth.Api
         }
 
         public User CreateUser (Guid domainKey, string username, 
-            string password, string email = null)
+                                string password, string email = null)
         {
             username = username.ToLower ();
 
@@ -349,7 +349,7 @@ namespace SuperSimple.Auth.Api
 
             var users = database.GetCollection<User> ("users");
             var query = Query.And(Query<User>.EQ (e => e.AuthToken, authToken),
-                Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
+                                  Query<User>.EQ(e => e.DomainId, domain["_id"].AsGuid));
 
             user = users.FindOne (query);
 
@@ -374,7 +374,7 @@ namespace SuperSimple.Auth.Api
         {
             var appCollection = database.GetCollection<RawBsonDocument> ("domains");
             var query = Query.And(Query.EQ ("Key", domainKey), 
-                Query.EQ("Name", domainName));
+                                  Query.EQ("Name", domainName));
 
             var app = appCollection.FindOne (query);
 
@@ -382,14 +382,14 @@ namespace SuperSimple.Auth.Api
             {
                 return true;
             }
-          
+
             return false;
         }
 
         public string Hash(string Salt, string Password) 
         {
             Rfc2898DeriveBytes Hasher = new Rfc2898DeriveBytes(Password,
-                System.Text.Encoding.Default.GetBytes(Salt), 10000);
+                                                               System.Text.Encoding.Default.GetBytes(Salt), 10000);
 
             return Convert.ToBase64String(Hasher.GetBytes(25));
         }
