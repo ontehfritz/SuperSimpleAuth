@@ -1,10 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using SuperSimple.Auth.Api;
-
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
+    using System.Collections.Generic;
+    using SuperSimple.Auth.Api.Repository;
+
     public class RoleModel : PageModel
     {
         public Manager Manager { get; set; }

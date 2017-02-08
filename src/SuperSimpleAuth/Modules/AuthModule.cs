@@ -1,9 +1,10 @@
-﻿using System;
-using Nancy;
-using System.Linq;
-
-namespace SuperSimple.Auth.Api
+﻿namespace SuperSimple.Auth.Api
 {
+    using System;
+    using Nancy;
+    using System.Linq;
+    using Repository;
+
     public class AuthModule : NancyModule
     {
         IApiRepository repository;

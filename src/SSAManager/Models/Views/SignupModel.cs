@@ -1,4 +1,4 @@
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
     using FluentValidation;
     using System.Collections.Generic;
@@ -9,7 +9,6 @@ namespace SSAManager
         public string Secret { get; set; }
         public string ConfirmSecret { get; set; }
         public List<Error> Errors { get; set; }
-
     }
 
     public class SignupValidator : AbstractValidator<SignupModel>

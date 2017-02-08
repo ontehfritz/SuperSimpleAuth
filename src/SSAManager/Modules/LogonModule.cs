@@ -1,16 +1,14 @@
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
     using Nancy;
     using Nancy.Authentication.Forms;
     using Nancy.ModelBinding;
     using Nancy.Validation;
     using System.Collections.Generic;
-    using SuperSimple.Auth.Api;
+    using SuperSimple.Auth.Api.Repository;
 
     public class LogonModule : NancyModule
     {
-        IRepository repository;
-
         public LogonModule (IRepository repository, IApiRepository api)
         {
             

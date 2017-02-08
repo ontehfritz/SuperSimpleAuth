@@ -1,4 +1,4 @@
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
     using FluentValidation;
 

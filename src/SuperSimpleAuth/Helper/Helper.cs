@@ -1,9 +1,11 @@
-using System;
-using Nancy;
-using System.Linq;
-
 namespace SuperSimple.Auth.Api
 {
+    using System;
+    using Nancy;
+    using System.Linq;
+    using System.Diagnostics.Contracts;
+    using SuperSimple.Auth.Api.Repository;
+
     public static class Helper
     {
         private const string _headerDomainKey = "Ssa-Domain-Key";
@@ -13,10 +15,12 @@ namespace SuperSimple.Auth.Api
         /// </summary>
         /// <returns>The request.</returns>
         /// <param name="request">Request.</param>
-        public static ErrorMessage VerifyRequest(Request request,IApiRepository repository)
+        public static ErrorMessage VerifyRequest(Request request,
+                                                 IApiRepository repository)
         {
+            Contract.Ensures (Contract.Result<ErrorMessage> () != null);
             ErrorMessage message = null;
-            Guid key = new Guid();
+            var key = new Guid();
 
             string appKey = request.Headers[_headerDomainKey].FirstOrDefault();
             string app = request.Headers[_headerDomain].FirstOrDefault();

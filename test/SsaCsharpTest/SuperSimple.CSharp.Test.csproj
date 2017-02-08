@@ -37,9 +37,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SuperSimpleAuthCSharp\SuperSimpleAuthCSharp.csproj">
+    <ProjectReference Include="..\..\src\SuperSimpleAuthCSharp\SuperSimple.Auth.CSharp.csproj">
       <Project>{7EF26E89-0BDF-4A21-8045-47CA3288EABC}</Project>
-      <Name>SuperSimpleAuthCSharp</Name>
+      <Name>SuperSimple.Auth.CSharp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

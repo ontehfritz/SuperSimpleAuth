@@ -1,7 +1,9 @@
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
     using System;
-    using SuperSimple.Auth.Api;
+    using Api;
+    using SuperSimple.Auth.Api.Repository;
+
     /// <summary>
     /// Interface for database access.
     /// </summary>

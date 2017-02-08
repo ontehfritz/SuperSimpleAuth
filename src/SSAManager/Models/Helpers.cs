@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Nancy.Validation;
 using System.Security.Cryptography;
 
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
     public static class Helpers
     {

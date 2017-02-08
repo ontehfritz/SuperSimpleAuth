@@ -1,7 +1,7 @@
 ﻿using System;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
     public class Administrator
     {

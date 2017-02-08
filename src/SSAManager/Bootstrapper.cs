@@ -1,13 +1,13 @@
-using System;
-using Nancy;
-using Nancy.TinyIoc;
-using Nancy.Authentication.Forms;
-using Nancy.Bootstrapper;
-using System.Configuration;
-using SuperSimple.Auth.Api;
-
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
+    using System;
+    using Nancy;
+    using Nancy.TinyIoc;
+    using Nancy.Authentication.Forms;
+    using Nancy.Bootstrapper;
+    using System.Configuration;
+    using SuperSimple.Auth.Api.Repository;
+
     public class Bootstrapper : DefaultNancyBootstrapper
     {
         protected override void ApplicationStartup(TinyIoCContainer container, 

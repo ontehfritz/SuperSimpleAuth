@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace SuperSimple.Auth.Api
+namespace SuperSimple.Auth.Api.Repository
 {
 	public class User
 	{

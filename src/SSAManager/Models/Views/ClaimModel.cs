@@ -1,7 +1,8 @@
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
     using FluentValidation;
-    using SuperSimple.Auth.Api;
+    using Api;
+    using SuperSimple.Auth.Api.Repository;
 
     public class ClaimModel : PageModel
     {
@@ -9,11 +10,6 @@ namespace SSAManager
         public Domain Domain { get; set; }
         public User[] Users { get; set; }
         public Role[] Roles { get; set; }
-
-        public ClaimModel() : base()
-        {
-           
-        }
     }
 
     public class ClaimModelValidator : AbstractValidator<ClaimModel>

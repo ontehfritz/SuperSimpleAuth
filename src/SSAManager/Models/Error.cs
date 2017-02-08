@@ -1,6 +1,6 @@
 using System;
 
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
   public class Error
   {

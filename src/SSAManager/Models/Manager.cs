@@ -1,12 +1,12 @@
-using System;
-using Nancy;
-using Nancy.Security;
-using Nancy.Authentication.Forms;
-using System.Collections.Generic;
-
-
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
+    using System;
+    using Nancy;
+    using Nancy.Security;
+    using Nancy.Authentication.Forms;
+    using System.Collections.Generic;
+    using SuperSimple.Auth.Api.Repository;
+
     public class ManagerMapper : IUserMapper
     {
         public IRepository Repository { get; set; }
@@ -31,7 +31,7 @@ namespace SSAManager
 
     public class Manager : IUserIdentity
     {
-        private SuperSimple.Auth.Api.User User   { get; }
+        private User User   { get; }
 
         public Guid Id                          { get; }
         public string UserName                  { get; }
@@ -41,7 +41,7 @@ namespace SSAManager
         public IEnumerable<string> Claims       { get; }
 
 
-        public Manager(SuperSimple.Auth.Api.User user)
+        public Manager(User user)
         {
             Id = user.Id;
             UserName = user.UserName;

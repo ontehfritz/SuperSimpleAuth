@@ -1,11 +1,11 @@
-using System;
-using Nancy;
-using Nancy.TinyIoc;
-using Nancy.Bootstrapper;
-using System.Configuration;
-
 namespace SuperSimple.Auth.Api
 {
+    using Nancy;
+    using Nancy.TinyIoc;
+    using Nancy.Bootstrapper;
+    using System.Configuration;
+    using Repository;
+
 	public class Bootstrapper : DefaultNancyBootstrapper
 	{
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)

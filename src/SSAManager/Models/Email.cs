@@ -5,7 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using System.Configuration;
 
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
     public class Email
     {
