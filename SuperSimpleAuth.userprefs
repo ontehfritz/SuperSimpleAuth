@@ -1,89 +1,10 @@
-﻿<Properties StartupConfiguration="{3E96487D-52AE-4A0B-8D29-B4F4EBEC5CC7}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/SSAManager/Views/logon/Settings.cshtml">
+﻿<Properties StartupConfiguration="{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Api/Bootstrapper.cs">
     <Files>
-      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="10" Column="32" />
-      <File FileName="src/SSAManager/Views/home/User.cshtml" Line="5" Column="1" />
-      <File FileName="src/SSAManager/Views/home/Claim.cshtml" Line="3" Column="29" />
-      <File FileName="src/SuperSimpleAuth/Helper/Helper.cs" Line="19" Column="55" />
-      <File FileName="src/SsaApiRepository/IApiRepository.cs" Line="4" Column="5" />
-      <File FileName="src/SsaApiRepository/ApiMongoRepository.cs" Line="7" Column="40" />
-      <File FileName="src/SsaApiRepository/User.cs" Line="9" Column="17" />
-      <File FileName="src/SsaApiRepository/Role.cs" Line="9" Column="17" />
-      <File FileName="src/SsaApiRepository/packages.config" Line="1" Column="1" />
-      <File FileName="src/SSAManager/Bootstrapper.cs" Line="26" Column="10" />
-      <File FileName="src/SSAManager/Models/Repositories/IRepository.cs" Line="12" Column="11" />
-      <File FileName="src/SSAManager/Models/Repositories/MongoRepository.cs" Line="706" Column="1" />
-      <File FileName="src/SSAManager/Models/Administrator.cs" Line="4" Column="35" />
-      <File FileName="src/SSAManager/Models/Domain.cs" Line="69" Column="45" />
-      <File FileName="src/SSAManager/Models/Email.cs" Line="8" Column="35" />
-      <File FileName="src/SSAManager/Models/Error.cs" Line="12" Column="1" />
-      <File FileName="src/SSAManager/Models/Helpers.cs" Line="13" Column="34" />
-      <File FileName="src/SSAManager/Models/Manager.cs" Line="32" Column="41" />
-      <File FileName="src/SSAManager/Modules/HomeModule.cs" Line="300" Column="19" />
-      <File FileName="src/SSAManager/Modules/IndexModule.cs" Line="3" Column="18" />
-      <File FileName="src/SSAManager/Modules/LogonModule.cs" Line="10" Column="43" />
-      <File FileName="src/SSAManager/Views/home/Admin.cshtml" Line="5" Column="1" />
-      <File FileName="src/SSAManager/Views/home/Admin_new.cshtml" Line="4" Column="2" />
-      <File FileName="src/SSAManager/Views/home/Claim_new.cshtml" Line="5" Column="66" />
-      <File FileName="src/SSAManager/Views/home/Domain.cshtml" Line="6" Column="76" />
-      <File FileName="src/SSAManager/Views/home/Domain_new.cshtml" Line="4" Column="2" />
-      <File FileName="src/SSAManager/Views/home/Manage.cshtml" Line="4" Column="5" />
-      <File FileName="src/SSAManager/Views/home/NoAccess.cshtml" Line="1" Column="1" />
-      <File FileName="src/SSAManager/Views/home/Role.cshtml" Line="3" Column="29" />
-      <File FileName="src/SSAManager/Views/home/Role_new.cshtml" Line="4" Column="5" />
-      <File FileName="src/SSAManager/Views/_Layout.cshtml" Line="1" Column="1" />
-      <File FileName="src/SSAManager/Views/Index.cshtml" Line="1" Column="1" />
-      <File FileName="src/SSAManager/Models/Views/PageModel.cs" Line="7" Column="37" />
-      <File FileName="src/SSAManager/Models/Views/RoleModel.cs" Line="18" Column="1" />
-      <File FileName="src/SSAManager/Models/Views/LogonModel.cs" Line="10" Column="1" />
-      <File FileName="src/SSAManager/Models/Views/ManageModel.cs" Line="10" Column="1" />
-      <File FileName="src/SSAManager/Models/Views/ClaimModel.cs" Line="4" Column="15" />
-      <File FileName="src/SSAManager/Models/Views/CreateRoleModel.cs" Line="9" Column="28" />
-      <File FileName="src/SSAManager/Models/Views/SettingsModel.cs" Line="10" Column="42" />
-      <File FileName="src/SSAManager/Models/Views/DomainModel.cs" Line="10" Column="21" />
-      <File FileName="src/SSAManager/Models/Views/DomainUserModel.cs" Line="11" Column="17" />
-      <File FileName="src/SSAManager/Models/Views/ForgotPasswordModel.cs" Line="4" Column="5" />
-      <File FileName="src/SSAManager/Models/Views/AdminModel.cs" Line="1" Column="1" />
-      <File FileName="src/SSAManager/Models/Views/SignupModel.cs" Line="4" Column="37" />
+      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="24" Column="11" />
       <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="7" Column="11" />
-      <File FileName="src/SSAManager/SuperSimple.Auth.Manager.csproj" Line="1" Column="1" />
-      <File FileName="src/SuperSimpleAuth/Modules/AuthModule.cs" Line="7" Column="5" />
-      <File FileName="src/SuperSimpleAuth/Bootstrapper.cs" Line="3" Column="17" />
-      <File FileName="src/SSAManager/web.config" Line="33" Column="49" />
-      <File FileName="src/SSAManager/Views/logon/_Signup.cshtml" Line="4" Column="2" />
-      <File FileName="src/SSAManager/Views/logon/Forgot.cshtml" Line="5" Column="1" />
-      <File FileName="src/SSAManager/Views/logon/Logon.cshtml" Line="3" Column="29" />
-      <File FileName="src/SSAManager/Views/logon/Settings.cshtml" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Api/Bootstrapper.cs" Line="7" Column="11" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Option id="ShowAllFiles" value="True" />
-          <Node name="SuperSimpleAuth" expanded="True">
-            <Node name="SSANancyExample" expanded="True">
-              <Node name="References" expanded="True" />
-            </Node>
-            <Node name="SuperSimple.Api.Repository" expanded="True" />
-            <Node name="SuperSimple.Auth.Api" expanded="True">
-              <Node name="References" expanded="True" />
-              <Node name="Helper" expanded="True" />
-              <Node name="Modules" expanded="True" />
-            </Node>
-            <Node name="SuperSimple.Auth.Manager" expanded="True">
-              <Node name="References" expanded="True" />
-              <Node name="Views" expanded="True">
-                <Node name="logon" expanded="True">
-                  <Node name="Settings.cshtml" selected="True" />
-                </Node>
-              </Node>
-            </Node>
-            <Node name="SuperSimple.CSharp.Test" expanded="True">
-              <Node name="References" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.Manager PreferredExecutionTarget="MonoDevelop.Default" />

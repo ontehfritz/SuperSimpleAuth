@@ -100,7 +100,7 @@
     <None Include="Views\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SsaApiRepository\SuperSimple.Api.Repository.csproj">
+    <ProjectReference Include="..\SuperSimple.Auth.Api.Repository\SuperSimple.Api.Repository.csproj">
       <Project>{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}</Project>
       <Name>SuperSimple.Api.Repository</Name>
     </ProjectReference>
