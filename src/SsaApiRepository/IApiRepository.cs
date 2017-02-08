@@ -1,7 +1,7 @@
-using System;
-
-namespace SuperSimple.Auth.Api
+namespace SuperSimple.Auth.Api.Repository
 {
+    using System;
+
 	public interface IApiRepository
 	{
         User Authenticate (Guid domainKey, string username, string secret, string IP = null);

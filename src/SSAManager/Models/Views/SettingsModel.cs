@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
     public class SettingsModel : PageModel
     {
@@ -11,11 +8,6 @@ namespace SSAManager
         public string ConfirmPassword { get; set; }
         public string DeletePassword { get; set; }
         public string Email { get; set; }
-
-        public SettingsModel() : base()
-        {
-
-        }
     }
 }
 

@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using Nancy.Validation;
-using FluentValidation;
-
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
+    using FluentValidation;
+
     public class CreateRoleModel: PageModel
     {
 

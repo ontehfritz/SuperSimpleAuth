@@ -1,4 +1,4 @@
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
     using Nancy.ModelBinding;
     using Nancy.Validation;
@@ -9,6 +9,7 @@ namespace SSAManager
     using Nancy.Security;
     using MongoDB.Driver;
     using SuperSimple.Auth.Api;
+    using SuperSimple.Auth.Api.Repository;
 
     public class HomeModule : NancyModule
     {

@@ -6,8 +6,8 @@
     <ProjectGuid>{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}</ProjectGuid>
     <ProjectTypeGuids>{349C5851-65DF-11DA-9384-00065B846F21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>SSAManager</RootNamespace>
-    <AssemblyName>SSAManager</AssemblyName>
+    <RootNamespace>SuperSimple.Auth</RootNamespace>
+    <AssemblyName>SuperSimple.Auth.Manager</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -142,9 +142,9 @@
     <None Include="Views\home\Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SsaApiRepository\SsaApiRepository.csproj">
+    <ProjectReference Include="..\SsaApiRepository\SuperSimple.Api.Repository.csproj">
       <Project>{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}</Project>
-      <Name>SsaApiRepository</Name>
+      <Name>SuperSimple.Api.Repository</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

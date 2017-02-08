@@ -1,11 +1,11 @@
-using Nancy;
-using Nancy.Authentication.Forms;
-using Nancy.Bootstrapper;
-using Nancy.TinyIoc;
-using SuperSimple.Auth;
-
 namespace SSANancyExample
 {
+    using Nancy;
+    using Nancy.Authentication.Forms;
+    using Nancy.Bootstrapper;
+    using Nancy.TinyIoc;
+    using SuperSimple.Auth;
+
     public class Bootstrapper : DefaultNancyBootstrapper
     {
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)

@@ -1,8 +1,7 @@
-using System;
-using System.Collections.Generic;
-
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
+    using System.Collections.Generic;
+
     public class PageModel
     {
         public Manager Manager { get; set; }

@@ -6,8 +6,9 @@ using FluentValidation;
 using System.Collections.Generic;
 using System.Configuration;
 using SuperSimple.Auth.Api;
+using SuperSimple.Auth.Api.Repository;
 
-namespace SSAManager
+namespace SuperSimple.Auth.Manager
 {
     public class Domain
     {

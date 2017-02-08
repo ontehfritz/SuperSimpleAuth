@@ -2,7 +2,7 @@ using System;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
-namespace SuperSimple.Auth.Api
+namespace SuperSimple.Auth.Api.Repository
 {
     public class Role
     {
