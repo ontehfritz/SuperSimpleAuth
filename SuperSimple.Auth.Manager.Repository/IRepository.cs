@@ -1,8 +1,8 @@
-namespace SuperSimple.Auth.Manager
+namespace SuperSimple.Auth.Manager.Repository
 {
     using System;
-    using Api;
-    using SuperSimple.Auth.Api.Repository;
+    using Api.Repository;
+    using SuperSimple.Auth.Api;
 
     /// <summary>
     /// Interface for database access.
@@ -29,17 +29,19 @@ namespace SuperSimple.Auth.Manager
         Domain GetDomain(Guid id);
         Domain[] GetDomains(Guid managerID);
         Domain[] GetDomainsAdmin(Guid managerID);
-        Domain CreateDomain(string name, Manager manager);
+        Domain CreateDomain(string name, IUser manager);
         Domain UpdateDomain(Domain domain);
         void DeleteDomain(Guid id);
-       
-        Manager[] GetAdministrators(Guid domainId);
-        Manager AddAdministrator(Guid domainId, string email);
+        bool HasAccess(Domain domain, IUser manager);
+        string GetOwnerName(Domain domain);
+
+        IUser[] GetAdministrators(Guid domainId);
+        IUser AddAdministrator(Guid domainId, string email);
         void DeleteAdministrator(Guid domainId, Guid adminId);
 
-        Manager GetManager(Guid managerId);
-        Manager GetManager(string userName);
-        Manager CreateManager(string userName, string secret);
+        IUser GetManager(Guid managerId);
+        IUser GetManager(string userName);
+        IUser CreateManager(string userName, string secret);
         void ChangeEmail(Guid id, string secret, string email);
         void ChangePassword(Guid id, string password, string newPassword, string confirmPassword);
         void DeleteManager(Guid id, string password);

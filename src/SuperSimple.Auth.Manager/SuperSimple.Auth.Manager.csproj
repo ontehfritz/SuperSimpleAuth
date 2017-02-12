@@ -90,22 +90,18 @@
     <Folder Include="Modules\" />
     <Folder Include="Views\" />
     <Folder Include="Models\Views\" />
-    <Folder Include="Models\Repositories\" />
     <Folder Include="Content\downloads\" />
     <Folder Include="Content\javascript\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Models\Helpers.cs" />
-    <Compile Include="Models\Manager.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Modules\IndexModule.cs" />
     <Compile Include="Modules\LogonModule.cs" />
     <Compile Include="Models\Views\RoleModel.cs" />
     <Compile Include="Models\Views\LogonModel.cs" />
     <Compile Include="Models\Views\ManageModel.cs" />
-    <Compile Include="Models\Repositories\IRepository.cs" />
-    <Compile Include="Models\Repositories\MongoRepository.cs" />
     <Compile Include="Models\Views\SignupModel.cs" />
     <Compile Include="Models\Views\ClaimModel.cs" />
     <Compile Include="Models\Views\CreateRoleModel.cs" />
@@ -113,12 +109,11 @@
     <Compile Include="Models\Views\SettingsModel.cs" />
     <Compile Include="Models\Views\DomainModel.cs" />
     <Compile Include="Models\Views\DomainUserModel.cs" />
-    <Compile Include="Models\Domain.cs" />
     <Compile Include="Models\Email.cs" />
     <Compile Include="Models\Views\ForgotPasswordModel.cs" />
     <Compile Include="Models\Views\PageModel.cs" />
-    <Compile Include="Models\Administrator.cs" />
     <Compile Include="Models\Views\AdminModel.cs" />
+    <Compile Include="Models\Manager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\.DS_Store" />
@@ -145,6 +140,10 @@
     <ProjectReference Include="..\SuperSimple.Auth.Api.Repository\SuperSimple.Api.Repository.csproj">
       <Project>{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}</Project>
       <Name>SuperSimple.Api.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SuperSimple.Auth.Manager.Repository\SuperSimple.Auth.Manager.Repository.csproj">
+      <Project>{18EC6CA5-A955-479B-AD76-E7ECC796B72F}</Project>
+      <Name>SuperSimple.Auth.Manager.Repository</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

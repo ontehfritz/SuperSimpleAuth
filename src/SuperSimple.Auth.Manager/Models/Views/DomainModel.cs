@@ -4,12 +4,13 @@ namespace SuperSimple.Auth.Manager
     using FluentValidation;
     using Api;
     using SuperSimple.Auth.Api.Repository;
+    using SuperSimple.Auth.Manager.Repository;
 
     public class DomainModel : PageModel
     {
         public List<Role> Roles         { get; set; }
-        public List<User> Users         { get; set; }
-        public List<Manager> Admins     { get; set; }
+        public List<User>  Users         { get; set; }
+        public List<IUser> Admins     { get; set; }
         public Domain Domain            { get; set; }
         public string[] WhiteListIps    { get; set; }
         public string Name              { get; set; }

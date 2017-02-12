@@ -1,4 +1,4 @@
-namespace SuperSimple.Auth.Manager
+namespace SuperSimple.Auth.Manager.Repository
 {
     using System;
     using System.Collections.Generic;
@@ -7,6 +7,7 @@ namespace SuperSimple.Auth.Manager
     using MongoDB.Driver.Builders;
     using System.Linq;
     using SuperSimple.Auth.Api.Repository;
+    using SuperSimple.Auth.Api;
 
     public class MongoRepository : IRepository
     {
@@ -27,6 +28,19 @@ namespace SuperSimple.Auth.Manager
         private Domain _ssaDomain;
         IApiRepository _api;
 
+
+        public string GetOwnerName(Domain domain)
+        {
+            var manager = GetManager(domain.ManagerId);
+
+            if(manager != null)
+            {
+                return manager.UserName;
+            }
+
+            return null;
+        }
+
         public void DeleteAdministrator (Guid domainId, Guid adminId)
         {
             var collection = database.GetCollection<Administrator> ("administrators");
@@ -38,28 +52,28 @@ namespace SuperSimple.Auth.Manager
             collection.Remove (new QueryDocument (query));
         }
 
-        public Manager [] GetAdministrators (Guid domainId)
+        public IUser [] GetAdministrators (Guid domainId)
         {
-            List<Manager> admins = new List<Manager> ();
+            List<IUser> admins = new List<IUser> ();
             var collection = database.GetCollection<Administrator> ("administrators");
             var query = Query<Administrator>.EQ (e => e.DomainId, domainId);
             var cursor = collection.Find (query);
 
             foreach (Administrator a in cursor)
             {
-                admins.Add (this.GetManager (a.ManagerId));
+                admins.Add (GetManager (a.ManagerId));
             }
 
             return admins.ToArray ();
         }
 
-        public Manager AddAdministrator (Guid domainId, string email)
+        public IUser AddAdministrator (Guid domainId, string email)
         {
-            Manager admin = this.GetManager (email);
+            var admin = GetManager (email);
 
             if (admin != null)
             {
-                Administrator addAdmin = new Administrator ();
+                var addAdmin = new Administrator ();
                 addAdmin.Id = Guid.NewGuid ();
                 addAdmin.DomainId = domainId;
                 addAdmin.ManagerId = admin.Id;
@@ -79,12 +93,12 @@ namespace SuperSimple.Auth.Manager
 
             BsonDocument manager = managers.FindOne (query);
 
-            if (manager ["Secret"].AsString == Helpers.Hash (manager ["_id"].AsGuid.ToString (),
+            if (manager ["Secret"].AsString == Encrypt.Hash (manager ["_id"].AsGuid.ToString (),
                                                            password))
             {
                 if (newPassword == confirmPassword)
                 {
-                    manager ["Secret"] = Helpers.Hash (manager ["_id"].AsGuid.ToString (),
+                    manager ["Secret"] = Encrypt.Hash (manager ["_id"].AsGuid.ToString (),
                                                       newPassword);
                     managers.Save (manager);
                 }
@@ -132,7 +146,7 @@ namespace SuperSimple.Auth.Manager
             if (manager != null)
             {
                 newPassword = this.PasswordGenerator (8);
-                manager ["Secret"] = Helpers.Hash (manager ["_id"].AsGuid.ToString (),
+                manager ["Secret"] = Encrypt.Hash (manager ["_id"].AsGuid.ToString (),
                                                    newPassword);
                 managers.Save (manager);
             }
@@ -147,7 +161,7 @@ namespace SuperSimple.Auth.Manager
 
             BsonDocument manager = managers.FindOne (query);
 
-            if (manager ["Secret"].AsString == Helpers.Hash (manager ["_id"].AsGuid.ToString (),
+            if (manager ["Secret"].AsString == Encrypt.Hash (manager ["_id"].AsGuid.ToString (),
                                                            password))
             {
                 manager ["UserName"] = email;
@@ -368,7 +382,7 @@ namespace SuperSimple.Auth.Manager
             return domains.ToArray ();
         }
 
-        public Domain CreateDomain (string name, Manager manager)
+        public Domain CreateDomain (string name, IUser manager)
         {
             var collection = database.GetCollection<Domain> ("domains");
             Domain domain = new Domain ();
@@ -432,15 +446,15 @@ namespace SuperSimple.Auth.Manager
             collection.Remove (new QueryDocument ("_id", domain.Id));
         }
 
-        public Manager CreateManager (string userName, string secret)
+        public IUser CreateManager (string userName, string secret)
         {
-            var collection = database.GetCollection<Manager> ("managers");
+            var collection = database.GetCollection<User> ("managers");
 
 
             var user = _api.CreateUser (_ssaDomain.Key, userName,
                                        secret, userName);
 
-            var manager = new Manager (user);
+            var manager = user;
             collection.Insert (manager);
 
 
@@ -456,7 +470,7 @@ namespace SuperSimple.Auth.Manager
 
             BsonDocument manager = managers.FindOne (query);
 
-            if (manager ["Secret"].AsString == Helpers.Hash (manager ["_id"].AsGuid.ToString (),
+            if (manager ["Secret"].AsString == Encrypt.Hash (manager ["_id"].AsGuid.ToString (),
                                                              password))
             {
                 managers.Remove (new QueryDocument ("_id", id));
@@ -473,7 +487,7 @@ namespace SuperSimple.Auth.Manager
             }
         }
 
-        public Manager GetManager (Guid id)
+        public IUser GetManager (Guid id)
         {
             MongoCollection<BsonDocument> managers =
                 database.GetCollection<BsonDocument> ("managers");
@@ -484,12 +498,12 @@ namespace SuperSimple.Auth.Manager
             var user = GetUser (managerId);
 
 
-            var manager = new Manager (user);
+            var manager = user;
 
             return manager;
         }
 
-        public Manager GetManager (string username)
+        public IUser GetManager (string username)
         {
             var collection = database.GetCollection<User> ("users");
 
@@ -501,7 +515,7 @@ namespace SuperSimple.Auth.Manager
 
             if (user == null) return null;
 
-            return new Manager (user);
+            return user;
         }
 
         public Role GetRole (Guid domainId, string name)
@@ -640,7 +654,7 @@ namespace SuperSimple.Auth.Manager
             options.SetUnique (true);
 
 
-            var collection = database.GetCollection<Manager> ("managers");
+            var collection = database.GetCollection<User> ("managers");
 
             collection.EnsureIndex (keys, options);
         }
@@ -683,6 +697,31 @@ namespace SuperSimple.Auth.Manager
 
             collection.Insert (domain);
             _ssaDomain = domain;
+        }
+
+        public bool HasAccess (Domain domain, IUser manager)
+        {
+            if(manager.Id == domain.ManagerId)
+            {
+                return true;
+            }
+
+            var admins = GetAdministrators(domain.Id);
+
+            foreach(var admin in admins)
+            {
+                if(admin.Id == manager.Id)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public string GetOwnerName (Domain domain, User manager)
+        {
+            throw new NotImplementedException ();
         }
 
         public MongoRepository (string connection, IApiRepository api)

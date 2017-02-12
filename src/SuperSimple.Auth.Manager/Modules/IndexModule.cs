@@ -4,15 +4,12 @@ namespace SuperSimple.Auth.Manager
     using Nancy;
     using Nancy.Authentication.Forms;
     using Nancy.Security;
+    using SuperSimple.Auth.Manager.Repository;
 
     public class IndexModule : NancyModule
     {
-        IRepository repository; 
-
         public IndexModule (IRepository repository)
         {
-            this.repository = repository;
-
             Get ["/"] = parameters => {
                 SignupModel model = new SignupModel();
    

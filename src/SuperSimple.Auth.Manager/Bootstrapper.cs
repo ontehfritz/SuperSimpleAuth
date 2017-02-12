@@ -7,6 +7,7 @@ namespace SuperSimple.Auth.Manager
     using Nancy.Bootstrapper;
     using System.Configuration;
     using SuperSimple.Auth.Api.Repository;
+    using SuperSimple.Auth.Manager.Repository;
 
     public class Bootstrapper : DefaultNancyBootstrapper
     {

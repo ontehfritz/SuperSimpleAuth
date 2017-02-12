@@ -1,17 +1,62 @@
 ﻿<Properties StartupConfiguration="{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Api/Bootstrapper.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Manager/Models/Views/DomainUserModel.cs">
     <Files>
-      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="24" Column="11" />
+      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="28" Column="9" />
       <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="7" Column="11" />
-      <File FileName="src/SuperSimple.Auth.Api/Bootstrapper.cs" Line="7" Column="11" />
+      <File FileName="src/SuperSimple.Auth.Api/Bootstrapper.cs" Line="34" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/web.config" Line="39" Column="41" />
+      <File FileName="src/SuperSimple.Auth.Manager/Bootstrapper.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/ApiMongoRepository.cs" Line="1" Column="1" />
+      <File FileName="SuperSimple.Auth.Manager.Repository/MyClass.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/packages.config" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/Role.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/User.cs" Line="18" Column="22" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/IApiRepository.cs" Line="1" Column="1" />
+      <File FileName="SuperSimple.Auth.Manager.Repository/MongoRepository.cs" Line="7" Column="35" />
+      <File FileName="SuperSimple.Auth.Manager.Repository/Administrator.cs" Line="7" Column="6" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Email.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Error.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Helpers.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/Modules/HomeModule.cs" Line="11" Column="26" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Manager.cs" Line="247" Column="13" />
+      <File FileName="SuperSimple.Auth.Manager.Repository/Domain.cs" Line="2" Column="2" />
+      <File FileName="src/SuperSimple.Auth.Manager/Modules/LogonModule.cs" Line="7" Column="38" />
+      <File FileName="src/SuperSimple.Auth.Manager/Modules/IndexModule.cs" Line="6" Column="26" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/IUser.cs" Line="34" Column="2" />
+      <File FileName="SuperSimple.Auth.Manager.Repository/Helpers.cs" Line="17" Column="14" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/PageModel.cs" Line="9" Column="22" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/AdminModel.cs" Line="14" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/DomainModel.cs" Line="14" Column="19" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/RoleModel.cs" Line="10" Column="19" />
+      <File FileName="SuperSimple.Auth.Manager.Repository/IRepository.cs" Line="1" Column="46" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/ManageModel.cs" Line="7" Column="18" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/ClaimModel.cs" Line="4" Column="15" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/CreateRoleModel.cs" Line="9" Column="20" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/DomainUserModel.cs" Line="11" Column="17" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SuperSimpleAuth" expanded="True">
+            <Node name="SuperSimple.Auth.Manager" expanded="True">
+              <Node name="Models" expanded="True">
+                <Node name="Views" expanded="True">
+                  <Node name="DomainUserModel.cs" selected="True" />
+                </Node>
+              </Node>
+              <Node name="Modules" expanded="True" />
+            </Node>
+            <Node name="SuperSimple.Auth.Manager.Repository" expanded="True" />
+            <Node name="SuperSimple.CSharp.Test" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.Manager PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/fritz/Dropbox/Projects/SuperSimpleAuth/test/SsaCsharpTest/SsaCsharp.cs" line="23" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.Api PreferredExecutionTarget="MonoDevelop.Default" />

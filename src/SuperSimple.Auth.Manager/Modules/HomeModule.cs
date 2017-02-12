@@ -8,8 +8,9 @@ namespace SuperSimple.Auth.Manager
     using Nancy;
     using Nancy.Security;
     using MongoDB.Driver;
+    using Api.Repository;
     using SuperSimple.Auth.Api;
-    using SuperSimple.Auth.Api.Repository;
+    using SuperSimple.Auth.Manager.Repository;
 
     public class HomeModule : NancyModule
     {
@@ -47,7 +48,7 @@ namespace SuperSimple.Auth.Manager
             Get ["/domain/new"] = parameters =>
             {
                 DomainModel model = new DomainModel ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = new Domain ();
                 return View ["Domain_new", model];
             };
@@ -55,7 +56,7 @@ namespace SuperSimple.Auth.Manager
             Post ["/domain/new"] = parameters =>
             {
                 DomainModel model = this.Bind<DomainModel> ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 var result = this.Validate (model);
 
                 if (!result.IsValid)
@@ -85,10 +86,11 @@ namespace SuperSimple.Auth.Manager
             Get ["/domain/{id}"] = parameters =>
             {
                 DomainModel model = new DomainModel ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
-                if (model.Domain == null || !model.Domain.HasAccess (model.Manager))
+                if (model.Domain == null || !repository.HasAccess (model.Domain,
+                                                                   model.Manager))
                 {
                     return View ["NoAccess"];
                 }
@@ -104,10 +106,10 @@ namespace SuperSimple.Auth.Manager
             Post ["/domain/{id}"] = parameters =>
             {
                 DomainModel model = this.Bind<DomainModel> ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 Domain domain = repository.GetDomain ((Guid)parameters.id);
 
-                if (domain == null || !domain.HasAccess (model.Manager))
+                if (domain == null || !repository.HasAccess (domain, model.Manager))
                 {
                     return View ["NoAccess"];
                 }
@@ -159,7 +161,7 @@ namespace SuperSimple.Auth.Manager
             Get ["/domain/{id}/admin/{aid}"] = parameters =>
             {
                 AdminModel model = new AdminModel ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
                 model.Admin = repository.GetManager ((Guid)parameters.aid);
 
@@ -174,7 +176,7 @@ namespace SuperSimple.Auth.Manager
             Post ["/remove/{id}/admin/{aid}"] = parameters =>
             {
                 AdminModel model = new AdminModel ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
                 if (!model.Domain.IsOwner (model.Manager))
@@ -195,10 +197,11 @@ namespace SuperSimple.Auth.Manager
             Get ["/domain/{id}/admin/new"] = parameters =>
             {
                 AdminModel model = new AdminModel ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
-                if (model.Domain == null || !model.Domain.HasAccess (model.Manager))
+                if (model.Domain == null || !repository.HasAccess (model.Domain,
+                                                                   model.Manager))
                 {
                     return View ["NoAccess"];
                 }
@@ -217,17 +220,18 @@ namespace SuperSimple.Auth.Manager
             Post ["/domain/{id}/admin/new"] = parameters =>
             {
                 AdminModel model = this.Bind<AdminModel> ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
-                if (model.Domain == null || !model.Domain.HasAccess (model.Manager))
+                if (model.Domain == null || !repository.HasAccess (model.Domain,
+                                                                   model.Manager))
                 {
                     return View ["NoAccess"];
                 }
 
                 if (model.Domain.IsOwner (model.Manager))
                 {
-                    Manager admin = null;
+                    IUser admin = null;
 
                     if (model.Manager.UserName.ToLower () !=
                         model.Email.ToLower ())
@@ -286,11 +290,12 @@ namespace SuperSimple.Auth.Manager
 
             Get ["/domain/{id}/role/{role}"] = parameters =>
             {
-                RoleModel model = new RoleModel ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                var model = new RoleModel ();
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
-                if (model.Domain == null || !model.Domain.HasAccess (model.Manager))
+                if (model.Domain == null || !repository.HasAccess (model.Domain,
+                                                                   model.Manager))
                 {
                     return View ["NoAccess"];
                 }
@@ -314,10 +319,11 @@ namespace SuperSimple.Auth.Manager
             Post ["/domain/{id}/role/{role}"] = parameters =>
             {
                 RoleModel model = this.Bind<RoleModel> ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
-                if (model.Domain == null || !model.Domain.HasAccess (model.Manager))
+                if (model.Domain == null || !repository.HasAccess (model.Domain
+                                                                   ,model.Manager))
                 {
                     return View ["NoAccess"];
                 }
@@ -383,10 +389,11 @@ namespace SuperSimple.Auth.Manager
             Get ["/domain/{id}/role/new"] = parameters =>
             {
                 CreateRoleModel model = new CreateRoleModel ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
-                if (model.Domain == null || !model.Domain.HasAccess (model.Manager))
+                if (model.Domain == null || !repository.HasAccess (model.Domain,
+                                                                   model.Manager))
                 {
                     return View ["NoAccess"];
                 }
@@ -397,10 +404,11 @@ namespace SuperSimple.Auth.Manager
             Post ["/domain/{id}/role/new"] = parameters =>
             {
                 CreateRoleModel model = this.Bind<CreateRoleModel> ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
-                if (model.Domain == null || !model.Domain.HasAccess (model.Manager))
+                if (model.Domain == null || !repository.HasAccess (model.Domain,
+                                                                   model.Manager))
                 {
                     return View ["NoAccess"];
                 }
@@ -437,10 +445,11 @@ namespace SuperSimple.Auth.Manager
                 ClaimModel model = new ClaimModel ();
                 model.Name = (string)parameters.cname;
                 model.Title = "Claim";
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
-                if (model.Domain == null || !model.Domain.HasAccess (model.Manager))
+                if (model.Domain == null || !repository.HasAccess (model.Domain,
+                                                                   model.Manager))
                 {
                     return View ["NoAccess"];
                 }
@@ -455,10 +464,11 @@ namespace SuperSimple.Auth.Manager
             {
                 ClaimModel model = new ClaimModel ();
                 model.Name = (string)parameters.cname;
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
-                if (model.Domain == null || !model.Domain.HasAccess (model.Manager))
+                if (model.Domain == null || !repository.HasAccess (model.Domain,
+                                                                   model.Manager))
                 {
                     return View ["NoAccess"];
                 }
@@ -498,10 +508,11 @@ namespace SuperSimple.Auth.Manager
             Get ["/domain/{id}/claim/new"] = parameters =>
             {
                 ClaimModel model = new ClaimModel ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
-                if (model.Domain == null || !model.Domain.HasAccess (model.Manager))
+                if (model.Domain == null || !repository.HasAccess (model.Domain,
+                                                                   model.Manager))
                 {
                     return View ["NoAccess"];
                 }
@@ -512,10 +523,11 @@ namespace SuperSimple.Auth.Manager
             Post ["/domain/{id}/claim/new"] = parameters =>
             {
                 ClaimModel model = this.Bind<ClaimModel> ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
-                if (model.Domain == null || !model.Domain.HasAccess (model.Manager))
+                if (model.Domain == null || !repository.HasAccess (model.Domain,
+                                                                   model.Manager))
                 {
                     return View ["NoAccess"];
                 }
@@ -570,10 +582,11 @@ namespace SuperSimple.Auth.Manager
             {
                 DomainUserModel model = new DomainUserModel ();
 
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
-                if (model.Domain == null || !model.Domain.HasAccess (model.Manager))
+                if (model.Domain == null || !repository.HasAccess (model.Domain,
+                                                                   model.Manager))
                 {
                     return View ["NoAccess"];
                 }
@@ -601,10 +614,11 @@ namespace SuperSimple.Auth.Manager
             Post ["/domain/{id}/user/{uid}"] = parameters =>
             {
                 DomainUserModel model = this.Bind<DomainUserModel> ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
-                if (model.Domain == null || !model.Domain.HasAccess (model.Manager))
+                if (model.Domain == null || !repository.HasAccess (model.Domain,
+                                                                   model.Manager))
                 {
                     return View ["NoAccess"];
                 }

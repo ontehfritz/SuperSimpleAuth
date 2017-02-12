@@ -3,6 +3,7 @@ namespace SuperSimple.Auth.Manager
     using System.Collections.Generic;
     using Api;
     using SuperSimple.Auth.Api.Repository;
+    using SuperSimple.Auth.Manager.Repository;
 
     public class DomainUserModel: PageModel
     {

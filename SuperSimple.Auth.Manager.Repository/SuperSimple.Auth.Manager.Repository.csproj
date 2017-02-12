@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}</ProjectGuid>
+    <ProjectGuid>{18EC6CA5-A955-479B-AD76-E7ECC796B72F}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>SuperSimple.Auth.Api</RootNamespace>
-    <AssemblyName>SuperSimple.Auth.Api.Repository</AssemblyName>
+    <RootNamespace>SuperSimple.Auth.Manager.Repository</RootNamespace>
+    <AssemblyName>SuperSimple.Auth.Manager.Repository</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -29,22 +29,31 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="MongoDB.Bson">
-      <HintPath>..\..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Bson.dll</HintPath>
+      <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Bson.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Driver">
-      <HintPath>..\..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Driver.dll</HintPath>
+      <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation.1.3.0.0\lib\NET35\FluentValidation.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiMongoRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IApiRepository.cs" />
-    <Compile Include="Role.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="IUser.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="MongoRepository.cs" />
+    <Compile Include="Administrator.cs" />
+    <Compile Include="Domain.cs" />
+    <Compile Include="Helpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\SuperSimple.Auth.Api.Repository\SuperSimple.Api.Repository.csproj">
+      <Project>{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}</Project>
+      <Name>SuperSimple.Api.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

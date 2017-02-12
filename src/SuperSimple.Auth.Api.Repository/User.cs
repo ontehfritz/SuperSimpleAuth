@@ -4,7 +4,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace SuperSimple.Auth.Api.Repository
 {
-	public class User
+    
+    public class User : IUser
 	{
         [BsonId]
         public Guid Id { get; set; }

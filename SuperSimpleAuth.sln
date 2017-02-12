@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.CSharp.Test", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Api.Repository", "src\SuperSimple.Auth.Api.Repository\SuperSimple.Api.Repository.csproj", "{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.Manager.Repository", "SuperSimple.Auth.Manager.Repository\SuperSimple.Auth.Manager.Repository.csproj", "{18EC6CA5-A955-479B-AD76-E7ECC796B72F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18EC6CA5-A955-479B-AD76-E7ECC796B72F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18EC6CA5-A955-479B-AD76-E7ECC796B72F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18EC6CA5-A955-479B-AD76-E7ECC796B72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18EC6CA5-A955-479B-AD76-E7ECC796B72F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = SSAManager\SSAManager.csproj
