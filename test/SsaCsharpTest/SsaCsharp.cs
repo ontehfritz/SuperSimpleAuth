@@ -22,6 +22,7 @@
                                           LOCAL_URL);
 
             var user = api.CreateUser("test", "test", "test@test.net");
+
             Assert.IsNotNull(user);
         }
 

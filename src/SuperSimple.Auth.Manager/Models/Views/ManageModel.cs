@@ -1,3 +1,5 @@
+using SuperSimple.Auth.Manager.Repository;
+
 namespace SuperSimple.Auth.Manager
 {
     public class ManageModel : PageModel

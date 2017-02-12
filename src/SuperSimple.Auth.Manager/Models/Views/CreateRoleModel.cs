@@ -1,6 +1,7 @@
 namespace SuperSimple.Auth.Manager
 {
     using FluentValidation;
+    using SuperSimple.Auth.Manager.Repository;
 
     public class CreateRoleModel: PageModel
     {

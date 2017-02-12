@@ -3,6 +3,7 @@ namespace SuperSimple.Auth.Manager
     using FluentValidation;
     using Api;
     using SuperSimple.Auth.Api.Repository;
+    using SuperSimple.Auth.Manager.Repository;
 
     public class ClaimModel : PageModel
     {

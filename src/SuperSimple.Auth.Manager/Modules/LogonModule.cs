@@ -6,6 +6,8 @@ namespace SuperSimple.Auth.Manager
     using Nancy.Validation;
     using System.Collections.Generic;
     using SuperSimple.Auth.Api.Repository;
+    using SuperSimple.Auth.Api;
+    using SuperSimple.Auth.Manager.Repository;
 
     public class LogonModule : NancyModule
     {
@@ -110,7 +112,7 @@ namespace SuperSimple.Auth.Manager
                 Manager newManager = null;
                 try
                 {
-                    newManager = repository.CreateManager (model.Email,model.Secret);
+                    newManager = new Manager(repository.CreateManager (model.Email,model.Secret));
                 }
                 catch (MongoDB.Driver.WriteConcernException e)
                 {
@@ -133,14 +135,14 @@ namespace SuperSimple.Auth.Manager
             Get ["/settings"] = parameters =>
             {
                 var model = new SettingsModel ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
                 return View ["Settings", model];
             };
 
             Post ["/settings"] = parameters =>
             {
                 var model = this.Bind<SettingsModel> ();
-                model.Manager = (Manager)this.Context.CurrentUser;
+                model.Manager = (IUser)this.Context.CurrentUser;
 
                 if (Request.Form.ChangeEmail != null)
                 {
