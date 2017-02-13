@@ -8,9 +8,9 @@ namespace SuperSimple.Auth.Manager
     using Nancy;
     using Nancy.Security;
     using MongoDB.Driver;
-    using Api.Repository;
-    using SuperSimple.Auth.Api;
     using SuperSimple.Auth.Manager.Repository;
+    using SuperSimple.Auth.Api;
+    using SuperSimple.Auth.Api.Repository;
 
     public class HomeModule : NancyModule
     {

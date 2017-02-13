@@ -141,7 +141,7 @@
       <Project>{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}</Project>
       <Name>SuperSimple.Api.Repository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SuperSimple.Auth.Manager.Repository\SuperSimple.Auth.Manager.Repository.csproj">
+    <ProjectReference Include="..\SuperSimple.Auth.Manager.Repository\SuperSimple.Auth.Manager.Repository.csproj">
       <Project>{18EC6CA5-A955-479B-AD76-E7ECC796B72F}</Project>
       <Name>SuperSimple.Auth.Manager.Repository</Name>
     </ProjectReference>

@@ -28,14 +28,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="FluentValidation">
+      <HintPath>..\..\packages\FluentValidation.1.3.0.0\lib\NET35\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="MongoDB.Bson">
-      <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Bson.dll</HintPath>
+      <HintPath>..\..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Bson.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Driver">
-      <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Driver.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentValidation">
-      <HintPath>..\packages\FluentValidation.1.3.0.0\lib\NET35\FluentValidation.dll</HintPath>
+      <HintPath>..\..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Driver.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -50,7 +50,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\SuperSimple.Auth.Api.Repository\SuperSimple.Api.Repository.csproj">
+    <ProjectReference Include="..\SuperSimple.Auth.Api.Repository\SuperSimple.Api.Repository.csproj">
       <Project>{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}</Project>
       <Name>SuperSimple.Api.Repository</Name>
     </ProjectReference>
