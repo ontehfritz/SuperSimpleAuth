@@ -7,13 +7,10 @@
 
     public class AuthModule : NancyModule
     {
-        IApiRepository repository;
         private const string _headerDomainKey = "Ssa-Domain-Key";
 
         public AuthModule (IApiRepository repository)
         {
-            this.repository = repository;
-
             Before += ctx => {
                 ErrorMessage error = Helper.VerifyRequest(Request,repository);
 
