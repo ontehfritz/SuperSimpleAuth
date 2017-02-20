@@ -1,12 +1,12 @@
 ﻿<Properties StartupConfiguration="{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Manager.Repository/IRepository.cs">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="28" Column="9" />
       <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="7" Column="11" />
       <File FileName="src/SuperSimple.Auth.Api/Bootstrapper.cs" Line="34" Column="1" />
-      <File FileName="src/SuperSimple.Auth.Manager/web.config" Line="39" Column="41" />
-      <File FileName="src/SuperSimple.Auth.Manager/Bootstrapper.cs" Line="24" Column="10" />
-      <File FileName="src/SuperSimple.Auth.Api.Repository/ApiMongoRepository.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/web.config" Line="35" Column="46" />
+      <File FileName="src/SuperSimple.Auth.Manager/Bootstrapper.cs" Line="31" Column="22" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/ApiMongoRepository.cs" Line="339" Column="1" />
       <File FileName="src/SuperSimple.Auth.Api.Repository/packages.config" Line="1" Column="1" />
       <File FileName="src/SuperSimple.Auth.Api.Repository/Role.cs" Line="1" Column="1" />
       <File FileName="src/SuperSimple.Auth.Api.Repository/User.cs" Line="18" Column="22" />
@@ -14,10 +14,10 @@
       <File FileName="src/SuperSimple.Auth.Manager/Models/Email.cs" Line="1" Column="1" />
       <File FileName="src/SuperSimple.Auth.Manager/Models/Error.cs" Line="1" Column="1" />
       <File FileName="src/SuperSimple.Auth.Manager/Models/Helpers.cs" Line="1" Column="1" />
-      <File FileName="src/SuperSimple.Auth.Manager/Modules/HomeModule.cs" Line="654" Column="47" />
+      <File FileName="src/SuperSimple.Auth.Manager/Modules/HomeModule.cs" Line="305" Column="18" />
       <File FileName="src/SuperSimple.Auth.Manager/Models/Manager.cs" Line="14" Column="20" />
-      <File FileName="src/SuperSimple.Auth.Manager/Modules/LogonModule.cs" Line="122" Column="63" />
-      <File FileName="src/SuperSimple.Auth.Manager/Modules/IndexModule.cs" Line="6" Column="26" />
+      <File FileName="src/SuperSimple.Auth.Manager/Modules/LogonModule.cs" Line="8" Column="28" />
+      <File FileName="src/SuperSimple.Auth.Manager/Modules/IndexModule.cs" Line="10" Column="32" />
       <File FileName="src/SuperSimple.Auth.Api.Repository/IUser.cs" Line="34" Column="2" />
       <File FileName="src/SuperSimple.Auth.Manager/Models/Views/PageModel.cs" Line="9" Column="22" />
       <File FileName="src/SuperSimple.Auth.Manager/Models/Views/AdminModel.cs" Line="10" Column="19" />
@@ -27,13 +27,21 @@
       <File FileName="src/SuperSimple.Auth.Manager/Models/Views/ClaimModel.cs" Line="4" Column="15" />
       <File FileName="src/SuperSimple.Auth.Manager/Models/Views/CreateRoleModel.cs" Line="9" Column="20" />
       <File FileName="src/SuperSimple.Auth.Manager/Models/Views/DomainUserModel.cs" Line="11" Column="17" />
-      <File FileName="src/SuperSimple.Auth.Manager.Repository/IRepository.cs" Line="4" Column="11" />
+      <File FileName="src/SuperSimple.Auth.Manager.Repository/IRepository.cs" Line="44" Column="61" />
+      <File FileName="test/SuperSimple.Auth.Manager.Repository.Test/Test.cs" Line="19" Column="12" />
+      <File FileName="src/SuperSimple.Auth.Manager.Repository/MongoRepository.cs" Line="484" Column="53" />
+      <File FileName="test/SuperSimple.Auth.Api.Repository.Test/ApiRepository.cs" Line="16" Column="1" />
+      <File FileName="test/SsaCsharpTest/packages.config" Line="1" Column="1" />
+      <File FileName="test/SuperSimple.Auth.Api.Repository.Test/packages.config" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.Manager PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/fritz/Dropbox/Projects/SuperSimpleAuth/src/SuperSimple.Auth.Manager.Repository/MongoRepository.cs" line="466" column="1" />
+      <Breakpoint file="/Users/fritz/Dropbox/Projects/SuperSimpleAuth/test/SuperSimple.Auth.Api.Repository.Test/ApiRepository.cs" line="15" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.Api PreferredExecutionTarget="MonoDevelop.Default" />
