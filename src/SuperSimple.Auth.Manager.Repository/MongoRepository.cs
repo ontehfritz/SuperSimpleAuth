@@ -448,9 +448,6 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public IUser CreateManager (string userName, string secret)
         {
-            var collection = database.GetCollection<User> ("users");
-
-
             var manager = _api.CreateUser (_ssaDomain.Key, userName,
                                        secret, userName);
             return manager;
@@ -461,9 +458,6 @@ namespace SuperSimple.Auth.Manager.Repository
             MongoCollection<BsonDocument> users =
                 database.GetCollection<BsonDocument> ("users");
           
-            var query = Query.EQ ("_id", id);
-
-            BsonDocument user  = users.FindOne(query);
             var manager = GetManager(id);
 
             if(_api.Authenticate(_ssaDomain.Key,manager.UserName,password) != null)

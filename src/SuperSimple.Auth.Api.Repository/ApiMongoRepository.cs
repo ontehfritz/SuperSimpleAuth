@@ -249,9 +249,11 @@
 
             var users = database.GetCollection<User> ("users");
             //TODO: Change application salt to user salt
-            var query = Query.And (Query<User>.EQ (e => e.UserName, username),
-                                  Query<User>.EQ (e => e.Secret, this.Hash (domain ["Salt"].AsGuid.ToString (), secret)),
-                                  Query<User>.EQ (e => e.DomainId, domain ["_id"].AsGuid));
+            var query = Query.And
+            (Query<User>.EQ (e => e.UserName, username),
+             Query<User>.EQ (e => e.Secret, 
+                             Hash (domain ["Salt"].AsGuid.ToString (), secret)),
+             Query<User>.EQ (e => e.DomainId, domain ["_id"].AsGuid));
 
             user = users.FindOne (query);
 
@@ -389,12 +391,13 @@
             return false;
         }
 
-        public string Hash (string Salt, string Password)
+        private string Hash (string Salt, string Password)
         {
-            Rfc2898DeriveBytes Hasher = new Rfc2898DeriveBytes (Password,
-                                                               System.Text.Encoding.Default.GetBytes (Salt), 10000);
+            var hasher = 
+                new Rfc2898DeriveBytes (Password,
+                                        System.Text.Encoding.Default.GetBytes (Salt), 10000);
 
-            return Convert.ToBase64String (Hasher.GetBytes (25));
+            return Convert.ToBase64String (hasher.GetBytes (25));
         }
 
     }

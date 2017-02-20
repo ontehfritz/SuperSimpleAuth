@@ -11,14 +11,8 @@ namespace SSANancyExample
 
     public class LogonModule : NancyModule
     {
-        //take advantage of nancy's IoC
-        //see bootstrapper.cs this is where SSA gets intialized
-        SuperSimpleAuth ssa; 
-
         public LogonModule (SuperSimpleAuth ssa)
         {
-            this.ssa = ssa;
-
             Get["/logon"] = parameters => {
                 LogonModel logon = new LogonModel();
                

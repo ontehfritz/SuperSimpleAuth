@@ -109,10 +109,9 @@ namespace SuperSimple.Auth.Manager
                     return View ["Index", model];
                 }
 
-                Manager newManager = null;
                 try
                 {
-                    newManager = new Manager(repository.CreateManager (model.Email,model.Secret));
+                    repository.CreateManager (model.Email,model.Secret);
                 }
                 catch (MongoDB.Driver.WriteConcernException e)
                 {
