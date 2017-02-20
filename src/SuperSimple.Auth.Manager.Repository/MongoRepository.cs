@@ -448,32 +448,27 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public IUser CreateManager (string userName, string secret)
         {
-            var collection = database.GetCollection<User> ("managers");
+            var collection = database.GetCollection<User> ("users");
 
 
-            var user = _api.CreateUser (_ssaDomain.Key, userName,
+            var manager = _api.CreateUser (_ssaDomain.Key, userName,
                                        secret, userName);
-
-            var manager = user;
-            collection.Insert (manager);
-
-
             return manager;
         }
 
         public void DeleteManager (Guid id, string password)
         {
-            MongoCollection<BsonDocument> managers =
-                database.GetCollection<BsonDocument> ("managers");
-            //var managers = database.GetCollection<Manager>("managers");
+            MongoCollection<BsonDocument> users =
+                database.GetCollection<BsonDocument> ("users");
+          
             var query = Query.EQ ("_id", id);
 
-            BsonDocument manager = managers.FindOne (query);
+            BsonDocument user  = users.FindOne(query);
+            var manager = GetManager(id);
 
-            if (manager ["Secret"].AsString == Encrypt.Hash (manager ["_id"].AsGuid.ToString (),
-                                                             password))
+            if(_api.Authenticate(_ssaDomain.Key,manager.UserName,password) != null)
             {
-                managers.Remove (new QueryDocument ("_id", id));
+                users.Remove(new QueryDocument ("_id", id));
 
                 Domain [] domains = GetDomains (id);
 
@@ -490,7 +485,7 @@ namespace SuperSimple.Auth.Manager.Repository
         public IUser GetManager (Guid id)
         {
             MongoCollection<BsonDocument> managers =
-                database.GetCollection<BsonDocument> ("managers");
+                database.GetCollection<BsonDocument> ("users");
             var query = Query.EQ ("_id", id);
 
             var managerBson = managers.FindOne (query);
