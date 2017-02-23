@@ -86,19 +86,28 @@ namespace SuperSimple.Auth.Manager.Repository
             return admin;
         }
 
-        public void ChangePassword (Guid id, string password, string newPassword, string confirmPassword)
+        public void ChangePassword (Guid id, string password, string newPassword, 
+                                    string confirmPassword)
         {
-            MongoCollection<BsonDocument> managers = database.GetCollection<BsonDocument> ("managers");
+            MongoCollection<BsonDocument> managers = 
+                database.GetCollection<BsonDocument> ("users");
             var query = Query.EQ ("_id", id);
 
             BsonDocument manager = managers.FindOne (query);
 
-            if (manager ["Secret"].AsString == Encrypt.Hash (manager ["_id"].AsGuid.ToString (),
+            var appCollection = 
+                database.GetCollection<RawBsonDocument> ("domains");
+            var querydomain = Query.EQ ("_id", _ssaDomain.Id);
+            var domain = appCollection.FindOne (querydomain);
+
+            if (manager ["Secret"].AsString == 
+                Encrypt.Hash (domain ["Salt"].AsGuid.ToString (),
                                                            password))
             {
                 if (newPassword == confirmPassword)
                 {
-                    manager ["Secret"] = Encrypt.Hash (manager ["_id"].AsGuid.ToString (),
+                    manager ["Secret"] = Encrypt.Hash (domain["Salt"]
+                                                       .AsGuid.ToString (),
                                                       newPassword);
                     managers.Save (manager);
                 }
@@ -118,7 +127,8 @@ namespace SuperSimple.Auth.Manager.Repository
         {
             Random r = new Random ();
             int seed = r.Next (1, int.MaxValue);
-            const string allowedChars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789";
+            const string allowedChars = 
+                "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789";
 
             var chars = new char [passwordLength];
             var rd = new Random (seed);
@@ -135,18 +145,23 @@ namespace SuperSimple.Auth.Manager.Repository
         public string ForgotPassword (string email)
         {
             MongoCollection<BsonDocument> managers =
-                database.GetCollection<BsonDocument> ("managers");
+                database.GetCollection<BsonDocument> ("users");
 
             var query = Query.EQ ("UserName", email);
 
             BsonDocument manager = managers.FindOne (query);
+            var appCollection = 
+                database.GetCollection<RawBsonDocument> ("domains");
+            var querydomain = Query.EQ ("_id", _ssaDomain.Id);
+            var domain = appCollection.FindOne (querydomain);
 
             string newPassword = null;
 
             if (manager != null)
             {
-                newPassword = this.PasswordGenerator (8);
-                manager ["Secret"] = Encrypt.Hash (manager ["_id"].AsGuid.ToString (),
+                newPassword = PasswordGenerator (8);
+                manager ["Secret"] = Encrypt.Hash (domain ["Salt"]
+                                                   .AsGuid.ToString (),
                                                    newPassword);
                 managers.Save (manager);
             }
@@ -156,15 +171,23 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public void ChangeEmail (Guid id, string password, string email)
         {
-            MongoCollection<BsonDocument> managers = database.GetCollection<BsonDocument> ("managers");
+            MongoCollection<BsonDocument> managers = 
+                database.GetCollection<BsonDocument> ("users");
+            
             var query = Query.EQ ("_id", id);
-
             BsonDocument manager = managers.FindOne (query);
 
-            if (manager ["Secret"].AsString == Encrypt.Hash (manager ["_id"].AsGuid.ToString (),
+            var appCollection = 
+                database.GetCollection<RawBsonDocument> ("domains");
+            var querydomain = Query.EQ ("_id", _ssaDomain.Id);
+            var domain = appCollection.FindOne (querydomain);
+
+            if (manager ["Secret"].AsString == 
+                Encrypt.Hash (domain ["Salt"].AsGuid.ToString (),
                                                            password))
             {
                 manager ["UserName"] = email;
+                manager["Email"] = email;
                 managers.Save (manager);
             }
             else
@@ -243,13 +266,6 @@ namespace SuperSimple.Auth.Manager.Repository
             {
                 users.Add (user);
             }
-
-            return users.ToArray ();
-        }
-
-        public User [] GetManagerUsers (Guid managerId)
-        {
-            List<User> users = new List<User> ();
 
             return users.ToArray ();
         }
@@ -478,15 +494,7 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public IUser GetManager (Guid id)
         {
-            MongoCollection<BsonDocument> managers =
-                database.GetCollection<BsonDocument> ("users");
-            var query = Query.EQ ("_id", id);
-
-            var managerBson = managers.FindOne (query);
-            Guid managerId = managerBson ["_id"].AsGuid;
-            var user = GetUser (managerId);
-
-
+            var user = GetUser (id);
             var manager = user;
 
             return manager;
@@ -632,22 +640,6 @@ namespace SuperSimple.Auth.Manager.Repository
             collection.EnsureIndex (keys, options);
         }
 
-        private void CreateManagerIndexes ()
-        {
-            var keys = new IndexKeysBuilder ();
-
-            keys.Ascending ("UserName");
-
-            var options = new IndexOptionsBuilder ();
-            options.SetSparse (true);
-            options.SetUnique (true);
-
-
-            var collection = database.GetCollection<User> ("managers");
-
-            collection.EnsureIndex (keys, options);
-        }
-
         private void CreateAdminIndexes ()
         {
             var keys = new IndexKeysBuilder ();
@@ -722,12 +714,10 @@ namespace SuperSimple.Auth.Manager.Repository
             _api = api;
 
             CreateSsaDomain ();
-            CreateManagerIndexes ();
             CreateDomainIndexes ();
             CreateUserIndexes ();
             CreateRoleIndexes ();
             CreateAdminIndexes ();
-
         }
     }
 }

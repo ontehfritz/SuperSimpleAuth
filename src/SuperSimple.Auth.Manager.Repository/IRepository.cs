@@ -10,7 +10,6 @@ namespace SuperSimple.Auth.Manager.Repository
     public interface IRepository
     {
         User[] GetDomainUsers(Guid domainId);
-        User[] GetManagerUsers(Guid managerId);
         User[] GetUsersInRole(Role role);
         User[] GetUsersWithClaim(Guid domainId, string claim);
         User GetUser(Guid userId);

@@ -391,11 +391,12 @@
             return false;
         }
 
-        private string Hash (string Salt, string Password)
+        private string Hash (string salt, string password)
         {
             var hasher = 
-                new Rfc2898DeriveBytes (Password,
-                                        System.Text.Encoding.Default.GetBytes (Salt), 10000);
+                new Rfc2898DeriveBytes (password,
+                                        System.Text.Encoding.Default.GetBytes (salt)
+                                        , 10000);
 
             return Convert.ToBase64String (hasher.GetBytes (25));
         }
