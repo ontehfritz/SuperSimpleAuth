@@ -15,6 +15,10 @@ namespace SuperSimple.Auth.Api.Repository
         [BsonElement]
         public List<string> Claims { get; set; }
 
+        public Role()
+        {
+            Claims = new List<string>();
+        }
 
         public bool HasClaim(string claim)
         {

@@ -42,6 +42,11 @@ namespace SuperSimple.Auth.Api.Repository
         [BsonElement]
         public DateTime ModifiedAt { get; set; }
 
+        public User()
+        {
+            Roles = new List<Role>();
+            Claims = new List<string>();
+        }
 
         public string[] GetRoles()
         {

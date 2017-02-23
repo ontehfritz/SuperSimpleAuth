@@ -1,13 +1,19 @@
 ﻿<Properties StartupConfiguration="{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="examples/SSANancyExample/Modules/LogonModule.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Api.Repository/Role.cs">
     <Files>
-      <File FileName="test/SuperSimple.Auth.Api.Repository.Test/ApiRepository.cs" Line="142" Column="13" />
-      <File FileName="src/SuperSimple.Auth.Api.Repository/ApiMongoRepository.cs" Line="193" Column="38" />
-      <File FileName="src/SuperSimple.Auth.Api.Repository/IApiRepository.cs" Line="1" Column="1" />
-      <File FileName="src/SuperSimple.Auth.Manager.Repository/MongoRepository.cs" Line="460" Column="11" />
+      <File FileName="test/SuperSimple.Auth.Api.Repository.Test/ApiRepository.cs" Line="258" Column="9" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/ApiMongoRepository.cs" Line="323" Column="14" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/IApiRepository.cs" Line="24" Column="3" />
+      <File FileName="src/SuperSimple.Auth.Manager.Repository/MongoRepository.cs" Line="718" Column="34" />
       <File FileName="src/SuperSimple.Auth.Api/Modules/AuthModule.cs" Line="15" Column="44" />
-      <File FileName="src/SuperSimple.Auth.Manager/Modules/LogonModule.cs" Line="112" Column="20" />
-      <File FileName="examples/SSANancyExample/Modules/LogonModule.cs" Line="15" Column="54" />
+      <File FileName="src/SuperSimple.Auth.Manager/Modules/LogonModule.cs" Line="81" Column="37" />
+      <File FileName="examples/SSANancyExample/Modules/LogonModule.cs" Line="15" Column="10" />
+      <File FileName="test/SuperSimple.Auth.Manager.Repository.Test/Test.cs" Line="546" Column="39" />
+      <File FileName="src/SuperSimple.Auth.Manager.Repository/IRepository.cs" Line="26" Column="9" />
+      <File FileName="src/SuperSimple.Auth.Manager/Bootstrapper.cs" Line="31" Column="22" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/IUser.cs" Line="34" Column="2" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/User.cs" Line="49" Column="10" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/Role.cs" Line="18" Column="10" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
