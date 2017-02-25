@@ -1,64 +1,64 @@
-using SSANancyExample;
-using SuperSimple.Auth;
-
 namespace SSANancyExample
 {
     using System;
+    using System.Linq;
     using Nancy;
     using Nancy.Authentication.Forms;
     using Nancy.ModelBinding;
     using Nancy.Validation;
+    using SuperSimple.Auth;
 
     public class LogonModule : NancyModule
     {
         public LogonModule (SuperSimpleAuth ssa)
         {
             Get["/logon"] = parameters => {
-                LogonModel logon = new LogonModel();
+                var model = new LogonModel();
                
-                return View["logon",logon];
+                return View["logon",model];
             };
 
             Post["/logon"] = parameters => {
-                LogonModel logon = this.Bind<LogonModel>();
-                logon.Message = "Password or/and Username is incorrect.";
+                var model = this.Bind<LogonModel>();
+                model.Message = "Password or/and Username is incorrect.";
 
                 User user = null;
 
                 try
                 {
-                   user = ssa.Authenticate(logon.Username,logon.Secret,
+                   user = ssa.Authenticate(model.Username,model.Secret,
                                             this.Context.Request.UserHostAddress);
                 }
                 catch(Exception e)
                 {
-                    logon.Message = e.Message;
+                    model.Message = e.Message;
                     if(user == null)
                     {
-                        return View["logon", logon];
+                        return View["logon", model];
                     }
                 }
 
-                return this.LoginAndRedirect(user.AuthToken, fallbackRedirectUrl: "/");
+                return this.LoginAndRedirect(user.AuthToken, 
+                                             fallbackRedirectUrl: "/");
             };
 
             Get["/logoff"] = parameters => {
-                NancyUserIdentity nuser = (NancyUserIdentity)Context.CurrentUser;
+                var nuser = (NancyUserIdentity)Context.CurrentUser;
                 ssa.End(nuser.AuthToken);
 
                 return this.LogoutAndRedirect("/");
             };
 
             Get ["/signup"] = parameters => {
-                SignupModel signup = new SignupModel();
+                var signup = new SignupModel();
                 return View["signup", signup];
             };
 
             Post ["/signup"] = parameters => {
 
-                SignupModel signup = this.Bind<SignupModel>();
+                var signup = this.Bind<SignupModel>();
                 var result = this.Validate(signup);
-                signup.Errors = Helpers.GetValidationErrors(result);
+                signup.Errors = Error.GetValidationErrors(result).ToList();
 
                 if (!result.IsValid)
                 {

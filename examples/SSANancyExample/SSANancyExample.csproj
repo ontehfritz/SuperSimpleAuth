@@ -87,7 +87,7 @@
     <Compile Include="Models\SignupModel.cs" />
     <Compile Include="Modules\IndexModule.cs" />
     <Compile Include="Modules\LogonModule.cs" />
-    <Compile Include="Models\Helpers.cs" />
+    <Compile Include="Models\Error.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />

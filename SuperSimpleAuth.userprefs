@@ -1,19 +1,7 @@
-﻿<Properties StartupConfiguration="{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Api.Repository/Role.cs">
+﻿<Properties StartupConfiguration="MonoDevelop.Projects.MultiStartup">
+  <MonoDevelop.Ide.Workbench ActiveDocument="examples/SSANancyExample/Bootstrapper.cs">
     <Files>
-      <File FileName="test/SuperSimple.Auth.Api.Repository.Test/ApiRepository.cs" Line="258" Column="9" />
-      <File FileName="src/SuperSimple.Auth.Api.Repository/ApiMongoRepository.cs" Line="323" Column="14" />
-      <File FileName="src/SuperSimple.Auth.Api.Repository/IApiRepository.cs" Line="24" Column="3" />
-      <File FileName="src/SuperSimple.Auth.Manager.Repository/MongoRepository.cs" Line="718" Column="34" />
-      <File FileName="src/SuperSimple.Auth.Api/Modules/AuthModule.cs" Line="15" Column="44" />
-      <File FileName="src/SuperSimple.Auth.Manager/Modules/LogonModule.cs" Line="81" Column="37" />
-      <File FileName="examples/SSANancyExample/Modules/LogonModule.cs" Line="15" Column="10" />
-      <File FileName="test/SuperSimple.Auth.Manager.Repository.Test/Test.cs" Line="546" Column="39" />
-      <File FileName="src/SuperSimple.Auth.Manager.Repository/IRepository.cs" Line="26" Column="9" />
-      <File FileName="src/SuperSimple.Auth.Manager/Bootstrapper.cs" Line="31" Column="22" />
-      <File FileName="src/SuperSimple.Auth.Api.Repository/IUser.cs" Line="34" Column="2" />
-      <File FileName="src/SuperSimple.Auth.Api.Repository/User.cs" Line="49" Column="10" />
-      <File FileName="src/SuperSimple.Auth.Api.Repository/Role.cs" Line="18" Column="10" />
+      <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="8" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
@@ -22,6 +10,11 @@
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <StartupItems>
+    <String>src/SuperSimple.Auth.Api/SuperSimple.Auth.Api.csproj</String>
+    <String>src/SuperSimple.Auth.Manager/SuperSimple.Auth.Manager.csproj</String>
+    <String>examples/SSANancyExample/SSANancyExample.csproj</String>
+  </StartupItems>
   <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.Api PreferredExecutionTarget="MonoDevelop.Default" />
   <AuthorInfo Name="Fritz (Fredrick Seitz)" Email="fredrick.seitz@gmail.com" Copyright="Fritz (Fredrick Seitz)" Company="Fritz" Trademark="Fritz" />
 </Properties>

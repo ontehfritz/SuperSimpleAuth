@@ -9,18 +9,19 @@ namespace SSANancyExample
 {
     public class NancyUserMapper: IUserMapper
     {
-        SuperSimpleAuth ssa; 
+        private SuperSimpleAuth _ssa; 
 
-        public NancyUserMapper(SuperSimpleAuth ssa){
-            this.ssa = ssa;
+        public NancyUserMapper(SuperSimpleAuth ssa)
+        {
+            _ssa = ssa;
         }
 
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
-            User ssaUser = ssa.Validate (identifier,
+            var ssaUser = _ssa.Validate (identifier,
                                          context.Request.UserHostAddress);
 
-            NancyUserIdentity user = new NancyUserIdentity {
+            var user = new NancyUserIdentity {
                 UserName = ssaUser.UserName,
                 AuthToken = ssaUser.AuthToken,
                 Email = ssaUser.Email,
