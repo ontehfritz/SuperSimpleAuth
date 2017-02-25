@@ -1,5 +1,5 @@
 ﻿<Properties StartupConfiguration="MonoDevelop.Projects.MultiStartup">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Api/Helper/Error.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Manager/Views/_Layout.cshtml">
     <Files>
       <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="24" Column="60" />
       <File FileName="test/SuperSimple.Auth.Manager.Repository.Test/Test.cs" Line="412" Column="1" />
@@ -11,10 +11,13 @@
       <File FileName="examples/SSANancyExample/packages.config" Line="1" Column="1" />
       <File FileName="src/SuperSimple.Auth.Api/Modules/AuthModule.cs" Line="299" Column="44" />
       <File FileName="src/SuperSimple.Auth.Api/Modules/IndexModule.cs" Line="5" Column="6" />
-      <File FileName="src/SuperSimple.Auth.Api/Helper/Error.cs" Line="31" Column="18" />
+      <File FileName="src/SuperSimple.Auth.Api/Helper/Error.cs" Line="24" Column="13" />
+      <File FileName="src/SuperSimple.Auth.Manager/Views/home/Admin.cshtml" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/Views/logon/_Signup.cshtml" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/Views/_Layout.cshtml" Line="20" Column="36" />
     </Files>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.Manager PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
