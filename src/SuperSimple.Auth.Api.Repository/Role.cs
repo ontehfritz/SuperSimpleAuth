@@ -1,9 +1,9 @@
-using System;
-using MongoDB.Bson.Serialization.Attributes;
-using System.Collections.Generic;
-
 namespace SuperSimple.Auth.Api.Repository
 {
+    using System;
+    using MongoDB.Bson.Serialization.Attributes;
+    using System.Collections.Generic;
+
     public class Role
     {
         [BsonId]

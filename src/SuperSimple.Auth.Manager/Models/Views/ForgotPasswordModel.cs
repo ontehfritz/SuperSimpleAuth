@@ -7,7 +7,8 @@ namespace SuperSimple.Auth.Manager
         public string Email { get; set; }
     }
 
-    public class ForgotPasswordModelValidator : AbstractValidator<ForgotPasswordModel>
+    public class ForgotPasswordModelValidator : 
+    AbstractValidator<ForgotPasswordModel>
     {
         public ForgotPasswordModelValidator ()
         {

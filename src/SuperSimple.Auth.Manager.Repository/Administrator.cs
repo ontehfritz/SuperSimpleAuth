@@ -1,8 +1,8 @@
-﻿using System;
-using MongoDB.Bson.Serialization.Attributes;
-
-namespace SuperSimple.Auth.Manager.Repository
+﻿namespace SuperSimple.Auth.Manager.Repository
 {
+    using System;
+    using MongoDB.Bson.Serialization.Attributes;
+
     public class Administrator
     {
         [BsonId]

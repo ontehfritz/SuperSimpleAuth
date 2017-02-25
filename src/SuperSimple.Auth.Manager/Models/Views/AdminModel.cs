@@ -1,8 +1,7 @@
 ﻿namespace SuperSimple.Auth.Manager
 {
-    using Api.Repository;
-    using SuperSimple.Auth.Api;
-    using SuperSimple.Auth.Manager.Repository;
+    using Api;
+    using Repository;
 
     public class AdminModel : PageModel
     {

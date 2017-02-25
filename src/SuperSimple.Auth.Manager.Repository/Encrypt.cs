@@ -14,7 +14,7 @@ namespace SuperSimple.Auth.Manager.Repository
         /// <summary>
         public static string Hash(string Salt, string Password) 
         {
-            Rfc2898DeriveBytes hash = new Rfc2898DeriveBytes(Password,
+            var hash = new Rfc2898DeriveBytes(Password,
                 System.Text.Encoding.Default.GetBytes(Salt), 10000);
 
             return Convert.ToBase64String(hash.GetBytes(25));

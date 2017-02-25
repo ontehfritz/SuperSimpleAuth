@@ -1,7 +1,7 @@
-using SuperSimple.Auth.Manager.Repository;
-
 namespace SuperSimple.Auth.Manager
 {
+    using Repository;
+
     public class ManageModel : PageModel
     {
         public Domain[] Domains      { get; set; }

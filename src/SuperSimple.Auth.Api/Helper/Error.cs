@@ -4,9 +4,9 @@ namespace SuperSimple.Auth.Api
     using Nancy;
     using System.Linq;
     using System.Diagnostics.Contracts;
-    using SuperSimple.Auth.Api.Repository;
+    using Repository;
 
-    public static class Helper
+    public static class Error
     {
         private const string _headerDomainKey = "Ssa-Domain-Key";
         private const string _headerDomain = "Ssa-Domain";
@@ -22,8 +22,8 @@ namespace SuperSimple.Auth.Api
             ErrorMessage message = null;
             var key = new Guid();
 
-            string appKey = request.Headers[_headerDomainKey].FirstOrDefault();
-            string app = request.Headers[_headerDomain].FirstOrDefault();
+            var appKey = request.Headers[_headerDomainKey].FirstOrDefault();
+            var app = request.Headers[_headerDomain].FirstOrDefault();
 
             if(appKey != null && app != null)
             {               

@@ -51,7 +51,7 @@
     <h1>API Methods </h1>
     <h3>Create a user:</h3>
     <pre>
-    Post http://api.supersimpleauth.com/user
+    Post https://api.authenticate.technology/user
     Provide request parameters:
     "Username"  This is the username to create
     "Secret"    The password for the user
@@ -65,7 +65,7 @@
 
     <h3>Authenticate a user</h3>
     <pre>
-    Post http://api.supersimpleauth.com/authenticate
+    Post https://api.authenticate.technology/authenticate
     Provide request parameters:
     "Username"  This is the username to authenticate
     "Secret"    The password for the user
@@ -82,7 +82,7 @@
 
     <h3>Validate a user</h3>
     <pre>
-    Post http://api.supersimpleauth.com/validate
+    Post https://api.authenticate.technology/validate
     Provide request parameters:
     "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user
     "IP"        Optional, but is important for logging
@@ -102,7 +102,7 @@
 
     <h3>User forgot password</h3>
     <pre>
-    Post http://api.supersimpleauth.com/forgot
+    Post https://api.authenticate.technology/forgot
     Provide request parameters:
     "Email" The email of the user.
     </pre>
@@ -119,7 +119,7 @@
 
     <h3>Change username</h3>
     <pre>
-    Post http://api.supersimpleauth.com/username
+    Post https://api.authenticate.technology/username
     Provide request parameters:
      "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user.
      "NewUserName" The new username for the user. 
@@ -137,7 +137,7 @@
 
     <h3>Change user email</h3>
     <pre>
-    Post http://api.supersimpleauth.com/username
+    Post https://api.authenticate.technology/username
     Provide request parameters:
      "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user.
      "NewEmail" The new email for the user. 
@@ -155,7 +155,7 @@
 
     <h3>User change password</h3>
     <pre>
-    Post http://api.supersimpleauth.com/forgot
+    Post https://api.authenticate.technology/forgot
     Provide request parameters:
      "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user.
      "NewPassword" The new password for the user. 
@@ -172,7 +172,7 @@
 
     <h3>End a session</h3>
     <pre>
-    Post http://api.supersimpleauth.com/end
+    Post https://api.authenticate.technology/end
     Provide request parameters:
     "AuthToken" This is the token assigned after authentication, in can be found in AuthToken field of the user.
     "IP"        Optional, but is important for logging.

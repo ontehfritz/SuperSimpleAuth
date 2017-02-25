@@ -1,5 +1,3 @@
-using System;
-
 namespace SuperSimple.Auth.Manager
 {
   public class Error

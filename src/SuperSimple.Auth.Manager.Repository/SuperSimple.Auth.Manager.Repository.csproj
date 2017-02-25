@@ -44,7 +44,7 @@
     <Compile Include="MongoRepository.cs" />
     <Compile Include="Administrator.cs" />
     <Compile Include="Domain.cs" />
-    <Compile Include="Helpers.cs" />
+    <Compile Include="Encrypt.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

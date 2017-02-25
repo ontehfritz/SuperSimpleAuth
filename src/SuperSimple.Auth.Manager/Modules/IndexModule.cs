@@ -3,7 +3,7 @@ namespace SuperSimple.Auth.Manager
     using Nancy;
     using Nancy.Authentication.Forms;
     using Nancy.Security;
-    using SuperSimple.Auth.Manager.Repository;
+    using Repository;
 
     public class IndexModule : NancyModule
     {
@@ -11,12 +11,13 @@ namespace SuperSimple.Auth.Manager
         {
             Get ["/"] = parameters =>
             {
-                SignupModel model = new SignupModel ();
+                var model = new SignupModel ();
 
-                if (this.Context.CurrentUser.IsAuthenticated ())
+                if (Context.CurrentUser.IsAuthenticated ())
                 {
-                    Manager manager = (Manager)this.Context.CurrentUser;
-                    return this.LoginAndRedirect (manager.Id, fallbackRedirectUrl: "/home");
+                    var manager = (Manager)this.Context.CurrentUser;
+                    return this.LoginAndRedirect 
+                               (manager.Id, fallbackRedirectUrl: "/home");
                 }
 
                 return View ["Index", model];

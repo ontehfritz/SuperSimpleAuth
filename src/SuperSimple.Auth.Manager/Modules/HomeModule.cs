@@ -8,9 +8,9 @@ namespace SuperSimple.Auth.Manager
     using Nancy;
     using Nancy.Security;
     using MongoDB.Driver;
-    using SuperSimple.Auth.Manager.Repository;
-    using SuperSimple.Auth.Api;
-    using SuperSimple.Auth.Api.Repository;
+    using Repository;
+    using Api;
+    using Api.Repository;
 
     public class HomeModule : NancyModule
     {
@@ -47,7 +47,7 @@ namespace SuperSimple.Auth.Manager
 
             Get ["/domain/new"] = parameters =>
             {
-                DomainModel model = new DomainModel ();
+                var model = new DomainModel ();
                 model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = new Domain ();
                 return View ["Domain_new", model];
@@ -55,7 +55,7 @@ namespace SuperSimple.Auth.Manager
 
             Post ["/domain/new"] = parameters =>
             {
-                DomainModel model = this.Bind<DomainModel> ();
+                var model = this.Bind<DomainModel> ();
                 model.Manager = (IUser)this.Context.CurrentUser;
                 var result = this.Validate (model);
 
@@ -71,7 +71,7 @@ namespace SuperSimple.Auth.Manager
                 }
                 catch (MongoDB.Driver.WriteConcernException e)
                 {
-                    Error error = new Error ();
+                    var error = new Error ();
                     error.Name = "Duplicate";
                     error.Message = "Cannot create domain, name already exists.";
                     model.Errors = new List<Error> ();
@@ -85,7 +85,7 @@ namespace SuperSimple.Auth.Manager
 
             Get ["/domain/{id}"] = parameters =>
             {
-                DomainModel model = new DomainModel ();
+                var model = new DomainModel ();
                 model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
@@ -105,9 +105,9 @@ namespace SuperSimple.Auth.Manager
 
             Post ["/domain/{id}"] = parameters =>
             {
-                DomainModel model = this.Bind<DomainModel> ();
+                var model = this.Bind<DomainModel> ();
                 model.Manager = (IUser)this.Context.CurrentUser;
-                Domain domain = repository.GetDomain ((Guid)parameters.id);
+                var domain = repository.GetDomain ((Guid)parameters.id);
 
                 if (domain == null || !repository.HasAccess (domain, model.Manager))
                 {
@@ -127,7 +127,7 @@ namespace SuperSimple.Auth.Manager
                 if (Request.Form.Delete != null)
                 {
                     repository.DeleteDomain (domain.Id);
-                    return this.Response.AsRedirect ("/");
+                    return Response.AsRedirect ("/");
                 }
 
                 if (Request.Form.Disable != null)
@@ -147,7 +147,7 @@ namespace SuperSimple.Auth.Manager
                 }
                 catch (Exception e)
                 {
-                    Error error = new Error ();
+                    var error = new Error ();
                     error.Name = e.GetType ().ToString ();
                     error.Message = e.Message;
 
@@ -160,7 +160,7 @@ namespace SuperSimple.Auth.Manager
 
             Get ["/domain/{id}/admin/{aid}"] = parameters =>
             {
-                AdminModel model = new AdminModel ();
+                var model = new AdminModel ();
                 model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
                 model.Admin = repository.GetManager ((Guid)parameters.aid);
@@ -175,7 +175,7 @@ namespace SuperSimple.Auth.Manager
 
             Post ["/remove/{id}/admin/{aid}"] = parameters =>
             {
-                AdminModel model = new AdminModel ();
+                var model = new AdminModel ();
                 model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
@@ -184,8 +184,8 @@ namespace SuperSimple.Auth.Manager
                     return View ["NoAccess"];
                 }
 
-                Guid domainId = (Guid)parameters.id;
-                Guid adminId = (Guid)parameters.aid;
+                var domainId = (Guid)parameters.id;
+                var adminId = (Guid)parameters.aid;
                 repository.DeleteAdministrator (domainId, adminId);
 
                 return this.Response
@@ -196,7 +196,7 @@ namespace SuperSimple.Auth.Manager
 
             Get ["/domain/{id}/admin/new"] = parameters =>
             {
-                AdminModel model = new AdminModel ();
+                var model = new AdminModel ();
                 model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
@@ -208,7 +208,7 @@ namespace SuperSimple.Auth.Manager
 
                 if (!model.Domain.IsOwner (model.Manager))
                 {
-                    Error error = new Error ();
+                    var error = new Error ();
                     error.Name = "Not Authorized";
                     error.Message = "You are not the owner of this domain.";
                     model.Errors.Add (error);
@@ -219,7 +219,7 @@ namespace SuperSimple.Auth.Manager
 
             Post ["/domain/{id}/admin/new"] = parameters =>
             {
-                AdminModel model = this.Bind<AdminModel> ();
+                var model = this.Bind<AdminModel> ();
                 model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
@@ -244,7 +244,7 @@ namespace SuperSimple.Auth.Manager
                         catch (WriteConcernException e)
                         {
                             model.Errors = new List<Error> ();
-                            Error error = new Error ();
+                            var error = new Error ();
                             error.Name = "Duplicate";
                             error.Message = "Admin already exists.";
                             model.Errors.Add (error);
@@ -255,7 +255,7 @@ namespace SuperSimple.Auth.Manager
                     else
                     {
                         model.Errors = new List<Error> ();
-                        Error error = new Error ();
+                        var error = new Error ();
                         error.Name = "Duplicate";
                         error.Message = "That is your email.";
                         model.Errors.Add (error);
@@ -271,7 +271,7 @@ namespace SuperSimple.Auth.Manager
                     }
                     else
                     {
-                        Error error = new Error ();
+                        var error = new Error ();
                         error.Name = "Manager error.";
                         error.Message = "Manager's email could not be found.";
                         model.Errors.Add (error);
@@ -279,7 +279,7 @@ namespace SuperSimple.Auth.Manager
                 }
                 else
                 {
-                    Error error = new Error ();
+                    var error = new Error ();
                     error.Name = "Not Authorized";
                     error.Message = "You are not the owner of this domain.";
                     model.Errors.Add (error);
@@ -302,9 +302,9 @@ namespace SuperSimple.Auth.Manager
 
                 model.Users = repository.GetDomainUsers (model.Domain.Id).ToList ();
                 model.Role = repository.GetRole (model.Domain.Id, (string)parameters.role);
-                User [] us = repository.GetUsersInRole (model.Role);
+                var us = repository.GetUsersInRole (model.Role);
 
-                List<string> usStringified = new List<string> ();
+                var usStringified = new List<string> ();
 
                 foreach (User u in us)
                 {
@@ -318,7 +318,7 @@ namespace SuperSimple.Auth.Manager
 
             Post ["/domain/{id}/role/{role}"] = parameters =>
             {
-                RoleModel model = this.Bind<RoleModel> ();
+                var model = this.Bind<RoleModel> ();
                 model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
@@ -388,7 +388,7 @@ namespace SuperSimple.Auth.Manager
 
             Get ["/domain/{id}/role/new"] = parameters =>
             {
-                CreateRoleModel model = new CreateRoleModel ();
+                var model = new CreateRoleModel ();
                 model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
@@ -403,7 +403,7 @@ namespace SuperSimple.Auth.Manager
 
             Post ["/domain/{id}/role/new"] = parameters =>
             {
-                CreateRoleModel model = this.Bind<CreateRoleModel> ();
+                var model = this.Bind<CreateRoleModel> ();
                 model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
@@ -429,7 +429,7 @@ namespace SuperSimple.Auth.Manager
                 catch (WriteConcernException e)
                 {
                     model.Errors = new List<Error> ();
-                    Error error = new Error ();
+                    var error = new Error ();
                     error.Name = "Duplicate";
                     error.Message = "Role already exists.";
                     model.Errors.Add (error);
@@ -437,12 +437,12 @@ namespace SuperSimple.Auth.Manager
                     return View ["Role_new", model];
                 }
 
-                return this.Response.AsRedirect ("/domain/" + model.Domain.Id);
+                return Response.AsRedirect ("/domain/" + model.Domain.Id);
             };
 
             Get ["/domain/{id}/claim/{cname}"] = parameters =>
             {
-                ClaimModel model = new ClaimModel ();
+                var model = new ClaimModel ();
                 model.Name = (string)parameters.cname;
                 model.Title = "Claim";
                 model.Manager = (IUser)this.Context.CurrentUser;
@@ -454,15 +454,17 @@ namespace SuperSimple.Auth.Manager
                     return View ["NoAccess"];
                 }
 
-                model.Users = repository.GetUsersWithClaim (model.Domain.Id, (string)parameters.cname);
-                model.Roles = repository.GetRolesWithClaim (model.Domain.Id, (string)parameters.cname);
+                model.Users = repository
+                    .GetUsersWithClaim (model.Domain.Id, (string)parameters.cname);
+                model.Roles = repository
+                    .GetRolesWithClaim (model.Domain.Id, (string)parameters.cname);
 
                 return View ["Claim", model];
             };
 
             Post ["/domain/{id}/claim/{cname}"] = parameters =>
             {
-                ClaimModel model = new ClaimModel ();
+                var model = new ClaimModel ();
                 model.Name = (string)parameters.cname;
                 model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
@@ -477,7 +479,7 @@ namespace SuperSimple.Auth.Manager
                 {
                     model.Domain.Claims.Remove (model.Name);
                     model.Domain = repository.UpdateDomain (model.Domain);
-                    Role [] roles = repository.GetRolesWithClaim (model.Domain.Id, model.Name);
+                    var roles = repository.GetRolesWithClaim (model.Domain.Id, model.Name);
 
                     if (roles != null)
                     {
@@ -488,7 +490,7 @@ namespace SuperSimple.Auth.Manager
                         }
                     }
 
-                    User [] users = repository.GetUsersWithClaim (model.Domain.Id, model.Name);
+                    var users = repository.GetUsersWithClaim (model.Domain.Id, model.Name);
 
                     if (users != null)
                     {
@@ -499,7 +501,9 @@ namespace SuperSimple.Auth.Manager
                         }
                     }
 
-                    return this.Response.AsRedirect (string.Format ("/domain/{0}", model.Domain.Name));
+                    return Response
+                        .AsRedirect (string.Format ("/domain/{0}", 
+                                                    model.Domain.Name));
                 }
 
                 return View ["Claim", model];
@@ -507,7 +511,7 @@ namespace SuperSimple.Auth.Manager
 
             Get ["/domain/{id}/claim/new"] = parameters =>
             {
-                ClaimModel model = new ClaimModel ();
+                var model = new ClaimModel ();
                 model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
@@ -522,7 +526,7 @@ namespace SuperSimple.Auth.Manager
 
             Post ["/domain/{id}/claim/new"] = parameters =>
             {
-                ClaimModel model = this.Bind<ClaimModel> ();
+                var model = this.Bind<ClaimModel> ();
                 model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
@@ -540,8 +544,8 @@ namespace SuperSimple.Auth.Manager
                     return View ["Claim_new", model];
                 }
 
-                Domain update = repository.GetDomain ((Guid)parameters.id);
-                List<string> claims = new List<string> ();
+                var update = repository.GetDomain ((Guid)parameters.id);
+                var claims = new List<string> ();
 
                 if (update.Claims != null)
                 {
@@ -551,7 +555,7 @@ namespace SuperSimple.Auth.Manager
 
                 if (claims.Contains (model.Name))
                 {
-                    Error error = new Error ();
+                    var error = new Error ();
                     error.Name = "Duplicate";
                     error.Message = "Claim already exists.";
                     model.Errors.Add (error);
@@ -568,19 +572,19 @@ namespace SuperSimple.Auth.Manager
                 }
                 catch (Exception e)
                 {
-                    Error error = new Error ();
+                    var error = new Error ();
                     error.Name = e.ToString ();
                     error.Message = e.Message;
                     model.Errors.Add (error);
                     return View ["Claim_new", model];
                 }
 
-                return this.Response.AsRedirect ("/domain/" + model.Domain.Id);
+                return Response.AsRedirect ("/domain/" + model.Domain.Id);
             };
 
             Get ["/domain/{id}/user/{uid}"] = parameters =>
             {
-                DomainUserModel model = new DomainUserModel ();
+                var model = new DomainUserModel ();
 
                 model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
@@ -595,7 +599,7 @@ namespace SuperSimple.Auth.Manager
                 model.Roles = repository.GetRoles (model.Domain.Id).ToList ();
                 model.Enabled = model.User.Enabled;
 
-                List<string> uRoles = new List<string> ();
+                var uRoles = new List<string> ();
 
                 if (model.User.Roles != null)
                 {
@@ -613,7 +617,7 @@ namespace SuperSimple.Auth.Manager
 
             Post ["/domain/{id}/user/{uid}"] = parameters =>
             {
-                DomainUserModel model = this.Bind<DomainUserModel> ();
+                var model = this.Bind<DomainUserModel> ();
                 model.Manager = (IUser)this.Context.CurrentUser;
                 model.Domain = repository.GetDomain ((Guid)parameters.id);
 
@@ -629,7 +633,7 @@ namespace SuperSimple.Auth.Manager
                 if (Request.Form.Delete != null)
                 {
                     repository.DeleteUser (model.Domain.Id, model.User.UserName);
-                    DomainModel dmodel = new DomainModel ();
+                    var dmodel = new DomainModel ();
                     dmodel.Domain = model.Domain;
                     dmodel.Manager = model.Manager;
                     dmodel.Roles = repository.GetRoles (dmodel.Domain.Id).ToList ();
@@ -641,7 +645,7 @@ namespace SuperSimple.Auth.Manager
 
                 if (Request.Form.Save != null)
                 {
-                    List<Role> uroles = new List<Role> ();
+                    var uroles = new List<Role> ();
 
                     if (model.NewRoles != null)
                     {
@@ -662,7 +666,7 @@ namespace SuperSimple.Auth.Manager
                     }
                     catch (Exception e)
                     {
-                        Error error = new Error ();
+                        var error = new Error ();
                         error.Name = e.GetType ().ToString ();
                         error.Message = e.Message;
                         model.Errors.Add (error);
