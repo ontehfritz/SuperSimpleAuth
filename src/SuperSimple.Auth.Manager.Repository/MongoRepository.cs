@@ -42,7 +42,8 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public void DeleteAdministrator (Guid domainId, Guid adminId)
         {
-            var collection = _database.GetCollection<Administrator> ("administrators");
+            var collection = 
+                _database.GetCollection<Administrator> ("administrators");
 
             var query = new Dictionary<string, object> ();
             query.Add ("DomainId", domainId);
@@ -88,11 +89,11 @@ namespace SuperSimple.Auth.Manager.Repository
         public void ChangePassword (Guid id, string password, string newPassword, 
                                     string confirmPassword)
         {
-            MongoCollection<BsonDocument> managers = 
+            var managers = 
                 _database.GetCollection<BsonDocument> ("users");
             var query = Query.EQ ("_id", id);
 
-            BsonDocument manager = managers.FindOne (query);
+            var manager = managers.FindOne (query);
 
             var appCollection = 
                 _database.GetCollection<RawBsonDocument> ("domains");
@@ -124,7 +125,7 @@ namespace SuperSimple.Auth.Manager.Repository
 
         private string PasswordGenerator (int passwordLength)
         {
-            Random r = new Random ();
+            var r = new Random ();
             int seed = r.Next (1, int.MaxValue);
             const string allowedChars = 
                 "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789";
@@ -143,12 +144,12 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public string ForgotPassword (string email)
         {
-            MongoCollection<BsonDocument> managers =
+            var managers =
                 _database.GetCollection<BsonDocument> ("users");
 
             var query = Query.EQ ("UserName", email);
 
-            BsonDocument manager = managers.FindOne (query);
+            var manager = managers.FindOne (query);
             var appCollection = 
                 _database.GetCollection<RawBsonDocument> ("domains");
             var querydomain = Query.EQ ("_id", _ssaDomain.Id);
@@ -170,11 +171,11 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public void ChangeEmail (Guid id, string password, string email)
         {
-            MongoCollection<BsonDocument> managers = 
+            var managers = 
                 _database.GetCollection<BsonDocument> ("users");
             
             var query = Query.EQ ("_id", id);
-            BsonDocument manager = managers.FindOne (query);
+            var manager = managers.FindOne (query);
 
             var appCollection = 
                 _database.GetCollection<RawBsonDocument> ("domains");
@@ -197,7 +198,7 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public Role [] GetRolesWithClaim (Guid domainId, string claim)
         {
-            List<Role> roles = new List<Role> ();
+            var roles = new List<Role> ();
             var collection = _database.GetCollection<Role> ("roles");
 
             var query = Query.And (Query<Role>.EQ (e => e.DomainId, domainId),
@@ -215,7 +216,7 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public User [] GetUsersWithClaim (Guid domainId, string claim)
         {
-            List<User> users = new List<User> ();
+            var users = new List<User> ();
             var collection = _database.GetCollection<User> ("users");
 
             var query = Query.And (Query<User>.EQ (e => e.DomainId, domainId),
@@ -235,7 +236,7 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public User [] GetUsersInRole (Role role)
         {
-            List<User> users = new List<User> ();
+            var users = new List<User> ();
             var collection = _database.GetCollection<User> ("users");
             var query = Query.And (Query<User>.EQ (e => e.DomainId, role.DomainId),
                                   Query<User>.EQ (e => e.Roles, role));
@@ -254,7 +255,7 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public User [] GetDomainUsers (Guid domainId)
         {
-            List<User> users = new List<User> ();
+            var users = new List<User> ();
             var collection = _database.GetCollection<User> ("users");
             var query = Query<User>.EQ (e => e.DomainId, domainId);
             var usersdb = collection.Find (query)
@@ -304,7 +305,7 @@ namespace SuperSimple.Auth.Manager.Repository
         {
             user.ModifiedAt = DateTime.Now;
 
-            MongoCollection<User> users = _database.GetCollection<User> ("users");
+            var users = _database.GetCollection<User> ("users");
             var query = Query<User>.EQ (e => e.Id, user.Id);
 
             var u = users.Find (query);
@@ -331,7 +332,7 @@ namespace SuperSimple.Auth.Manager.Repository
         {
             var collection = _database.GetCollection<User> ("users");
 
-            Dictionary<string, object> query = new Dictionary<string, object> ();
+            var query = new Dictionary<string, object> ();
             query.Add ("DomainId", domainId);
             query.Add ("UserName", userName);
 
@@ -343,21 +344,11 @@ namespace SuperSimple.Auth.Manager.Repository
             var collection = _database.GetCollection<Domain> ("domains");
             var query = Query.And (Query<Domain>.EQ (e => e.Id, id));
 
-            Domain domain = collection.FindOne (query);
+            var domain = collection.FindOne (query);
 
             return domain;
         }
 
-        //        public Domain GetDomain(string name, Guid managerId)
-        //        {
-        //            var collection = database.GetCollection<Domain> ("domains");
-        //            var query = Query.And(Query<Domain>.EQ (e => e.ManagerId, managerId),
-        //                Query<Domain>.EQ(e => e.Name, name));
-        //
-        //            Domain domain = collection.FindOne (query);
-        //
-        //            return domain;
-        //        }
 
         public Domain [] GetDomainsAdmin (Guid managerId)
         {
@@ -365,7 +356,7 @@ namespace SuperSimple.Auth.Manager.Repository
             var query = Query<Administrator>.EQ (e => e.ManagerId, managerId);
             var cursor = collection.Find (query);
 
-            List<Domain> domains = new List<Domain> ();
+            var domains = new List<Domain> ();
 
             Domain domain = null;
             foreach (Administrator admin in cursor)
@@ -387,7 +378,7 @@ namespace SuperSimple.Auth.Manager.Repository
             var query = Query<Domain>.EQ (e => e.ManagerId, managerId);
             var cursor = collection.Find (query);
 
-            List<Domain> domains = new List<Domain> ();
+            var domains = new List<Domain> ();
 
             foreach (Domain d in cursor)
             {
@@ -400,7 +391,7 @@ namespace SuperSimple.Auth.Manager.Repository
         public Domain CreateDomain (string name, IUser manager)
         {
             var collection = _database.GetCollection<Domain> ("domains");
-            Domain domain = new Domain ();
+            var domain = new Domain ();
             domain.Id = Guid.NewGuid ();
             domain.Name = name;
             domain.Enabled = true;
@@ -421,11 +412,11 @@ namespace SuperSimple.Auth.Manager.Repository
         {
             domain.ModifiedAt = DateTime.Now;
 
-            MongoCollection<BsonDocument> domains =
+            var domains =
                 _database.GetCollection<BsonDocument> ("domains");
             var query = Query.EQ ("_id", domain.Id);
 
-            BsonDocument updateDomain = domains.FindOne (query);
+            var updateDomain = domains.FindOne (query);
 
             if (updateDomain != null)
             {
@@ -442,15 +433,15 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public void DeleteDomain (Guid id)
         {
-            Domain domain = this.GetDomain (id);
-            Role [] roles = this.GetRoles (domain.Id);
+            var domain = GetDomain (id);
+            var roles = GetRoles (domain.Id);
 
             foreach (Role r in roles)
             {
                 this.DeleteRole (r);
             }
 
-            User [] users = this.GetDomainUsers (domain.Id);
+            var users = this.GetDomainUsers (domain.Id);
 
             foreach (User u in users)
             {
@@ -470,7 +461,7 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public void DeleteManager (Guid id, string password)
         {
-            MongoCollection<BsonDocument> users =
+            var users =
                 _database.GetCollection<BsonDocument> ("users");
           
             var manager = GetManager(id);
@@ -479,7 +470,7 @@ namespace SuperSimple.Auth.Manager.Repository
             {
                 users.Remove(new QueryDocument ("_id", id));
 
-                Domain [] domains = GetDomains (id);
+                var domains = GetDomains (id);
 
                 if (domains != null && domains.Length > 0)
                 {
@@ -507,7 +498,7 @@ namespace SuperSimple.Auth.Manager.Repository
                 Query<User>.EQ (e => e.UserName, username),
                 Query<User>.EQ (e => e.DomainId, _ssaDomain.Id));
 
-            User user = collection.FindOne (query);
+            var user = collection.FindOne (query);
 
             if (user == null) return null;
 
@@ -533,12 +524,12 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public Role UpdateRole (Role role)
         {
-            MongoCollection<BsonDocument> roles =
+            var roles =
                 _database.GetCollection<BsonDocument> ("roles");
 
             var query = Query.EQ ("_id", role.Id);
 
-            BsonDocument updateRole = roles.FindOne (query);
+            var updateRole = roles.FindOne (query);
 
             if (updateRole != null)
             {
@@ -551,7 +542,7 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public Role [] GetRoles (Guid domainId)
         {
-            List<Role> roles = new List<Role> ();
+            var roles = new List<Role> ();
             var collection = _database.GetCollection<Role> ("roles");
             var query = Query<Role>.EQ (e => e.DomainId, domainId);
 
@@ -569,7 +560,7 @@ namespace SuperSimple.Auth.Manager.Repository
         {
             var collection = _database.GetCollection<Role> ("roles");
 
-            Role role = new Role ();
+            var role = new Role ();
             role.Id = Guid.NewGuid ();
             role.DomainId = domainId;
             role.Name = name;
@@ -580,7 +571,7 @@ namespace SuperSimple.Auth.Manager.Repository
 
         public void DeleteRole (Role role)
         {
-            User [] users = this.GetUsersInRole (role);
+            var users = this.GetUsersInRole (role);
 
             foreach (User u in users)
             {
