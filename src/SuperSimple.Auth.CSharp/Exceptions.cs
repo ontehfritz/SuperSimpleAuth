@@ -1,9 +1,7 @@
-using System;
-using System.Reflection;
-
-
 namespace SuperSimple.Auth
 {
+    using System;
+
     [Serializable]
     public class InvalidKeyException : Exception
     {

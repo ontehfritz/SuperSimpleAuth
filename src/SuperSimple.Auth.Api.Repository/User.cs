@@ -8,39 +8,39 @@ namespace SuperSimple.Auth.Api.Repository
     public class User : IUser
 	{
         [BsonId]
-        public Guid Id { get; set; }
+        public Guid Id                  { get; set; }
         [BsonElement]
-        public Guid DomainId { get; set; }
+        public Guid DomainId            { get; set; }
         [BsonElement]
-        public string UserName { get; set; }
+        public string UserName          { get; set; }
         [BsonElement]
-        public string Email { get; set;}
+        public string Email             { get; set;}
         [BsonElement]
-        public string Secret { get; set; }
+        public string Secret            { get; set; }
         [BsonElement]
-        public Guid AuthToken { get; set; }
+        public Guid AuthToken           { get; set; }
         [BsonElement]
-        public bool Enabled { get; set; }
+        public bool Enabled             { get; set; }
         [BsonElement]
-        public List<Role> Roles { get; set; }
+        public List<Role> Roles         { get; set; }
         [BsonElement]
-        public List<string> Claims { get; set; }
+        public List<string> Claims      { get; set; }
         [BsonElement]
-        public string CurrentIp { get; set; }
+        public string CurrentIp         { get; set; }
         [BsonElement]
-        public DateTime ?CurrentLogon { get; set; }
+        public DateTime ?CurrentLogon   { get; set; }
         [BsonElement]
-        public string LastIp { get; set; }
+        public string LastIp            { get; set; }
         [BsonElement]
-        public DateTime ?LastLogon { get; set; }
+        public DateTime ?LastLogon      { get; set; }
         [BsonElement]
-        public DateTime ?LastRequest { get; set; }
+        public DateTime ?LastRequest    { get; set; }
         [BsonElement]
-        public int LogonCount { get; set; }
+        public int LogonCount           { get; set; }
         [BsonElement]
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt       { get; set; }
         [BsonElement]
-        public DateTime ModifiedAt { get; set; }
+        public DateTime ModifiedAt      { get; set; }
 
         public User()
         {
@@ -50,7 +50,7 @@ namespace SuperSimple.Auth.Api.Repository
 
         public string[] GetRoles()
         {
-            List<string> roles = new List<string> ();
+            var roles = new List<string> ();
 
             if (this.Roles != null) 
             {
@@ -66,9 +66,9 @@ namespace SuperSimple.Auth.Api.Repository
 
         public void AddRole(Role role)
         {
-            if(this.Roles == null)
+            if(Roles == null)
             {
-                this.Roles = new List<Role> ();
+                Roles = new List<Role> ();
             }
 
             Roles.Add (role);
@@ -81,15 +81,19 @@ namespace SuperSimple.Auth.Api.Repository
 
         public string[] GetClaims()
         {
-            List<string> claims = new List<string> ();
+            var claims = new List<string> ();
 
-            if (this.Claims != null) {
-                claims = this.Claims;
+            if (Claims != null) 
+            {
+                claims = Claims;
             }
 
-            if (this.Roles != null) {
-                foreach (Role role in this.Roles) {
-                    if (role.Claims != null) {
+            if (Roles != null) 
+            {
+                foreach (Role role in this.Roles) 
+                {
+                    if (role.Claims != null) 
+                    {
                         claims.AddRange (role.Claims);
                     }
                 }
@@ -100,13 +104,15 @@ namespace SuperSimple.Auth.Api.Repository
 
         public bool InRole(string role)
         {
-            if (Roles == null || Roles.Count == 0) {
+            if (Roles == null || Roles.Count == 0) 
+            {
                 return false;
             }
 
             foreach(Role r in Roles)
             {
-                if (r.Name == role) {
+                if (r.Name == role) 
+                {
                     return true;
                 }
             }
@@ -116,15 +122,17 @@ namespace SuperSimple.Auth.Api.Repository
 
         public bool HasClaim(string claim)
         {
-            string[] claims = this.GetClaims ();
+            var claims = GetClaims ();
 
-            if (claims == null) {
+            if (claims == null) 
+            {
                 return false;
             }
 
             foreach(string c in claims)
             {
-                if (c == claim) {
+                if (c == claim)
+                {
                     return true;
                 }
             }

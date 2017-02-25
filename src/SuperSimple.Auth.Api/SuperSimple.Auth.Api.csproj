@@ -90,7 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Helper\Helper.cs" />
+    <Compile Include="Helper\Error.cs" />
     <Compile Include="Models\ErrorMessage.cs" />
     <Compile Include="Modules\IndexModule.cs" />
     <Compile Include="Models\Email.cs" />

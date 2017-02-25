@@ -26,13 +26,13 @@ namespace SuperSimple.Auth.Manager
         /// <returns>The validation errors.</returns>
         public static List<Error> GetValidationErrors(ModelValidationResult result)
         {
-            List<Error> errors = new List<Error>();
+            var errors = new List<Error>();
 
             foreach(var e in result.Errors)
             {
                 foreach(var message in e.Value)
                 {
-                    Error error = new Error();
+                    var error = new Error();
                     error.Name = e.Key;
                     error.Message = message.ErrorMessage;
                     errors.Add(error);
@@ -44,7 +44,7 @@ namespace SuperSimple.Auth.Manager
 
         public static string Hash(string Salt, string Password) 
         {
-            Rfc2898DeriveBytes hash = new Rfc2898DeriveBytes(Password,
+            var hash = new Rfc2898DeriveBytes(Password,
                 System.Text.Encoding.Default.GetBytes(Salt), 10000);
 
             return Convert.ToBase64String(hash.GetBytes(25));

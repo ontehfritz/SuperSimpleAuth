@@ -9,22 +9,22 @@
 
     public class ApiMongoRepository : IApiRepository
     {
-        private string connectionString { get; set; }
-        private MongoClient client;
-        private MongoServer server;
-        private MongoDatabase database;
+        private string _connection { get; set; }
+        private MongoClient _client;
+        private MongoServer _server;
+        private MongoDatabase _database;
 
         public ApiMongoRepository (string connection)
         {
-            connectionString = connection;
-            client = new MongoClient (connectionString);
-            server = client.GetServer ();
-            database = server.GetDatabase ("SsAuthDb");
+            _connection = connection;
+            _client = new MongoClient (_connection);
+            _server = _client.GetServer ();
+            _database = _server.GetDatabase ("SsAuthDb");
         }
 
         private string PasswordGenerator (int passwordLength)
         {
-            Random r = new Random ();
+            var r = new Random ();
             int seed = r.Next (1, int.MaxValue);
             const string allowedChars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -39,18 +39,29 @@
             return new string (chars);
         }
 
+        private string Hash (string salt, string password)
+        {
+            var hasher = 
+                new Rfc2898DeriveBytes (password,
+                                        System.Text.Encoding.Default.GetBytes (salt)
+                                        , 10000);
+
+            return Convert.ToBase64String (hasher.GetBytes (25));
+        }
+
+
         public bool ChangeEmail (Guid domainKey, Guid authToken, string newEmail)
         {
             newEmail = newEmail.ToLower ();
-            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var domains = _database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And (Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dQuery);
 
-            var users = database.GetCollection<User> ("users");
+            var users = _database.GetCollection<User> ("users");
             var query = Query.And (Query<User>.EQ (e => e.AuthToken, authToken),
                                   Query<User>.EQ (e => e.DomainId, domain ["_id"].AsGuid));
 
-            User user = users.FindOne (query);
+            var user = users.FindOne (query);
 
             if (user != null && user.Enabled)
             {
@@ -68,15 +79,15 @@
         public bool ChangeUserName (Guid domainKey, Guid authToken, string newUserName)
         {
             newUserName = newUserName.ToLower ();
-            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var domains = _database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And (Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dQuery);
 
-            var users = database.GetCollection<User> ("users");
+            var users = _database.GetCollection<User> ("users");
             var query = Query.And (Query<User>.EQ (e => e.AuthToken, authToken),
                                   Query<User>.EQ (e => e.DomainId, domain ["_id"].AsGuid));
 
-            User user = users.FindOne (query);
+            var user = users.FindOne (query);
 
             if (user != null && user.Enabled)
             {
@@ -92,15 +103,15 @@
 
         public bool ChangePassword (Guid domainKey, Guid authToken, string newPassword)
         {
-            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var domains = _database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And (Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dQuery);
 
-            var users = database.GetCollection<User> ("users");
+            var users = _database.GetCollection<User> ("users");
             var query = Query.And (Query<User>.EQ (e => e.AuthToken, authToken),
                                   Query<User>.EQ (e => e.DomainId, domain ["_id"].AsGuid));
 
-            User user = users.FindOne (query);
+            var user = users.FindOne (query);
 
             if (user != null && user.Enabled)
             {
@@ -117,12 +128,12 @@
         {
             User user = null;
             email = email.ToLower ();
-            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var domains = _database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And (Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dQuery);
 
 
-            var users = database.GetCollection<User> ("users");
+            var users = _database.GetCollection<User> ("users");
             var query = Query.And (Query<User>.EQ (e => e.Email, email),
                                   Query<User>.EQ (e => e.DomainId, domain ["_id"].AsGuid));
 
@@ -132,7 +143,7 @@
             {
                 string newPassword = this.PasswordGenerator (8);
                 user.Secret = this.Hash (domain ["Salt"].AsGuid.ToString (), newPassword);
-                WriteConcernResult result = users.Save (user);
+                var result = users.Save (user);
 
                 if (result.UpdatedExisting)
                 {
@@ -145,14 +156,15 @@
 
         public bool IpAllowed (Guid domainKey, string ip)
         {
-            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var domains = _database.GetCollection<RawBsonDocument> ("domains");
             var dquery = Query.And (Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dquery);
 
             if (!domain ["WhiteListIps"].IsBsonNull)
             {
-                string [] ips =
-                    domain ["WhiteListIps"].AsBsonArray.Select (p => p.AsString).ToArray ();
+                var ips =
+                    domain ["WhiteListIps"].AsBsonArray
+                                           .Select (p => p.AsString).ToArray ();
 
                 if (ips.Length > 0)
                 {
@@ -168,11 +180,11 @@
             User user = null;
             username = username.ToLower ();
 
-            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var domains = _database.GetCollection<RawBsonDocument> ("domains");
             var dquery = Query.And (Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dquery);
 
-            var users = database.GetCollection<User> ("users");
+            var users = _database.GetCollection<User> ("users");
             var query = Query.And (Query<User>.EQ (e => e.UserName, username),
                                   Query<User>.EQ (e => e.DomainId, domain ["_id"].AsGuid));
 
@@ -192,11 +204,11 @@
 
             email = email.ToLower ();
 
-            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var domains = _database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And (Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dQuery);
 
-            var users = database.GetCollection<User> ("users");
+            var users = _database.GetCollection<User> ("users");
             var query = Query.And (Query<User>.EQ (e => e.Email, email),
                                   Query<User>.EQ (e => e.DomainId, domain ["_id"].AsGuid));
 
@@ -214,11 +226,11 @@
         {
             User user = null;
 
-            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var domains = _database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And (Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dQuery);
 
-            var users = database.GetCollection<User> ("users");
+            var users = _database.GetCollection<User> ("users");
             var query = Query.And (Query<User>.EQ (e => e.AuthToken, authToken),
                                   Query<User>.EQ (e => e.DomainId, domain ["_id"].AsGuid));
 
@@ -230,7 +242,7 @@
             user.AuthToken = Guid.Empty;
             user.CurrentLogon = null;
 
-            WriteConcernResult result = users.Save (user);
+            var result = users.Save (user);
 
             return result.UpdatedExisting;
 
@@ -243,11 +255,11 @@
 
             username = username.ToLower ();
 
-            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var domains = _database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And (Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dQuery);
 
-            var users = database.GetCollection<User> ("users");
+            var users = _database.GetCollection<User> ("users");
             //TODO: Change application salt to user salt
             var query = Query.And
             (Query<User>.EQ (e => e.UserName, username),
@@ -266,7 +278,7 @@
                 user.LastRequest = DateTime.Now;
                 user.CurrentLogon = DateTime.Now;
 
-                WriteConcernResult result = users.Save (user);
+                var result = users.Save (user);
 
                 if (!result.UpdatedExisting)
                 {
@@ -285,11 +297,11 @@
         {
             User user = null;
 
-            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var domains = _database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And (Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dQuery);
 
-            var users = database.GetCollection<User> ("users");
+            var users = _database.GetCollection<User> ("users");
             var query = Query.And (Query<User>.EQ (e => e.AuthToken, authToken),
                                   Query<User>.EQ (e => e.DomainId, domain ["_id"].AsGuid));
 
@@ -299,7 +311,7 @@
             {
                 user.CurrentIp = IP;
                 user.LastRequest = DateTime.Now;
-                WriteConcernResult result = users.Save (user);
+                var result = users.Save (user);
 
                 if (!result.UpdatedExisting)
                 {
@@ -324,10 +336,10 @@
                 email = email.ToLower ();
             }
 
-            var appCollection = database.GetCollection<RawBsonDocument> ("domains");
+            var appCollection = _database.GetCollection<RawBsonDocument> ("domains");
             var query = Query.And (Query.EQ ("Key", domainKey));
             var domain = appCollection.FindOne (query);
-            User user = new User ();
+            var user = new User ();
             user.UserName = username;
             user.Email = email;
             //TODO: Change application salt to user salt
@@ -337,7 +349,7 @@
             user.Enabled = true;
             user.ModifiedAt = DateTime.Now;
 
-            var collection = database.GetCollection<User> ("users");
+            var collection = _database.GetCollection<User> ("users");
             collection.Insert (user);
             //user.AuthToken = user.AppId.ToString();
             return user;
@@ -347,11 +359,11 @@
         {
             User user = null;
 
-            var domains = database.GetCollection<RawBsonDocument> ("domains");
+            var domains = _database.GetCollection<RawBsonDocument> ("domains");
             var dQuery = Query.And (Query.EQ ("Key", domainKey));
             var domain = domains.FindOne (dQuery);
 
-            var users = database.GetCollection<User> ("users");
+            var users = _database.GetCollection<User> ("users");
             var query = Query.And (Query<User>.EQ (e => e.AuthToken, authToken),
                                   Query<User>.EQ (e => e.DomainId, domain ["_id"].AsGuid));
 
@@ -362,7 +374,7 @@
                 user.CurrentIp = IP;
                 user.LastRequest = DateTime.Now;
                 user.Enabled = false;
-                WriteConcernResult result = users.Save (user);
+                var result = users.Save (user);
 
                 if (!result.UpdatedExisting)
                 {
@@ -377,7 +389,7 @@
 
         public bool ValidateDomainKey (string domainName, Guid domainKey)
         {
-            var appCollection = database.GetCollection<RawBsonDocument> ("domains");
+            var appCollection = _database.GetCollection<RawBsonDocument> ("domains");
             var query = Query.And (Query.EQ ("Key", domainKey),
                                   Query.EQ ("Name", domainName));
 
@@ -390,17 +402,6 @@
 
             return false;
         }
-
-        private string Hash (string salt, string password)
-        {
-            var hasher = 
-                new Rfc2898DeriveBytes (password,
-                                        System.Text.Encoding.Default.GetBytes (salt)
-                                        , 10000);
-
-            return Convert.ToBase64String (hasher.GetBytes (25));
-        }
-
     }
 }
 

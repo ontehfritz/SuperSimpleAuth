@@ -8,22 +8,26 @@ namespace SuperSimple.Auth.Api
 
 	public class Bootstrapper : DefaultNancyBootstrapper
 	{
-        protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
+        protected override void ApplicationStartup(TinyIoCContainer container, 
+                                                   IPipelines pipelines)
         {
             base.ApplicationStartup(container, pipelines);
             StaticConfiguration.DisableErrorTraces = false;
             StaticConfiguration.EnableRequestTracing = true;
         }
 
-        protected override void ConfigureApplicationContainer(TinyIoCContainer container)
+        protected override void 
+        ConfigureApplicationContainer(TinyIoCContainer container)
         {
             base.ConfigureApplicationContainer(container);
-            IApiRepository repository = 
-                new ApiMongoRepository (ConfigurationManager.AppSettings.Get("db"));
+            var repository = 
+                new ApiMongoRepository (ConfigurationManager
+                                        .AppSettings.Get("db"));
             container.Register<IApiRepository>(repository);
         }
 
-        protected override void RequestStartup (TinyIoCContainer container, Nancy.Bootstrapper.IPipelines pipelines, 
+        protected override void RequestStartup (TinyIoCContainer container, 
+                                                IPipelines pipelines, 
                                                 NancyContext context)
         {
             base.RequestStartup (container, pipelines, context);

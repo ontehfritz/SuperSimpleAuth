@@ -5,8 +5,7 @@ namespace SuperSimple.Auth.Manager.Repository
     using MongoDB.Bson.Serialization.Attributes;
     using FluentValidation;
     using System.Collections.Generic;
-    using Api.Repository;
-    using SuperSimple.Auth.Api;
+    using Api;
 
     public class Domain
     {

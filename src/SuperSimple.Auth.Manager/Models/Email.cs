@@ -9,10 +9,14 @@ namespace SuperSimple.Auth.Manager
 {
     public class Email
     {
-        private static string _logon =    ConfigurationManager.AppSettings.Get("smtp:Logon");
-        private static string _password =  ConfigurationManager.AppSettings.Get("smtp:Password");
-        private static string _smtp =       ConfigurationManager.AppSettings.Get("smtp:Server");
-        private static string _port =       ConfigurationManager.AppSettings.Get("smtp:Port");
+        private static string _logon =    
+            ConfigurationManager.AppSettings.Get("smtp:Logon");
+        private static string _password =  
+            ConfigurationManager.AppSettings.Get("smtp:Password");
+        private static string _smtp =       
+            ConfigurationManager.AppSettings.Get("smtp:Server");
+        private static string _port =       
+            ConfigurationManager.AppSettings.Get("smtp:Port");
   
         public static void Send(string domain, string to, string subject,
             string body)

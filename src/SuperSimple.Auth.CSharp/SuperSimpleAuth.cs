@@ -8,29 +8,29 @@ namespace SuperSimple.Auth
 
     public class SuperSimpleAuth
     {
-//        private const string _headerDomainKey = "SSA_DOMAIN_KEY";
-//        private const string _headerDomain = "SSA_DOMAIN";
+        //        private const string _headerDomainKey = "SSA_DOMAIN_KEY";
+        //        private const string _headerDomain = "SSA_DOMAIN";
         private const string _headerDomainKey = "Ssa-Domain-Key";
         private const string _headerDomain = "Ssa-Domain";
 
-        private string URI;
-        private Guid DomainKey { get; set; }
-        private string Name;
- 
-        public SuperSimpleAuth (string name, 
-                                string domainKey, 
+        private string _uri;
+        private Guid _domainKey { get; set; }
+        private string _name;
+
+        public SuperSimpleAuth (string name,
+                                string domainKey,
                                 string uri = "https://api.authenticate.technology")
         {
-            this.Name = name;
-            this.URI = uri;
+            _name = name;
+            _uri = uri;
 
-            Guid key; 
+            Guid key;
 
-            if (Guid.TryParse (domainKey, out key)) 
+            if (Guid.TryParse (domainKey, out key))
             {
-                DomainKey = key;
-            } 
-            else 
+                _domainKey = key;
+            }
+            else
             {
                 throw new Exception ("Domain key is in an incorrect format.");
             }
@@ -40,116 +40,124 @@ namespace SuperSimple.Auth
         /// /*Forgot the specified email.*/
         /// </summary>
         /// <param name="email">Email.</param>
-        public string Forgot(string email)
+        public string Forgot (string email)
         {
-            if(email == null || email == "")
+            if (string.IsNullOrEmpty (email))
             {
                 throw new ArgumentException ("email cannot be null or empty string", "email");
             }
 
-            using (WebClient client = new WebClient ()) {
-                System.Collections.Specialized.NameValueCollection reqparm = 
+            using (WebClient client = new WebClient ())
+            {
+                var reqparm =
                     new System.Collections.Specialized.NameValueCollection ();
-             
+
                 reqparm.Add ("Email", email);
 
-               
-                client.Headers [_headerDomainKey] = this.DomainKey.ToString ();
-                client.Headers [_headerDomain] = this.Name;
+                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
+                client.Headers [_headerDomain] = this._name;
 
                 string responsebody = "";
 
-                try {
-                    ServicePointManager.ServerCertificateValidationCallback = delegate {
+                try
+                {
+                    ServicePointManager.ServerCertificateValidationCallback = 
+                        delegate
+                    {
                         return true;
                     };
 
-                    byte[] responsebytes = client.UploadValues (string.Format ("{0}/forgot", URI), 
+                    byte [] responsebytes = 
+                        client.UploadValues (string.Format ("{0}/forgot", _uri),
                                                "Post", reqparm);
 
                     responsebody = Encoding.UTF8.GetString (responsebytes);
 
-                } catch (WebException e) {
+                }
+                catch (WebException e)
+                {
                     HandleWebException (e);
                 }
 
                 return JsonConvert.DeserializeObject<string> (responsebody);
             }
         }
-       
-        public bool ChangeUserName(Guid authToken, string newUserName)
+
+        public bool ChangeUserName (Guid authToken, string newUserName)
         {
             bool end = false;
 
-            using(WebClient client = new WebClient())
+            using (WebClient client = new WebClient ())
             {
-                System.Collections.Specialized.NameValueCollection reqparm = 
-                    new System.Collections.Specialized.NameValueCollection();
+                var reqparm =
+                    new System.Collections.Specialized.NameValueCollection ();
 
-                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
-                client.Headers[_headerDomain] = this.Name;
+                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
+                client.Headers [_headerDomain] = this._name;
 
-                reqparm.Add("AuthToken", authToken.ToString());
-                reqparm.Add("NewUserName", newUserName);
+                reqparm.Add ("AuthToken", authToken.ToString ());
+                reqparm.Add ("NewUserName", newUserName);
 
                 string responsebody = "";
 
                 try
                 {
-                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+                    ServicePointManager.ServerCertificateValidationCallback = 
+                        delegate { return true; };
 
-                    byte[] responsebytes = 
-                        client.UploadValues(string.Format("{0}/username",URI), 
+                    byte [] responsebytes =
+                        client.UploadValues (string.Format ("{0}/username", _uri),
                             "Post", reqparm);
 
-                    responsebody = Encoding.UTF8.GetString(responsebytes);
+                    responsebody = Encoding.UTF8.GetString (responsebytes);
 
                 }
-                catch(WebException e) 
+                catch (WebException e)
                 {
                     HandleWebException (e);
                 }
 
-                end = JsonConvert.DeserializeObject<bool>(responsebody);
+                end = JsonConvert.DeserializeObject<bool> (responsebody);
             }
 
             return end;
         }
 
-        public bool ChangeEmail(Guid authToken, string newEmail)
+        public bool ChangeEmail (Guid authToken, string newEmail)
         {
             bool end = false;
 
-            using(WebClient client = new WebClient())
+            using (WebClient client = new WebClient ())
             {
-                System.Collections.Specialized.NameValueCollection reqparm = 
-                    new System.Collections.Specialized.NameValueCollection();
+                var reqparm =
+                    new System.Collections.Specialized.NameValueCollection ();
 
-                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
-                client.Headers[_headerDomain] = this.Name;
+                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
+                client.Headers [_headerDomain] = this._name;
 
-                reqparm.Add("AuthToken", authToken.ToString());
-                reqparm.Add("NewEmail", newEmail);
+                reqparm.Add ("AuthToken", authToken.ToString ());
+                reqparm.Add ("NewEmail", newEmail);
 
                 string responsebody = "";
 
                 try
                 {
-                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+                    ServicePointManager.ServerCertificateValidationCallback = 
+                        delegate { return true; };
 
-                    byte[] responsebytes = 
-                        client.UploadValues(string.Format("{0}/email",URI), 
+                    byte [] responsebytes =
+                        client.UploadValues (string.Format ("{0}/email", _uri),
                             "Post", reqparm);
 
-                    responsebody = Encoding.UTF8.GetString(responsebytes);
+                    responsebody = Encoding.UTF8.GetString (responsebytes);
 
                 }
-                catch(WebException e) 
+                catch (WebException e)
                 {
                     HandleWebException (e);
                 }
 
-                end = JsonConvert.DeserializeObject<bool>(responsebody);
+                end = JsonConvert.DeserializeObject<bool> (responsebody);
             }
 
             return end;
@@ -159,80 +167,82 @@ namespace SuperSimple.Auth
         /// End the specified authToken.
         /// </summary>
         /// <param name="authToken">Auth token.</param>
-        public bool ChangePassword(Guid authToken, string newPassword)
+        public bool ChangePassword (Guid authToken, string newPassword)
         {
             bool end = false;
 
-            using(WebClient client = new WebClient())
+            using (WebClient client = new WebClient ())
             {
-                System.Collections.Specialized.NameValueCollection reqparm = 
-                    new System.Collections.Specialized.NameValueCollection();
+                var reqparm =
+                    new System.Collections.Specialized.NameValueCollection ();
 
-                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
-                client.Headers[_headerDomain] = this.Name;
+                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
+                client.Headers [_headerDomain] = this._name;
 
-                reqparm.Add("AuthToken", authToken.ToString());
-                reqparm.Add("NewPassword", newPassword);
+                reqparm.Add ("AuthToken", authToken.ToString ());
+                reqparm.Add ("NewPassword", newPassword);
 
                 string responsebody = "";
 
                 try
                 {
-                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-                    byte[] responsebytes = 
-                        client.UploadValues(string.Format("{0}/password",URI), 
+                    ServicePointManager.ServerCertificateValidationCallback = 
+                        delegate { return true; };
+                    byte [] responsebytes =
+                        client.UploadValues (string.Format ("{0}/password", _uri),
                             "Post", reqparm);
 
-                    responsebody = Encoding.UTF8.GetString(responsebytes);
+                    responsebody = Encoding.UTF8.GetString (responsebytes);
 
                 }
-                catch(WebException e) 
+                catch (WebException e)
                 {
                     HandleWebException (e);
                 }
 
-                end = JsonConvert.DeserializeObject<bool>(responsebody);
+                end = JsonConvert.DeserializeObject<bool> (responsebody);
             }
 
             return end;
         }
-       
+
         /// <summary>
         /// End the specified authToken.
         /// </summary>
         /// <param name="authToken">Auth token.</param>
-        public bool End(Guid authToken)
+        public bool End (Guid authToken)
         {
             bool end = false;
 
-            using(WebClient client = new WebClient())
+            using (WebClient client = new WebClient ())
             {
-                System.Collections.Specialized.NameValueCollection reqparm = 
-                    new System.Collections.Specialized.NameValueCollection();
+                var reqparm =
+                    new System.Collections.Specialized.NameValueCollection ();
 
-                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
-                client.Headers[_headerDomain] = this.Name;
+                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
+                client.Headers [_headerDomain] = this._name;
 
-                reqparm.Add("AuthToken", authToken.ToString());
+                reqparm.Add ("AuthToken", authToken.ToString ());
 
                 string responsebody = "";
 
                 try
                 {
-                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-                    byte[] responsebytes = 
-                        client.UploadValues(string.Format("{0}/end",URI), 
+                    ServicePointManager.ServerCertificateValidationCallback = 
+                        delegate { return true; };
+                    byte [] responsebytes =
+                        client.UploadValues (string.Format ("{0}/end", _uri),
                                             "Post", reqparm);
 
-                    responsebody = Encoding.UTF8.GetString(responsebytes);
+                    responsebody = Encoding.UTF8.GetString (responsebytes);
 
                 }
-                catch(WebException e) 
+                catch (WebException e)
                 {
                     HandleWebException (e);
                 }
 
-                end = JsonConvert.DeserializeObject<bool>(responsebody);
+                end = JsonConvert.DeserializeObject<bool> (responsebody);
             }
 
             return end;
@@ -244,42 +254,44 @@ namespace SuperSimple.Auth
         /// <param name="username">Username.</param>
         /// <param name="secret">Secret.</param>
         /// <param name="IP">I.</param>
-        public User Authenticate(string username, string secret, string IP = null)
+        public User Authenticate (string username, string secret, string IP = null)
         {
             User user = null;
 
-            using(WebClient client = new WebClient())
+            using (WebClient client = new WebClient ())
             {
-                System.Collections.Specialized.NameValueCollection reqparm = 
-                    new System.Collections.Specialized.NameValueCollection();
+                var reqparm =
+                    new System.Collections.Specialized.NameValueCollection ();
 
-                reqparm.Add("Username", username);
-                reqparm.Add("Secret", secret);
+                reqparm.Add ("Username", username);
+                reqparm.Add ("Secret", secret);
 
-                if (IP != null) 
+                if (IP != null)
                 {
                     reqparm.Add ("IP", IP);
                 }
 
-                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
-                client.Headers[_headerDomain] = this.Name;
+                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
+                client.Headers [_headerDomain] = this._name;
 
                 string responsebody = "";
 
                 try
                 {
-                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-                    byte[] responsebytes = client.UploadValues(string.Format("{0}/authenticate", URI), 
+                    ServicePointManager.ServerCertificateValidationCallback = 
+                        delegate { return true; };
+                    byte [] responsebytes = 
+                        client.UploadValues (string.Format ("{0}/authenticate", _uri),
                                                                "Post", reqparm);
 
-                    responsebody = Encoding.UTF8.GetString(responsebytes);
+                    responsebody = Encoding.UTF8.GetString (responsebytes);
                 }
-                catch(WebException e) 
+                catch (WebException e)
                 {
                     HandleWebException (e);
                 }
-               
-                user = JsonConvert.DeserializeObject<User>(responsebody);
+
+                user = JsonConvert.DeserializeObject<User> (responsebody);
             }
 
             return user;
@@ -290,42 +302,43 @@ namespace SuperSimple.Auth
         /// </summary>
         /// <param name="authToken">Auth token.</param>
         /// <param name="IP">I.</param>
-        public User Validate(Guid authToken, string IP = null)
+        public User Validate (Guid authToken, string IP = null)
         {
             User user = null;
-            using(WebClient client = new WebClient())
+            using (WebClient client = new WebClient ())
             {
-                System.Collections.Specialized.NameValueCollection reqparm = 
-                    new System.Collections.Specialized.NameValueCollection();
+                var reqparm =
+                    new System.Collections.Specialized.NameValueCollection ();
 
-                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
-                client.Headers[_headerDomain] = this.Name;
+                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
+                client.Headers [_headerDomain] = this._name;
 
-                reqparm.Add("AuthToken", authToken.ToString());
+                reqparm.Add ("AuthToken", authToken.ToString ());
 
-                if (IP != null) 
+                if (IP != null)
                 {
                     reqparm.Add ("IP", IP);
                 }
-              
+
                 string responsebody = "";
 
                 try
                 {
-                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-                    byte[] responsebytes = 
-                        client.UploadValues(string.Format("{0}/validate", URI), 
+                    ServicePointManager.ServerCertificateValidationCallback = 
+                        delegate { return true; };
+                    byte [] responsebytes =
+                        client.UploadValues (string.Format ("{0}/validate", _uri),
                                                                "Post", reqparm);
 
-                    responsebody = Encoding.UTF8.GetString(responsebytes);
+                    responsebody = Encoding.UTF8.GetString (responsebytes);
 
                 }
-                catch(WebException e) 
+                catch (WebException e)
                 {
                     HandleWebException (e);
                 }
 
-                user = JsonConvert.DeserializeObject<User>(responsebody);
+                user = JsonConvert.DeserializeObject<User> (responsebody);
             }
 
             return user;
@@ -338,80 +351,83 @@ namespace SuperSimple.Auth
         /// <param name="userName">User name.</param>
         /// <param name="secret">Secret.</param>
         /// <param name="email">Email.</param>
-        public User CreateUser(string userName, string secret, string email = null)
+        public User CreateUser (string userName, string secret, string email = null)
         {
             User user = null;
 
-            using(WebClient client = new WebClient())
+            using (WebClient client = new WebClient ())
             {
-                System.Collections.Specialized.NameValueCollection reqparm = 
-                    new System.Collections.Specialized.NameValueCollection();
+                var reqparm =
+                    new System.Collections.Specialized.NameValueCollection ();
 
-                reqparm.Add("Username", userName);
-                reqparm.Add("Secret", secret);
+                reqparm.Add ("Username", userName);
+                reqparm.Add ("Secret", secret);
 
-                if (email != null) 
+                if (email != null)
                 {
-                    reqparm.Add("Email", email);
+                    reqparm.Add ("Email", email);
                 }
 
-                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
-                client.Headers[_headerDomain] = this.Name;
+                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
+                client.Headers [_headerDomain] = this._name;
 
                 string responsebody = "";
 
                 try
                 {
-                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-                    byte[] responsebytes = client.UploadValues(string.Format("{0}/user",URI), 
+                    ServicePointManager.ServerCertificateValidationCallback = 
+                        delegate { return true; };
+                    byte [] responsebytes = 
+                        client.UploadValues (string.Format ("{0}/user", _uri),
                         "Post", reqparm);
-                   
-                    responsebody = Encoding.UTF8.GetString(responsebytes);
+
+                    responsebody = Encoding.UTF8.GetString (responsebytes);
 
                 }
-                catch(WebException e) 
+                catch (WebException e)
                 {
                     HandleWebException (e);
                 }
-              
-                user = JsonConvert.DeserializeObject<User>(responsebody);
+
+                user = JsonConvert.DeserializeObject<User> (responsebody);
             }
 
             return user;
         }
 
-        public bool Disable(Guid authToken)
+        public bool Disable (Guid authToken)
         {
             bool disabled = false;
 
-            using(WebClient client = new WebClient())
+            using (WebClient client = new WebClient ())
             {
-                System.Collections.Specialized.NameValueCollection reqparm = 
-                    new System.Collections.Specialized.NameValueCollection();
+                var reqparm =
+                    new System.Collections.Specialized.NameValueCollection ();
 
-                client.Headers[_headerDomainKey] = this.DomainKey.ToString();
-                client.Headers[_headerDomain] = this.Name;
+                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
+                client.Headers [_headerDomain] = this._name;
 
-                reqparm.Add("AuthToken", authToken.ToString());
+                reqparm.Add ("AuthToken", authToken.ToString ());
 
                 string responsebody = "";
 
                 try
                 {
-                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-                    byte[] responsebytes = 
-                        client.UploadValues(string.Format("{0}/disable",URI), 
+                    ServicePointManager.ServerCertificateValidationCallback = 
+                        delegate { return true; };
+                    byte [] responsebytes =
+                        client.UploadValues (string.Format ("{0}/disable", _uri),
                             "Post", reqparm);
 
-                    responsebody = Encoding.UTF8.GetString(responsebytes);
+                    responsebody = Encoding.UTF8.GetString (responsebytes);
 
                 }
-                catch(WebException e) 
+                catch (WebException e)
                 {
                     HandleWebException (e);
                 }
 
-                disabled = JsonConvert.DeserializeObject<bool>(responsebody);
+                disabled = JsonConvert.DeserializeObject<bool> (responsebody);
             }
 
             return disabled;
@@ -422,19 +438,19 @@ namespace SuperSimple.Auth
         /// </summary>
         /// <returns>The response.</returns>
         /// <param name="response">Response.</param>
-        private string ReadResponse(WebResponse response)
+        private string ReadResponse (WebResponse response)
         {
-            string responseText = "";
+            var responseText = string.Empty;
 
             if (response != null)
             {
-                var responseStream = response.GetResponseStream();
+                var responseStream = response.GetResponseStream ();
 
                 if (responseStream != null)
                 {
-                    using (var reader = new StreamReader(responseStream))
+                    using (var reader = new StreamReader (responseStream))
                     {
-                        responseText = reader.ReadToEnd();
+                        responseText = reader.ReadToEnd ();
                     }
                 }
             }
@@ -446,40 +462,40 @@ namespace SuperSimple.Auth
         /// Handles the web exception.
         /// </summary>
         /// <param name="exception">Exception.</param>
-        private void HandleWebException(WebException exception)
+        private void HandleWebException (WebException exception)
         {
-            if (exception.Status != WebExceptionStatus.ProtocolError) 
+            if (exception.Status != WebExceptionStatus.ProtocolError)
             {
                 throw exception;
             }
 
-            ErrorMessage error = new ErrorMessage();
+            var error = new ErrorMessage ();
 
             try
             {
                 string response = ReadResponse (exception.Response);
-                error = 
-                    JsonConvert.DeserializeObject<ErrorMessage>(response);
+                error =
+                    JsonConvert.DeserializeObject<ErrorMessage> (response);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw exception;
             }
 
-            switch (error.Status) 
+            switch (error.Status)
             {
-                case "DuplicateUser":
-                    throw new DuplicateUserException (error.Message);
-                case "InvalidKey":
-                    throw new InvalidKeyException(error.Message);
-                case "AuthenticationFailed":
-                    throw new AuthenticationFailedException(error.Message);
-                case "InvalidToken":
-                    throw new InvalidTokenException(error.Message);
-                case "IpNotAllowed":
-                    throw new InvalidIpException(error.Message);
-                default:
-                    throw exception;
+            case "DuplicateUser":
+                throw new DuplicateUserException (error.Message);
+            case "InvalidKey":
+                throw new InvalidKeyException (error.Message);
+            case "AuthenticationFailed":
+                throw new AuthenticationFailedException (error.Message);
+            case "InvalidToken":
+                throw new InvalidTokenException (error.Message);
+            case "IpNotAllowed":
+                throw new InvalidIpException (error.Message);
+            default:
+                throw exception;
             }
         }
     }

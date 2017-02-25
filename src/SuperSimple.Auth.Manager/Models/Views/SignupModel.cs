@@ -5,10 +5,10 @@ namespace SuperSimple.Auth.Manager
 
     public class SignupModel
     {
-        public string Email { get; set; }
-        public string Secret { get; set; }
+        public string Email         { get; set; }
+        public string Secret        { get; set; }
         public string ConfirmSecret { get; set; }
-        public List<Error> Errors { get; set; }
+        public List<Error> Errors   { get; set; }
     }
 
     public class SignupValidator : AbstractValidator<SignupModel>

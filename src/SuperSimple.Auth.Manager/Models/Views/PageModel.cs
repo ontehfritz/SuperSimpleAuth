@@ -1,15 +1,14 @@
 namespace SuperSimple.Auth.Manager
 {
     using System.Collections.Generic;
-    using SuperSimple.Auth.Api;
-    using SuperSimple.Auth.Api.Repository;
+    using Api;
 
     public class PageModel
     {
-        public IUser Manager { get; set; }
-        public string Title { get; set; }
-        public List<string> Messages { get; set; }
-        public List<Error> Errors { get; set; }
+        public IUser Manager            { get; set; }
+        public string Title             { get; set; }
+        public List<string> Messages    { get; set; }
+        public List<Error> Errors       { get; set; }
 
         public PageModel()
         {

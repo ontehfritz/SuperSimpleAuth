@@ -7,7 +7,7 @@ namespace SuperSimple.Auth.Manager
     using System.Collections.Generic;
     using Api.Repository;
     using Api;
-    using SuperSimple.Auth.Manager.Repository;
+    using Repository;
 
     public class ManagerMapper : IUserMapper
     {
