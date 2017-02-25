@@ -13,7 +13,7 @@ namespace SSANancyExample
             this.RequiresAuthentication ();
 
             Get ["/"] = parameters => {
-                NancyUserIdentity nuser = (NancyUserIdentity)Context.CurrentUser;
+                var nuser = (NancyUserIdentity)Context.CurrentUser;
                 return View["index", nuser];
             };
 

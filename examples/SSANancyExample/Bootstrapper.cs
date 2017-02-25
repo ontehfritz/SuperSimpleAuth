@@ -8,26 +8,34 @@ namespace SSANancyExample
 
     public class Bootstrapper : DefaultNancyBootstrapper
     {
-        protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
+        /// <summary>
+        /// Change these settings to match local or online server settings
+        /// </summary>
+        //*****************************************************************//
+        private string _domain = "test";
+        private string _domainCode = "16fcdfeb-a5b2-4119-8b11-e1dc4de82851";
+        private string _url = "http://127.0.0.1:8082";
+        //*****************************************************************//
+
+        protected override void ApplicationStartup(TinyIoCContainer container, 
+                                                   IPipelines pipelines)
         {
             base.ApplicationStartup(container, pipelines);
             StaticConfiguration.DisableErrorTraces = false;
             StaticConfiguration.EnableRequestTracing = true;
         }
 
-        protected override void ConfigureApplicationContainer(TinyIoCContainer container)
+        protected override void ConfigureApplicationContainer(TinyIoCContainer 
+                                                              container)
         {
             base.ConfigureApplicationContainer(container);
 
             //some encryption on the keys could be used. 
 
-            SuperSimpleAuth ssa = 
-                new SuperSimpleAuth ("test", 
-                    "99de73fb-0b87-4cbf-87d3-b4660c42f4b2", "http://127.0.0.1:8082");
-
-//            SuperSimpleAuth ssa = 
-//                new SuperSimpleAuth ("testing", 
-//                    "e7cfb785-4b37-4350-8897-cbd85af8fde9");
+            var ssa = 
+                new SuperSimpleAuth (_domain, 
+                                     _domainCode, 
+                                     _url);
 
             container.Register<SuperSimpleAuth>(ssa);
         }

@@ -1,11 +1,7 @@
-using Nancy.Validation;
-using System.Collections.Generic;
-
 namespace SSANancyExample
 {
-    using System;
-    using Nancy.Validation.FluentValidation;
     using FluentValidation;
+    using System.Collections.Generic;
 
     public class SignupModel
     {
