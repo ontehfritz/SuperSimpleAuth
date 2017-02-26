@@ -233,6 +233,15 @@ namespace SuperSimple.Auth.Manager
                 {
                     IUser admin = null;
 
+                    model.Errors = new List<Error> ();
+                    var result = this.Validate (model);
+
+                    if (!result.IsValid)
+                    {
+                        model.Errors = Helpers.GetValidationErrors (result);
+                        return View ["Admin_new", model];
+                    }
+
                     if (model.Manager.UserName.ToLower () !=
                         model.Email.ToLower ())
                     {
