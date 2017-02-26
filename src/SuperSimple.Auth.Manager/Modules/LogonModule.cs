@@ -70,6 +70,15 @@ namespace SuperSimple.Auth.Manager
             {
                 var model = this.Bind<LogonModel> ();
 
+                model.Errors = new List<Error> ();
+                var result = this.Validate (model);
+
+                if (!result.IsValid)
+                {
+                    model.Errors = Helpers.GetValidationErrors (result);
+                    return View ["Logon", model];
+                }
+
                 var manager = api.Authenticate(repository.SsaDomain.Key,
                                                model.Username,
                                                model.Secret);

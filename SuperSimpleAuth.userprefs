@@ -1,5 +1,5 @@
-﻿<Properties StartupConfiguration="MonoDevelop.Projects.MultiStartup">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Manager/Views/_Layout.cshtml">
+﻿<Properties StartupConfiguration="Multi-Startup">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Manager/Models/Views/AdminModel.cs">
     <Files>
       <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="24" Column="60" />
       <File FileName="test/SuperSimple.Auth.Manager.Repository.Test/Test.cs" Line="412" Column="1" />
@@ -14,20 +14,41 @@
       <File FileName="src/SuperSimple.Auth.Api/Helper/Error.cs" Line="24" Column="13" />
       <File FileName="src/SuperSimple.Auth.Manager/Views/home/Admin.cshtml" Line="1" Column="1" />
       <File FileName="src/SuperSimple.Auth.Manager/Views/logon/_Signup.cshtml" Line="1" Column="1" />
-      <File FileName="src/SuperSimple.Auth.Manager/Views/_Layout.cshtml" Line="20" Column="36" />
+      <File FileName="src/SuperSimple.Auth.Manager/Views/_Layout.cshtml" Line="31" Column="32" />
+      <File FileName="src/SuperSimple.Auth.Manager/Modules/LogonModule.cs" Line="120" Column="17" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/ApiMongoRepository.cs" Line="46" Column="40" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/LogonModel.cs" Line="3" Column="28" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/AdminModel.cs" Line="23" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/ClaimModel.cs" Line="24" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/CreateRoleModel.cs" Line="3" Column="5" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/ManageModel.cs" Line="1" Column="35" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/PageModel.cs" Line="12" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/RoleModel.cs" Line="18" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/SettingsModel.cs" Line="12" Column="2" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/SignupModel.cs" Line="14" Column="38" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/DomainModel.cs" Line="6" Column="26" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/DomainUserModel.cs" Line="21" Column="39" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Views/ForgotPasswordModel.cs" Line="10" Column="49" />
+      <File FileName="src/SuperSimple.Auth.Manager/Modules/HomeModule.cs" Line="242" Column="58" />
+      <File FileName="src/SuperSimple.Auth.Manager/Modules/IndexModule.cs" Line="4" Column="38" />
     </Files>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.Manager PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <StartupItems>
-    <String>src/SuperSimple.Auth.Api/SuperSimple.Auth.Api.csproj</String>
-    <String>src/SuperSimple.Auth.Manager/SuperSimple.Auth.Manager.csproj</String>
-    <String>examples/SSANancyExample/SSANancyExample.csproj</String>
-  </StartupItems>
   <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.Api PreferredExecutionTarget="MonoDevelop.Default" />
   <AuthorInfo Name="Fritz (Fredrick Seitz)" Email="fredrick.seitz@gmail.com" Copyright="Fritz (Fredrick Seitz)" Company="Fritz" Trademark="Fritz" />
+  <MultiItemStartupConfigurations>
+    <MultiItemSolutionRunConfiguration Id="Multi-Startup" Name="Multi-Startup">
+      <Items>
+        <StartupItem ItemId="{3E96487D-52AE-4A0B-8D29-B4F4EBEC5CC7}" />
+        <StartupItem ItemId="{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}" />
+        <StartupItem ItemId="{7CEC59C0-3066-4EF5-B541-74271176F26B}" />
+      </Items>
+    </MultiItemSolutionRunConfiguration>
+  </MultiItemStartupConfigurations>
+  <MonoDevelop.Ide.ItemProperties.SSANancyExample PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>
