@@ -1,6 +1,7 @@
 ﻿namespace SuperSimple.Auth.Api.Token
 {
     using System;
+    using System.Collections.Generic;
     using System.Security.Cryptography;
     using System.Text;
     using Newtonsoft.Json;
@@ -73,11 +74,10 @@
             if(splittoken.Length != 3){ return null; }
 
             var header = JsonConvert.DeserializeObject<Header>(
-                Encoding.UTF8.GetString(
-                    Encoding.Unicode.GetBytes(splittoken[0]))); 
+                Encoding.UTF8.GetString(Base64UrlDecode(splittoken[0])));
+                   
             var payload = JsonConvert.DeserializeObject<Payload>(
-                Encoding.UTF8.GetString(
-                    Encoding.Unicode.GetBytes(splittoken[1]))); 
+                Encoding.UTF8.GetString(Base64UrlDecode(splittoken[1])));
 
             var hash = HMACSHA256(header, payload, secret);
             if(hash != splittoken[2]) { return null; }
@@ -119,6 +119,19 @@
         public string Type { get; set; }
     }
 
+    public class Role 
+    {
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+        [JsonProperty(PropertyName = "per")]
+        public List<string> Permissions { get; set; }
+
+        public Role()
+        {
+            Permissions = new List<string>();
+        }
+    }
+
     public class Payload
     {
         // ** registered jwt properites 
@@ -143,5 +156,14 @@
         public string Username      { get; set; }
         [JsonProperty(PropertyName = "mail")]
         public string Email         { get; set; }
+
+        [JsonProperty(PropertyName="roles")]
+        public List<Role> Roles     { get; set; }
+
+        public Payload()
+        {
+            Roles = new List<Role>();
+        }
+
     }
 }
