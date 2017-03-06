@@ -32,12 +32,12 @@
             payload.Roles.Add(role1);
             payload.Roles.Add(role2);
 
-            var token = new JwtToken(header,payload, "testing");
+            var token = new Jwt(header,payload, "testing");
 
-            var tokenString = JwtToken.ToToken(token);
+            var tokenString = Jwt.ToToken(token);
             Assert.True(!string.IsNullOrEmpty(tokenString));
 
-            var valToken = JwtToken.Validate(tokenString,"testing");
+            var valToken = Jwt.Validate(tokenString,"testing");
             Assert.AreEqual(token.Payload.Issuer,valToken.Payload.Issuer);
         }
     }

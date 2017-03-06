@@ -35,7 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="JwtToken.cs" />
+    <Compile Include="Jwt.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -248,6 +248,22 @@
 
         }
 
+        public User GetUser (Guid domainId, string username)
+        {
+            var collection = _database.GetCollection<User> ("users");
+            var query = Query.And (Query<User>.EQ (e => e.DomainId, domainId),
+                                   Query<User>.EQ (e => e.UserName, username));
+            var user = collection.Find (query)
+                                 .SetFields (Fields.Exclude ("Secret", "AuthToken"));
+
+            foreach (var u in user)
+            {
+                return u;
+            }
+
+            return null;
+        }
+
         public User Authenticate (Guid domainKey, string username,
                                   string secret, string IP = null)
         {
