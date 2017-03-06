@@ -209,8 +209,9 @@
 
             Post ["/authenticate"] = parameters =>
             {
-                Guid domainKey =
-                    Guid.Parse (Request.Headers [_headerDomainKey].FirstOrDefault ());
+                var domainKey =
+                    Guid.Parse (Request.Headers [_headerDomainKey]
+                                .FirstOrDefault ());
 
                 User user = null;
                 string username = Request.Form ["Username"];
@@ -242,6 +243,7 @@
                     Claims = user.GetClaims (),
                     Roles = user.GetRoles ()
                 };
+
 
                 return Response.AsJson (u);
             };
