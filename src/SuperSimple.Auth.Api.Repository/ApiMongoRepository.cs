@@ -248,6 +248,7 @@
 
         }
 
+       
         public User Authenticate (Guid domainKey, string username,
                                   string secret, string IP = null)
         {
@@ -291,6 +292,24 @@
             }
 
             return user;
+        }
+
+        public string GetAuthToken(Guid domainKey, string username)
+        {
+            User user = null;
+
+            var domains = _database.GetCollection<RawBsonDocument> ("domains");
+            var dQuery = Query.And (Query.EQ ("Key", domainKey));
+            var domain = domains.FindOne (dQuery);
+
+            var users = _database.GetCollection<User> ("users");
+            var query = Query.And (Query<User>.EQ (e => e.UserName, username),
+                                   Query<User>.EQ (e => e.DomainId, 
+                                                   domain ["_id"].AsGuid));
+
+            user = users.FindOne (query);
+
+            return user.AuthToken.ToString();
         }
 
         public User Validate (Guid authToken, Guid domainKey, string IP = null)

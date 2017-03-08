@@ -8,17 +8,15 @@
     /// <summary>
     /// Jwt token. https://scotch.io/tutorials/the-anatomy-of-a-json-web-token
     /// </summary>
-    public class JwtToken
+    public class Jwt
     {
         public Header Header        { get; }
         public Payload Payload      { get; }
-        public string Secret        { get; }
 
-        public JwtToken (Header header, Payload payload, string secret)
+        public Jwt (Header header, Payload payload)
         {
             Header = header;
             Payload = payload;
-            Secret = secret;
         }
 
         // great replacement for microsofts urlencode that is pretty shit 
@@ -49,7 +47,7 @@
             return converted;
         }
 
-        public static string ToToken(JwtToken jwttoken)
+        public static string ToToken(Jwt jwttoken, string secret)
         {
             var header =
                 Encoding.UTF8.GetBytes(
@@ -62,16 +60,31 @@
                               Base64UrlEncode(header),
                               Base64UrlEncode(payload),
                               HMACSHA256(jwttoken.Header,jwttoken.Payload,
-                                         jwttoken.Secret));
+                                         secret));
 
             return token;
         }
 
-        public static JwtToken Validate(string token, string secret)
+        public static Jwt ToObject(string token)
         {
             var splittoken = token.Split('.');
 
             if(splittoken.Length != 3){ return null; }
+
+            var header = JsonConvert.DeserializeObject<Header>(
+                Encoding.UTF8.GetString(Base64UrlDecode(splittoken[0])));
+
+            var payload = JsonConvert.DeserializeObject<Payload>(
+                Encoding.UTF8.GetString(Base64UrlDecode(splittoken[1])));
+
+            return new Jwt(header, payload);
+        }
+
+        public static bool Validate(string token, string secret)
+        {
+            var splittoken = token.Split('.');
+
+            if(splittoken.Length != 3){ return false; }
 
             var header = JsonConvert.DeserializeObject<Header>(
                 Encoding.UTF8.GetString(Base64UrlDecode(splittoken[0])));
@@ -80,10 +93,9 @@
                 Encoding.UTF8.GetString(Base64UrlDecode(splittoken[1])));
 
             var hash = HMACSHA256(header, payload, secret);
-            if(hash != splittoken[2]) { return null; }
-            var tokenObject = new JwtToken(header, payload, secret);
+            if(hash != splittoken[2]) { return false; }
 
-            return tokenObject;
+            return true;
         }
 
         private static string HMACSHA256(Header header, Payload payload,

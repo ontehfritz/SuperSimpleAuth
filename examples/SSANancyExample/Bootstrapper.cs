@@ -44,7 +44,7 @@ namespace SSANancyExample
                                                           NancyContext context)
         {
             base.ConfigureRequestContainer(container, context);
-            container.Register<IUserMapper, NancyUserMapper>();
+            //container.Register<IUserMapper, NancyUserMapper>();
         }
        
         protected override void RequestStartup(TinyIoCContainer container, 

@@ -12,10 +12,10 @@ namespace SSANancyExample
         {
             this.RequiresAuthentication ();
 
-            Get ["/"] = parameters => {
-                var nuser = (NancyUserIdentity)Context.CurrentUser;
-                return View["index", nuser];
-            };
+            //Get ["/"] = parameters => {
+            //    var nuser = (NancyUserIdentity)Context.CurrentUser;
+            //    return View["index", nuser];
+            //};
 
         }
     }
