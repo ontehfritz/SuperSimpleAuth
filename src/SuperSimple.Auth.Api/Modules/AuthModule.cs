@@ -165,7 +165,7 @@
                 var token =
                     Request.Headers [_authorization].FirstOrDefault ();
 
-                var jwt = Jwt.ToObject(token);
+                var jwt = Jwt.ToObject(token.Replace("\"", string.Empty));
 
                 string IP = Request.Form ["IP"];
 
@@ -173,7 +173,7 @@
                                         jwt.Payload.Username);
 
 
-                if(Jwt.Validate(token, key))
+                if(Jwt.Validate(token.Replace("\"", string.Empty), key))
                 {
                     return Response.AsJson (token);
                 }

@@ -80,7 +80,7 @@
             return new Jwt(header, payload);
         }
 
-        public bool Validate(string token, string secret)
+        public static bool Validate(string token, string secret)
         {
             var splittoken = token.Split('.');
 

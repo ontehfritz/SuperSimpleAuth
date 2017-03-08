@@ -3,14 +3,23 @@ using System.Collections.Generic;
 
 namespace SuperSimple.Auth
 {
+    public class Role
+    {
+        public string Name                  { get; set; }
+        public List<string> Permissions     { get; set; }
+
+        public Role()
+        {
+            Permissions = new List<string>();
+        }
+    }
     public class User
     {
         public Guid Id { get; set; }
         public string UserName { get; set;}
         public string Email { get; set; }
-        public Guid AuthToken { get; set; }
-        public IEnumerable<string> Claims { get; set; }
-        public IEnumerable<string> Roles { get; set; }
+        public string Jwt { get; set; }
+        public List<Role> Roles { get; set; }
 
         public bool InRole(string role)
         {
@@ -19,9 +28,9 @@ namespace SuperSimple.Auth
                 return false;
             }
 
-            foreach(string r in Roles)
+            foreach(var r in Roles)
             {
-                if (r == role) 
+                if (r.Name == role) 
                 {
                     return true;
                 }
@@ -30,16 +39,16 @@ namespace SuperSimple.Auth
             return false;
         }
 
-        public bool HasClaim(string claim)
+        public bool HasPermission(string role, string permission)
         {
-            if (Claims == null) 
+            if (Roles == null) 
             {
                 return false;
             }
 
-            foreach(string c in Claims)
+            foreach(var r in Roles)
             {
-                if (c == claim) 
+                if (r.Name == role) 
                 {
                     return true;
                 }

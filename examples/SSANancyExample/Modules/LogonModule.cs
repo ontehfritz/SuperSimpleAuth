@@ -18,36 +18,36 @@ namespace SSANancyExample
                 return View["logon",model];
             };
 
-            Post["/logon"] = parameters => {
-                var model = this.Bind<LogonModel>();
-                model.Message = "Password or/and Username is incorrect.";
+            //Post["/logon"] = parameters => {
+            //    var model = this.Bind<LogonModel>();
+            //    model.Message = "Password or/and Username is incorrect.";
 
-                User user = null;
+            //    User user = null;
 
-                try
-                {
-                   user = ssa.Authenticate(model.Username,model.Secret,
-                                            this.Context.Request.UserHostAddress);
-                }
-                catch(Exception e)
-                {
-                    model.Message = e.Message;
-                    if(user == null)
-                    {
-                        return View["logon", model];
-                    }
-                }
+            //    try
+            //    {
+            //       user = ssa.Authenticate(model.Username,model.Secret,
+            //                                this.Context.Request.UserHostAddress);
+            //    }
+            //    catch(Exception e)
+            //    {
+            //        model.Message = e.Message;
+            //        if(user == null)
+            //        {
+            //            return View["logon", model];
+            //        }
+            //    }
 
-                return this.LoginAndRedirect(user.AuthToken, 
-                                             fallbackRedirectUrl: "/");
-            };
+            //    return this.LoginAndRedirect(user.Jwt, 
+            //                                 fallbackRedirectUrl: "/");
+            //};
 
-            Get["/logoff"] = parameters => {
-                var nuser = (NancyUserIdentity)Context.CurrentUser;
-                ssa.End(nuser.AuthToken);
+            //Get["/logoff"] = parameters => {
+            //    var nuser = (NancyUserIdentity)Context.CurrentUser;
+            //    ssa.End(nuser.AuthToken);
 
-                return this.LogoutAndRedirect("/");
-            };
+            //    return this.LogoutAndRedirect("/");
+            //};
 
             Get ["/signup"] = parameters => {
                 var signup = new SignupModel();

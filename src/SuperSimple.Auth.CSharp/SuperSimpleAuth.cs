@@ -5,6 +5,7 @@ namespace SuperSimple.Auth
     using System.Net;
     using System.Text;
     using Newtonsoft.Json;
+    using SuperSimple.Auth.Api.Token;
 
     public class SuperSimpleAuth
     {
@@ -12,6 +13,7 @@ namespace SuperSimple.Auth
         //        private const string _headerDomain = "SSA_DOMAIN";
         private const string _headerDomainKey = "Ssa-Domain-Key";
         private const string _headerDomain = "Ssa-Domain";
+        private const string _authenticate = "Authenticate";
 
         private string _uri;
         private Guid _domainKey { get; set; }
@@ -254,10 +256,9 @@ namespace SuperSimple.Auth
         /// <param name="username">Username.</param>
         /// <param name="secret">Secret.</param>
         /// <param name="IP">I.</param>
-        public User Authenticate (string username, string secret, string IP = null)
+        public User Authenticate (string username, string secret, 
+                                  string IP = null)
         {
-            User user = null;
-
             using (WebClient client = new WebClient ())
             {
                 var reqparm =
@@ -271,8 +272,7 @@ namespace SuperSimple.Auth
                     reqparm.Add ("IP", IP);
                 }
 
-                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
-                client.Headers [_headerDomain] = this._name;
+                client.Headers [_headerDomainKey] = this._domainKey.ToString();
 
                 string responsebody = "";
 
@@ -280,8 +280,9 @@ namespace SuperSimple.Auth
                 {
                     ServicePointManager.ServerCertificateValidationCallback = 
                         delegate { return true; };
-                    byte [] responsebytes = 
-                        client.UploadValues (string.Format ("{0}/authenticate", _uri),
+                    var responsebytes = 
+                        client.UploadValues (
+                            string.Format ("{0}/authenticate", _uri),
                                                                "Post", reqparm);
 
                     responsebody = Encoding.UTF8.GetString (responsebytes);
@@ -291,7 +292,30 @@ namespace SuperSimple.Auth
                     HandleWebException (e);
                 }
 
-                user = JsonConvert.DeserializeObject<User> (responsebody);
+                var user = JwtToUser(responsebody.Replace("\"",string.Empty));
+                return user;
+            }
+        }
+
+        private User JwtToUser(string token)
+        {
+            var jwt = Jwt.ToObject(token);
+            var user = new User();
+            user.Jwt = token;
+            user.Email = jwt.Payload.Email;
+            user.UserName = jwt.Payload.Username;
+
+            foreach(var role in jwt.Payload.Roles)
+            {
+                var r = new Role();
+
+                r.Name = role.Name;
+                foreach(var permission in role.Permissions)
+                {
+                    r.Permissions.Add(permission);
+                }
+
+                user.Roles.Add(r);
             }
 
             return user;
@@ -302,19 +326,16 @@ namespace SuperSimple.Auth
         /// </summary>
         /// <param name="authToken">Auth token.</param>
         /// <param name="IP">I.</param>
-        public User Validate (Guid authToken, string IP = null)
+        public bool Validate (User user, string IP = null)
         {
-            User user = null;
+            bool valid = false;
             using (WebClient client = new WebClient ())
             {
                 var reqparm =
                     new System.Collections.Specialized.NameValueCollection ();
 
-                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
-                client.Headers [_headerDomain] = this._name;
-
-                reqparm.Add ("AuthToken", authToken.ToString ());
-
+                client.Headers [_authenticate] = user.Jwt;
+              
                 if (IP != null)
                 {
                     reqparm.Add ("IP", IP);
@@ -338,10 +359,11 @@ namespace SuperSimple.Auth
                     HandleWebException (e);
                 }
 
-                user = JsonConvert.DeserializeObject<User> (responsebody);
+                valid = JsonConvert.DeserializeObject<bool> 
+                                   (responsebody.Replace("\"", string.Empty));
             }
 
-            return user;
+            return valid;
         }
 
         /// <summary>
@@ -369,8 +391,6 @@ namespace SuperSimple.Auth
                 }
 
                 client.Headers [_headerDomainKey] = this._domainKey.ToString ();
-                client.Headers [_headerDomain] = this._name;
-
                 string responsebody = "";
 
                 try

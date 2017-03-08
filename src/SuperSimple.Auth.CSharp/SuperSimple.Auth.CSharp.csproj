@@ -45,5 +45,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SuperSimple.Auth.Token\SuperSimple.Auth.Token.csproj">
+      <Project>{0A257DF1-010E-4026-9CE4-671807BFAEE1}</Project>
+      <Name>SuperSimple.Auth.Token</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
