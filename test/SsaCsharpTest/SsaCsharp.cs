@@ -29,7 +29,6 @@
         [Test()]
         public void Authenticate()
         {
-
             var api = new SuperSimpleAuth("test",
                                           LOCAL_KEY,
                                           LOCAL_URL);
@@ -38,7 +37,12 @@
             Assert.True(!string.IsNullOrEmpty(user.Jwt));
 
             var valid = api.Validate(user);
+            Assert.True(valid);
 
+            valid = api.ChangeEmail(user, "test@test1.com");
+            Assert.True(valid);
+
+            valid = api.ChangeUserName(user, "mutha");
             Assert.True(valid);
         }
     }

@@ -13,7 +13,7 @@ namespace SuperSimple.Auth
         //        private const string _headerDomain = "SSA_DOMAIN";
         private const string _headerDomainKey = "Ssa-Domain-Key";
         private const string _headerDomain = "Ssa-Domain";
-        private const string _authenticate = "Authenticate";
+        private const string _authorization = "Authorization";
 
         private string _uri;
         private Guid _domainKey { get; set; }
@@ -85,7 +85,7 @@ namespace SuperSimple.Auth
             }
         }
 
-        public bool ChangeUserName (Guid authToken, string newUserName)
+        public bool ChangeUserName (User user, string newUserName)
         {
             bool end = false;
 
@@ -94,10 +94,8 @@ namespace SuperSimple.Auth
                 var reqparm =
                     new System.Collections.Specialized.NameValueCollection ();
 
-                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
-                client.Headers [_headerDomain] = this._name;
+                client.Headers [_authorization] = user.Jwt;
 
-                reqparm.Add ("AuthToken", authToken.ToString ());
                 reqparm.Add ("NewUserName", newUserName);
 
                 string responsebody = "";
@@ -125,7 +123,7 @@ namespace SuperSimple.Auth
             return end;
         }
 
-        public bool ChangeEmail (Guid authToken, string newEmail)
+        public bool ChangeEmail (User user, string newEmail)
         {
             bool end = false;
 
@@ -134,10 +132,7 @@ namespace SuperSimple.Auth
                 var reqparm =
                     new System.Collections.Specialized.NameValueCollection ();
 
-                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
-                client.Headers [_headerDomain] = this._name;
-
-                reqparm.Add ("AuthToken", authToken.ToString ());
+                client.Headers [_authorization] = user.Jwt;
                 reqparm.Add ("NewEmail", newEmail);
 
                 string responsebody = "";
@@ -147,7 +142,7 @@ namespace SuperSimple.Auth
                     ServicePointManager.ServerCertificateValidationCallback = 
                         delegate { return true; };
 
-                    byte [] responsebytes =
+                    var responsebytes =
                         client.UploadValues (string.Format ("{0}/email", _uri),
                             "Post", reqparm);
 
@@ -334,7 +329,7 @@ namespace SuperSimple.Auth
                 var reqparm =
                     new System.Collections.Specialized.NameValueCollection ();
 
-                client.Headers [_authenticate] = user.Jwt;
+                client.Headers [_authorization] = user.Jwt;
               
                 if (IP != null)
                 {
@@ -373,10 +368,8 @@ namespace SuperSimple.Auth
         /// <param name="userName">User name.</param>
         /// <param name="secret">Secret.</param>
         /// <param name="email">Email.</param>
-        public User CreateUser (string userName, string secret, string email = null)
+        public bool CreateUser (string userName, string secret, string email = null)
         {
-            User user = null;
-
             using (WebClient client = new WebClient ())
             {
                 var reqparm =
@@ -397,7 +390,7 @@ namespace SuperSimple.Auth
                 {
                     ServicePointManager.ServerCertificateValidationCallback = 
                         delegate { return true; };
-                    byte [] responsebytes = 
+                     var responsebytes = 
                         client.UploadValues (string.Format ("{0}/user", _uri),
                         "Post", reqparm);
 
@@ -409,13 +402,12 @@ namespace SuperSimple.Auth
                     HandleWebException (e);
                 }
 
-                user = JsonConvert.DeserializeObject<User> (responsebody);
+                return(JsonConvert.DeserializeObject<bool>(
+                    responsebody.Replace("\"", string.Empty)));
             }
-
-            return user;
         }
 
-        public bool Disable (Guid authToken)
+        public bool Disable (string authToken)
         {
             bool disabled = false;
 
@@ -423,9 +415,6 @@ namespace SuperSimple.Auth
             {
                 var reqparm =
                     new System.Collections.Specialized.NameValueCollection ();
-
-                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
-                client.Headers [_headerDomain] = this._name;
 
                 reqparm.Add ("AuthToken", authToken.ToString ());
 

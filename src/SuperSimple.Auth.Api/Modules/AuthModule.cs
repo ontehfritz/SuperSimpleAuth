@@ -4,7 +4,7 @@
     using Nancy;
     using System.Linq;
     using Repository;
-    using SuperSimple.Auth.Api.Token;
+    using Token;
 
     public class AuthModule : NancyModule
     {
@@ -13,44 +13,60 @@
 
         public AuthModule (IApiRepository repository)
         {
-            //Before += ctx =>
-            //{
-            //    var error = Error.VerifyRequest (Request, repository);
+            Before += ctx =>
+            {
+                //var token =
+                //    Request.Headers [_authorization].FirstOrDefault ();
 
-            //    if (error != null)
-            //    {
-            //        return Response.AsJson (error,
-            //            Nancy.HttpStatusCode.UnprocessableEntity);
-            //    }
+                //var jwt = Jwt.ToObject(token.Replace("\"", string.Empty));
 
-            //    var domainKey =
-            //        Guid.Parse (Request.Headers [_headerDomainKey].FirstOrDefault ());
+                //var key = repository.GetAuthToken(Guid.Parse(jwt.Payload.Audience),
+                //                                   jwt.Payload.Username);
 
-            //    if (!repository.IpAllowed (domainKey, Request.UserHostAddress))
-            //    {
-            //        var e = new ErrorMessage ();
-            //        e.Message = "Server IP not accepted";
-            //        e.Status = "IpNotAllowed";
+                //if(Jwt.Validate(token.Replace("\"", 
+                //                              string.Empty), key))
+                //{
+                //    return Response.AsJson (true);
+                //}
+                
+                //var error = Error.VerifyRequest (Request, repository);
 
-            //        return Response.AsJson (e,
-            //           HttpStatusCode.UnprocessableEntity);
-            //    }
+                //if (error != null)
+                //{
+                //    return Response.AsJson (error,
+                //        Nancy.HttpStatusCode.UnprocessableEntity);
+                //}
+                ///////old
+                //var domainKey =
+                //    Guid.Parse (Request.Headers [_headerDomainKey].FirstOrDefault ());
 
-            //    return null;
-            //};
+                //if (!repository.IpAllowed (domainKey, Request.UserHostAddress))
+                //{
+                //    var e = new ErrorMessage ();
+                //    e.Message = "Server IP not accepted";
+                //    e.Status = "IpNotAllowed";
+
+                //    return Response.AsJson (e,
+                //       HttpStatusCode.UnprocessableEntity);
+                //}
+
+                return null;
+            };
 
             Post ["/email"] = parameters =>
             {
-                var domainKey =
-                    Guid.Parse (Request.Headers [_headerDomainKey].FirstOrDefault ());
+                var token =
+                    Request.Headers [_authorization].FirstOrDefault ();
 
-                Guid token = Guid.Parse (Request.Form ["AuthToken"]);
+                var jwt = Jwt.ToObject(token.Replace("\"", string.Empty));
+                Guid domainKey = Guid.Parse(jwt.Payload.Audience);
+
                 string newEmail = Request.Form ["NewEmail"];
                 //string IP = Request.Form["IP"];
 
                 if (repository.EmailExists (domainKey, newEmail))
                 {
-                    ErrorMessage e = new ErrorMessage ();
+                    var e = new ErrorMessage ();
                     e.Message = "Email already exist. Please choose another.";
                     e.Status = "DuplicateUser";
 
@@ -58,18 +74,21 @@
                         Nancy.HttpStatusCode.UnprocessableEntity);
                 }
 
-
-                return Response.AsJson (repository.ChangeEmail (domainKey,
-                                                              token, newEmail));
+                var key = Guid.Parse(repository.GetAuthToken(
+                    Guid.Parse(jwt.Payload.Audience),
+                    jwt.Payload.Username));
+                
+                return Response.AsJson (repository.ChangeEmail 
+                                        (domainKey, key, newEmail));
             };
 
             Post ["/username"] = parameters =>
             {
-                var domainKey =
-                    Guid.Parse (Request.Headers [_headerDomainKey]
-                               .FirstOrDefault ());
+                var token =
+                    Request.Headers [_authorization].FirstOrDefault ();
 
-                Guid token = Guid.Parse (Request.Form ["AuthToken"]);
+                var jwt = Jwt.ToObject(token.Replace("\"", string.Empty));
+                Guid domainKey = Guid.Parse(jwt.Payload.Audience);
                 string newUserName = Request.Form ["NewUserName"];
                 //string IP = Request.Form["IP"];
 
@@ -83,26 +102,32 @@
                         Nancy.HttpStatusCode.UnprocessableEntity);
                 }
 
+                var key = Guid.Parse(repository.GetAuthToken(
+                    Guid.Parse(jwt.Payload.Audience),
+                    jwt.Payload.Username));
+                
                 return Response.AsJson (repository
                                        .ChangeUserName (domainKey,
-                                                       token, newUserName));
+                                                       key, newUserName));
             };
-
-
 
             Post ["/password"] = parameters =>
             {
+                var token =
+                    Request.Headers [_authorization].FirstOrDefault ();
 
-                var domainKey =
-                    Guid.Parse (Request.Headers [_headerDomainKey]
-                                .FirstOrDefault ());
+                var jwt = Jwt.ToObject(token.Replace("\"", string.Empty));
+                Guid domainKey = Guid.Parse(jwt.Payload.Audience);
 
-                Guid token = Guid.Parse (Request.Form ["AuthToken"]);
+                Guid key = Guid.Parse(repository.GetAuthToken(
+                    Guid.Parse(jwt.Payload.Audience),
+                    jwt.Payload.Username));
+                
                 string newPassword = Request.Form ["NewPassword"];
                 //string IP = Request.Form["IP"];
 
                 return Response.AsJson (repository
-                                       .ChangePassword (domainKey, token, 
+                                       .ChangePassword (domainKey, key, 
                                                         newPassword));
             };
 
@@ -172,15 +197,14 @@
                 var key = repository.GetAuthToken(Guid.Parse(jwt.Payload.Audience),
                                         jwt.Payload.Username);
 
-
-                if(Jwt.Validate(token.Replace("\"", string.Empty), key))
+                if(Jwt.Validate(token.Replace("\"", 
+                                              string.Empty), key))
                 {
-                    return Response.AsJson (token);
+                    return Response.AsJson (true);
                 }
 
                 //return error here
-                return Response.AsJson ("Not valid");
-
+                return Response.AsJson (false);
             };
 
             Post ["/disable"] = parameters =>
@@ -279,17 +303,7 @@
                         Nancy.HttpStatusCode.UnprocessableEntity);
                 }
 
-                var u = new
-                {
-                    Id = user.Id,
-                    UserName = user.UserName,
-                    Email = user.Email,
-                    AuthToken = user.AuthToken,
-                    Claims = user.GetClaims (),
-                    Roles = user.GetRoles ()
-                };
-
-                return Response.AsJson (u);
+                return Response.AsJson (true);
             };
         }
     }
