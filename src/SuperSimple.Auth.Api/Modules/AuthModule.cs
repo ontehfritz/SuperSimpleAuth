@@ -209,13 +209,17 @@
 
             Post ["/disable"] = parameters =>
             {
-                var domainKey =
-                    Guid.Parse (Request.Headers [_headerDomainKey].FirstOrDefault ());
+                var token =
+                    Request.Headers [_authorization].FirstOrDefault ();
 
+                var jwt = Jwt.ToObject(token.Replace("\"", string.Empty));
+                Guid domainKey = Guid.Parse(jwt.Payload.Audience);
 
-                Guid token = Guid.Parse (Request.Form ["AuthToken"]);
+                var key = Guid.Parse(
+                    repository.GetAuthToken(Guid.Parse(jwt.Payload.Audience),
+                                            jwt.Payload.Username));
 
-                return Response.AsJson (repository.Disable (token, domainKey));
+                return Response.AsJson (repository.Disable (key, domainKey));
             };
 
             Post ["/authenticate"] = parameters =>

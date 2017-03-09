@@ -407,7 +407,7 @@ namespace SuperSimple.Auth
             }
         }
 
-        public bool Disable (string authToken)
+        public bool Disable (User user)
         {
             bool disabled = false;
 
@@ -415,8 +415,8 @@ namespace SuperSimple.Auth
             {
                 var reqparm =
                     new System.Collections.Specialized.NameValueCollection ();
-
-                reqparm.Add ("AuthToken", authToken.ToString ());
+                
+                client.Headers [_authorization] = user.Jwt;
 
                 string responsebody = "";
 

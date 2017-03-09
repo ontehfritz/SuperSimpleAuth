@@ -33,6 +33,8 @@
                                           LOCAL_KEY,
                                           LOCAL_URL);
 
+            api.CreateUser("test", "test", "test@test.net");
+
             var user = api.Authenticate("test", "test");
             Assert.True(!string.IsNullOrEmpty(user.Jwt));
 
@@ -43,6 +45,9 @@
             Assert.True(valid);
 
             valid = api.ChangeUserName(user, "mutha");
+            Assert.True(valid);
+
+            valid = api.Disable(user);
             Assert.True(valid);
         }
     }
