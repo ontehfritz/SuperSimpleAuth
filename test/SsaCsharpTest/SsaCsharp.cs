@@ -33,16 +33,23 @@
                                           LOCAL_KEY,
                                           LOCAL_URL);
 
+            api.CreateUser("test", "test", "test@test.net");
+
             var user = api.Authenticate("test", "test");
             Assert.True(!string.IsNullOrEmpty(user.Jwt));
 
             var valid = api.Validate(user);
             Assert.True(valid);
+            user.Email = "test@test1.com";
 
-            valid = api.ChangeEmail(user, "test@test1.com");
-            Assert.True(valid);
+            user = api.ChangeEmail(user, user.Email);
+          
 
-            valid = api.ChangeUserName(user, "mutha");
+            user.UserName = "mutha";
+            user = api.ChangeUserName(user, user.UserName);
+
+            valid = api.Disable(user);
+
             Assert.True(valid);
         }
     }

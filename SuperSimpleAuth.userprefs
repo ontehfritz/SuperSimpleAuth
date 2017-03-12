@@ -1,15 +1,28 @@
 ﻿<Properties StartupConfiguration="Multi-Startup">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Api.Repository/ApiMongoRepository.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Api.Repository/User.cs">
     <Files>
-      <File FileName="src/SuperSimple.Auth.CSharp/SuperSimpleAuth.cs" Line="419" Column="56" />
-      <File FileName="src/SuperSimple.Auth.Api/Modules/AuthModule.cs" Line="73" Column="47" />
-      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="31" Column="10" />
+      <File FileName="src/SuperSimple.Auth.Api/Modules/AuthModule.cs" Line="272" Column="59" />
+      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="41" Column="44" />
       <File FileName="src/SuperSimple.Auth.CSharp/User.cs" Line="20" Column="42" />
       <File FileName="examples/SSANancyExample/Models/LogonModel.cs" Line="1" Column="1" />
-      <File FileName="examples/SSANancyExample/Models/NancyUser.cs" Line="8" Column="28" />
+      <File FileName="examples/SSANancyExample/Models/NancyUser.cs" Line="30" Column="10" />
       <File FileName="examples/SSANancyExample/Models/SignupModel.cs" Line="1" Column="1" />
-      <File FileName="examples/SSANancyExample/Modules/LogonModule.cs" Line="51" Column="1" />
+      <File FileName="examples/SSANancyExample/Modules/LogonModule.cs" Line="65" Column="18" />
       <File FileName="src/SuperSimple.Auth.Api.Repository/ApiMongoRepository.cs" Line="297" Column="68" />
+      <File FileName="src/SuperSimple.Auth.Api/Modules/IndexModule.cs" Line="5" Column="6" />
+      <File FileName="test/SuperSimple.Auth.Api.Repository.Test/ApiRepository.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.CSharp/SuperSimpleAuth.cs" Line="302" Column="51" />
+      <File FileName="src/SuperSimple.Auth.Api/Models/Email.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Api/Models/ErrorMessage.cs" Line="1" Column="1" />
+      <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="18" Column="72" />
+      <File FileName="examples/SSANancyExample/Models/Error.cs" Line="1" Column="1" />
+      <File FileName="examples/SSANancyExample/Modules/IndexModule.cs" Line="19" Column="13" />
+      <File FileName="src/SuperSimple.Auth.Manager/Bootstrapper.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/Modules/LogonModule.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/Modules/IndexModule.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/Models/Manager.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Token/Jwt.cs" Line="166" Column="27" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/User.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

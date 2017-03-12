@@ -5,12 +5,10 @@ namespace SuperSimple.Auth
     using System.Net;
     using System.Text;
     using Newtonsoft.Json;
-    using SuperSimple.Auth.Api.Token;
+    using Api.Token;
 
     public class SuperSimpleAuth
     {
-        //        private const string _headerDomainKey = "SSA_DOMAIN_KEY";
-        //        private const string _headerDomain = "SSA_DOMAIN";
         private const string _headerDomainKey = "Ssa-Domain-Key";
         private const string _headerDomain = "Ssa-Domain";
         private const string _authorization = "Authorization";
@@ -85,7 +83,7 @@ namespace SuperSimple.Auth
             }
         }
 
-        public bool ChangeUserName (User user, string newUserName)
+        public User ChangeUserName (User user, string newUserName)
         {
             bool end = false;
 
@@ -117,16 +115,15 @@ namespace SuperSimple.Auth
                     HandleWebException (e);
                 }
 
-                end = JsonConvert.DeserializeObject<bool> (responsebody);
+                user = JwtToUser(responsebody.Replace("\"",string.Empty));
+                return user;
             }
 
-            return end;
+            throw new Exception("Cannot update user name");
         }
 
-        public bool ChangeEmail (User user, string newEmail)
+        public User ChangeEmail (User user, string newEmail)
         {
-            bool end = false;
-
             using (WebClient client = new WebClient ())
             {
                 var reqparm =
@@ -154,10 +151,11 @@ namespace SuperSimple.Auth
                     HandleWebException (e);
                 }
 
-                end = JsonConvert.DeserializeObject<bool> (responsebody);
+                user = JwtToUser(responsebody.Replace("\"",string.Empty));
+                return user;
             }
 
-            return end;
+            throw new Exception("Cannot update user email");
         }
 
         /// <summary>
@@ -296,6 +294,7 @@ namespace SuperSimple.Auth
         {
             var jwt = Jwt.ToObject(token);
             var user = new User();
+            user.Id = Guid.Parse(jwt.Payload.JwtTokenId);
             user.Jwt = token;
             user.Email = jwt.Payload.Email;
             user.UserName = jwt.Payload.Username;
@@ -407,7 +406,7 @@ namespace SuperSimple.Auth
             }
         }
 
-        public bool Disable (string authToken)
+        public bool Disable (User user)
         {
             bool disabled = false;
 
@@ -415,8 +414,8 @@ namespace SuperSimple.Auth
             {
                 var reqparm =
                     new System.Collections.Specialized.NameValueCollection ();
-
-                reqparm.Add ("AuthToken", authToken.ToString ());
+                
+                client.Headers [_authorization] = user.Jwt;
 
                 string responsebody = "";
 
@@ -424,7 +423,7 @@ namespace SuperSimple.Auth
                 {
                     ServicePointManager.ServerCertificateValidationCallback = 
                         delegate { return true; };
-                    byte [] responsebytes =
+                    var responsebytes =
                         client.UploadValues (string.Format ("{0}/disable", _uri),
                             "Post", reqparm);
 

@@ -160,7 +160,7 @@
         [JsonProperty(PropertyName = "iat")]
         public int IssuedAt         { get; set; }
         [JsonProperty(PropertyName = "jti")]
-        public string JwtTokenId   { get; set; }
+        public string JwtTokenId    { get; set; }
         //****************************************
 
         //*** Public ***//
