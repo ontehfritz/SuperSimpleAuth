@@ -40,14 +40,16 @@
 
             var valid = api.Validate(user);
             Assert.True(valid);
+            user.Email = "test@test1.com";
 
-            valid = api.ChangeEmail(user, "test@test1.com");
-            Assert.True(valid);
+            user = api.ChangeEmail(user, user.Email);
+          
 
-            valid = api.ChangeUserName(user, "mutha");
-            Assert.True(valid);
+            user.UserName = "mutha";
+            user = api.ChangeUserName(user, user.UserName);
 
             valid = api.Disable(user);
+
             Assert.True(valid);
         }
     }

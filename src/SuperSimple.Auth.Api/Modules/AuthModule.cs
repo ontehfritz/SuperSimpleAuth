@@ -77,9 +77,15 @@
                 var key = Guid.Parse(repository.GetAuthToken(
                     Guid.Parse(jwt.Payload.Audience),
                     jwt.Payload.Username));
-                
-                return Response.AsJson (repository.ChangeEmail 
-                                        (domainKey, key, newEmail));
+
+                if(repository.ChangeEmail 
+                   (domainKey, key, newEmail))
+                {
+                    jwt.Payload.Email = newEmail;
+                }
+
+                return Response.AsJson (Jwt.ToToken(jwt, 
+                                                    key.ToString()));
             };
 
             Post ["/username"] = parameters =>
@@ -105,10 +111,17 @@
                 var key = Guid.Parse(repository.GetAuthToken(
                     Guid.Parse(jwt.Payload.Audience),
                     jwt.Payload.Username));
-                
-                return Response.AsJson (repository
-                                       .ChangeUserName (domainKey,
-                                                       key, newUserName));
+
+
+                if(repository
+                   .ChangeUserName (domainKey,
+                                    key, newUserName))
+                {
+                    jwt.Payload.Username = newUserName;
+                }
+
+                return Response.AsJson (Jwt.ToToken(jwt, 
+                                                    key.ToString()));
             };
 
             Post ["/password"] = parameters =>
@@ -215,10 +228,11 @@
                 var jwt = Jwt.ToObject(token.Replace("\"", string.Empty));
                 Guid domainKey = Guid.Parse(jwt.Payload.Audience);
 
-                var key = Guid.Parse(
-                    repository.GetAuthToken(Guid.Parse(jwt.Payload.Audience),
-                                            jwt.Payload.Username));
+                Guid key = Guid.Parse(repository.GetAuthToken(
+                    domainKey,
+                    jwt.Payload.Username));
 
+                //return Response.AsJson (true);
                 return Response.AsJson (repository.Disable (key, domainKey));
             };
 
@@ -257,6 +271,7 @@
                 var payload = new Payload();
                 payload.Issuer = "autheticate.technology";
                 payload.Audience = domainKey.ToString();
+                payload.JwtTokenId = user.Id.ToString();
                 payload.Username = user.UserName;
                 payload.Email = user.Email;
 
