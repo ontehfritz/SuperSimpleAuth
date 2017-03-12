@@ -265,6 +265,11 @@ namespace SuperSimple.Auth.Manager
             }
         }
 
+        public string Key
+        {
+            get;set;
+        }
+
         public Manager (IUser user)
         {
             _user = user;

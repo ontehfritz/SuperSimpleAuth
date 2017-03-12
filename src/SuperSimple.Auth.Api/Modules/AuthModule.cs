@@ -60,6 +60,7 @@
 
                 var jwt = Jwt.ToObject(token.Replace("\"", string.Empty));
                 Guid domainKey = Guid.Parse(jwt.Payload.Audience);
+                Guid authToken = Guid.Parse(jwt.Payload.JwtTokenId);
 
                 string newEmail = Request.Form ["NewEmail"];
                 //string IP = Request.Form["IP"];
@@ -74,18 +75,16 @@
                         Nancy.HttpStatusCode.UnprocessableEntity);
                 }
 
-                var key = Guid.Parse(repository.GetAuthToken(
-                    Guid.Parse(jwt.Payload.Audience),
-                    jwt.Payload.Username));
+                var key = repository.GetKey(authToken);
 
                 if(repository.ChangeEmail 
-                   (domainKey, key, newEmail))
+                   (domainKey, authToken, newEmail))
                 {
                     jwt.Payload.Email = newEmail;
                 }
 
                 return Response.AsJson (Jwt.ToToken(jwt, 
-                                                    key.ToString()));
+                                                    key));
             };
 
             Post ["/username"] = parameters =>
@@ -95,6 +94,8 @@
 
                 var jwt = Jwt.ToObject(token.Replace("\"", string.Empty));
                 Guid domainKey = Guid.Parse(jwt.Payload.Audience);
+                Guid authToken = Guid.Parse(jwt.Payload.JwtTokenId);
+
                 string newUserName = Request.Form ["NewUserName"];
                 //string IP = Request.Form["IP"];
 
@@ -108,20 +109,18 @@
                         Nancy.HttpStatusCode.UnprocessableEntity);
                 }
 
-                var key = Guid.Parse(repository.GetAuthToken(
-                    Guid.Parse(jwt.Payload.Audience),
-                    jwt.Payload.Username));
+                var key = repository.GetKey(authToken);
 
 
                 if(repository
                    .ChangeUserName (domainKey,
-                                    key, newUserName))
+                                    authToken, newUserName))
                 {
                     jwt.Payload.Username = newUserName;
                 }
 
                 return Response.AsJson (Jwt.ToToken(jwt, 
-                                                    key.ToString()));
+                                                    key));
             };
 
             Post ["/password"] = parameters =>
@@ -131,16 +130,15 @@
 
                 var jwt = Jwt.ToObject(token.Replace("\"", string.Empty));
                 Guid domainKey = Guid.Parse(jwt.Payload.Audience);
+                Guid authToken = Guid.Parse(jwt.Payload.JwtTokenId);
 
-                Guid key = Guid.Parse(repository.GetAuthToken(
-                    Guid.Parse(jwt.Payload.Audience),
-                    jwt.Payload.Username));
+                var key = repository.GetKey(authToken);
                 
                 string newPassword = Request.Form ["NewPassword"];
                 //string IP = Request.Form["IP"];
 
                 return Response.AsJson (repository
-                                       .ChangePassword (domainKey, key, 
+                                        .ChangePassword (domainKey, authToken, 
                                                         newPassword));
             };
 
@@ -207,8 +205,7 @@
 
                 string IP = Request.Form ["IP"];
 
-                var key = repository.GetAuthToken(Guid.Parse(jwt.Payload.Audience),
-                                        jwt.Payload.Username);
+                var key = repository.GetKey(Guid.Parse(jwt.Payload.JwtTokenId));
 
                 if(Jwt.Validate(token.Replace("\"", 
                                               string.Empty), key))
@@ -220,6 +217,44 @@
                 return Response.AsJson (false);
             };
 
+            Post ["/validateAuthToken"] = parameters =>
+            {
+                Guid domainKey =
+                    Guid.Parse (Request.Headers [_headerDomainKey].FirstOrDefault ());
+
+                Guid token = Guid.Parse (Request.Form ["AuthToken"]);
+                string IP = Request.Form ["IP"];
+                User user = null;
+
+                user = repository.Validate (token, domainKey, IP);
+
+                if (user == null)
+                {
+                    var message = new ErrorMessage
+                    {
+                        Status = "InvalidToken",
+                        Message = "AuthToken is not valid or expired. Re-Authenticate user."
+                    };
+
+                    return Response.AsJson (message,
+                        Nancy.HttpStatusCode.Forbidden);
+                }
+
+                var u = new
+                {
+                    Id = user.Id,
+                    Username = user.UserName,
+                    Email = user.Email,
+                    AuthToken = user.AuthToken,
+                    Claims = user.GetClaims (),
+                    Roles = user.GetRoles ()
+                };
+
+                return Response.AsJson (u);
+
+            };
+
+
             Post ["/disable"] = parameters =>
             {
                 var token =
@@ -228,11 +263,8 @@
                 var jwt = Jwt.ToObject(token.Replace("\"", string.Empty));
                 Guid domainKey = Guid.Parse(jwt.Payload.Audience);
 
-                Guid key = Guid.Parse(repository.GetAuthToken(
-                    domainKey,
-                    jwt.Payload.Username));
+                var key = Guid.Parse(jwt.Payload.JwtTokenId);
 
-                //return Response.AsJson (true);
                 return Response.AsJson (repository.Disable (key, domainKey));
             };
 
@@ -271,14 +303,14 @@
                 var payload = new Payload();
                 payload.Issuer = "autheticate.technology";
                 payload.Audience = domainKey.ToString();
-                payload.JwtTokenId = user.Id.ToString();
+                payload.JwtTokenId = user.AuthToken.ToString();
                 payload.Username = user.UserName;
                 payload.Email = user.Email;
 
                 var jwt = new Jwt(header,payload);
 
                 return Response.AsJson (Jwt.ToToken(jwt, 
-                                                    user.AuthToken.ToString()));
+                                                    user.Key));
             };
 
             Post ["/user"] = parameters =>

@@ -18,31 +18,30 @@ namespace SSANancyExample
 
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
-            var user = (NancyUserIdentity)context.CurrentUser;
-
-
-            var valid = _ssa.Validate (user._user,
+            var ssaUser = _ssa.Validate (identifier,
                                          context.Request.UserHostAddress);
-            if(valid) return user;
-            return null;
+
+            var user = new NancyUserIdentity {
+                UserName = ssaUser.UserName,
+                AuthToken = ssaUser.AuthToken,
+                Email = ssaUser.Email,
+                Id = ssaUser.Id,
+                Claims = ssaUser.Claims,
+                Roles = ssaUser.Roles
+            };
+
+            return user;
         }
     }
 
     public class NancyUserIdentity : IUserIdentity
     {
-        public User _user;
-        public Guid Id { get; }
-        public string AuthToken { get; set; }
+        public Guid Id { get; set; }
+        public Guid AuthToken { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
         public IEnumerable<string> Claims { get; set; }
         public IEnumerable<string> Roles { get; set; }
-
-        public NancyUserIdentity(User user)
-        {
-            _user = user;
-            Id = user.Id;
-        }
     }
 }
 

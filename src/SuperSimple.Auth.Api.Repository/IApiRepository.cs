@@ -9,8 +9,7 @@ namespace SuperSimple.Auth.Api.Repository
         User CreateUser (Guid domainKey, string username, string password, 
                          string email = null);
         User Validate (Guid authToken, Guid domainKey, string IP = null);
-
-        string GetAuthToken(Guid domainKey, string username);
+        string GetKey (Guid authtoken);
         string Forgot (Guid domainKey, string email);
         bool Disable (Guid authToken, Guid domainKey, string IP = null);
         bool UsernameExists (Guid domainKey, string username);

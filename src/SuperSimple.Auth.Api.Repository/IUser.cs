@@ -11,6 +11,7 @@
         string UserName         { get; set; }
         string Email            { get; set; }
         string Secret           { get; set; }
+        string Key              { get; set; }
         Guid AuthToken          { get; set; }
         bool Enabled            { get; set; }
         List<Role> Roles        { get; set; }

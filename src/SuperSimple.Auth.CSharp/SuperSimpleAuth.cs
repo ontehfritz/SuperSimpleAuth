@@ -360,6 +360,61 @@ namespace SuperSimple.Auth
             return valid;
         }
 
+        public User Validate (string token, string IP = null)
+        {
+            var user = JwtToUser(token);
+
+            if(Validate(user, IP))
+            {
+                return user;
+            }
+
+            return null;
+        }
+
+        public User Validate (Guid authToken, string IP = null)
+        {
+            User user = null;
+
+            using (WebClient client = new WebClient ())
+            {
+                var reqparm =
+                    new System.Collections.Specialized.NameValueCollection ();
+
+                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
+                client.Headers [_headerDomain] = this._name;
+
+                reqparm.Add ("AuthToken", authToken.ToString ());
+
+                if (IP != null)
+                {
+                    reqparm.Add ("IP", IP);
+                }
+
+                string responsebody = "";
+
+                try
+                {
+                    ServicePointManager.ServerCertificateValidationCallback = 
+                        delegate { return true; };
+                    byte [] responsebytes =
+                        client.UploadValues (string.Format ("{0}/validate", _uri),
+                                             "Post", reqparm);
+
+                    responsebody = Encoding.UTF8.GetString (responsebytes);
+
+                }
+                catch (WebException e)
+                {
+                    HandleWebException (e);
+                }
+
+                user = JsonConvert.DeserializeObject<User> (responsebody);
+            }
+
+            return user;
+        }
+
         /// <summary>
         /// Creates the user.
         /// </summary>
@@ -465,6 +520,9 @@ namespace SuperSimple.Auth
 
             return responseText;
         }
+        
+         
+
 
         /// <summary>
         /// Handles the web exception.

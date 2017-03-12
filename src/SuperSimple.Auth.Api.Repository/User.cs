@@ -18,6 +18,8 @@ namespace SuperSimple.Auth.Api.Repository
         [BsonElement]
         public string Secret            { get; set; }
         [BsonElement]
+        public string Key               { get; set; }
+        [BsonElement]
         public Guid AuthToken           { get; set; }
         [BsonElement]
         public bool Enabled             { get; set; }
