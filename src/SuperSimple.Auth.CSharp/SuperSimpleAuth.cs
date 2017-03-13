@@ -294,7 +294,7 @@ namespace SuperSimple.Auth
         {
             var jwt = Jwt.ToObject(token);
             var user = new User();
-            user.Id = Guid.Parse(jwt.Payload.JwtTokenId);
+            user.AuthToken = Guid.Parse(jwt.Payload.JwtTokenId);
             user.Jwt = token;
             user.Email = jwt.Payload.Email;
             user.UserName = jwt.Payload.Username;
@@ -358,6 +358,63 @@ namespace SuperSimple.Auth
             }
 
             return valid;
+        }
+
+        public User Validate (string token, string IP = null)
+        {
+            var user = JwtToUser(token);
+
+            if(Validate(user, IP))
+            {
+                return user;
+            }
+
+            return null;
+        }
+
+        public User Validate (Guid authToken, string IP = null)
+        {
+            User user = null;
+
+            using (WebClient client = new WebClient ())
+            {
+                var reqparm =
+                    new System.Collections.Specialized.NameValueCollection ();
+
+                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
+
+                reqparm.Add ("AuthToken", authToken.ToString ());
+
+                if (IP != null)
+                {
+                    reqparm.Add ("IP", IP);
+                }
+
+                string responsebody = "";
+
+                try
+                {
+                    ServicePointManager.ServerCertificateValidationCallback = 
+                        delegate { return true; };
+                    
+                    var responsebytes =
+                        client.UploadValues (string.Format ("{0}/validateauthtoken", 
+                                                            _uri),
+                                             "Post", reqparm);
+
+                    responsebody = Encoding.UTF8.GetString (responsebytes);
+
+                }
+                catch (WebException e)
+                {
+                    HandleWebException (e);
+                }
+
+                user = JsonConvert.DeserializeObject<User> (responsebody);
+
+            }
+
+            return user;
         }
 
         /// <summary>
@@ -465,6 +522,9 @@ namespace SuperSimple.Auth
 
             return responseText;
         }
+        
+         
+
 
         /// <summary>
         /// Handles the web exception.

@@ -8,7 +8,7 @@
     public class SsaCsharp
     {
         private const string LOCAL_URL = "http://localhost:8082";
-        private const string LOCAL_KEY = "1967cc86-8dde-4515-a352-b821a08e2ab6";
+        private const string LOCAL_KEY = "9fa95fd4-04e5-4cea-8dca-3a818f525a91";
 
         private const string URL = "https://api.authenticate.technology";
         private const string KEY = "894b3a57-6311-436e-97c7-d4e1984fa94b";

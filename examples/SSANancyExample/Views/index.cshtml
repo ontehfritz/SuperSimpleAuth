@@ -7,12 +7,13 @@
     <body>
     <table>
     <tr>
-        <td>Id:</td>
-        <td>@Model.Id</td>
-    </tr>
-    <tr>
         <td>UserName:</td>
         <td>@Model.UserName</td>
+    </tr>
+
+    <tr>
+        <td>JSON web token:</td>
+        <td>@Model.Jwt</td>
     </tr>
     <tr>
         <td>Email:</td>
@@ -21,25 +22,6 @@
     <tr>
         <td>AuthToken:</td>
         <td>@Model.AuthToken</td>
-    </tr>
-    <tr>
-        <td>Roles:</td>
-        <td>
-        <ul>
-        @if(Model.Roles != null && Model.Roles.ToArray().Length > 0)
-        {
-            foreach(string role in Model.Roles)
-            {
-                <li>@role </li>
-            }
-        }
-        else
-        {
-            <li>Not in a role</li>
-        }
-        </ul>
-        </td>
-    </tr>
     <tr>
         <td>Claims:</td>
         <td>

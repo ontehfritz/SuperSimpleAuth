@@ -13,7 +13,7 @@ namespace SSANancyExample
         /// </summary>
         //*****************************************************************//
         private string _domain = "test";
-        private string _domainCode = "1967cc86-8dde-4515-a352-b821a08e2ab6";
+        private string _domainCode = "9fa95fd4-04e5-4cea-8dca-3a818f525a91";
         private string _url = "http://127.0.0.1:8082";
         //*****************************************************************//
 

@@ -39,7 +39,7 @@ namespace SSANancyExample
                     }
                 }
 
-                return this.LoginAndRedirect(user.Id, 
+                return this.LoginAndRedirect(user.AuthToken, 
                                              fallbackRedirectUrl: "/");
             };
 

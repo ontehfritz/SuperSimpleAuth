@@ -75,7 +75,6 @@
 
         }
 
-
         public bool ChangeUserName (Guid domainKey, Guid authToken, string newUserName)
         {
             newUserName = newUserName.ToLower ();
@@ -275,6 +274,7 @@
             {
                 user.CurrentIp = IP;
                 user.AuthToken = Guid.NewGuid ();
+                user.Key = Guid.NewGuid().ToString();
                 user.LogonCount += 1;
                 user.LastRequest = DateTime.Now;
                 user.CurrentLogon = DateTime.Now;
@@ -294,22 +294,15 @@
             return user;
         }
 
-        public string GetAuthToken(Guid domainKey, string username)
+        public string GetKey(Guid authtoken)
         {
             User user = null;
-
-            var domains = _database.GetCollection<RawBsonDocument> ("domains");
-            var dQuery = Query.And (Query.EQ ("Key", domainKey));
-            var domain = domains.FindOne (dQuery);
-
             var users = _database.GetCollection<User> ("users");
-            var query = Query.And (Query<User>.EQ (e => e.UserName, username),
-                                   Query<User>.EQ (e => e.DomainId, 
-                                                   domain ["_id"].AsGuid));
+            var query = Query.And (Query<User>.EQ (e => e.AuthToken, authtoken));
 
             user = users.FindOne (query);
 
-            return user.AuthToken.ToString();
+            return user.Key;
         }
 
         public User Validate (Guid authToken, Guid domainKey, string IP = null)

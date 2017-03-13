@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.Manager", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSANancyExample", "examples\SSANancyExample\SSANancyExample.csproj", "{7CEC59C0-3066-4EF5-B541-74271176F26B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.CSharp.Test", "test\SsaCsharpTest\SuperSimple.CSharp.Test.csproj", "{8E398D1E-316B-4EA6-8A6F-E4B8C40D6B8E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.CSharp.Test", "test\SsaCsharpTest\SuperSimple.Auth.CSharp.Test.csproj", "{8E398D1E-316B-4EA6-8A6F-E4B8C40D6B8E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Api.Repository", "src\SuperSimple.Auth.Api.Repository\SuperSimple.Api.Repository.csproj", "{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}"
 EndProject
