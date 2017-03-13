@@ -294,7 +294,7 @@ namespace SuperSimple.Auth
         {
             var jwt = Jwt.ToObject(token);
             var user = new User();
-            user.Id = Guid.Parse(jwt.Payload.JwtTokenId);
+            user.AuthToken = Guid.Parse(jwt.Payload.JwtTokenId);
             user.Jwt = token;
             user.Email = jwt.Payload.Email;
             user.UserName = jwt.Payload.Username;
@@ -382,7 +382,6 @@ namespace SuperSimple.Auth
                     new System.Collections.Specialized.NameValueCollection ();
 
                 client.Headers [_headerDomainKey] = this._domainKey.ToString ();
-                client.Headers [_headerDomain] = this._name;
 
                 reqparm.Add ("AuthToken", authToken.ToString ());
 
@@ -397,8 +396,10 @@ namespace SuperSimple.Auth
                 {
                     ServicePointManager.ServerCertificateValidationCallback = 
                         delegate { return true; };
-                    byte [] responsebytes =
-                        client.UploadValues (string.Format ("{0}/validate", _uri),
+                    
+                    var responsebytes =
+                        client.UploadValues (string.Format ("{0}/validateauthtoken", 
+                                                            _uri),
                                              "Post", reqparm);
 
                     responsebody = Encoding.UTF8.GetString (responsebytes);
@@ -410,6 +411,7 @@ namespace SuperSimple.Auth
                 }
 
                 user = JsonConvert.DeserializeObject<User> (responsebody);
+
             }
 
             return user;

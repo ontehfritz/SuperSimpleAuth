@@ -20,28 +20,28 @@ namespace SSANancyExample
         {
             var ssaUser = _ssa.Validate (identifier,
                                          context.Request.UserHostAddress);
-
-            var user = new NancyUserIdentity {
-                UserName = ssaUser.UserName,
-                AuthToken = ssaUser.AuthToken,
-                Email = ssaUser.Email,
-                Id = ssaUser.Id,
-                Claims = ssaUser.Claims,
-                Roles = ssaUser.Roles
-            };
-
+            
+            var user = new NancyUserIdentity(ssaUser);
+           
             return user;
         }
     }
 
     public class NancyUserIdentity : IUserIdentity
     {
-        public Guid Id { get; set; }
         public Guid AuthToken { get; set; }
         public string UserName { get; set; }
+        public string Jwt {get; set; }
         public string Email { get; set; }
         public IEnumerable<string> Claims { get; set; }
-        public IEnumerable<string> Roles { get; set; }
+
+        public NancyUserIdentity(User user)
+        {
+            UserName = user.UserName;
+            Email = user.Email;
+            AuthToken = user.AuthToken;
+            Jwt = user.Jwt;
+        }
     }
 }
 

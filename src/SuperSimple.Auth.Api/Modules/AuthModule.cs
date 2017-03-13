@@ -217,11 +217,11 @@
                 return Response.AsJson (false);
             };
 
-            Post ["/validateAuthToken"] = parameters =>
+            Post ["/validateauthtoken"] = parameters =>
             {
                 Guid domainKey =
                     Guid.Parse (Request.Headers [_headerDomainKey].FirstOrDefault ());
-
+                
                 Guid token = Guid.Parse (Request.Form ["AuthToken"]);
                 string IP = Request.Form ["IP"];
                 User user = null;
@@ -240,11 +240,23 @@
                         Nancy.HttpStatusCode.Forbidden);
                 }
 
+                var header = new Header();
+                header.Algorithm = "HS256";
+                header.Type = "JWT";
+
+                var payload = new Payload();
+                payload.Issuer = "autheticate.technology";
+                payload.Audience = user.DomainId.ToString();
+                payload.JwtTokenId = user.AuthToken.ToString();
+                payload.Username = user.UserName;
+                payload.Email = user.Email;
+
+                var jwt = new Jwt(header,payload);
                 var u = new
                 {
-                    Id = user.Id,
                     Username = user.UserName,
                     Email = user.Email,
+                    Jwt = Jwt.ToToken(jwt, repository.GetKey(user.AuthToken)),
                     AuthToken = user.AuthToken,
                     Claims = user.GetClaims (),
                     Roles = user.GetRoles ()
@@ -253,7 +265,6 @@
                 return Response.AsJson (u);
 
             };
-
 
             Post ["/disable"] = parameters =>
             {
@@ -294,7 +305,6 @@
                     return Response.AsJson (message,
                         Nancy.HttpStatusCode.Forbidden);
                 }
-
 
                 var header = new Header();
                 header.Algorithm = "HS256";
