@@ -40,6 +40,11 @@
 
             var valid = api.Validate(user);
             Assert.True(valid);
+            var u  = api.Validate(user.AuthToken);
+            Assert.IsNotNull(u);
+            u = api.Validate(user.Jwt);
+            Assert.IsNotNull(u);
+
             user.Email = "test@test1.com";
 
             user = api.ChangeEmail(user, user.Email);
