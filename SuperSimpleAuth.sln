@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.Token", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.Token.Test", "test\SuperSimple.Auth.Token.Test\SuperSimple.Auth.Token.Test.csproj", "{8182D472-6B5A-46E8-9682-01EAE450E0CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NancyStatelessJwt", "examples\NancyStatelessJwt\NancyStatelessJwt.csproj", "{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{8182D472-6B5A-46E8-9682-01EAE450E0CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8182D472-6B5A-46E8-9682-01EAE450E0CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8182D472-6B5A-46E8-9682-01EAE450E0CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = SSAManager\SSAManager.csproj

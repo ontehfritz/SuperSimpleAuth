@@ -1,17 +1,17 @@
-﻿<Properties StartupConfiguration="Multi-Startup">
-  <MonoDevelop.Ide.Workbench ActiveDocument="test/SsaCsharpTest/SsaCsharp.cs">
+﻿<Properties StartupConfiguration="{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Token/Jwt.cs">
     <Files>
       <File FileName="src/SuperSimple.Auth.Api/Modules/IndexModule.cs" Line="5" Column="6" />
-      <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="22" Column="10" />
-      <File FileName="examples/SSANancyExample/Modules/LogonModule.cs" Line="39" Column="22" />
-      <File FileName="examples/SSANancyExample/Modules/IndexModule.cs" Line="1" Column="1" />
+      <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="41" Column="10" />
+      <File FileName="examples/SSANancyExample/Modules/LogonModule.cs" Line="30" Column="83" />
+      <File FileName="examples/SSANancyExample/Modules/IndexModule.cs" Line="9" Column="43" />
       <File FileName="examples/SSANancyExample/Models/LogonModel.cs" Line="1" Column="1" />
       <File FileName="examples/SSANancyExample/Models/Error.cs" Line="1" Column="1" />
       <File FileName="examples/SSANancyExample/Models/SignupModel.cs" Line="1" Column="1" />
       <File FileName="examples/SSANancyExample/Views/logon/logon.cshtml" Line="1" Column="1" />
       <File FileName="examples/SSANancyExample/Views/logon/signup.cshtml" Line="1" Column="1" />
       <File FileName="examples/SSANancyExample/packages.config" Line="1" Column="1" />
-      <File FileName="examples/SSANancyExample/web.config" Line="36" Column="13" />
+      <File FileName="examples/SSANancyExample/web.config" Line="8" Column="15" />
       <File FileName="src/SuperSimple.Auth.Manager.Repository/MongoRepository.cs" Line="401" Column="13" />
       <File FileName="src/SuperSimple.Auth.Api/Models/Email.cs" Line="1" Column="1" />
       <File FileName="src/SuperSimple.Auth.Api.Repository/User.cs" Line="8" Column="18" />
@@ -20,30 +20,69 @@
       <File FileName="src/SuperSimple.Auth.Manager/Models/Manager.cs" Line="267" Column="9" />
       <File FileName="test/SuperSimple.Auth.Manager.Repository.Test/Test.cs" Line="15" Column="44" />
       <File FileName="src/SuperSimple.Auth.Manager.Repository/Administrator.cs" Line="1" Column="1" />
-      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="45" Column="10" />
-      <File FileName="examples/SSANancyExample/Models/NancyUser.cs" Line="44" Column="10" />
-      <File FileName="src/SuperSimple.Auth.CSharp/SuperSimpleAuth.cs" Line="556" Column="1" />
+      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="17" Column="18" />
+      <File FileName="examples/SSANancyExample/Models/NancyUser.cs" Line="45" Column="6" />
+      <File FileName="src/SuperSimple.Auth.CSharp/SuperSimpleAuth.cs" Line="295" Column="1" />
       <File FileName="src/SuperSimple.Auth.Api/Modules/AuthModule.cs" Line="244" Column="44" />
       <File FileName="src/SuperSimple.Auth.CSharp/User.cs" Line="22" Column="34" />
       <File FileName="examples/SSANancyExample/Views/index.cshtml" Line="45" Column="30" />
+      <File FileName="examples/NancyStatelessJwt/web.config" Line="12" Column="18" />
+      <File FileName="examples/NancyStatelessJwt/Bootstrapper.cs" Line="77" Column="1" />
+      <File FileName="examples/NancyStatelessJwt/Models/NancyUserIdentity.cs" Line="6" Column="11" />
+      <File FileName="examples/NancyStatelessJwt/Views/index.cshtml" Line="13" Column="5" />
+      <File FileName="examples/NancyStatelessJwt/Views/logon/logon.cshtml" Line="7" Column="42" />
+      <File FileName="examples/NancyStatelessJwt/Views/logon/signup.cshtml" Line="8" Column="33" />
+      <File FileName="examples/NancyStatelessJwt/Modules/IndexModule.cs" Line="17" Column="15" />
+      <File FileName="examples/NancyStatelessJwt/Modules/LogonModule.cs" Line="38" Column="18" />
+      <File FileName="examples/NancyStatelessJwt/Models/SignupModel.cs" Line="7" Column="6" />
+      <File FileName="examples/NancyStatelessJwt/packages.config" Line="1" Column="1" />
+      <File FileName="examples/NancyStatelessJwt/Models/LogonModel.cs" Line="2" Column="2" />
+      <File FileName="examples/NancyStatelessJwt/Models/Error.cs" Line="9" Column="19" />
+      <File FileName="examples/SuperSimple.Auth.Jwt.Nancy/Modules/IndexModule.cs" Line="4" Column="33" />
+      <File FileName="src/SuperSimple.Auth.Token/Jwt.cs" Line="38" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SuperSimpleAuth" expanded="True">
+            <Node name="NancyStatelessJwt" expanded="True">
+              <Node name="Modules" expanded="True" />
+              <Node name="Views" expanded="True">
+                <Node name="logon" expanded="True" />
+              </Node>
+            </Node>
+            <Node name="SSANancyExample" expanded="True">
+              <Node name="Views" expanded="True" />
+            </Node>
+            <Node name="SuperSimple.Auth.CSharp" expanded="True" />
+            <Node name="SuperSimple.Auth.CSharp.Test" expanded="True" />
+            <Node name="SuperSimple.Auth.Token" expanded="True">
+              <Node name="Jwt.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.Manager PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/fritz/Dropbox/Projects/SuperSimpleAuth/test/SsaCsharpTest/SsaCsharp.cs" relfile="test/SsaCsharpTest/SsaCsharp.cs" line="32" column="1" />
+      <Breakpoint file="/Users/fritz/Dropbox/Projects/SuperSimpleAuth/examples/NancyStatelessJwt/Bootstrapper.cs" relfile="examples/NancyStatelessJwt/Bootstrapper.cs" line="61" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="examples/NancyStatelessJwt/Bootstrapper.cs" line="65" offsetX="527" offsetY="960" expression="jwtToken" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
   <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.Api PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.NancyStatelessJwt PreferredExecutionTarget="MonoDevelop.Default" />
   <AuthorInfo Name="Fritz (Fredrick Seitz)" Email="fredrick.seitz@gmail.com" Copyright="Fritz (Fredrick Seitz)" Company="Fritz" Trademark="Fritz" />
   <MultiItemStartupConfigurations>
     <MultiItemSolutionRunConfiguration Id="Multi-Startup" Name="Multi-Startup">
       <Items>
+        <StartupItem ItemId="{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}" />
         <StartupItem ItemId="{3E96487D-52AE-4A0B-8D29-B4F4EBEC5CC7}" />
         <StartupItem ItemId="{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}" />
-        <StartupItem ItemId="{7CEC59C0-3066-4EF5-B541-74271176F26B}" />
       </Items>
     </MultiItemSolutionRunConfiguration>
   </MultiItemStartupConfigurations>

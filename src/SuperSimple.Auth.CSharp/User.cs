@@ -21,6 +21,11 @@ namespace SuperSimple.Auth
         public string Jwt       { get; set; }
         public List<Role> Roles { get; set; }
 
+        public User()
+        {
+            Roles = new List<Role>();
+        }
+
         public bool InRole(string role)
         {
             if (Roles == null) 
