@@ -1,9 +1,8 @@
-namespace SSANancyExample
+namespace NancyStatelessJwt
 {
     using System;
     using System.Linq;
     using Nancy;
-    using Nancy.Authentication.Forms;
     using Nancy.ModelBinding;
     using Nancy.Validation;
     using SuperSimple.Auth;
@@ -38,8 +37,9 @@ namespace SSANancyExample
                     }
                 }
 
-                return this.LoginAndRedirect(user.AuthToken, 
-                                             fallbackRedirectUrl: "/");
+                return 
+                    Response.AsRedirect(string.Format("/?authorization={0}",
+                                                      user.Jwt));
             };
 
             //Get["/logoff"] = parameters => {
@@ -75,7 +75,7 @@ namespace SSANancyExample
                     return View["signup", signup];
                 }
 
-                return this.Response.AsRedirect("/");
+                return this.Response.AsRedirect("/logon");
             };
         }
     }
