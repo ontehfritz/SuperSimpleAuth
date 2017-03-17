@@ -132,8 +132,6 @@
                 Guid domainKey = Guid.Parse(jwt.Payload.Audience);
                 Guid authToken = Guid.Parse(jwt.Payload.JwtTokenId);
 
-                var key = repository.GetKey(authToken);
-                
                 string newPassword = Request.Form ["NewPassword"];
                 //string IP = Request.Form["IP"];
 
@@ -144,7 +142,7 @@
 
             Post ["/forgot"] = parameters =>
             {
-                string email = Request.Form ["Email"];
+                var email = Request.Form ["Email"];
 
                 Guid domainKey =
                     Guid.Parse (Request.Headers [_headerDomainKey]
@@ -185,13 +183,14 @@
             /// <param name="authToken">Auth token.</param>
             Post ["/end"] = parameters =>
             {
-                Guid domainKey =
-                    Guid.Parse (Request.Headers [_headerDomainKey]
-                                .FirstOrDefault ());
+                var token =
+                    Request.Headers [_authorization].FirstOrDefault ();
 
-                Guid token = Guid.Parse (Request.Form ["AuthToken"]);
+                var jwt = Jwt.ToObject(token.Replace("\"", string.Empty));
+                Guid domainKey = Guid.Parse(jwt.Payload.Audience);
+                Guid authToken = Guid.Parse(jwt.Payload.JwtTokenId);
 
-                bool end = repository.End (domainKey, token);
+                var end = repository.End (domainKey, authToken);
 
                 return Response.AsJson (end);
             };
