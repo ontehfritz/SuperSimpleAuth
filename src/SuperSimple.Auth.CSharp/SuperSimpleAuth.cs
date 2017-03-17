@@ -44,7 +44,9 @@ namespace SuperSimple.Auth
         {
             if (string.IsNullOrEmpty (email))
             {
-                throw new ArgumentException ("email cannot be null or empty string", "email");
+                throw 
+                new ArgumentException ("email cannot be null or empty string", 
+                                       "email");
             }
 
             using (WebClient client = new WebClient ())
@@ -53,9 +55,7 @@ namespace SuperSimple.Auth
                     new System.Collections.Specialized.NameValueCollection ();
 
                 reqparm.Add ("Email", email);
-
                 client.Headers [_headerDomainKey] = this._domainKey.ToString ();
-                client.Headers [_headerDomain] = this._name;
 
                 string responsebody = "";
 
@@ -162,7 +162,7 @@ namespace SuperSimple.Auth
         /// End the specified authToken.
         /// </summary>
         /// <param name="authToken">Auth token.</param>
-        public bool ChangePassword (Guid authToken, string newPassword)
+        public bool ChangePassword (User user, string newPassword)
         {
             bool end = false;
 
@@ -171,10 +171,8 @@ namespace SuperSimple.Auth
                 var reqparm =
                     new System.Collections.Specialized.NameValueCollection ();
 
-                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
-                client.Headers [_headerDomain] = this._name;
+                client.Headers [_authorization] = user.Jwt;
 
-                reqparm.Add ("AuthToken", authToken.ToString ());
                 reqparm.Add ("NewPassword", newPassword);
 
                 string responsebody = "";
@@ -205,7 +203,7 @@ namespace SuperSimple.Auth
         /// End the specified authToken.
         /// </summary>
         /// <param name="authToken">Auth token.</param>
-        public bool End (Guid authToken)
+        public bool End (User user)
         {
             bool end = false;
 
@@ -217,7 +215,7 @@ namespace SuperSimple.Auth
                 client.Headers [_headerDomainKey] = this._domainKey.ToString ();
                 client.Headers [_headerDomain] = this._name;
 
-                reqparm.Add ("AuthToken", authToken.ToString ());
+                client.Headers [_authorization] = user.Jwt;
 
                 string responsebody = "";
 

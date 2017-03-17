@@ -48,13 +48,26 @@
             user.Email = "test@test1.com";
 
             user = api.ChangeEmail(user, user.Email);
-          
 
             user.UserName = "mutha";
             user = api.ChangeUserName(user, user.UserName);
 
-            valid = api.Disable(user);
+            valid = api.ChangePassword(user, "pazzwurd");
+            Assert.True(valid);
 
+            var newpassword = api.Forgot(user.Email);
+            Assert.True(!string.IsNullOrEmpty(newpassword));
+
+            valid = api.End(user);
+            Assert.True(valid);
+            valid = api.Validate(user);
+            Assert.False(valid);
+
+            user = api.Authenticate(user.UserName, newpassword);
+
+            Assert.IsNotNull(user);
+
+            valid = api.Disable(user);
             Assert.True(valid);
         }
     }

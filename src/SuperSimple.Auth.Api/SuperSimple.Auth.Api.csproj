@@ -93,7 +93,6 @@
     <Compile Include="Helper\Error.cs" />
     <Compile Include="Models\ErrorMessage.cs" />
     <Compile Include="Modules\IndexModule.cs" />
-    <Compile Include="Models\Email.cs" />
     <Compile Include="Modules\AuthModule.cs" />
   </ItemGroup>
   <ItemGroup>
