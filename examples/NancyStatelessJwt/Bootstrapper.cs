@@ -7,8 +7,8 @@
     using Nancy.Authentication.Stateless;
     using Nancy.Bootstrapper;
     using Nancy.TinyIoc;
-    using SuperSimple.Auth;
     using System.Collections.Generic;
+    using SuperSimple.Auth;
 
     public class Bootstrapper : DefaultNancyBootstrapper
     {
