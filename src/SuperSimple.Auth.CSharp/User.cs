@@ -13,6 +13,7 @@ namespace SuperSimple.Auth
             Permissions = new List<string>();
         }
     }
+
     public class User
     {
         public string UserName  { get; set; }

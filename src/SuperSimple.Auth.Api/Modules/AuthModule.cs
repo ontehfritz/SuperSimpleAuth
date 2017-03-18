@@ -206,6 +206,8 @@
 
                 var key = repository.GetKey(Guid.Parse(jwt.Payload.JwtTokenId));
 
+                if(key == null) return Response.AsJson (false);
+
                 if(Jwt.Validate(token.Replace("\"", 
                                               string.Empty), key))
                 {
