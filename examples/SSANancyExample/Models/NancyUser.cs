@@ -1,12 +1,12 @@
-using System;
-using Nancy.Authentication.Forms;
-using Nancy.Security;
-using Nancy;
-using System.Collections.Generic;
-using SuperSimple.Auth;
-
 namespace SSANancyExample
 {
+    using System;
+    using Nancy.Authentication.Forms;
+    using Nancy.Security;
+    using Nancy;
+    using System.Collections.Generic;
+    using SuperSimple.Auth;
+
     public class NancyUserMapper: IUserMapper
     {
         private SuperSimpleAuth _ssa; 

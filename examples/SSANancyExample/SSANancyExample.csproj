@@ -95,9 +95,9 @@
     <None Include="Views\logon\signup.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SuperSimple.Auth.CSharp\SuperSimple.Auth.CSharp.csproj">
+    <ProjectReference Include="..\..\src\SuperSimple.Auth.CSharp\SuperSimple.Auth.SuperSimpleAuth.csproj">
       <Project>{7EF26E89-0BDF-4A21-8045-47CA3288EABC}</Project>
-      <Name>SuperSimple.Auth.CSharp</Name>
+      <Name>SuperSimple.Auth.SuperSimpleAuth</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\..\packages\Nancy.Viewengines.Razor.1.4.3\build\Nancy.ViewEngines.Razor.targets" Condition="Exists('..\..\packages\Nancy.Viewengines.Razor.1.4.3\build\Nancy.ViewEngines.Razor.targets')" />

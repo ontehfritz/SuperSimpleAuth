@@ -301,6 +301,8 @@
             var query = Query.And (Query<User>.EQ (e => e.AuthToken, authtoken));
 
             user = users.FindOne (query);
+           
+            if(user == null) return null;
 
             return user.Key;
         }
