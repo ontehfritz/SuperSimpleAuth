@@ -99,13 +99,13 @@
     <None Include="Views\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SuperSimple.Auth.Api.Repository\SuperSimple.Api.Repository.csproj">
-      <Project>{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}</Project>
-      <Name>SuperSimple.Api.Repository</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SuperSimple.Auth.Token\SuperSimple.Auth.Token.csproj">
       <Project>{0A257DF1-010E-4026-9CE4-671807BFAEE1}</Project>
       <Name>SuperSimple.Auth.Token</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SuperSimple.Auth.Api.Repository\SuperSimple.Auth.Api.Repository.csproj">
+      <Project>{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}</Project>
+      <Name>SuperSimple.Auth.Api.Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\..\packages\Nancy.Viewengines.Razor.1.4.3\build\Nancy.ViewEngines.Razor.targets" Condition="Exists('..\..\packages\Nancy.Viewengines.Razor.1.4.3\build\Nancy.ViewEngines.Razor.targets')" />

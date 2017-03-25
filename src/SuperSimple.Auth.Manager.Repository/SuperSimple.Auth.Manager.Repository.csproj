@@ -50,9 +50,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SuperSimple.Auth.Api.Repository\SuperSimple.Api.Repository.csproj">
+    <ProjectReference Include="..\SuperSimple.Auth.Api.Repository\SuperSimple.Auth.Api.Repository.csproj">
       <Project>{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}</Project>
-      <Name>SuperSimple.Api.Repository</Name>
+      <Name>SuperSimple.Auth.Api.Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
