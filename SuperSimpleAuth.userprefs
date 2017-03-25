@@ -1,44 +1,10 @@
 ﻿<Properties StartupConfiguration="{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="examples/NancyStatelessJwt/Models/NancyUserIdentity.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="test/SsaCsharpTest/SsaCsharp.cs">
     <Files>
-      <File FileName="src/SuperSimple.Auth.Api/Modules/AuthModule.cs" Line="33" Column="1" />
-      <File FileName="src/SuperSimple.Auth.Api/Modules/IndexModule.cs" Line="5" Column="6" />
-      <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="21" Column="3" />
-      <File FileName="examples/SSANancyExample/Models/NancyUser.cs" Line="9" Column="5" />
-      <File FileName="src/SuperSimple.Auth.CSharp/SuperSimpleAuth.cs" Line="20" Column="16" />
-      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="34" Column="36" />
-      <File FileName="src/SuperSimple.Auth.Api/Bootstrapper.cs" Line="1" Column="1" />
-      <File FileName="examples/SSANancyExample/Modules/IndexModule.cs" Line="14" Column="22" />
-      <File FileName="examples/SSANancyExample/Models/Error.cs" Line="1" Column="1" />
-      <File FileName="examples/SSANancyExample/Models/LogonModel.cs" Line="1" Column="1" />
-      <File FileName="src/SuperSimple.Auth.CSharp/Properties/AssemblyInfo.cs" Line="8" Column="39" />
-      <File FileName="examples/NancyStatelessJwt/Bootstrapper.cs" Line="9" Column="25" />
-      <File FileName="examples/NancyStatelessJwt/Models/NancyUserIdentity.cs" Line="4" Column="7" />
+      <File FileName="examples/NancyStatelessJwt/Bootstrapper.cs" Line="25" Column="15" />
+      <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="7" Column="11" />
+      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="32" Column="27" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="SuperSimpleAuth" expanded="True">
-            <Node name="NancyStatelessJwt" expanded="True">
-              <Node name="Models" expanded="True">
-                <Node name="NancyUserIdentity.cs" selected="True" />
-              </Node>
-            </Node>
-            <Node name="SSANancyExample" expanded="True">
-              <Node name="References" expanded="True" />
-              <Node name="Models" expanded="True" />
-              <Node name="Modules" expanded="True" />
-            </Node>
-            <Node name="SuperSimple.Auth.CSharp.Test" expanded="True">
-              <Node name="References" expanded="True" />
-            </Node>
-            <Node name="SuperSimple.Auth.SuperSimpleAuth" expanded="True">
-              <Node name="Properties" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.Manager PreferredExecutionTarget="MonoDevelop.Default" />

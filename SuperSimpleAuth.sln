@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.Api", "src\SuperSimple.Auth.Api\SuperSimple.Auth.Api.csproj", "{3E96487D-52AE-4A0B-8D29-B4F4EBEC5CC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.SuperSimpleAuth", "src\SuperSimple.Auth.CSharp\SuperSimple.Auth.SuperSimpleAuth.csproj", "{7EF26E89-0BDF-4A21-8045-47CA3288EABC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.SuperSimpleAuth", "src\SuperSimple.Auth.SuperSimpleAuth\SuperSimple.Auth.SuperSimpleAuth.csproj", "{7EF26E89-0BDF-4A21-8045-47CA3288EABC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.Manager", "src\SuperSimple.Auth.Manager\SuperSimple.Auth.Manager.csproj", "{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSANancyExample", "examples\SSANancyExample\SSANancyExample.csproj", "{7CEC59C0-3066-4EF5-B541-74271176F26B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.CSharp.Test", "test\SsaCsharpTest\SuperSimple.Auth.CSharp.Test.csproj", "{8E398D1E-316B-4EA6-8A6F-E4B8C40D6B8E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.SuperSimpleAuth.Test", "test\SsaCsharpTest\SuperSimple.Auth.SuperSimpleAuth.Test.csproj", "{8E398D1E-316B-4EA6-8A6F-E4B8C40D6B8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Api.Repository", "src\SuperSimple.Auth.Api.Repository\SuperSimple.Api.Repository.csproj", "{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.Api.Repository", "src\SuperSimple.Auth.Api.Repository\SuperSimple.Auth.Api.Repository.csproj", "{FFA557A6-6405-4AAD-9B1B-8699AB8CBC0B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.Manager.Repository", "src\SuperSimple.Auth.Manager.Repository\SuperSimple.Auth.Manager.Repository.csproj", "{18EC6CA5-A955-479B-AD76-E7ECC796B72F}"
 EndProject

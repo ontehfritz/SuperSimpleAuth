@@ -81,7 +81,7 @@
     <None Include="Views\logon\signup.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SuperSimple.Auth.CSharp\SuperSimple.Auth.SuperSimpleAuth.csproj">
+    <ProjectReference Include="..\..\src\SuperSimple.Auth.SuperSimpleAuth\SuperSimple.Auth.SuperSimpleAuth.csproj">
       <Project>{7EF26E89-0BDF-4A21-8045-47CA3288EABC}</Project>
       <Name>SuperSimple.Auth.SuperSimpleAuth</Name>
     </ProjectReference>
