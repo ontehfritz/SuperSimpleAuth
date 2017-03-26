@@ -9,11 +9,6 @@ namespace SuperSimple.Auth.Api
             {
                 return View ["index"];
             };
-
-            Get ["/test"] = parameters =>
-            {
-                return Response.AsJson (Request.Headers);
-            };
         }
     }
 }

@@ -90,8 +90,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Helper\Error.cs" />
-    <Compile Include="Models\ErrorMessage.cs" />
+    <Compile Include="Helper\Errors.cs" />
+    <Compile Include="Models\Error.cs" />
     <Compile Include="Modules\IndexModule.cs" />
     <Compile Include="Modules\AuthModule.cs" />
   </ItemGroup>

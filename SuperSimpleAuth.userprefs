@@ -1,12 +1,21 @@
 ﻿<Properties StartupConfiguration="{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="test/SsaCsharpTest/SsaCsharp.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Api/Modules/IndexModule.cs">
     <Files>
-      <File FileName="examples/NancyStatelessJwt/Bootstrapper.cs" Line="25" Column="15" />
+      <File FileName="examples/NancyStatelessJwt/Bootstrapper.cs" Line="27" Column="44" />
       <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="7" Column="11" />
       <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="32" Column="27" />
+      <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/ErrorMessage.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/Exceptions.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/packages.config" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/SuperSimpleAuth.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/User.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Api/Models/Error.cs" Line="22" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Api/Helper/Errors.cs" Line="6" Column="42" />
+      <File FileName="src/SuperSimple.Auth.Api/Modules/AuthModule.cs" Line="66" Column="50" />
+      <File FileName="src/SuperSimple.Auth.Api/Modules/IndexModule.cs" Line="15" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.Manager PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
