@@ -3,34 +3,22 @@ namespace SuperSimple.Auth
     using System;
 
     [Serializable]
-    public class InvalidKeyException : Exception
+    public class InvalidException : Exception
     {
-        public InvalidKeyException(){}
-        public InvalidKeyException(string message): base(message){}
+        public InvalidException(){}
+        public InvalidException(string message): base(message){}
     }
 
-    public class DuplicateUserException : Exception
+    public class DuplicateException : Exception
     {
-        public DuplicateUserException(){}
-        public DuplicateUserException(string message): base(message){}
+        public DuplicateException(){}
+        public DuplicateException(string message): base(message){}
     }
 
-    public class AuthenticationFailedException : Exception
+    public class UnauthorizedException : Exception
     {
-        public AuthenticationFailedException(){}
-        public AuthenticationFailedException(string message): base(message){}
-    }
-
-    public class InvalidTokenException : Exception
-    {
-        public InvalidTokenException(){}
-        public InvalidTokenException(string message): base(message){}
-    }
-
-    public class InvalidIpException : Exception
-    {
-        public InvalidIpException(){}
-        public InvalidIpException(string message): base(message){}
+        public UnauthorizedException(){}
+        public UnauthorizedException(string message): base(message){}
     }
 }
 

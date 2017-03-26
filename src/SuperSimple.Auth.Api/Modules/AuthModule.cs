@@ -67,10 +67,11 @@
 
                 if (repository.EmailExists (domainKey, newEmail))
                 {
-                    var e = new ErrorMessage ();
-                    e.Message = "Email already exist. Please choose another.";
-                    e.Status = "DuplicateUser";
-
+                    var e = new Error ();
+                    e.Detail = "Email already exist. Please choose another.";
+                    e.Status =  (int)HttpStatusCode.UnprocessableEntity;
+                    e.Title = "Duplicate";
+                    e.Source = new Source("/email");
                     return Response.AsJson (e,
                         Nancy.HttpStatusCode.UnprocessableEntity);
                 }
@@ -84,7 +85,7 @@
                 }
 
                 return Response.AsJson (Jwt.ToToken(jwt, 
-                                                    key));
+                                                    key),HttpStatusCode.OK);
             };
 
             Post ["/username"] = parameters =>
@@ -101,12 +102,14 @@
 
                 if (repository.UsernameExists (domainKey, newUserName))
                 {
-                    var e = new ErrorMessage ();
-                    e.Message = "Username already exist. Please choose another.";
-                    e.Status = "DuplicateUser";
+                    var e = new Error ();
+                    e.Detail = "Username already exist. Please choose another.";
+                    e.Status =  (int)HttpStatusCode.UnprocessableEntity;
+                    e.Title = "Duplicate";
+                    e.Source = new Source("/username");
 
                     return Response.AsJson (e,
-                        Nancy.HttpStatusCode.UnprocessableEntity);
+                        HttpStatusCode.UnprocessableEntity);
                 }
 
                 var key = repository.GetKey(authToken);
@@ -120,7 +123,7 @@
                 }
 
                 return Response.AsJson (Jwt.ToToken(jwt, 
-                                                    key));
+                                                    key),HttpStatusCode.OK);
             };
 
             Post ["/password"] = parameters =>
@@ -137,7 +140,8 @@
 
                 return Response.AsJson (repository
                                         .ChangePassword (domainKey, authToken, 
-                                                        newPassword));
+                                                        newPassword),
+                                        HttpStatusCode.OK);
             };
 
             Post ["/forgot"] = parameters =>
@@ -150,11 +154,13 @@
 
                 if (string.IsNullOrEmpty (email))
                 {
-                    var noemail = new ErrorMessage ();
-                    noemail.Status = "EmailNotFound";
-                    noemail.Message = "No email provided";
+                    var er = new Error ();
+                    er.Detail = "Email could not be found.";
+                    er.Status =  (int)HttpStatusCode.UnprocessableEntity;
+                    er.Title = "Invalid";
+                    er.Source = new Source("/forgot");
 
-                    return Response.AsJson (noemail,
+                    return Response.AsJson (er,
                         Nancy.HttpStatusCode.UnprocessableEntity);
                 }
 
@@ -164,15 +170,17 @@
 
                     if (newPassword != null)
                     {
-                        return Response.AsJson (newPassword);
+                        return Response.AsJson (newPassword, HttpStatusCode.OK);
                     }
                 }
 
-                var emailNotFound = new ErrorMessage ();
-                emailNotFound.Status = "EmailNotFound";
-                emailNotFound.Message = "Email does not exist";
+                var e = new Error ();
+                e.Detail = "Email could not be found.";
+                e.Status =  (int)HttpStatusCode.UnprocessableEntity;
+                e.Title = "Invalid";
+                e.Source = new Source("/forgot");
 
-                return Response.AsJson (emailNotFound,
+                return Response.AsJson (e,
                     Nancy.HttpStatusCode.UnprocessableEntity);
             };
 
@@ -192,7 +200,7 @@
 
                 var end = repository.End (domainKey, authToken);
 
-                return Response.AsJson (end);
+                return Response.AsJson (end, HttpStatusCode.OK);
             };
 
             Post ["/validate"] = parameters =>
@@ -211,11 +219,11 @@
                 if(Jwt.Validate(token.Replace("\"", 
                                               string.Empty), key))
                 {
-                    return Response.AsJson (true);
+                    return Response.AsJson (true, HttpStatusCode.OK);
                 }
 
                 //return error here
-                return Response.AsJson (false);
+                return Response.AsJson (false, HttpStatusCode.OK);
             };
 
             Post ["/validateauthtoken"] = parameters =>
@@ -231,13 +239,13 @@
 
                 if (user == null)
                 {
-                    var message = new ErrorMessage
-                    {
-                        Status = "InvalidToken",
-                        Message = "AuthToken is not valid or expired. Re-Authenticate user."
-                    };
+                    var e = new Error ();
+                    e.Detail = "AuthToken is not valid or expired.Re-Authenticate user";
+                    e.Status =  (int)HttpStatusCode.UnprocessableEntity;
+                    e.Title = "Invalid";
+                    e.Source = new Source("/validateauthtoken");
 
-                    return Response.AsJson (message,
+                    return Response.AsJson (e,
                         Nancy.HttpStatusCode.Forbidden);
                 }
 
@@ -263,7 +271,7 @@
                     Roles = user.GetRoles ()
                 };
 
-                return Response.AsJson (u);
+                return Response.AsJson (u, HttpStatusCode.OK);
 
             };
 
@@ -277,7 +285,8 @@
 
                 var key = Guid.Parse(jwt.Payload.JwtTokenId);
 
-                return Response.AsJson (repository.Disable (key, domainKey));
+                return Response.AsJson (repository.Disable (key, domainKey),
+                                        HttpStatusCode.OK);
             };
 
             Post ["/authenticate"] = parameters =>
@@ -297,14 +306,14 @@
 
                 if (user == null)
                 {
-                    var message = new ErrorMessage
-                    {
-                        Status = "AuthenticationFailed",
-                        Message = "User cannot be authenticated."
-                    };
+                    var e = new Error ();
+                    e.Detail = "Authentication failed. User not found.";
+                    e.Status =  (int)HttpStatusCode.Forbidden;
+                    e.Title = "Unauthorized";
+                    e.Source = new Source("/authenticate");
 
-                    return Response.AsJson (message,
-                        Nancy.HttpStatusCode.Forbidden);
+                    return Response.AsJson (e,
+                        HttpStatusCode.Forbidden);
                 }
 
                 var header = new Header();
@@ -321,7 +330,7 @@
                 var jwt = new Jwt(header,payload);
 
                 return Response.AsJson (Jwt.ToToken(jwt, 
-                                                    user.Key));
+                                                    user.Key),HttpStatusCode.OK);
             };
 
             Post ["/user"] = parameters =>
@@ -338,14 +347,16 @@
                         Request.Form ["Email"] != "" &&
                         repository.EmailExists (domainKey, Request.Form ["Email"]))
                     {
-                        var message = new ErrorMessage
-                        {
-                            Status = "DuplicateUser",
-                            Message = "Email is already being used for this application."
-                        };
+                     
+                        var e = new Error ();
+                        e.Detail = "Email is already used.";
+                        e.Status =  (int)HttpStatusCode.UnprocessableEntity;
+                        e.Title = "Duplicate";
+                        e.Source = new Source("/user");
 
-                        return Response.AsJson (message,
-                            Nancy.HttpStatusCode.UnprocessableEntity);
+                    
+                        return Response.AsJson (e,
+                            HttpStatusCode.UnprocessableEntity);
                     }
 
                     user = repository.CreateUser (domainKey,
@@ -353,19 +364,19 @@
                         Request.Form ["Secret"],
                         Request.Form ["Email"]);
                 }
-                catch (Exception e)
+                catch (Exception exc)
                 {
-                    var message = new ErrorMessage
-                    {
-                        Status = "DuplicateUser",
-                        Message = "Username already exists for this application."
-                    };
+                    var e = new Error ();
+                    e.Detail = "Username already exists for this application.";
+                    e.Status =  (int)HttpStatusCode.UnprocessableEntity;
+                    e.Title = "Duplicate";
+                    e.Source = new Source("/user");
 
-                    return Response.AsJson (message,
-                        Nancy.HttpStatusCode.UnprocessableEntity);
+                    return Response.AsJson (e,
+                        HttpStatusCode.UnprocessableEntity);
                 }
 
-                return Response.AsJson (true);
+                return Response.AsJson (true, HttpStatusCode.OK);
             };
         }
     }

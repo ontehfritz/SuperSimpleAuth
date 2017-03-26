@@ -520,9 +520,6 @@ namespace SuperSimple.Auth
 
             return responseText;
         }
-        
-         
-
 
         /// <summary>
         /// Handles the web exception.
@@ -535,33 +532,29 @@ namespace SuperSimple.Auth
                 throw exception;
             }
 
-            var error = new ErrorMessage ();
+            var error = new Error ();
 
             try
             {
-                string response = ReadResponse (exception.Response);
+                var response = ReadResponse (exception.Response);
                 error =
-                    JsonConvert.DeserializeObject<ErrorMessage> (response);
+                    JsonConvert.DeserializeObject<Error> (response);
             }
             catch (Exception e)
             {
                 throw exception;
             }
 
-            switch (error.Status)
+            switch (error.Title)
             {
-            case "DuplicateUser":
-                throw new DuplicateUserException (error.Message);
-            case "InvalidKey":
-                throw new InvalidKeyException (error.Message);
-            case "AuthenticationFailed":
-                throw new AuthenticationFailedException (error.Message);
-            case "InvalidToken":
-                throw new InvalidTokenException (error.Message);
-            case "IpNotAllowed":
-                throw new InvalidIpException (error.Message);
-            default:
-                throw exception;
+                case "Duplicate":
+                    throw new DuplicateException (error.Detail);
+                case "Invalid":
+                    throw new InvalidException (error.Detail);
+                case "Unauthorized":
+                    throw new UnauthorizedException (error.Detail);
+                default:
+                    throw exception;
             }
         }
     }
