@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\NuGet.Build.Packaging.0.1.157-dev\build\NuGet.Build.Packaging.props" Condition="Exists('..\..\packages\NuGet.Build.Packaging.0.1.157-dev\build\NuGet.Build.Packaging.props')" />
+  <Import Project="..\..\packages\NuGet.Build.Packaging.0.1.227\build\NuGet.Build.Packaging.props" Condition="Exists('..\..\packages\NuGet.Build.Packaging.0.1.227\build\NuGet.Build.Packaging.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -11,6 +11,25 @@
     <RootNamespace>SuperSimple.Auth</RootNamespace>
     <AssemblyName>SuperSimple.Auth.SuperSimpleAuth</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <PackageId>SuperSimple.Auth.SuperSimpleAuth</PackageId>
+    <PackageVersion>0.1.0</PackageVersion>
+    <Authors>Fritz (Fredrick) Seitz</Authors>
+    <Owners>Fritz (Fredrick) Seitz</Owners>
+    <PackageProjectUrl>https://www.authenticate.technology</PackageProjectUrl>
+    <PackageReleaseNotes>Note: Always, Always use SSL/HTTPS with Super Simple Auth and keep your domain keys safe. Do not put them client side, this defeats the use of SSA.
+
+This is a client side library for intergrating web authorization. Please sign up for an account at https://www.authenticate.technology.com. This uses JWT and/or simple GUID Token.</PackageReleaseNotes>
+    <Summary>Client Library for Super Simple Auth</Summary>
+    <PackageTags>Super Simple Auth, Simple Auth, Microservice client, SSA</PackageTags>
+    <Title>Super Simple Auth</Title>
+    <Description>Client library for Super Simple Auth uses JWT and/or Simple GUID Token. 
+Note: Always ... Always use SSL/HTTPS with SSA (Super Simple Auth)! Do not store domain/api keys
+client side. A node.js proxy will be developed for client side. 
+
+You need to sign up for a manager profile at https://www.authenticate.technology. 
+Api located at https://api.authenticate.technology
+Or you can set up your own instance by taking the code at: https://github.com/fritzcoder/SuperSimpleAuth</Description>
+    <PackOnBuild>true</PackOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,5 +72,5 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\packages\NuGet.Build.Packaging.0.1.157-dev\build\NuGet.Build.Packaging.targets" Condition="Exists('..\..\packages\NuGet.Build.Packaging.0.1.157-dev\build\NuGet.Build.Packaging.targets')" />
+  <Import Project="..\..\packages\NuGet.Build.Packaging.0.1.227\build\NuGet.Build.Packaging.targets" Condition="Exists('..\..\packages\NuGet.Build.Packaging.0.1.227\build\NuGet.Build.Packaging.targets')" />
 </Project>
