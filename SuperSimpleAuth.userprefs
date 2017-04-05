@@ -1,5 +1,5 @@
 ﻿<Properties StartupConfiguration="{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../../.nuget/packages/nuget.build.packaging/0.1.157-dev/build/NuGet.Build.Packaging.targets">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Token/Jwt.cs">
     <Files>
       <File FileName="examples/NancyStatelessJwt/Bootstrapper.cs" Line="23" Column="9" />
       <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="7" Column="11" />
@@ -13,8 +13,8 @@
       <File FileName="src/SuperSimple.Auth.Api/Helper/Errors.cs" Line="6" Column="42" />
       <File FileName="src/SuperSimple.Auth.Api/Modules/AuthModule.cs" Line="375" Column="37" />
       <File FileName="src/SuperSimple.Auth.Api/Modules/IndexModule.cs" Line="15" Column="1" />
-      <File FileName="src/SuperSimple.Auth.SuperSimpleAuth.Nuget/readme.txt" Line="3" Column="1" />
-      <File FileName="../../../.nuget/packages/nuget.build.packaging/0.1.157-dev/build/NuGet.Build.Packaging.targets" Line="697" Column="51" />
+      <File FileName="packages/NuGet.Build.Packaging.0.1.227/build/NuGet.Build.Packaging.targets" Line="209" Column="31" />
+      <File FileName="src/SuperSimple.Auth.Token/Jwt.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
