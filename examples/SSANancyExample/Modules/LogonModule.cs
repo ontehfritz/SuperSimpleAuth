@@ -26,8 +26,9 @@ namespace SSANancyExample
 
                 try
                 {
-                   user = ssa.Authenticate(model.Username,model.Secret,
-                                            this.Context.Request.UserHostAddress);
+                   user = 
+                        ssa.Authenticate(model.Username,model.Secret,
+                                           this.Context.Request.UserHostAddress).Result;
                 }
                 catch(Exception e)
                 {

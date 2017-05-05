@@ -13,19 +13,6 @@
         private const string URL = "https://api.authenticate.technology";
         private const string KEY = "894b3a57-6311-436e-97c7-d4e1984fa94b";
 
-
-        [Test ()]
-        public void CreateUser ()
-        {
-            //var api = new SuperSimpleAuth("test",
-            //                              LOCAL_KEY,
-            //                              LOCAL_URL);
-
-            //var user = api.CreateUser("test", "test", "test@test.net");
-            //user = api.Authenticate("test", "test");
-            //Assert.IsNotNull(user);
-        }
-
         [Test()]
         public void Authenticate()
         {
@@ -33,9 +20,10 @@
                                           LOCAL_KEY,
                                           LOCAL_URL);
 
-            api.CreateUser("test", "test", "test@test.net");
+            var created = api.CreateUser("test", "test", "test@test.net").Result;
 
-            var user = api.Authenticate("test", "test");
+            var user = api.Authenticate("test", "test").Result;
+
             Assert.True(!string.IsNullOrEmpty(user.Jwt));
 
             var valid = api.Validate(user);
@@ -46,7 +34,6 @@
             Assert.IsNotNull(u);
 
             user.Email = "test@test1.com";
-
             user = api.ChangeEmail(user, user.Email);
 
             user.UserName = "mutha";
@@ -58,12 +45,12 @@
             var newpassword = api.Forgot(user.Email);
             Assert.True(!string.IsNullOrEmpty(newpassword));
 
-            valid = api.End(user);
+            valid = api.End(user).Result;
             Assert.True(valid);
             valid = api.Validate(user);
             Assert.False(valid);
 
-            user = api.Authenticate(user.UserName, newpassword);
+            user = api.Authenticate(user.UserName, newpassword).Result;
 
             Assert.IsNotNull(user);
 
