@@ -367,7 +367,7 @@
                 catch (Exception exc)
                 {
                     var e = new Error ();
-                    e.Detail = "Username already exists for this application.";
+                    e.Detail = exc.Message;
                     e.Status =  (int)HttpStatusCode.UnprocessableEntity;
                     e.Title = "Duplicate";
                     e.Source = new Source("/user");

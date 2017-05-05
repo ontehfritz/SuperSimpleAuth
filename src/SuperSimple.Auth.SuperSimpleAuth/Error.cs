@@ -11,6 +11,7 @@ namespace SuperSimple.Auth
     public class Source
     {
         public string Pointer   { get; set; }
+
         public Source(string pointer)
         {
             Pointer = pointer;

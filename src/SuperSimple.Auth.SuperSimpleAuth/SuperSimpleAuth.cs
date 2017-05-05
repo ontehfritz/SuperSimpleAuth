@@ -6,12 +6,17 @@ namespace SuperSimple.Auth
     using System.Text;
     using Newtonsoft.Json;
     using Api.Token;
+    using System.Net.Http;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Net.Http.Headers;
 
     public class SuperSimpleAuth
     {
         private const string _headerDomainKey = "Ssa-Domain-Key";
         private const string _headerDomain = "Ssa-Domain";
         private const string _authorization = "Authorization";
+        private HttpClient _client; 
 
         private string _uri;
         private Guid _domainKey { get; set; }
@@ -21,6 +26,9 @@ namespace SuperSimple.Auth
                                 string domainKey,
                                 string uri = "https://api.authenticate.technology")
         {
+            _client = new HttpClient();
+            _client.BaseAddress = new Uri(uri);
+           
             _name = name;
             _uri = uri;
 
@@ -29,6 +37,8 @@ namespace SuperSimple.Auth
             if (Guid.TryParse (domainKey, out key))
             {
                 _domainKey = key;
+                _client.DefaultRequestHeaders.Add(_headerDomainKey, 
+                                                   _domainKey.ToString ());
             }
             else
             {
@@ -203,89 +213,116 @@ namespace SuperSimple.Auth
         /// End the specified authToken.
         /// </summary>
         /// <param name="authToken">Auth token.</param>
-        public bool End (User user)
+        public async Task<bool> End (User user)
         {
             bool end = false;
+            _client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue (user.Jwt);
 
-            using (WebClient client = new WebClient ())
-            {
-                var reqparm =
-                    new System.Collections.Specialized.NameValueCollection ();
+            var result = await _client.PostAsync ("/end", null);
+            string resultContent = await result.Content.ReadAsStringAsync ();
 
-                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
-                client.Headers [_headerDomain] = this._name;
+            return (JsonConvert.DeserializeObject<bool> (
+                resultContent.Replace ("\"", string.Empty)));
+            //bool end = false;
 
-                client.Headers [_authorization] = user.Jwt;
+            //using (WebClient client = new WebClient ())
+            //{
+            //    var reqparm =
+            //        new System.Collections.Specialized.NameValueCollection ();
 
-                string responsebody = "";
+            //    client.Headers [_headerDomainKey] = this._domainKey.ToString ();
+            //    client.Headers [_headerDomain] = this._name;
 
-                try
-                {
-                    ServicePointManager.ServerCertificateValidationCallback = 
-                        delegate { return true; };
-                    byte [] responsebytes =
-                        client.UploadValues (string.Format ("{0}/end", _uri),
-                                            "Post", reqparm);
+            //    client.Headers [_authorization] = user.Jwt;
 
-                    responsebody = Encoding.UTF8.GetString (responsebytes);
+            //    string responsebody = "";
 
-                }
-                catch (WebException e)
-                {
-                    HandleWebException (e);
-                }
+            //    try
+            //    {
+            //        ServicePointManager.ServerCertificateValidationCallback = 
+            //            delegate { return true; };
+            //        byte [] responsebytes =
+            //            client.UploadValues (string.Format ("{0}/end", _uri),
+            //                                "Post", reqparm);
 
-                end = JsonConvert.DeserializeObject<bool> (responsebody);
-            }
+            //        responsebody = Encoding.UTF8.GetString (responsebytes);
 
-            return end;
+            //    }
+            //    catch (WebException e)
+            //    {
+            //        HandleWebException (e);
+            //    }
+
+            //    end = JsonConvert.DeserializeObject<bool> (responsebody);
+            //}
+
+            //return end;
         }
+        /// <summary>
+        /// Creates the user.
+        /// </summary>
+        /// <returns>The user.</returns>
+        /// <param name="userName">User name.</param>
+        /// <param name="secret">Secret.</param>
+        /// <param name="email">Email.</param>
+        public async Task<bool> CreateUser (string userName, string secret, 
+                                            string email = null)
+        {
+            var content = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("Username", userName),
+                new KeyValuePair<string, string>("Secret", secret),
+                new KeyValuePair<string, string>("Email", email)
 
+            });
+
+            var result = await _client.PostAsync("/user", 
+                                                 content);
+            if(result.IsSuccessStatusCode)
+            {
+                var resultContent = await result.Content.ReadAsStringAsync();
+
+                Console.Write(resultContent);
+
+                return(JsonConvert.DeserializeObject<bool>(
+                    resultContent.Replace("\"", string.Empty)));
+            }
+            else
+            {
+                var errorJson = await result.Content.ReadAsStringAsync();
+                var error = JsonConvert.DeserializeObject<Error>(
+                    errorJson);
+
+                throw new Exception(error.Detail);
+            }
+        }
         /// <summary>
         /// Authenticate the specified username, secret and IP.
         /// </summary>
         /// <param name="username">Username.</param>
         /// <param name="secret">Secret.</param>
         /// <param name="IP">I.</param>
-        public User Authenticate (string username, string secret, 
+        public async Task<User> Authenticate (string userName, string secret,
                                   string IP = null)
         {
-            using (WebClient client = new WebClient ())
+            var content = new FormUrlEncodedContent (new []
             {
-                var reqparm =
-                    new System.Collections.Specialized.NameValueCollection ();
+                new KeyValuePair<string, string>("Username", userName),
+                new KeyValuePair<string, string>("Secret", secret),
+                new KeyValuePair<string, string>("IP",IP)
+            });
 
-                reqparm.Add ("Username", username);
-                reqparm.Add ("Secret", secret);
+            //_client.DefaultRequestHeaders.Add(_headerDomainKey, 
+                                              //_domainKey.ToString ());
 
-                if (IP != null)
-                {
-                    reqparm.Add ("IP", IP);
-                }
-
-                client.Headers [_headerDomainKey] = this._domainKey.ToString();
-
-                string responsebody = "";
-
-                try
-                {
-                    ServicePointManager.ServerCertificateValidationCallback = 
-                        delegate { return true; };
-                    var responsebytes = 
-                        client.UploadValues (
-                            string.Format ("{0}/authenticate", _uri),
-                                                               "Post", reqparm);
-
-                    responsebody = Encoding.UTF8.GetString (responsebytes);
-                }
-                catch (WebException e)
-                {
-                    HandleWebException (e);
-                }
-
-                var user = JwtToUser(responsebody.Replace("\"",string.Empty));
-                return user;
-            }
+            var result = await _client.PostAsync ("/authenticate",
+                                                 content);
+            
+            string resultContent = await result.Content.ReadAsStringAsync ();
+            Console.WriteLine(resultContent);
+            var user = JwtToUser (resultContent.Replace ("\"", string.Empty));
+            return user;
         }
 
         private User JwtToUser(string token)
@@ -415,51 +452,7 @@ namespace SuperSimple.Auth
             return user;
         }
 
-        /// <summary>
-        /// Creates the user.
-        /// </summary>
-        /// <returns>The user.</returns>
-        /// <param name="userName">User name.</param>
-        /// <param name="secret">Secret.</param>
-        /// <param name="email">Email.</param>
-        public bool CreateUser (string userName, string secret, string email = null)
-        {
-            using (WebClient client = new WebClient ())
-            {
-                var reqparm =
-                    new System.Collections.Specialized.NameValueCollection ();
 
-                reqparm.Add ("Username", userName);
-                reqparm.Add ("Secret", secret);
-
-                if (email != null)
-                {
-                    reqparm.Add ("Email", email);
-                }
-
-                client.Headers [_headerDomainKey] = this._domainKey.ToString ();
-                string responsebody = "";
-
-                try
-                {
-                    ServicePointManager.ServerCertificateValidationCallback = 
-                        delegate { return true; };
-                     var responsebytes = 
-                        client.UploadValues (string.Format ("{0}/user", _uri),
-                        "Post", reqparm);
-
-                    responsebody = Encoding.UTF8.GetString (responsebytes);
-
-                }
-                catch (WebException e)
-                {
-                    HandleWebException (e);
-                }
-
-                return(JsonConvert.DeserializeObject<bool>(
-                    responsebody.Replace("\"", string.Empty)));
-            }
-        }
 
         public bool Disable (User user)
         {
