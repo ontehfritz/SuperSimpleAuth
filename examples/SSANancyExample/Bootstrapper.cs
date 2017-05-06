@@ -33,8 +33,7 @@ namespace SSANancyExample
             //some encryption on the keys could be used. 
 
             var ssa = 
-                new SuperSimpleAuth (_domain, 
-                                     _domainCode, 
+                new SuperSimpleAuth (_domainCode, 
                                      _url);
 
             container.Register<SuperSimpleAuth>(ssa);
