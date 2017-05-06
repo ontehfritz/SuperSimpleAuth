@@ -1,18 +1,21 @@
 ﻿<Properties StartupConfiguration="{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.SuperSimpleAuth/Error.cs">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="51" Column="33" />
-      <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/SuperSimpleAuth.cs" Line="273" Column="14" />
+      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="30" Column="1" />
+      <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/SuperSimpleAuth.cs" Line="357" Column="17" />
       <File FileName="src/SuperSimple.Auth.Api/Modules/AuthModule.cs" Line="350" Column="22" />
       <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/User.cs" Line="1" Column="1" />
-      <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/Error.cs" Line="1" Column="1" />
-      <File FileName="src/SuperSimple.Auth.Api/Models/Error.cs" Line="1" Column="1" />
+      <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="38" Column="1" />
+      <File FileName="examples/NancyStatelessJwt/Bootstrapper.cs" Line="40" Column="39" />
+      <File FileName="examples/SSANancyExample/Models/NancyUser.cs" Line="29" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.Manager PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/fritz/Dropbox/Projects/SuperSimpleAuth/test/SsaCsharpTest/SsaCsharp.cs" relfile="test/SsaCsharpTest/SsaCsharp.cs" line="30" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="examples/NancyStatelessJwt/Bootstrapper.cs" line="65" offsetX="527" offsetY="960" expression="jwtToken" liveUpdate="False" />

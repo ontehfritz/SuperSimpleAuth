@@ -19,7 +19,7 @@ namespace SSANancyExample
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
             var ssaUser = _ssa.Validate (identifier,
-                                         context.Request.UserHostAddress);
+                                         context.Request.UserHostAddress).Result;
             
             var user = new NancyUserIdentity(ssaUser);
            

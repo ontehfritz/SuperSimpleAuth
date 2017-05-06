@@ -16,8 +16,7 @@
         [Test()]
         public void Authenticate()
         {
-            var api = new SuperSimpleAuth("test",
-                                          LOCAL_KEY,
+            var api = new SuperSimpleAuth(LOCAL_KEY,
                                           LOCAL_URL);
 
             var created = api.CreateUser("test", "test", "test@test.net").Result;
@@ -26,28 +25,28 @@
 
             Assert.True(!string.IsNullOrEmpty(user.Jwt));
 
-            var valid = api.Validate(user);
+            var valid = api.Validate(user).Result;
             Assert.True(valid);
-            var u  = api.Validate(user.AuthToken);
+            var u  = api.Validate(user.AuthToken).Result;
             Assert.IsNotNull(u);
-            u = api.Validate(user.Jwt);
+            u = api.Validate (user.Jwt);
             Assert.IsNotNull(u);
 
             user.Email = "test@test1.com";
-            user = api.ChangeEmail(user, user.Email);
+            user = api.ChangeEmail(user, user.Email).Result;
 
             user.UserName = "mutha";
-            user = api.ChangeUserName(user, user.UserName);
+            user = api.ChangeUserName(user, user.UserName).Result;
 
-            valid = api.ChangePassword(user, "pazzwurd");
+            valid = api.ChangePassword(user, "pazzwurd").Result;
             Assert.True(valid);
 
-            var newpassword = api.Forgot(user.Email);
+            var newpassword = api.Forgot(user.Email).Result;
             Assert.True(!string.IsNullOrEmpty(newpassword));
 
             valid = api.End(user).Result;
             Assert.True(valid);
-            valid = api.Validate(user);
+            valid = api.Validate(user).Result;
             Assert.False(valid);
 
             user = api.Authenticate(user.UserName, newpassword).Result;
