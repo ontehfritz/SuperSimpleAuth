@@ -53,7 +53,7 @@
 
             Assert.IsNotNull(user);
 
-            valid = api.Disable(user);
+            valid = api.Disable(user).Result;
             Assert.True(valid);
         }
     }
