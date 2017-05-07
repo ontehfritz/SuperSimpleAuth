@@ -1,9 +1,6 @@
 namespace SuperSimple.Auth
 {
     using System;
-    using System.IO;
-    using System.Net;
-    using System.Text;
     using Newtonsoft.Json;
     using Api.Token;
     using System.Net.Http;
@@ -17,7 +14,7 @@ namespace SuperSimple.Auth
         private const string _headerDomainKey = "Ssa-Domain-Key";
         private const string _headerDomain = "Ssa-Domain";
         private const string _authorization = "Authorization";
-        private HttpClient _client; 
+        private HttpClient _client;
 
         private string _uri;
         private Guid _domainKey { get; set; }
@@ -25,8 +22,8 @@ namespace SuperSimple.Auth
         public SuperSimpleAuth (string domainKey,
                                 string uri = ServiceUri)
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri(uri);
+            _client = new HttpClient ();
+            _client.BaseAddress = new Uri (uri);
             _uri = uri;
 
             Guid key;
@@ -34,12 +31,12 @@ namespace SuperSimple.Auth
             if (Guid.TryParse (domainKey, out key))
             {
                 _domainKey = key;
-                _client.DefaultRequestHeaders.Add(_headerDomainKey, 
+                _client.DefaultRequestHeaders.Add (_headerDomainKey,
                                                    _domainKey.ToString ());
             }
             else
             {
-                throw new ArgumentException 
+                throw new ArgumentException
                 ("Domain key is in an incorrect format.");
             }
         }
@@ -65,19 +62,19 @@ namespace SuperSimple.Auth
             var result = await _client.PostAsync ("/forgot",
                                                  content);
 
-            if(result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode)
             {
-                var resultContent = await result.Content.ReadAsStringAsync();
-                return(JsonConvert.DeserializeObject<string>(
+                var resultContent = await result.Content.ReadAsStringAsync ();
+                return (JsonConvert.DeserializeObject<string> (
                     resultContent));
             }
             else
             {
-                var errorJson = await result.Content.ReadAsStringAsync();
-                var error = JsonConvert.DeserializeObject<Error>(
+                var errorJson = await result.Content.ReadAsStringAsync ();
+                var error = JsonConvert.DeserializeObject<Error> (
                     errorJson);
 
-                throw new Exception(error.Detail);
+                throw new Exception (error.Detail);
             }
         }
 
@@ -93,7 +90,7 @@ namespace SuperSimple.Auth
 
             var result = await _client.PostAsync ("/username", content);
 
-            if(result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode)
             {
                 var resultContent = await result.Content.ReadAsStringAsync ();
                 user = JwtToUser (resultContent.Replace ("\"", string.Empty));
@@ -101,11 +98,11 @@ namespace SuperSimple.Auth
             }
             else
             {
-                var errorJson = await result.Content.ReadAsStringAsync();
-                var error = JsonConvert.DeserializeObject<Error>(
+                var errorJson = await result.Content.ReadAsStringAsync ();
+                var error = JsonConvert.DeserializeObject<Error> (
                     errorJson);
 
-                throw new Exception(error.Detail);
+                throw new Exception (error.Detail);
             }
         }
 
@@ -121,7 +118,7 @@ namespace SuperSimple.Auth
 
             var result = await _client.PostAsync ("/email", content);
 
-            if(result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode)
             {
                 var resultContent = await result.Content.ReadAsStringAsync ();
                 user = JwtToUser (resultContent.Replace ("\"", string.Empty));
@@ -129,18 +126,15 @@ namespace SuperSimple.Auth
             }
             else
             {
-                var errorJson = await result.Content.ReadAsStringAsync();
-                var error = JsonConvert.DeserializeObject<Error>(
+                var errorJson = await result.Content.ReadAsStringAsync ();
+                var error = JsonConvert.DeserializeObject<Error> (
                     errorJson);
 
-                throw new Exception(error.Detail);
+                throw new Exception (error.Detail);
             }
         }
 
-        /// <summary>
-        /// End the specified authToken.
-        /// </summary>
-        /// <param name="authToken">Auth token.</param>
+
         public async Task<bool> ChangePassword (User user, string newPassword)
         {
             var content = new FormUrlEncodedContent (new []
@@ -153,26 +147,22 @@ namespace SuperSimple.Auth
 
             var result = await _client.PostAsync ("/password", content);
 
-            if(result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode)
             {
-                var resultContent = await result.Content.ReadAsStringAsync();
-                return(JsonConvert.DeserializeObject<bool>(
-                    resultContent.Replace("\"", string.Empty)));
+                var resultContent = await result.Content.ReadAsStringAsync ();
+                return (JsonConvert.DeserializeObject<bool> (
+                    resultContent.Replace ("\"", string.Empty)));
             }
             else
             {
-                var errorJson = await result.Content.ReadAsStringAsync();
-                var error = JsonConvert.DeserializeObject<Error>(
+                var errorJson = await result.Content.ReadAsStringAsync ();
+                var error = JsonConvert.DeserializeObject<Error> (
                     errorJson);
 
-                throw new Exception(error.Detail);
+                throw new Exception (error.Detail);
             }
         }
 
-        /// <summary>
-        /// End the specified authToken.
-        /// </summary>
-        /// <param name="authToken">Auth token.</param>
         public async Task<bool> End (User user)
         {
             _client.DefaultRequestHeaders.Authorization =
@@ -180,19 +170,19 @@ namespace SuperSimple.Auth
 
             var result = await _client.PostAsync ("/end", null);
 
-            if(result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode)
             {
-                var resultContent = await result.Content.ReadAsStringAsync();
-                return(JsonConvert.DeserializeObject<bool>(
-                    resultContent.Replace("\"", string.Empty)));
+                var resultContent = await result.Content.ReadAsStringAsync ();
+                return (JsonConvert.DeserializeObject<bool> (
+                    resultContent.Replace ("\"", string.Empty)));
             }
             else
             {
-                var errorJson = await result.Content.ReadAsStringAsync();
-                var error = JsonConvert.DeserializeObject<Error>(
+                var errorJson = await result.Content.ReadAsStringAsync ();
+                var error = JsonConvert.DeserializeObject<Error> (
                     errorJson);
 
-                throw new Exception(error.Detail);
+                throw new Exception (error.Detail);
             }
         }
         /// <summary>
@@ -202,10 +192,10 @@ namespace SuperSimple.Auth
         /// <param name="userName">User name.</param>
         /// <param name="secret">Secret.</param>
         /// <param name="email">Email.</param>
-        public async Task<bool> CreateUser (string userName, string secret, 
+        public async Task<bool> CreateUser (string userName, string secret,
                                             string email = null)
         {
-            var content = new FormUrlEncodedContent(new[]
+            var content = new FormUrlEncodedContent (new []
             {
                 new KeyValuePair<string, string>("Username", userName),
                 new KeyValuePair<string, string>("Secret", secret),
@@ -213,21 +203,21 @@ namespace SuperSimple.Auth
 
             });
 
-            var result = await _client.PostAsync("/user", 
+            var result = await _client.PostAsync ("/user",
                                                  content);
-            if(result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode)
             {
-                var resultContent = await result.Content.ReadAsStringAsync();
-                return(JsonConvert.DeserializeObject<bool>(
-                    resultContent.Replace("\"", string.Empty)));
+                var resultContent = await result.Content.ReadAsStringAsync ();
+                return (JsonConvert.DeserializeObject<bool> (
+                    resultContent.Replace ("\"", string.Empty)));
             }
             else
             {
-                var errorJson = await result.Content.ReadAsStringAsync();
-                var error = JsonConvert.DeserializeObject<Error>(
+                var errorJson = await result.Content.ReadAsStringAsync ();
+                var error = JsonConvert.DeserializeObject<Error> (
                     errorJson);
 
-                throw new Exception(error.Detail);
+                throw new Exception (error.Detail);
             }
         }
         /// <summary>
@@ -249,7 +239,7 @@ namespace SuperSimple.Auth
             var result = await _client.PostAsync ("/authenticate",
                                                  content);
 
-            if(result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode)
             {
                 var resultContent = await result.Content.ReadAsStringAsync ();
                 var user = JwtToUser (resultContent.Replace ("\"", string.Empty));
@@ -257,37 +247,12 @@ namespace SuperSimple.Auth
             }
             else
             {
-                var errorJson = await result.Content.ReadAsStringAsync();
-                var error = JsonConvert.DeserializeObject<Error>(
+                var errorJson = await result.Content.ReadAsStringAsync ();
+                var error = JsonConvert.DeserializeObject<Error> (
                     errorJson);
 
-                throw new Exception(error.Detail);
+                throw new Exception (error.Detail);
             }
-        }
-
-        private User JwtToUser(string token)
-        {
-            var jwt = Jwt.ToObject(token);
-            var user = new User();
-            user.AuthToken = Guid.Parse(jwt.Payload.JwtTokenId);
-            user.Jwt = token;
-            user.Email = jwt.Payload.Email;
-            user.UserName = jwt.Payload.Username;
-
-            foreach(var role in jwt.Payload.Roles)
-            {
-                var r = new Role();
-
-                r.Name = role.Name;
-                foreach(var permission in role.Permissions)
-                {
-                    r.Permissions.Add(permission);
-                }
-
-                user.Roles.Add(r);
-            }
-
-            return user;
         }
 
         /// <summary>
@@ -308,27 +273,27 @@ namespace SuperSimple.Auth
             var result = await _client.PostAsync ("/validate",
                                                   content);
 
-            if(result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode)
             {
-                var resultContent = await result.Content.ReadAsStringAsync();
-                return(JsonConvert.DeserializeObject<bool>(
+                var resultContent = await result.Content.ReadAsStringAsync ();
+                return (JsonConvert.DeserializeObject<bool> (
                     resultContent));
             }
             else
             {
-                var errorJson = await result.Content.ReadAsStringAsync();
-                var error = JsonConvert.DeserializeObject<Error>(
+                var errorJson = await result.Content.ReadAsStringAsync ();
+                var error = JsonConvert.DeserializeObject<Error> (
                     errorJson);
 
-                throw new Exception(error.Detail);
+                throw new Exception (error.Detail);
             }
         }
 
         public User Validate (string token, string IP = null)
         {
-            var user = JwtToUser(token);
+            var user = JwtToUser (token);
 
-            if(Validate(user, IP).Result)
+            if (Validate (user, IP).Result)
             {
                 return user;
             }
@@ -348,7 +313,7 @@ namespace SuperSimple.Auth
 
             var result = await _client.PostAsync ("/validateauthtoken",
                                                   content);
-            if(result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode)
             {
                 var resultContent = await result.Content.ReadAsStringAsync ();
                 var user = JsonConvert.DeserializeObject<User> (resultContent);
@@ -356,153 +321,98 @@ namespace SuperSimple.Auth
             }
             else
             {
-                var errorJson = await result.Content.ReadAsStringAsync();
-                var error = JsonConvert.DeserializeObject<Error>(
+                var errorJson = await result.Content.ReadAsStringAsync ();
+                var error = JsonConvert.DeserializeObject<Error> (
                     errorJson);
 
-                throw new Exception(error.Detail);
+                throw new Exception (error.Detail);
             }
-
-            //User user = null;
-
-            //using (WebClient client = new WebClient ())
-            //{
-            //    var reqparm =
-            //        new System.Collections.Specialized.NameValueCollection ();
-
-            //    client.Headers [_headerDomainKey] = this._domainKey.ToString ();
-
-            //    reqparm.Add ("AuthToken", );
-
-            //    if (IP != null)
-            //    {
-            //        reqparm.Add ("IP", IP);
-            //    }
-
-            //    string responsebody = "";
-
-            //    try
-            //    {
-            //        ServicePointManager.ServerCertificateValidationCallback =
-            //            delegate { return true; };
-
-            //        var responsebytes =
-            //            client.UploadValues (string.Format ("{0}/validateauthtoken",
-            //                                                _uri),
-            //                                 "Post", reqparm);
-
-            //        responsebody = Encoding.UTF8.GetString (responsebytes);
-
-            //    }
-            //    catch (WebException e)
-            //    {
-            //        HandleWebException (e);
-            //    }
-
-            //    user = JsonConvert.DeserializeObject<User> (responsebody);
-
-            //}
-
-            //return user;
         }
 
-
-
-        public bool Disable (User user)
+        public async Task<bool> Disable (User user)
         {
-            bool disabled = false;
+            _client.DefaultRequestHeaders.Authorization =
+                         new AuthenticationHeaderValue (user.Jwt);
 
-            using (WebClient client = new WebClient ())
+            var result = await _client.PostAsync ("/disable", null);
+
+            if (result.IsSuccessStatusCode)
             {
-                var reqparm =
-                    new System.Collections.Specialized.NameValueCollection ();
-                
-                client.Headers [_authorization] = user.Jwt;
-
-                string responsebody = "";
-
-                try
-                {
-                    ServicePointManager.ServerCertificateValidationCallback = 
-                        delegate { return true; };
-                    var responsebytes =
-                        client.UploadValues (string.Format ("{0}/disable", _uri),
-                            "Post", reqparm);
-
-                    responsebody = Encoding.UTF8.GetString (responsebytes);
-
-                }
-                catch (WebException e)
-                {
-                    HandleWebException (e);
-                }
-
-                disabled = JsonConvert.DeserializeObject<bool> (responsebody);
+                var resultContent = await result.Content.ReadAsStringAsync ();
+                return (JsonConvert.DeserializeObject<bool> (
+                    resultContent));
             }
+            else
+            {
+                var errorJson = await result.Content.ReadAsStringAsync ();
+                var error = JsonConvert.DeserializeObject<Error> (
+                    errorJson);
 
-            return disabled;
+                throw new Exception (error.Detail);
+            }
         }
 
-        /// <summary>
-        /// Reads the response.
-        /// </summary>
-        /// <returns>The response.</returns>
-        /// <param name="response">Response.</param>
-        private string ReadResponse (WebResponse response)
+        private User JwtToUser (string token)
         {
-            var responseText = string.Empty;
+            var jwt = Jwt.ToObject (token);
+            var user = new User ();
+            user.AuthToken = Guid.Parse (jwt.Payload.JwtTokenId);
+            user.Jwt = token;
+            user.Email = jwt.Payload.Email;
+            user.UserName = jwt.Payload.Username;
 
-            if (response != null)
+            foreach (var role in jwt.Payload.Roles)
             {
-                var responseStream = response.GetResponseStream ();
+                var r = new Role ();
 
-                if (responseStream != null)
+                r.Name = role.Name;
+                foreach (var permission in role.Permissions)
                 {
-                    using (var reader = new StreamReader (responseStream))
-                    {
-                        responseText = reader.ReadToEnd ();
-                    }
+                    r.Permissions.Add (permission);
                 }
+
+                user.Roles.Add (r);
             }
 
-            return responseText;
+            return user;
         }
+
 
         /// <summary>
         /// Handles the web exception.
         /// </summary>
         /// <param name="exception">Exception.</param>
-        private void HandleWebException (WebException exception)
-        {
-            if (exception.Status != WebExceptionStatus.ProtocolError)
-            {
-                throw exception;
-            }
+        //private void HandleWebException (WebException exception)
+        //{
+        //    if (exception.Status != WebExceptionStatus.ProtocolError)
+        //    {
+        //        throw exception;
+        //    }
 
-            var error = new Error ();
+        //    var error = new Error ();
 
-            try
-            {
-                var response = ReadResponse (exception.Response);
-                error =
-                    JsonConvert.DeserializeObject<Error> (response);
-            }
-            catch (Exception e)
-            {
-                throw exception;
-            }
+        //    try
+        //    {
+        //        var response = ReadResponse (exception.Response);
+        //        error =
+        //            JsonConvert.DeserializeObject<Error> (response);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw exception;
+        //    }
 
-            switch (error.Title)
-            {
-                case "Duplicate":
-                    throw new DuplicateException (error.Detail);
-                case "Invalid":
-                    throw new InvalidException (error.Detail);
-                case "Unauthorized":
-                    throw new UnauthorizedException (error.Detail);
-                default:
-                    throw exception;
-            }
-        }
+        //    switch (error.Title)
+        //    {
+        //        case "Duplicate":
+        //            throw new DuplicateException (error.Detail);
+        //        case "Invalid":
+        //            throw new InvalidException (error.Detail);
+        //        case "Unauthorized":
+        //            throw new UnauthorizedException (error.Detail);
+        //        default:
+        //            throw exception;
+        //    }
+        //}
     }
 }
