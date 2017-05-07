@@ -11,7 +11,7 @@
         private const string LOCAL_KEY = "9fa95fd4-04e5-4cea-8dca-3a818f525a91";
 
         private const string URL = "https://api.authenticate.technology";
-        private const string KEY = "894b3a57-6311-436e-97c7-d4e1984fa94b";
+        private const string KEY = "30fb3a81-75b6-47dc-9da6-7a7016cae4b4";
 
         [Test()]
         public void Authenticate()

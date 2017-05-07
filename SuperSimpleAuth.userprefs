@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="test/SsaCsharpTest/SsaCsharp.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="examples/NancyStatelessJwt/Bootstrapper.cs">
     <Files>
-      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="32" Column="41" />
-      <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/SuperSimpleAuth.cs" Line="437" Column="9" />
+      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="20" Column="54" />
+      <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/SuperSimpleAuth.cs" Line="74" Column="67" />
       <File FileName="src/SuperSimple.Auth.Api/Modules/AuthModule.cs" Line="350" Column="22" />
       <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/User.cs" Line="1" Column="1" />
       <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="38" Column="1" />
