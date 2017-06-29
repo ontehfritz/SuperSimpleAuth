@@ -1,13 +1,15 @@
 ﻿<Properties StartupConfiguration="{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="examples/NancyStatelessJwt/Bootstrapper.cs">
+  <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.SuperSimpleAuth.Core HideGettingStarted="True" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="test/SsaCsharpTest/SsaCsharp.cs">
     <Files>
-      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="20" Column="54" />
-      <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/SuperSimpleAuth.cs" Line="74" Column="67" />
-      <File FileName="src/SuperSimple.Auth.Api/Modules/AuthModule.cs" Line="350" Column="22" />
-      <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/User.cs" Line="1" Column="1" />
-      <File FileName="examples/SSANancyExample/Bootstrapper.cs" Line="38" Column="1" />
-      <File FileName="examples/NancyStatelessJwt/Bootstrapper.cs" Line="40" Column="39" />
-      <File FileName="examples/SSANancyExample/Models/NancyUser.cs" Line="29" Column="5" />
+      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="61" Column="1" />
+      <File FileName="SuperSimple.Auth.SuperSimpleAuthTemp/project.json" Line="1" Column="1" />
+      <File FileName="SuperSimple.Auth.SuperSimpleAuthTemp/Jwt.cs" Line="15" Column="9" />
+      <File FileName="SuperSimple.Auth.SuperSimpleAuthTemp/SuperSimpleAuth.cs" Line="10" Column="5" />
+      <File FileName="test/SsaCsharpTest/packages.config" Line="1" Column="1" />
+      <File FileName="SuperSimple.Auth.SuperSimpleAuthTemp/Exceptions.cs" Line="24" Column="1" />
+      <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/SuperSimpleAuth.cs" Line="1" Column="1" />
+      <File FileName="packages/NuGet.Build.Packaging.0.1.157-dev/build/NuGet.Build.Packaging.targets" Line="289" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
@@ -24,9 +26,8 @@
   <MultiItemStartupConfigurations>
     <MultiItemSolutionRunConfiguration Id="Multi-Startup" Name="Multi-Startup">
       <Items>
-        <StartupItem ItemId="{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}" />
-        <StartupItem ItemId="{3E96487D-52AE-4A0B-8D29-B4F4EBEC5CC7}" />
-        <StartupItem ItemId="{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}" />
+        <StartupItem ItemId="{3E96487D-52AE-4A0B-8D29-B4F4EBEC5CC7}" ItemName="SuperSimple.Auth.Api" />
+        <StartupItem ItemId="{C504D953-1F8F-4DD8-AE91-16FAF5E2F1A9}" ItemName="SuperSimple.Auth.Manager" />
       </Items>
     </MultiItemSolutionRunConfiguration>
   </MultiItemStartupConfigurations>
