@@ -1,0 +1,11 @@
+﻿{
+  "dependencies": {
+    "NETStandard.Library": "1.6.1",
+    "Newtonsoft.Json": "10.0.2",
+    "NuGet.Build.Packaging": "0.1.248",
+    "System.Net.Http": "4.3.2"
+  },
+  "frameworks": {
+    "netstandard1.6": {}
+  }
+}
