@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.Token.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NancyStatelessJwt", "examples\NancyStatelessJwt\NancyStatelessJwt.csproj", "{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.SuperSimpleAuth.Core", "SuperSimple.Auth.SuperSimpleAuthTemp\SuperSimple.Auth.SuperSimpleAuth.Core.csproj", "{18BD33B3-DD18-427A-88C7-4A7E489E3FEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,38 +81,31 @@ Global
 		{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18BD33B3-DD18-427A-88C7-4A7E489E3FEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18BD33B3-DD18-427A-88C7-4A7E489E3FEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18BD33B3-DD18-427A-88C7-4A7E489E3FEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18BD33B3-DD18-427A-88C7-4A7E489E3FEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = SSAManager\SSAManager.csproj
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
-		$1.DirectoryNamespaceAssociation = None
-		$1.ResourceNamePolicy = FileFormatDefault
 		$0.TextStylePolicy = $2
 		$2.inheritsSet = null
 		$2.scope = application/javascript
 		$2.inheritsScope = text/plain
 		$0.XmlFormattingPolicy = $3
-		$3.inheritsSet = Mono
 		$3.scope = application/xml
-		$3.inheritsScope = application/xml
 		$0.CSharpFormattingPolicy = $4
-		$4.NewLinesForBracesInProperties = True
-		$4.NewLinesForBracesInAccessors = True
-		$4.NewLinesForBracesInAnonymousMethods = True
-		$4.NewLinesForBracesInControlBlocks = True
-		$4.NewLinesForBracesInAnonymousTypes = True
-		$4.NewLinesForBracesInObjectCollectionArrayInitializers = True
-		$4.NewLinesForBracesInLambdaExpressionBody = True
-		$4.NewLineForElse = True
-		$4.NewLineForCatch = True
-		$4.NewLineForFinally = True
-		$4.inheritsSet = Mono
-		$4.inheritsScope = text/x-csharp
 		$4.scope = text/x-csharp
+		$4.IndentSwitchSection = False
+		$4.NewLineForMembersInObjectInit = False
+		$4.NewLineForMembersInAnonymousTypes = False
+		$4.NewLineForClausesInQuery = False
+		$4.SpacingAfterMethodDeclarationName = True
+		$4.SpaceAfterMethodCallName = True
+		$4.SpaceBeforeOpenSquareBracket = True
 		$0.StandardHeader = $5
-		$5.Text = 
-		$5.IncludeInNewFiles = True
 		$0.NameConventionPolicy = $6
 		$6.Rules = $7
 		$7.NamingRule = $8
@@ -125,6 +120,5 @@ Global
 		$8.RequiredSuffixes = $10
 		$10.String = Exception
 		$0.VersionControlPolicy = $11
-		$11.inheritsSet = Mono
 	EndGlobalSection
 EndGlobal

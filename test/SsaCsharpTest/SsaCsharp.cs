@@ -1,6 +1,5 @@
 ﻿namespace SsaCsharpTest
 {
-    using System;
     using NUnit.Framework;
     using SuperSimple.Auth;
 
@@ -16,6 +15,7 @@
         [Test()]
         public void Authenticate()
         {
+            
             var api = new SuperSimpleAuth(LOCAL_KEY,
                                           LOCAL_URL);
 

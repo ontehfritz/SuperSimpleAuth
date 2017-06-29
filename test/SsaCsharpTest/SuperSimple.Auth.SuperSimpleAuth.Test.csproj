@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>SsaCsharpTest</RootNamespace>
     <AssemblyName>SsaCsharpTest</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,7 +25,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -37,13 +39,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SuperSimple.Auth.Token\SuperSimple.Auth.Token.csproj">
-      <Project>{0A257DF1-010E-4026-9CE4-671807BFAEE1}</Project>
-      <Name>SuperSimple.Auth.Token</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\SuperSimple.Auth.SuperSimpleAuth\SuperSimple.Auth.SuperSimpleAuth.csproj">
-      <Project>{7EF26E89-0BDF-4A21-8045-47CA3288EABC}</Project>
-      <Name>SuperSimple.Auth.SuperSimpleAuth</Name>
+    <ProjectReference Include="..\..\SuperSimple.Auth.SuperSimpleAuthTemp\SuperSimple.Auth.SuperSimpleAuth.Core.csproj">
+      <Project>{18BD33B3-DD18-427A-88C7-4A7E489E3FEE}</Project>
+      <Name>SuperSimple.Auth.SuperSimpleAuth.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
