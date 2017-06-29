@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.Token.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NancyStatelessJwt", "examples\NancyStatelessJwt\NancyStatelessJwt.csproj", "{8C89401B-D92B-4F3E-9C26-98D8A23F7DA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.SuperSimpleAuth.Core", "SuperSimple.Auth.SuperSimpleAuthTemp\SuperSimple.Auth.SuperSimpleAuth.Core.csproj", "{18BD33B3-DD18-427A-88C7-4A7E489E3FEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.SuperSimpleAuth.Core", "src\SuperSimple.Auth.SuperSimpleCore\SuperSimple.Auth.SuperSimpleAuth.Core.csproj", "{18BD33B3-DD18-427A-88C7-4A7E489E3FEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
