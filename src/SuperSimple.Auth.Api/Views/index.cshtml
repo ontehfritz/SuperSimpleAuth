@@ -25,10 +25,49 @@
     All request to SSA must be done over https/ssl. If not your Domain Key can be compromised and your application will not be secure, 
     please keep your Domain Key private. 
     </p>
-    <h3>User</h3>
+
+    <h3>JWT format</h3>
+    Description:
+	<pre>
+    algorithm: HMACSHA256, dont worry SSA can create and validate tokens for you.
+    </pre>
+			
+    <p>
+    SSA JWT format is as follows:
+    Note at www.authenticate.technology these settings can be managed
+    </p>
+    <h4>Header</h4>
+    <pre>
+    alg         string      currently only HMACSHA256 is supported,
+    typ         string      in SSA this is always JWT
+    </pre>
+    <h4>Payload</h4>
+    <pre>
+    sub         string      Subject
+    iss         string      Issuer
+    aud         string      Audience
+    exp         int         Expiration
+    nbf         int         Not Before
+    iat         int         Issued At
+    jti         string      JWT unique Id
+    </pre>
+			
+    <pre>
+    name        string      User name
+    mail        string      Email
+    roles       array       Roles user is assigned to
+    </pre>
+			
+  	<h4>Role format</h4>	
+	 <pre>
+    name        string      role name
+    per         string      permission of this role
+    </pre>
+			
+    <h3>Jwt to User</h3>
     Description:
     <p>
-    This is the definition of <b>user</b> used for authorization and authentication.
+    The JWT can be converted to this format for convience. 
     </p>
 
     <pre>
@@ -36,6 +75,7 @@
     UserName    string      this is the email of the user, must use and email for username
     Email       string      this is optional, but is used for account recovery
     AuthToken   Guid        the users current authentication token,
+    JWT         string      Carry the token with the user object as a convenience  
     Claims      string[]    an array of simple claims
     Roles       string[]    an array of roles the user belongs to
     </pre>
