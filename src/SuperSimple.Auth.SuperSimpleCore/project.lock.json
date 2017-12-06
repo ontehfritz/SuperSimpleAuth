@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "targets": {
     ".NETStandard,Version=v1.6": {
       "Microsoft.CSharp/4.3.0": {
@@ -5047,7 +5047,14 @@
       "projectName": "SuperSimple.Auth.SuperSimpleAuth.Core",
       "projectPath": "/Users/fritz/Dropbox/Projects/SuperSimpleAuth/src/SuperSimple.Auth.SuperSimpleCore/SuperSimple.Auth.SuperSimpleAuth.Core.csproj",
       "projectJsonPath": "/Users/fritz/Dropbox/Projects/SuperSimpleAuth/src/SuperSimple.Auth.SuperSimpleCore/project.json",
-      "projectStyle": "ProjectJson"
+      "packagesPath": "/Users/fritz/.nuget/packages/",
+      "projectStyle": "ProjectJson",
+      "configFilePaths": [
+        "/Users/fritz/.config/NuGet/NuGet.Config"
+      ],
+      "sources": {
+        "https://www.nuget.org/api/v2/": {}
+      }
     },
     "dependencies": {
       "NETStandard.Library": "1.6.1",

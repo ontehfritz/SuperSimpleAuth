@@ -1,5 +1,5 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+Microsoft Visual Studio Solution File, Format Version 15.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSimple.Auth.Api", "src\SuperSimple.Auth.Api\SuperSimple.Auth.Api.csproj", "{3E96487D-52AE-4A0B-8D29-B4F4EBEC5CC7}"
 EndProject
