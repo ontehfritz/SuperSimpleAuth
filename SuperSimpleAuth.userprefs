@@ -1,14 +1,19 @@
 ﻿<Properties StartupConfiguration="{3E96487D-52AE-4A0B-8D29-B4F4EBEC5CC7}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Api.Repository/IUser.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Api/Models/Error.cs">
     <Files>
       <File FileName="src/SuperSimple.Auth.Token/Jwt.cs" Line="173" Column="50" />
       <File FileName="src/SuperSimple.Auth.Api/Bootstrapper.cs" Line="1" Column="1" />
-      <File FileName="src/SuperSimple.Auth.Api/Views/index.cshtml" Line="64" Column="34" />
+      <File FileName="src/SuperSimple.Auth.Api/Views/index.cshtml" Line="62" Column="2" />
       <File FileName="src/SuperSimple.Auth.SuperSimpleCore/Jwt.cs" Line="133" Column="40" />
       <File FileName="src/SuperSimple.Auth.SuperSimpleCore/User.cs" Line="1" Column="1" />
       <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/SuperSimpleAuth.cs" Line="355" Column="22" />
       <File FileName="src/SuperSimple.Auth.Api.Repository/User.cs" Line="1" Column="1" />
-      <File FileName="src/SuperSimple.Auth.Api.Repository/IUser.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/IUser.cs" Line="35" Column="2" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/IApiRepository.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Api.Repository/ApiMongoRepository.cs" Line="1" Column="1" />
+      <File FileName="test/SuperSimple.Auth.Api.Repository.Test/ApiRepository.cs" Line="1" Column="1" />
+      <File FileName="test/SuperSimple.Auth.Api.Repository.Test/packages.config" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Api/Models/Error.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
