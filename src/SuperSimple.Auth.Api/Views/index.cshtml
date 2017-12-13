@@ -59,7 +59,7 @@
     </pre>
 			
   	<h4>Role format</h4>	
-	 <pre>
+	<pre>
     name        string      role name
     per         string      permission of this role
     </pre>
@@ -84,8 +84,14 @@
     Description:
     <p>Errors occured while making an api request will be in the following format.</p>
     <pre>
-    Status          string       error type,
-    Message         string       details of the error
+    Status      int
+    Source      source - see source
+    Title       string
+    Detail      string
+    </pre>
+    Source
+    <pre>
+    Pointer     string
     </pre>
 
     <h1>API Methods </h1>
