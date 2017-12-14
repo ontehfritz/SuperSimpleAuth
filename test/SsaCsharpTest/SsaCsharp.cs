@@ -7,7 +7,7 @@
     public class SsaCsharp
     {
         private const string LOCAL_URL = "http://localhost:8082";
-        private const string LOCAL_KEY = "9fa95fd4-04e5-4cea-8dca-3a818f525a91";
+        private const string LOCAL_KEY = "59abff40-3b13-4e5f-be46-9cea815a8e0a";
 
         private const string URL = "https://api.authenticate.technology";
         private const string KEY = "30fb3a81-75b6-47dc-9da6-7a7016cae4b4";
@@ -16,8 +16,8 @@
         public void Authenticate()
         {
             
-            var api = new SuperSimpleAuth(LOCAL_KEY,
-                                          LOCAL_URL);
+            var api = new SuperSimpleAuth(KEY,
+                                          URL);
 
             var created = api.CreateUser("test", "test", "test@test.net").Result;
 

@@ -1,9 +1,9 @@
 ﻿<Properties StartupConfiguration="{3E96487D-52AE-4A0B-8D29-B4F4EBEC5CC7}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Api/Models/Error.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/SuperSimple.Auth.Api/web.config">
     <Files>
       <File FileName="src/SuperSimple.Auth.Token/Jwt.cs" Line="173" Column="50" />
       <File FileName="src/SuperSimple.Auth.Api/Bootstrapper.cs" Line="1" Column="1" />
-      <File FileName="src/SuperSimple.Auth.Api/Views/index.cshtml" Line="62" Column="2" />
+      <File FileName="src/SuperSimple.Auth.Api/Views/index.cshtml" Line="92" Column="11" />
       <File FileName="src/SuperSimple.Auth.SuperSimpleCore/Jwt.cs" Line="133" Column="40" />
       <File FileName="src/SuperSimple.Auth.SuperSimpleCore/User.cs" Line="1" Column="1" />
       <File FileName="src/SuperSimple.Auth.SuperSimpleAuth/SuperSimpleAuth.cs" Line="355" Column="22" />
@@ -13,13 +13,18 @@
       <File FileName="src/SuperSimple.Auth.Api.Repository/ApiMongoRepository.cs" Line="1" Column="1" />
       <File FileName="test/SuperSimple.Auth.Api.Repository.Test/ApiRepository.cs" Line="1" Column="1" />
       <File FileName="test/SuperSimple.Auth.Api.Repository.Test/packages.config" Line="1" Column="1" />
-      <File FileName="src/SuperSimple.Auth.Api/Models/Error.cs" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Api/Models/Error.cs" Line="14" Column="46" />
+      <File FileName="test/SsaCsharpTest/SsaCsharp.cs" Line="24" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Manager/web.config" Line="1" Column="1" />
+      <File FileName="src/SuperSimple.Auth.Api/web.config" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.SuperSimple.Auth.Manager PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/fritz/Dropbox/Projects/SuperSimpleAuth/test/SsaCsharpTest/SsaCsharp.cs" relfile="test/SsaCsharpTest/SsaCsharp.cs" line="19" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="examples/NancyStatelessJwt/Bootstrapper.cs" line="65" offsetX="527" offsetY="960" expression="jwtToken" liveUpdate="False" />
